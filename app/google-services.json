@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "927439833428",
+    "firebase_url": "https://lotusschoolapp.firebaseio.com",
+    "project_id": "lotusschoolapp",
+    "storage_bucket": "lotusschoolapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927439833428:android:a18c01ab4dbfb41a2660c1",
+        "android_client_info": {
+          "package_name": "com.learnathome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927439833428-ajhbe19arl96ai5501pvobc1kbt3vdkh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.learnathome",
+            "certificate_hash": "a42d2758f5e5597aa2caa17a131d4bec3d393318"
+          }
+        },
+        {
+          "client_id": "927439833428-pbgggqlahp159c0t9cvv2pt01k44l61i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjj2bHlXi9yxCQ4UMRBHTZg7YM6IEBD2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "927439833428-pbgggqlahp159c0t9cvv2pt01k44l61i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
