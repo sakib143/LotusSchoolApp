@@ -15,18 +15,26 @@ class PrefUtils @Inject constructor(context: Context) {
      * */
     private val mPref = context.getSharedPreferences(Constant.APP_PREFERENCES, Context.MODE_PRIVATE)
 
-    private val SAVE_USER_DATA = "saveUserData"
     private val USER_ID = "user_id"
-    private val IS_NEW_USER = "is_new_user"
 
-    fun getIsNewUser() : Boolean {
-        return mPref.getBoolean(IS_NEW_USER, true)
+    /**
+     * Method to clear All Stored Preferences
+     */
+    fun clearAll() {
+        val mEditor = mPref.edit()
+        mEditor.clear()
+        mEditor.apply()
     }
 
-    fun setIsNewUser(value: Boolean){
+
+    fun getUserId(): String? {
+        return mPref.getString(USER_ID,"")
+    }
+
+    fun saveUserId(usedrId: String) {
         val editor: SharedPreferences.Editor = mPref.edit()
-        editor.putBoolean(IS_NEW_USER, value)
-        editor.commit()
+        editor.putString(USER_ID, usedrId)
+        editor.apply()
     }
 
 
@@ -55,13 +63,6 @@ class PrefUtils @Inject constructor(context: Context) {
 //        return mPref.getString(USER_ID, null)
 //    }
 //
-//    /**
-//     * Method to clear All Stored Preferences
-//     */
-//    fun clearAll() {
-//        val mEditor = mPref.edit()
-//        mEditor.clear()
-//        mEditor.apply()
-//    }
+
 
 }

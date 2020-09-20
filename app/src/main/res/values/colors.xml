@@ -3,4 +3,9 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="grey_dark">#a1a1a1</color>
+    <color name="colormenu_background">#EFF6FC</color>
+    <color name="colorSignInButtom">#66c3d0</color>
+
 </resources>

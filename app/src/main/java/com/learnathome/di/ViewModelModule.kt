@@ -2,9 +2,7 @@ package com.learnathome.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.learnathome.di.ViewModelFactory
-import com.learnathome.di.ViewModelKey
-import com.learnathome.ui.login.LoginViewModel
+import com.learnathome.ui.auth.login.LoginViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

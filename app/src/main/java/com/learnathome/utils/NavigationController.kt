@@ -2,6 +2,9 @@ package com.learnathome.utils
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import com.learnathome.base.BaseActivity
+import com.learnathome.ui.auth.login.LoginActivity
+import com.learnathome.ui.home.HomeActivity
 import javax.inject.Inject
 
 /**
@@ -17,13 +20,22 @@ class NavigationController @Inject constructor(var context: Context) {
 //        activity.startActivity(HelpScreenActivity.intentFor(context))
 //    }
 //
-//    /**
-//    //     * Opens Home screen
-//    //     * @param activity -> to Start the Activity
-//    //     */
-//    fun navigateToHomeScreen(activity: BaseActivity) {
-//        activity.startActivity(HomeActivity.intentFor(context))
-//    }
+    /**
+    //     * Opens Home screen
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToHomeScreen(activity: BaseActivity) {
+        activity.startActivity(HomeActivity.intentFor(context))
+    }
+
+    /**
+    //     * Opens Login  screen
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToLoginScreen(activity: BaseActivity) {
+        activity.startActivity(LoginActivity.intentFor(context))
+    }
+
 //
 //
 //    /**

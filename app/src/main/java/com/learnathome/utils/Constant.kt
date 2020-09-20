@@ -19,6 +19,12 @@ class Constant {
         const val TWITTER_NAME = "pented_learning"
         const val KEY_ROOM_ID = ""
         const val JITSI_MEET_URL = "https://meet.fahm-technologies.com"
+        const val REQUEST_USERNAME = "username"
+        const val REQUEST_PASSWORD = "password"
+
+
+
+
 
 
 

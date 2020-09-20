@@ -1,40 +1,23 @@
 package com.learnathome.api
 
+import com.google.gson.JsonObject
+import com.learnathome.data.model.LoginModel
+import com.learnathome.data.model.ScheduleModel
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.POST
+
 /**
  * REST API access points
  */
 interface WebServiceInterface {
 
-//    @POST("GetTopics")
-//    suspend fun getSolutionTopics(): Response<SolutionMainModel>
-//
-//    @POST("GetSubTopics")
-//    suspend fun getSolutionSubTopics(@Body jsonObject: JsonObject): Response<SubTopicModel>
-//
-//    @POST("GetQuestions")
-//    suspend fun getSolutionQuestion(@Body jsonObject: JsonObject): Response<SolutionQuestionModel>
-//
-//    @POST("GetLoginStatus")
-//    suspend fun callLogin(@Body jsonObject: JsonObject): Response<LoginModel>
-//
-//    @POST("ForgotPassword")
-//    suspend fun callForgotPassword(@Body jsonObject: JsonObject): Response<ForgotPasswordModel>
-//
-//    @POST("RegisterUser")
-//    suspend fun callSignUp(@Body jsonObject: JsonObject): Response<SignUpModel>
-//
-//    @POST("GetYouTubeVideos")
-//    suspend fun callOtherVideos(@Body jsonObject: JsonObject): Response<OtherVideoModel>
-//
-//    @POST("GetUserData")
-//    suspend fun callGetUserData(@Body jsonObject: JsonObject): Response<GetUserDataModel>
-//
-//    @POST("UpdateProfile")
-//    suspend fun callUdpateUserProfile(@Body jsonObject: JsonObject): Response<UpdateProfileModel>
-//
-//    @POST("GetSchedule")
-//    suspend fun callSchedule(@Body jsonObject: JsonObject): Response<GetScheduleModel>
-//
+    @POST("Login")
+    suspend fun calllLogin(@Body jsonObject: JsonObject): Response<LoginModel>
+
+    @POST("GetSchedule")
+    suspend fun callSchedule(@Body jsonObject: JsonObject): Response<ScheduleModel>
+
 //    @Multipart
 //    @POST("UpdateProfilePic")
 //    suspend fun callUpdateProfilePics(
