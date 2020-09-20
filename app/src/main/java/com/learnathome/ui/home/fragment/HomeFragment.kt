@@ -5,10 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import com.learnathome.R
 import com.learnathome.base.BaseBindingFragment
 import com.learnathome.databinding.FragmentHomeBinding
 import com.learnathome.utils.Constant
+import com.learnathome.utils.LogM
+import com.learnathome.utils.toast
 import java.net.URLEncoder
 import javax.inject.Inject
 
@@ -24,6 +27,7 @@ class HomeFragment  : BaseBindingFragment<FragmentHomeBinding>() {
     override fun initializeBinding(binding: FragmentHomeBinding) {
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
+        binding.listner = this
     }
 
     companion object {
@@ -48,5 +52,10 @@ class HomeFragment  : BaseBindingFragment<FragmentHomeBinding>() {
 
     interface HomeListener {
         fun popFragment()
+        fun openHamBurgerMenu()
+    }
+
+    fun openHamBurgerMenu() {
+        listener?.openHamBurgerMenu()
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.GravityCompat
 import com.learnathome.R
 import com.learnathome.base.BaseBindingActivity
 import com.learnathome.databinding.ActivityHomeBinding
@@ -13,6 +14,7 @@ import com.learnathome.utils.toast
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
 
 class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
@@ -78,6 +80,15 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun popFragment() {
         onBackPressed()
+    }
+
+    override fun openHamBurgerMenu() {
+        drawerLayout.openDrawer(GravityCompat.START)
+    }
+
+    fun performLogout() {
+        prefUtils.clearAll()
+        navigationController.navigateToLoginScreen(this@HomeActivity)
     }
 
 }
