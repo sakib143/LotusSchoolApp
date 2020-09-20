@@ -31,6 +31,7 @@ class HomeFragmentViewModel  @Inject constructor(
     val scheduleData: LiveData<ScheduleModel>
         get() = _scheduleData
 
+    val studentName: String? = prefUtils.getUserName()
 
     fun executeScheduleData(): LiveData<ScheduleModel> {
         Coroutines.main {

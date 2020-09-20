@@ -32,7 +32,8 @@
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
                 android:background="@drawable/ic_nav_menu"
-                android:onClick="@{()->listner.openHamBurgerMenu()}" />
+                android:onClick="@{()->listner.openHamBurgerMenu()}"
+                android:layout_centerVertical="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -46,6 +47,18 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/tvStudentName"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/rlHeader"
+            tools:text="Student Name"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/_16sdp"
+            android:text="@{viewmodel.studentName}"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
             bindScheduleList="@{scheduleList}"
             android:layout_width="match_parent"
@@ -53,7 +66,7 @@
             android:paddingLeft="@dimen/_30sdp"
             android:paddingRight="@dimen/_30sdp"
             tools:listitem="@layout/adapter_home"
-            android:layout_below="@+id/rlHeader"/>
+            android:layout_below="@+id/tvStudentName"/>
 
         <ProgressBar
             android:layout_width="wrap_content"

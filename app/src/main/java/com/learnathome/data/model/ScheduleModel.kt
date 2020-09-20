@@ -16,14 +16,13 @@ data class ScheduleModel(
     data class Data(
         @Expose
         @SerializedName("Column1") var column1: String = "",
-        @Expose
         @SerializedName("CourseName") var courseName: String = "",
         @Expose
         @SerializedName("duration") var duration: Double = 0.0,
         @Expose
         @SerializedName("meetinglink") var meetinglink: String = "",
         @Expose
-        @SerializedName("remark") var remark: String = "",
+        @SerializedName("topic") var topic: String = "",
         @Expose
         @SerializedName("scheduledate") var scheduledate: Any = Any(),
         @Expose
@@ -33,6 +32,11 @@ data class ScheduleModel(
         @Expose
         @SerializedName("subjid") var subjid: Double = 0.0,
         @Expose
-        @SerializedName("teacherid") var teacherid: Double = 0.0
+        @SerializedName("teacherid") var teacherid: Double = 0.0,
+        @Expose
+        @SerializedName("schdatetime") var schdatetime: String = ""
+
+
+
     )
 }

@@ -53,7 +53,7 @@ class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
 
     private val loginObserver = Observer<LoginModel> {
         if (it.status) {
-            prefUtils.saveUserId(it.data.get(0).studentId)
+            prefUtils.saveUserId(it.data.get(0).studentId,it.data.get(0).studentname)
             navigationController.navigateToHomeScreen(this@LoginActivity)
             toast(it!!.message)
         } else {

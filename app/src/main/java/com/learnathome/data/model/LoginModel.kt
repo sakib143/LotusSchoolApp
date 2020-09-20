@@ -14,6 +14,7 @@ data class LoginModel(
 ) {
     data class Data(
         @Expose
-        @SerializedName("StudentId") var studentId: String = ""
-    )
+        @SerializedName("StudentId") var studentId: String = "",
+        @Expose
+        @SerializedName("studentname") var studentname: String = "")
 }

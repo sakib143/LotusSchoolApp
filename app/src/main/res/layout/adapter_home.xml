@@ -30,16 +30,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/calibri"
-                android:textSize="@dimen/_13ssp"
-                android:text="@{scheduleModel.courseName}"
-                />
+                android:textSize="@dimen/_14ssp"
+                tools:text="Time"
+                android:text="@{scheduleModel.schdatetime}" />
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/calibri"
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/_14ssp"
+                tools:text="Course name"
+                android:text="@{scheduleModel.courseName}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/calibri"
+                android:textSize="@dimen/_14ssp"
+                tools:text="Course details"
+                android:text="@{scheduleModel.topic}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/calibri"
+                android:textSize="@dimen/_14ssp"
+                tools:text="Teacher name"
                 android:text="@{scheduleModel.Column1}" />
+
 
         </LinearLayout>
 

@@ -16,6 +16,8 @@ class PrefUtils @Inject constructor(context: Context) {
     private val mPref = context.getSharedPreferences(Constant.APP_PREFERENCES, Context.MODE_PRIVATE)
 
     private val USER_ID = "user_id"
+    private val STUDENT_NAME = "studentname"
+
 
     /**
      * Method to clear All Stored Preferences
@@ -31,12 +33,16 @@ class PrefUtils @Inject constructor(context: Context) {
         return mPref.getString(USER_ID,"")
     }
 
-    fun saveUserId(usedrId: String) {
+    fun saveUserId(usedrId: String, studentname:String) {
         val editor: SharedPreferences.Editor = mPref.edit()
         editor.putString(USER_ID, usedrId)
+        editor.putString(STUDENT_NAME, studentname)
         editor.apply()
     }
 
+    fun getUserName(): String? {
+        return mPref.getString(STUDENT_NAME,"")
+    }
 
 //    fun saveUserData(userDataModel  : GetUserDataModel.Data) {
 //        val editor: SharedPreferences.Editor = mPref.edit()
