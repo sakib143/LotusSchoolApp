@@ -2,6 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="java.util.List" />
+        <import type="com.learnathome.data.model.ScheduleModel.Data" />
         <variable
             name="viewmodel"
             type="com.learnathome.ui.home.fragment.HomeFragmentViewModel" />
