@@ -94,14 +94,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openVideoCalling(model: ScheduleModel.Data) {
-        toast("openVideoCalling !!!" + model.meetinglink)
-
-
-//        addFragment(
-//            supportFragmentManager,
-//            SolutionQuestionFragment.newInstance(model.subtopicId, model.subtopicname),
-//            addToBackStack = true
-//        )
+        navigationController.navigateToVideoCallScreen(this@HomeActivity, model.meetinglink)
     }
 
 }

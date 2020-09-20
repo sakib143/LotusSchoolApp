@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import com.learnathome.base.BaseActivity
 import com.learnathome.ui.auth.login.LoginActivity
 import com.learnathome.ui.home.HomeActivity
+import com.learnathome.ui.videocalling.VideoCallingActivity
 import javax.inject.Inject
 
 /**
@@ -36,14 +37,14 @@ class NavigationController @Inject constructor(var context: Context) {
         activity.startActivity(LoginActivity.intentFor(context))
     }
 
-//
-//
-//    /**
-//    //     * Opens Video calling
-//    //     * @param activity -> to Start the Activity
-//    //     */
-//    fun navigateToVideoCallScreen(activity: BaseActivity, roomId: String) {
-//        activity.startActivity(VideoCallingActivity.intentFor(context,roomId))
-//    }
+
+    /**
+    //     * Opens Video calling
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToVideoCallScreen(activity: BaseActivity, roomUrl: String) {
+        activity.startActivity(VideoCallingActivity.intentFor(context,roomUrl))
+    }
+
 
 }
