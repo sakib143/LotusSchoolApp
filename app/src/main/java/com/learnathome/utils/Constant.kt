@@ -21,6 +21,7 @@ class Constant {
         const val JITSI_MEET_URL = "https://meet.fahm-technologies.com"
         const val REQUEST_USERNAME = "username"
         const val REQUEST_PASSWORD = "password"
+        const val REQUEST_STUDENTID = "studentid"
 
 
 

@@ -7,8 +7,10 @@ import android.os.Bundle
 import androidx.core.view.GravityCompat
 import com.learnathome.R
 import com.learnathome.base.BaseBindingActivity
+import com.learnathome.data.model.ScheduleModel
 import com.learnathome.databinding.ActivityHomeBinding
 import com.learnathome.di.Injectable
+import com.learnathome.listner.HomeListner
 import com.learnathome.ui.home.fragment.HomeFragment
 import com.learnathome.utils.toast
 import dagger.android.AndroidInjector
@@ -20,7 +22,7 @@ import javax.inject.Inject
 class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     Injectable,
     HasAndroidInjector,
-    HomeFragment.HomeListener {
+    HomeFragment.HomeListener, HomeListner {
 
     override fun layoutId() = R.layout.activity_home
 
@@ -89,6 +91,17 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     fun performLogout() {
         prefUtils.clearAll()
         navigationController.navigateToLoginScreen(this@HomeActivity)
+    }
+
+    override fun openVideoCalling(model: ScheduleModel.Data) {
+        toast("openVideoCalling !!!" + model.meetinglink)
+
+
+//        addFragment(
+//            supportFragmentManager,
+//            SolutionQuestionFragment.newInstance(model.subtopicId, model.subtopicname),
+//            addToBackStack = true
+//        )
     }
 
 }

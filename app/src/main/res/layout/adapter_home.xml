@@ -1,24 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/_10sdp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="scheduleModel"
+            type="com.learnathome.data.model.ScheduleModel.Data" />
+
+        <variable
+            name="scheduleClickListner"
+            type="com.learnathome.listner.HomeListner" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/calibri"
-        android:textSize="@dimen/_13ssp"
-        tools:text="Date" />
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:fontFamily="@font/calibri"
-        android:text="Join"
-        android:textSize="@dimen/_13ssp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/calibri"
+                android:textSize="@dimen/_13ssp"
+                android:text="@{scheduleModel.courseName}"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/calibri"
+                android:textSize="@dimen/_13ssp"
+                android:text="@{scheduleModel.courseName}" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/calibri"
+            android:text="Remark"
+            android:textSize="@dimen/_13ssp"
+            android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"/>
+
+    </RelativeLayout>
+</layout>

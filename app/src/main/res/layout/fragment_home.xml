@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="android.view.View"/>
         <import type="java.util.List" />
-        <import type="com.learnathome.data.model.ScheduleModel.Data" />
         <variable
             name="viewmodel"
             type="com.learnathome.ui.home.fragment.HomeFragmentViewModel" />
@@ -12,6 +12,9 @@
             name="listner"
             type="com.learnathome.ui.home.fragment.HomeFragment" />
 
+        <variable
+            name="scheduleList"
+            type="List&lt;com.learnathome.data.model.ScheduleModel.Data>" />
     </data>
 
     <RelativeLayout
@@ -20,20 +23,44 @@
         android:orientation="vertical"
         android:padding="@dimen/_10sdp">
 
-        <TextView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:background="@drawable/ic_nav_menu"
-            android:onClick="@{()->listner.openHamBurgerMenu()}" />
+        <RelativeLayout
+            android:id="@+id/rlHeader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp">
 
-        <TextView
+            <TextView
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@drawable/ic_nav_menu"
+                android:onClick="@{()->listner.openHamBurgerMenu()}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home Screen"
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            bindScheduleList="@{scheduleList}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/_30sdp"
+            android:paddingRight="@dimen/_30sdp"
+            tools:listitem="@layout/adapter_home"
+            android:layout_below="@+id/rlHeader"/>
+
+        <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home Screen"
-            android:textSize="@dimen/_18ssp"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerInParent="true"
+            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}" />
+
 
     </RelativeLayout>
 

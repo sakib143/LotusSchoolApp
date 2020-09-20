@@ -1,8 +1,8 @@
 package com.learnathome.data.model
 
-
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import androidx.annotation.Keep
 
 
 data class ScheduleModel(
@@ -15,13 +15,19 @@ data class ScheduleModel(
 ) {
     data class Data(
         @Expose
-        @SerializedName("groupid") var groupid: Int = 0,
+        @SerializedName("Column1") var column1: String = "",
+        @Expose
+        @SerializedName("CourseName") var courseName: String = "",
+        @Expose
+        @SerializedName("duration") var duration: Double = 0.0,
         @Expose
         @SerializedName("meetinglink") var meetinglink: String = "",
         @Expose
-        @SerializedName("scheduledate") var scheduledate: String = "",
+        @SerializedName("remark") var remark: String = "",
         @Expose
-        @SerializedName("scheduletime") var scheduletime: String = "",
+        @SerializedName("scheduledate") var scheduledate: Any = Any(),
+        @Expose
+        @SerializedName("scheduletime") var scheduletime: Any = Any(),
         @Expose
         @SerializedName("schid") var schid: Double = 0.0,
         @Expose
