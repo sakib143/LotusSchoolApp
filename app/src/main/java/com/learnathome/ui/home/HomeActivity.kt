@@ -94,7 +94,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openVideoCalling(model: ScheduleModel.Data) {
-        navigationController.navigateToVideoCallScreen(this@HomeActivity, model.meetinglink)
+        navigationController.navigateToVideoCallScreen(
+            this@HomeActivity,
+            model.meetinglink,
+            prefUtils.getUserId()!!
+        )
     }
 
 }

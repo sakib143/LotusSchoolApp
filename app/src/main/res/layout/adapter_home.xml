@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/calibri"
                 android:textSize="@dimen/_13ssp"
-                android:text="@{scheduleModel.courseName}" />
+                android:text="@{scheduleModel.Column1}" />
 
         </LinearLayout>
 
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:fontFamily="@font/calibri"
-            android:text="Remark"
+            android:text="Join"
             android:textSize="@dimen/_13ssp"
             android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"/>
 

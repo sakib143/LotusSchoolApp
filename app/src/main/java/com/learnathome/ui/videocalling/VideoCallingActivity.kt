@@ -15,6 +15,7 @@ class VideoCallingActivity: FragmentActivity(), JitsiMeetActivityInterface {
 
     private var view: JitsiMeetView? = null
     private var roomUrl: String? = null
+    private var userName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +23,12 @@ class VideoCallingActivity: FragmentActivity(), JitsiMeetActivityInterface {
 
         view = JitsiMeetView(this)
         roomUrl = intent.getStringExtra(Constant.KEY_ROOM_URL)
+        userName = intent.getStringExtra(Constant.REQUEST_USERNAME)
 
         val builder = JitsiMeetConferenceOptions.Builder()
             .setRoom(roomUrl)
         val jitsiMeetUserInfo = JitsiMeetUserInfo()
-        jitsiMeetUserInfo.displayName = "Sakib"
+        jitsiMeetUserInfo.displayName = userName
         builder.setUserInfo(jitsiMeetUserInfo)
         val options = builder.build()
         view!!.join(options)
@@ -48,9 +50,10 @@ class VideoCallingActivity: FragmentActivity(), JitsiMeetActivityInterface {
 
     companion object {
         @JvmStatic
-        fun intentFor(context: Context, roomId: String) =
+        fun intentFor(context: Context, roomId: String, userName: String) =
             Intent(context, VideoCallingActivity::class.java)
                 .putExtra(Constant.KEY_ROOM_URL, roomId)
+                .putExtra(Constant.REQUEST_USERNAME, userName)
     }
 
 
