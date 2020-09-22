@@ -5,11 +5,11 @@
 
         <variable
             name="listner"
-            type="com.learnathome.ui.home.HomeActivity" />
+            type="com.appforschool.ui.home.HomeActivity" />
 
         <variable
             name="viewmodel"
-            type="com.learnathome.ui.home.HomeActivitViewModel" />
+            type="com.appforschool.ui.home.HomeActivitViewModel" />
     </data>
 
     <ScrollView

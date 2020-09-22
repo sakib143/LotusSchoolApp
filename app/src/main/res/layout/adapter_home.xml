@@ -8,11 +8,11 @@
 
         <variable
             name="scheduleModel"
-            type="com.learnathome.data.model.ScheduleModel.Data" />
+            type="com.appforschool.data.model.ScheduleModel.Data" />
 
         <variable
             name="scheduleClickListner"
-            type="com.learnathome.listner.HomeListner" />
+            type="com.appforschool.listner.HomeListner" />
     </data>
 
     <RelativeLayout

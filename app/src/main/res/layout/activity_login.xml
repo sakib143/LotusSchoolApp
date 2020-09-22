@@ -11,11 +11,11 @@
 
         <variable
             name="loginViewModel"
-            type="com.learnathome.ui.auth.login.LoginViewModel" />
+            type="com.appforschool.ui.auth.login.LoginViewModel" />
 
         <variable
             name="listner"
-            type="com.learnathome.ui.auth.login.LoginActivity" />
+            type="com.appforschool.ui.auth.login.LoginActivity" />
     </data>
 
     <RelativeLayout

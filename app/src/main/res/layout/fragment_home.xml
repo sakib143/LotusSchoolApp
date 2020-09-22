@@ -7,14 +7,14 @@
         <import type="java.util.List" />
         <variable
             name="viewmodel"
-            type="com.learnathome.ui.home.fragment.HomeFragmentViewModel" />
+            type="com.appforschool.ui.home.fragment.HomeFragmentViewModel" />
         <variable
             name="listner"
-            type="com.learnathome.ui.home.fragment.HomeFragment" />
+            type="com.appforschool.ui.home.fragment.HomeFragment" />
 
         <variable
             name="scheduleList"
-            type="List&lt;com.learnathome.data.model.ScheduleModel.Data>" />
+            type="List&lt;com.appforschool.data.model.ScheduleModel.Data>" />
     </data>
 
     <RelativeLayout
