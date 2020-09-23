@@ -22,6 +22,7 @@ class Constant {
         const val REQUEST_USERNAME = "username"
         const val REQUEST_PASSWORD = "password"
         const val REQUEST_STUDENTID = "studentid"
+        const val WEBVIEW_URL = "webview_url"
 
 
 

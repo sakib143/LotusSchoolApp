@@ -3,6 +3,7 @@ package com.appforschool.di
 import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.home.HomeBuilderModule
 import com.appforschool.ui.auth.login.LoginActivity
+import com.appforschool.ui.commonwebview.CommonWebviewActivity
 import com.appforschool.ui.splash.SplashActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -27,12 +28,17 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [(HomeBuilderModule::class)])
     abstract fun bindHomeNewActivity(): HomeActivity
 
-
     /**
      * fun to bind Login screen , making Injection enable
      **/
     @ContributesAndroidInjector()
     abstract fun bindLoginActivity(): LoginActivity
+
+    /**
+     * fun to bind Login screen , making Injection enable
+     **/
+    @ContributesAndroidInjector()
+    abstract fun bindCommonWebviewActivity(): CommonWebviewActivity
 
 
 

@@ -2,6 +2,7 @@ package com.appforschool.ui.home
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.view.GravityCompat
 import com.appforschool.R
@@ -93,11 +94,18 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openVideoCalling(model: ScheduleModel.Data) {
-        navigationController.navigateToVideoCallScreen(
-            this@HomeActivity,
-            model.meetinglink,
-            prefUtils.getUserId()!!
-        )
+        if(model.meetinglink.isNullOrBlank()){
+            navigationController.navigateToVideoCallScreen(
+                this@HomeActivity,
+                model.meetinglink,
+                prefUtils.getUserId()!!
+            )
+        }else{
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            }
+        }
     }
 
 }

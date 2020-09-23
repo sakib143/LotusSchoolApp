@@ -3,6 +3,7 @@ package com.appforschool.utils
 import android.content.Context
 import com.appforschool.base.BaseActivity
 import com.appforschool.ui.auth.login.LoginActivity
+import com.appforschool.ui.commonwebview.CommonWebviewActivity
 import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.videocalling.VideoCallingActivity
 import javax.inject.Inject
@@ -44,6 +45,15 @@ class NavigationController @Inject constructor(var context: Context) {
     fun navigateToVideoCallScreen(activity: BaseActivity, roomUrl: String, userName: String) {
         activity.startActivity(VideoCallingActivity.intentFor(context,roomUrl,userName))
     }
+
+    /**
+    //     * Opens CommonWebview Screen
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToCommonWebviewScreen(activity: BaseActivity, url: String) {
+        activity.startActivity(CommonWebviewActivity.intentFor(context, url))
+    }
+
 
 
 }
