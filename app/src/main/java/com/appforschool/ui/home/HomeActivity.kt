@@ -105,5 +105,4 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             }
         }
     }
-
 }
