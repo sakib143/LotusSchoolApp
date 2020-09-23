@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.core.view.GravityCompat
+import com.appforschool.BuildConfig
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.ScheduleModel
@@ -95,11 +96,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun openVideoCalling(model: ScheduleModel.Data) {
         if(model.meetinglink.isNullOrBlank()){
-            navigationController.navigateToVideoCallScreen(
-                this@HomeActivity,
-                model.meetinglink,
-                prefUtils.getUserId()!!
-            )
+            val fullUrl = BuildConfig.VIDEO_CALL_URL + model.schid
+            navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl, prefUtils.getUserName()!!)
         }else{
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
             if (intent.resolveActivity(packageManager) != null) {
