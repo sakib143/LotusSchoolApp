@@ -12,6 +12,7 @@ import com.appforschool.data.model.ScheduleModel
 import com.appforschool.databinding.ActivityHomeBinding
 import com.appforschool.di.Injectable
 import com.appforschool.listner.HomeListner
+import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.utils.toast
 import dagger.android.AndroidInjector
@@ -48,8 +49,24 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         super.onCreate(savedInstanceState)
 
         homeFragment = ScheduleFragment.newInstance()
-        navigateToHomeFragment(false)
+//        navigateToHomeFragment(false)
+        navigateToDashBoardFragment(false)
 
+    }
+
+    private fun navigateToDashBoardFragment(addToBackStack: Boolean) {
+        if (supportFragmentManager.findFragmentByTag(DashboardFragment::class.java.name) != null) {
+            repeat(supportFragmentManager.fragments.size) {
+                if (supportFragmentManager.findFragmentById(R.id.container) !is DashboardFragment) {
+                    supportFragmentManager.popBackStackImmediate()
+                }
+            }
+        } else {
+            addFragmentWithoutAnimation(
+                supportFragmentManager, DashboardFragment.newInstance(),
+                addToBackStack = addToBackStack
+            )
+        }
     }
 
     private fun navigateToHomeFragment(addToBackStack: Boolean) {

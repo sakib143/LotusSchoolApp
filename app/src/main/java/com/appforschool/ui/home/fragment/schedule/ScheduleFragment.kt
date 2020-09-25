@@ -6,25 +6,25 @@ import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
 import com.appforschool.data.model.ScheduleModel
-import com.appforschool.databinding.FragmentHomeBinding
+import com.appforschool.databinding.FragmentScheduleBinding
 import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import javax.inject.Inject
 
-class ScheduleFragment  : BaseBindingFragment<FragmentHomeBinding>() {
+class ScheduleFragment  : BaseBindingFragment<FragmentScheduleBinding>() {
 
     private var listener: HomeListener? = null
 
     @Inject
     lateinit var viewModel: ScheduleViewModel
 
-    override fun layoutId(): Int = R.layout.fragment_home
+    override fun layoutId(): Int = R.layout.fragment_schedule
 
     private var alSchedule: ArrayList<ScheduleModel.Data>? = ArrayList()
-    private var binding: FragmentHomeBinding? = null
+    private var binding: FragmentScheduleBinding? = null
 
-    override fun initializeBinding(binding: FragmentHomeBinding) {
+    override fun initializeBinding(binding: FragmentScheduleBinding) {
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
         binding.listner = this
