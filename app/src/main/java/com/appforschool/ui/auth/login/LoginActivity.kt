@@ -28,7 +28,6 @@ class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
         super.onCreate(savedInstanceState)
 
         setData()
-
     }
 
     companion object {
