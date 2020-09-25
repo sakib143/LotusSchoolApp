@@ -14,7 +14,7 @@ import com.appforschool.utils.Coroutines
 import com.appforschool.utils.PrefUtils
 import javax.inject.Inject
 
-class HomeFragmentViewModel  @Inject constructor(
+class ScheduleViewModel  @Inject constructor(
     private val application: MyApp,
     private val prefUtils: PrefUtils,
     private val repository: ScheduleRepository

@@ -16,7 +16,7 @@ fun bindRecyclerView(view: RecyclerView, list: List<ScheduleModel.Data>) {
 
     if (adapter == null) {
         adapter =
-            HomeAdapter(
+            ScheduleAdapter(
                 view.context,
                 list
             )

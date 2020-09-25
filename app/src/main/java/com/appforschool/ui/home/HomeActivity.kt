@@ -12,7 +12,7 @@ import com.appforschool.data.model.ScheduleModel
 import com.appforschool.databinding.ActivityHomeBinding
 import com.appforschool.di.Injectable
 import com.appforschool.listner.HomeListner
-import com.appforschool.ui.home.fragment.HomeFragment
+import com.appforschool.ui.home.fragment.ScheduleFragment
 import com.appforschool.utils.toast
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     Injectable,
     HasAndroidInjector,
-    HomeFragment.HomeListener, HomeListner {
+    ScheduleFragment.HomeListener, HomeListner {
 
     override fun layoutId() = R.layout.activity_home
 
@@ -36,7 +36,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
 
-    private var homeFragment: HomeFragment? = null
+    private var homeFragment: ScheduleFragment? = null
 
     override fun initializeBinding(binding: ActivityHomeBinding) {
         binding.viewmodel = viewModel
@@ -47,15 +47,15 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        homeFragment = HomeFragment.newInstance()
+        homeFragment = ScheduleFragment.newInstance()
         navigateToHomeFragment(false)
 
     }
 
     private fun navigateToHomeFragment(addToBackStack: Boolean) {
-        if (supportFragmentManager.findFragmentByTag(HomeFragment::class.java.name) != null) {
+        if (supportFragmentManager.findFragmentByTag(ScheduleFragment::class.java.name) != null) {
             repeat(supportFragmentManager.fragments.size) {
-                if (supportFragmentManager.findFragmentById(R.id.container) !is HomeFragment) {
+                if (supportFragmentManager.findFragmentById(R.id.container) !is ScheduleFragment) {
                     supportFragmentManager.popBackStackImmediate()
                 }
             }

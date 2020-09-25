@@ -12,12 +12,12 @@ import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import javax.inject.Inject
 
-class HomeFragment  : BaseBindingFragment<FragmentHomeBinding>() {
+class ScheduleFragment  : BaseBindingFragment<FragmentHomeBinding>() {
 
     private var listener: HomeListener? = null
 
     @Inject
-    lateinit var viewModel: HomeFragmentViewModel
+    lateinit var viewModel: ScheduleViewModel
 
     override fun layoutId(): Int = R.layout.fragment_home
 
@@ -34,8 +34,8 @@ class HomeFragment  : BaseBindingFragment<FragmentHomeBinding>() {
 
     companion object {
         @JvmStatic
-        fun newInstance(): HomeFragment {
-            val homeFragment = HomeFragment()
+        fun newInstance(): ScheduleFragment {
+            val homeFragment = ScheduleFragment()
             val bundle = Bundle().apply {}
             homeFragment.arguments = bundle
             return homeFragment

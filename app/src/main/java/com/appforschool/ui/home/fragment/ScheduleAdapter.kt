@@ -10,10 +10,10 @@ import com.appforschool.data.model.ScheduleModel
 import com.appforschool.databinding.AdapterHomeBinding
 import com.appforschool.listner.HomeListner
 
-class HomeAdapter (
+class ScheduleAdapter (
     private val context: Context,
     private val dataList: List<ScheduleModel.Data>
-) : RecyclerView.Adapter<HomeAdapter.BindingViewHolder>() {
+) : RecyclerView.Adapter<ScheduleAdapter.BindingViewHolder>() {
 
     override fun getItemCount() = dataList.size
 

@@ -7,10 +7,10 @@
         <import type="java.util.List" />
         <variable
             name="viewmodel"
-            type="com.appforschool.ui.home.fragment.HomeFragmentViewModel" />
+            type="com.appforschool.ui.home.fragment.ScheduleViewModel" />
         <variable
             name="listner"
-            type="com.appforschool.ui.home.fragment.HomeFragment" />
+            type="com.appforschool.ui.home.fragment.ScheduleFragment" />
 
         <variable
             name="scheduleList"
