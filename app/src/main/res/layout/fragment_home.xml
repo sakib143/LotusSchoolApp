@@ -7,10 +7,10 @@
         <import type="java.util.List" />
         <variable
             name="viewmodel"
-            type="com.appforschool.ui.home.fragment.ScheduleViewModel" />
+            type="com.appforschool.ui.home.fragment.schedule.ScheduleViewModel" />
         <variable
             name="listner"
-            type="com.appforschool.ui.home.fragment.ScheduleFragment" />
+            type="com.appforschool.ui.home.fragment.schedule.ScheduleFragment" />
 
         <variable
             name="scheduleList"
@@ -65,7 +65,7 @@
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/_30sdp"
             android:paddingRight="@dimen/_30sdp"
-            tools:listitem="@layout/adapter_home"
+            tools:listitem="@layout/adapter_schedule"
             android:layout_below="@+id/tvStudentName"/>
 
         <ProgressBar

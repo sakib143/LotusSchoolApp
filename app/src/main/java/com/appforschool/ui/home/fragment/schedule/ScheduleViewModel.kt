@@ -1,4 +1,4 @@
-package com.appforschool.ui.home.fragment
+package com.appforschool.ui.home.fragment.schedule
 
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData

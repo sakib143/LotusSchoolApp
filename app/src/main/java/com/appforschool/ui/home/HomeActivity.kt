@@ -12,7 +12,7 @@ import com.appforschool.data.model.ScheduleModel
 import com.appforschool.databinding.ActivityHomeBinding
 import com.appforschool.di.Injectable
 import com.appforschool.listner.HomeListner
-import com.appforschool.ui.home.fragment.ScheduleFragment
+import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.utils.toast
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector

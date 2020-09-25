@@ -1,6 +1,6 @@
 package com.appforschool.ui.home
 
-import com.appforschool.ui.home.fragment.ScheduleFragment
+import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

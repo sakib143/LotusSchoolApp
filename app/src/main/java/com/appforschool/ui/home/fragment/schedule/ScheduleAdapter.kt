@@ -1,4 +1,4 @@
-package com.appforschool.ui.home.fragment
+package com.appforschool.ui.home.fragment.schedule
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.data.model.ScheduleModel
-import com.appforschool.databinding.AdapterHomeBinding
+import com.appforschool.databinding.AdapterScheduleBinding
 import com.appforschool.listner.HomeListner
 
 class ScheduleAdapter (
@@ -19,7 +19,7 @@ class ScheduleAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder {
         val rootView: ViewDataBinding =
-            AdapterHomeBinding.inflate(LayoutInflater.from(context), parent, false)
+            AdapterScheduleBinding.inflate(LayoutInflater.from(context), parent, false)
         return BindingViewHolder(
             rootView
         )
