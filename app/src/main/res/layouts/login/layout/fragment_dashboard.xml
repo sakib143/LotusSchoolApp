@@ -133,7 +133,6 @@
                             android:text="@string/my_subject"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_12ssp" />
-
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
