@@ -10,8 +10,9 @@ import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.utils.Constant
 import com.appforschool.utils.toast
 
-class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>(){
+class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
+    private var listener: FragmentListner? = null
 
     override fun layoutId(): Int = R.layout.fragment_dashboard
 
@@ -32,8 +33,8 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>(){
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is ScheduleFragment.HomeListener) {
-//            listener = context
+        if (context is FragmentListner) {
+            listener = context
         } else {
             throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
@@ -51,6 +52,15 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>(){
 //        } else {
 //            activity!!.toast(Constant.CHECK_INTERNET)
 //        }
+    }
+
+    interface FragmentListner {
+        fun popFragment()
+        fun openScheduleFragment()
+    }
+
+    fun openScheduleFragment() {
+        listener?.openScheduleFragment()
     }
 
 }

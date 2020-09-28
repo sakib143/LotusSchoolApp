@@ -9,9 +9,11 @@
     <string name="enter_password">Enter password</string>
     <string name="home">Home</string>
     <string name="schedule">Schedule</string>
-    <string name="subject">Subject</string>
+    <string name="subject">Subjects</string>
     <string name="assignments">Assignments</string>
     <string name="exam">Exams</string>
     <string name="drive">Drive</string>
     <string name="score_card">Score Card</string>
+    <string name="my_alert">My Alerts</string>
+
 </resources>

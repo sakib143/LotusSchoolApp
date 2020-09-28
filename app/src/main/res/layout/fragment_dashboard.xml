@@ -16,7 +16,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@android:color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +75,8 @@
                     android:layout_marginRight="@dimen/_8sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:onClick="@{()-> listner.openScheduleFragment()}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -83,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/my_schedule"
+                        android:text="@string/schedule"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
 
@@ -101,13 +105,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_my_schedule" />
+                        android:background="@drawable/my_subject" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/my_subject"
+                        android:text="@string/subject"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
                 </LinearLayout>
@@ -131,13 +135,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_my_schedule" />
+                        android:background="@drawable/ic_assignment" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/my_schedule"
+                        android:text="@string/assignments"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
 
@@ -155,13 +159,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_my_schedule" />
+                        android:background="@drawable/ic_alert" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/my_subject"
+                        android:text="@string/my_alert"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
                 </LinearLayout>
@@ -185,13 +189,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_my_schedule" />
+                        android:background="@drawable/ic_my_exam" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/my_schedule"
+                        android:text="@string/exam"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
 
@@ -209,13 +213,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_my_schedule" />
+                        android:background="@drawable/ic_my_drive" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/my_subject"
+                        android:text="@string/drive"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
                 </LinearLayout>

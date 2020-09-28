@@ -24,7 +24,7 @@ import javax.inject.Inject
 class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     Injectable,
     HasAndroidInjector,
-    ScheduleFragment.HomeListener, HomeListner {
+    ScheduleFragment.HomeListener, HomeListner, DashboardFragment.FragmentListner {
 
     override fun layoutId() = R.layout.activity_home
 
@@ -69,22 +69,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
-    private fun navigateToHomeFragment(addToBackStack: Boolean) {
-        if (supportFragmentManager.findFragmentByTag(ScheduleFragment::class.java.name) != null) {
-            repeat(supportFragmentManager.fragments.size) {
-                if (supportFragmentManager.findFragmentById(R.id.container) !is ScheduleFragment) {
-                    supportFragmentManager.popBackStackImmediate()
-                }
-            }
-        } else {
-            addFragmentWithoutAnimation(
-                supportFragmentManager, homeFragment!!,
-                addToBackStack = addToBackStack
-            )
-        }
-    }
-
-
     companion object {
         @JvmStatic
         fun intentFor(context: Context) =
@@ -100,6 +84,13 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun popFragment() {
         onBackPressed()
+    }
+
+    override fun openScheduleFragment() {
+        addFragment(
+            supportFragmentManager,
+            ScheduleFragment.newInstance(),
+            addToBackStack = true)
     }
 
     override fun openHamBurgerMenu() {
