@@ -15,5 +15,8 @@
     <string name="drive">Drive</string>
     <string name="score_card">Score Card</string>
     <string name="my_alert">My Alerts</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="share_this_app">Share This App</string>
 
 </resources>

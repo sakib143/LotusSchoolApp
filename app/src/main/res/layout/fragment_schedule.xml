@@ -32,13 +32,6 @@
             android:layout_height="@dimen/_50sdp">
 
             <TextView
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:background="@drawable/ic_nav_menu"
-                android:onClick="@{()->listner.openHamBurgerMenu()}"
-                android:layout_centerVertical="true"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home Screen"

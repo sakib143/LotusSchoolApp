@@ -78,10 +78,6 @@ class ScheduleFragment  : BaseBindingFragment<FragmentScheduleBinding>() {
 
     interface HomeListener {
         fun popFragment()
-        fun openHamBurgerMenu()
     }
 
-    fun openHamBurgerMenu() {
-        listener?.openHamBurgerMenu()
-    }
 }

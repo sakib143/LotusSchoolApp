@@ -5,10 +5,6 @@ import android.os.Bundle
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
 import com.appforschool.databinding.FragmentDashboardBinding
-import com.appforschool.databinding.FragmentScheduleBinding
-import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
-import com.appforschool.utils.Constant
-import com.appforschool.utils.toast
 
 class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
@@ -42,25 +38,20 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-//        viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
-//        viewModel.scheduleData.observe(viewLifecycleOwner, scheduleData)
-//
-//        //Make API call
-//        if (globalMethods.isInternetAvailable(activity!!)) {
-//            viewModel.executeScheduleData()
-//        } else {
-//            activity!!.toast(Constant.CHECK_INTERNET)
-//        }
     }
 
     interface FragmentListner {
         fun popFragment()
         fun openScheduleFragment()
+        fun openHamBurgerMenu()
     }
 
     fun openScheduleFragment() {
         listener?.openScheduleFragment()
+    }
+
+    fun openHamBurgerMenu() {
+        listener?.openHamBurgerMenu()
     }
 
 }
