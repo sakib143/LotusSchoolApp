@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="center_vertical"
-                    android:onClick="@{()-> listner.openMyProfile()}"
+                    android:onClick="@{()-> listner.signOut()}"
                     android:orientation="horizontal">
 
                     <ImageView

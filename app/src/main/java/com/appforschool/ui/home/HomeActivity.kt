@@ -82,6 +82,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         toast("openMyProfile is clicked !!!")
     }
 
+    fun signOut() {
+        prefUtils.clearAll()
+        navigationController.navigateToLoginScreen(this@HomeActivity)
+    }
+
     override fun popFragment() {
         onBackPressed()
     }
