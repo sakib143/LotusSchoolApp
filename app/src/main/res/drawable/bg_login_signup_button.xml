@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/colorSignInButtom"/>
+    <solid android:color="@color/colorHomeHeader"/>
     <stroke
         android:width="@dimen/_1sdp"
-        android:color="@color/colorSignInButtom" />
+        android:color="@color/colorHomeHeader" />
     <corners android:radius="@dimen/_70sdp" />
     <padding
         android:bottom="0dp"

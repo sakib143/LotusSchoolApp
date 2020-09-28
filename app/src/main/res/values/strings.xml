@@ -4,9 +4,11 @@
     <string name="my_profile">My Profile</string>
     <string name="chat_with_teacher">Chat with teacher</string>
     <string name="logout">Sign Out </string>
+    <string name="sign_in">Sign In</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="enter_email_id">Enter email id</string>
     <string name="enter_password">Enter password</string>
+    <string name="password">Password</string>
     <string name="home">Home</string>
     <string name="schedule">Schedule</string>
     <string name="subject">Subjects</string>
@@ -18,5 +20,6 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="rate_us">Rate Us</string>
     <string name="share_this_app">Share This App</string>
+    <string name="email_address">Email address</string>
 
 </resources>
