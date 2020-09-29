@@ -45,31 +45,20 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/ic_dashboard_header" />
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_below="@+id/tvHeaderDesign"
-                    android:layout_marginLeft="@dimen/_30sdp"
-                    android:layout_marginTop="@dimen/_minus60sdp"
-                    android:layout_marginRight="@dimen/_30sdp"
-                    android:background="@drawable/rounded_edittext"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingRight="@dimen/_10sdp"/>
-
             </RelativeLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_140sdp"
-                android:layout_marginTop="@dimen/_minus30sdp"
+                android:layout_marginTop="@dimen/_minus60sdp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginRight="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -93,7 +82,7 @@
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
@@ -124,7 +113,7 @@
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginRight="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -147,7 +136,7 @@
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
@@ -178,7 +167,7 @@
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginRight="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -201,7 +190,7 @@
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
@@ -219,6 +208,7 @@
                         android:text="@string/drive"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
+
                 </LinearLayout>
 
             </LinearLayout>
