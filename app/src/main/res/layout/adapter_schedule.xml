@@ -17,14 +17,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_5sdp"
         android:background="@color/colorScheduleBackground">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_110sdp"
             android:orientation="vertical">
 
             <TextView
@@ -43,14 +44,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
             android:background="@drawable/bg_cardview"
             android:orientation="vertical"
             android:paddingLeft="@dimen/_10sdp"
             android:paddingTop="@dimen/_5sdp"
             android:paddingRight="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_5sdp">
+            android:paddingBottom="@dimen/_10sdp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -110,7 +111,13 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_file_save" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -121,11 +128,14 @@
                     android:textSize="@dimen/_20ssp"
                     android:textStyle="bold"
                     android:text="@string/join_now"
-                    android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"					/>
+                    android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"/>
 
             </RelativeLayout>
+
         </LinearLayout>
+
     </LinearLayout>
+
 </layout>
 
 
