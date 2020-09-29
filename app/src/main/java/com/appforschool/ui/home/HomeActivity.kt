@@ -14,6 +14,7 @@ import com.appforschool.di.Injectable
 import com.appforschool.listner.HomeListner
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
+import com.appforschool.ui.home.fragment.subject.SubjectFragment
 import com.appforschool.utils.toast
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -24,7 +25,8 @@ import javax.inject.Inject
 class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     Injectable,
     HasAndroidInjector,
-    ScheduleFragment.HomeListener, HomeListner, DashboardFragment.FragmentListner {
+    ScheduleFragment.HomeListener, HomeListner, DashboardFragment.FragmentListner,
+    SubjectFragment.SubjectFragmentListner{
 
     override fun layoutId() = R.layout.activity_home
 
@@ -91,6 +93,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         onBackPressed()
     }
 
+    override fun openVideo(url: String) {
+
+    }
+
     override fun openScheduleFragment() {
         addFragment(
             supportFragmentManager,
@@ -100,6 +106,13 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun openHamBurgerMenu() {
         drawerLayout.openDrawer(GravityCompat.START)
+    }
+
+    override fun openSubjectFragment() {
+        addFragment(
+            supportFragmentManager,
+            SubjectFragment.newInstance(),
+            addToBackStack = true)
     }
 
     fun performLogout() {

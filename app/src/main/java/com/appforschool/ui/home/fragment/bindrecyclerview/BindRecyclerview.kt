@@ -1,9 +1,10 @@
-package com.appforschool.ui.home.fragment.schedule
+package com.appforschool.ui.home.fragment.bindrecyclerview
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.data.model.ScheduleModel
+import com.appforschool.ui.home.fragment.schedule.ScheduleAdapter
 
 @BindingAdapter("bindScheduleList")
 fun bindRecyclerView(view: RecyclerView, list: List<ScheduleModel.Data>) {
