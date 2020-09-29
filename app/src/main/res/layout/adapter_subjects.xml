@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rlRoom"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
@@ -32,28 +31,28 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
             android:paddingLeft="@dimen/_5sdp"
-            android:paddingRight="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp">
+            android:paddingRight="@dimen/_5sdp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_subject_mentors"
-                android:text="@string/teacher"
+                android:drawablePadding="@dimen/_5sdp"
                 android:fontFamily="@font/calibri"
-                android:textSize="@dimen/_11ssp"
-                android:drawablePadding="@dimen/_5sdp"/>
+                android:text="@string/teacher"
+                android:textSize="@dimen/_11ssp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/ic_subject_file"
-                android:text="@string/files"
+                android:drawablePadding="@dimen/_5sdp"
                 android:fontFamily="@font/calibri"
-                android:textSize="@dimen/_11ssp"
-                android:drawablePadding="@dimen/_5sdp"/>
+                android:text="@string/files"
+                android:textSize="@dimen/_11ssp" />
 
         </RelativeLayout>
 
