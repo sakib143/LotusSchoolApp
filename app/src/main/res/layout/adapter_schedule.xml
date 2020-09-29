@@ -15,11 +15,12 @@
             type="com.appforschool.listner.HomeListner" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
+        android:layout_height="@dimen/_100sdp"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/_10sdp"
+        android:background="@color/colorScheduleBackground">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,53 +30,103 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/calibri"
-                android:textSize="@dimen/_14ssp"
-                tools:text="Time"
-                android:text="@{scheduleModel.schdatetime}" />
+                android:background="@drawable/ic_timeline_circle" />
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/calibri"
-                android:textSize="@dimen/_14ssp"
-                tools:text="Course name"
-                android:text="@{scheduleModel.courseName}" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/calibri"
-                android:textSize="@dimen/_14ssp"
-                tools:text="Course details"
-                android:text="@{scheduleModel.topic}" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/calibri"
-                android:textSize="@dimen/_14ssp"
-                tools:text="Teacher name"
-                android:text="@{scheduleModel.Column1}" />
-
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@android:color/darker_gray" />
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:fontFamily="@font/calibri"
-            android:text="Join"
-            android:textSize="@dimen/_13ssp"
-            android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"/>
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:layout_alignParentBottom="true"/>
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:background="@drawable/bg_cardview"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp">
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/calibri"
+                android:text="@{scheduleModel.schdatetime}"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                tools:text="Time" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/ivSubjectTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_14ssp"
+                    android:text="@string/subject" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivSubjectTitle"
+                    android:fontFamily="@font/calibri"
+                    android:text="@{scheduleModel.courseName + ` ` + scheduleModel.column1}"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_14ssp"
+                    tools:text="Course name" />
+
+                <TextView
+                    android:id="@+id/tvTopicTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/calibri"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_14ssp"
+                    android:text="@string/topic" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvTopicTitle"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/calibri"
+                    android:text="@{scheduleModel.topic}"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_14ssp"
+                    tools:text="Course details" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/calibri"
+                    android:textColor="@color/colorJoinMeeting"
+                    android:textSize="@dimen/_20ssp"
+                    android:textStyle="bold"
+                    android:text="@string/join_now"
+                    android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"					/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 </layout>
+
+
+

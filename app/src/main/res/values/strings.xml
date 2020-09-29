@@ -11,7 +11,8 @@
     <string name="password">Password</string>
     <string name="home">Home</string>
     <string name="schedule">Schedule</string>
-    <string name="subject">Subjects</string>
+    <string name="subjects">Subjects</string>
+    <string name="subject">Subject</string>
     <string name="assignments">Assignments</string>
     <string name="exam">Exams</string>
     <string name="drive">Drive</string>
@@ -21,5 +22,7 @@
     <string name="rate_us">Rate Us</string>
     <string name="share_this_app">Share This App</string>
     <string name="email_address">Email address</string>
+    <string name="topic">Topic</string>
+    <string name="join_now">Join Now</string>
 
 </resources>

@@ -11,4 +11,7 @@
     <color name="colorHomeHeader">#A67B72</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorJoinMeeting">#A38179</color>
+    <color name="colorScheduleBackground">#F9F8F3</color>
+
 </resources>

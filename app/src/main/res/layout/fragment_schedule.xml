@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <import type="java.util.List" />
+
         <variable
             name="viewmodel"
             type="com.appforschool.ui.home.fragment.schedule.ScheduleViewModel" />
+
         <variable
             name="listner"
             type="com.appforschool.ui.home.fragment.schedule.ScheduleFragment" />
@@ -20,49 +24,20 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:background="@color/colorScheduleBackground"
         android:clickable="true"
         android:focusable="true"
-        android:background="@android:color/white"
+        android:orientation="vertical"
         android:padding="@dimen/_10sdp">
-
-        <RelativeLayout
-            android:id="@+id/rlHeader"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Home Screen"
-                android:textSize="@dimen/_18ssp"
-                android:textStyle="bold"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tvStudentName"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_centerVertical="true"
-            android:layout_below="@+id/rlHeader"
-            tools:text="Student Name"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/_16sdp"
-            android:text="@{viewmodel.studentName}"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
             bindScheduleList="@{scheduleList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/_30sdp"
-            android:paddingRight="@dimen/_30sdp"
-            tools:listitem="@layout/adapter_schedule"
-            android:layout_below="@+id/tvStudentName"/>
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            tools:listitem="@layout/adapter_schedule" />
 
         <ProgressBar
             android:layout_width="wrap_content"
