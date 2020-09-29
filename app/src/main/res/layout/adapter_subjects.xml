@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/my_subject" />
+            android:background="@drawable/ic_my_schedule" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +24,37 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:text="@string/subject"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_12ssp" />
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_subject_mentors"
+                android:text="@string/mentors"
+                android:fontFamily="@font/calibri"
+                android:textSize="@dimen/_11ssp"
+                android:drawablePadding="@dimen/_5sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/ic_subject_file"
+                android:text="@string/files"
+                android:fontFamily="@font/calibri"
+                android:textSize="@dimen/_11ssp"
+                android:drawablePadding="@dimen/_5sdp"/>
+
+        </RelativeLayout>
+
     </LinearLayout>
 
 </RelativeLayout>
