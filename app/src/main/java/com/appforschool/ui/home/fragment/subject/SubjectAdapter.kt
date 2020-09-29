@@ -4,10 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.R
 import com.appforschool.data.model.SubjectModel
+
 
 class SubjectAdapter(
     private val list: List<SubjectModel.Data>,
@@ -22,21 +24,24 @@ class SubjectAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-//        if (position % 2 == 1) {
-//            val params = LinearLayout.LayoutParams(
-//                LinearLayout.LayoutParams.MATCH_PARENT,
-//                LinearLayout.LayoutParams.WRAP_CONTENT)
-//            params.setMargins(0, 20, 0, 40)
-//            holder.llSubject.setLayoutParams(params)
-//        } else {
-//
-//        }
+        holder.tvSubjectName.text = list.get(position).coursename
+
+        if (position % 2 == 1) {
+            val params = RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(0, 50, 0, 0)
+            holder.rlRoom.setLayoutParams(params)
+        } else {
+
+        }
     }
 
     override fun getItemCount() = list.size
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val llSubject = itemView.findViewById(R.id.llSubject) as LinearLayout
-//        val rvScheduleChild  = itemView.findViewById(R.id.rvScheduleChild) as RecyclerView
+        val rlRoom = itemView.findViewById(R.id.rlRoom) as RelativeLayout
+        val tvSubjectName = itemView.findViewById(R.id.tvSubjectName) as TextView
     }
 }

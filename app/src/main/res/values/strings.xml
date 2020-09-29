@@ -25,7 +25,7 @@
     <string name="topic">Topic</string>
     <string name="join_now">Join Now</string>
     <string name="my_subject">My Subject</string>
-    <string name="mentors">Mentors</string>
+    <string name="teacher">Teacher</string>
     <string name="files">Files</string>
 
 </resources>

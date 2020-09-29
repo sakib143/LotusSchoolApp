@@ -17,6 +17,7 @@
     </data>
 
     <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorScheduleBackground"
@@ -24,41 +25,45 @@
         android:focusable="true">
 
         <LinearLayout
-            android:id="@+id/llHeader"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_130sdp"
-            android:background="@color/colorHomeHeader"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingTop="@dimen/_15sdp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_back_icon"
-                android:onClick="@{()->listner.closeSubjectFragment()}" />
+            <LinearLayout
+                android:id="@+id/llHeader"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:background="@color/colorHomeHeader"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingTop="@dimen/_15sdp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:fontFamily="@font/calibri"
-                android:text="@string/my_subject"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_20ssp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_back_icon"
+                    android:onClick="@{()->listner.closeSubjectFragment()}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/calibri"
+                    android:text="@string/my_subject"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_20ssp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSubjectFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/adapter_subjects"
+                android:layout_marginTop="@dimen/_minus35sdp"
+                android:gravity="center"/>
 
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSubjectFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/_5sdp"
-            android:paddingRight="@dimen/_5sdp"
-            tools:listitem="@layout/adapter_subjects"
-            android:layout_below="@+id/llHeader"
-            />
-
 
         <ProgressBar
             android:layout_width="wrap_content"

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/rlRoom"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingLeft="@dimen/_10sdp">
 
     <LinearLayout
-        android:id="@+id/llSubject"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_120sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
         android:background="@drawable/bg_cardview"
         android:gravity="center"
         android:orientation="vertical">
@@ -19,6 +20,7 @@
             android:background="@drawable/ic_my_schedule" />
 
         <TextView
+            android:id="@+id/tvSubjectName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
@@ -38,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_subject_mentors"
-                android:text="@string/mentors"
+                android:text="@string/teacher"
                 android:fontFamily="@font/calibri"
                 android:textSize="@dimen/_11ssp"
                 android:drawablePadding="@dimen/_5sdp"/>

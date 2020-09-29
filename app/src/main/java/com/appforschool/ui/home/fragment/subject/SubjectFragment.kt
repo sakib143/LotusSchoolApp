@@ -71,6 +71,7 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
                 }
 
                 override fun openVideo(url: String) {
+
                 }
             })
             rvSubjectFragment.adapter = adapter
