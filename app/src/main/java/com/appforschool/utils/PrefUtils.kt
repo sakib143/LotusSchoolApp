@@ -2,6 +2,8 @@ package com.appforschool.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.appforschool.data.model.LoginModel
+import com.google.gson.Gson
 import javax.inject.Inject
 
 /**
@@ -15,7 +17,7 @@ class PrefUtils @Inject constructor(context: Context) {
     private val mPref = context.getSharedPreferences(Constant.APP_PREFERENCES, Context.MODE_PRIVATE)
 
     private val USER_ID = "user_id"
-    private val STUDENT_NAME = "studentname"
+    private val SAVE_USER_DATA = "saveUserData"
 
 
     /**
@@ -32,42 +34,23 @@ class PrefUtils @Inject constructor(context: Context) {
         return mPref.getString(USER_ID,"")
     }
 
-    fun saveUserId(usedrId: String, studentname:String) {
+    fun saveUserId(usedrId: String,userDataModel  : LoginModel.Data) {
         val editor: SharedPreferences.Editor = mPref.edit()
+        //Save user id
         editor.putString(USER_ID, usedrId)
-        editor.putString(STUDENT_NAME, studentname)
+        //Save user model data
+        val gson = Gson();
+        val jsonToString = gson.toJson(userDataModel)
+        editor.putString(SAVE_USER_DATA, jsonToString)
         editor.apply()
     }
 
-    fun getUserName(): String? {
-        return mPref.getString(STUDENT_NAME,"")
+    fun getUserData () : LoginModel.Data? {
+        val gson = Gson();
+        val data = mPref.getString(SAVE_USER_DATA,null)
+        val model : LoginModel.Data  = gson.fromJson(data, LoginModel.Data::class.java)
+        return model
     }
-
-//    fun saveUserData(userDataModel  : GetUserDataModel.Data) {
-//        val editor: SharedPreferences.Editor = mPref.edit()
-//        val gson = Gson();
-//        val jsonToString = gson.toJson(userDataModel)
-//        editor.putString(SAVE_USER_DATA, jsonToString)
-//        editor.commit()
-//    }
-//
-//    fun getUserData () : GetUserDataModel.Data? {
-//        val gson = Gson();
-//        val data = mPref.getString(SAVE_USER_DATA,null)
-//        val model : GetUserDataModel.Data  = gson.fromJson(data, GetUserDataModel.Data::class.java)
-//        return model
-//    }
-//
-//    fun saveUserId(custId : String){
-//        val editor: SharedPreferences.Editor = mPref.edit()
-//        editor.putString(USER_ID, custId)
-//        editor.commit()
-//    }
-//
-//    fun getUserId() : String?{
-//        return mPref.getString(USER_ID, null)
-//    }
-//
 
 
 }

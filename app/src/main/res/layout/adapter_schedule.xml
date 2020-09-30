@@ -75,7 +75,8 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14ssp"
                     android:text="@{scheduleModel.courseName}"
-                    tools:text="Subject" />
+                    tools:text="Subject"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"

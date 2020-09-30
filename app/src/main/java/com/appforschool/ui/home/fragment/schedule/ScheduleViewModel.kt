@@ -30,7 +30,7 @@ class ScheduleViewModel  @Inject constructor(
     val scheduleData: LiveData<ScheduleModel>
         get() = _scheduleData
 
-    val studentName: String? = prefUtils.getUserName()
+    val studentName: String? = prefUtils.getUserData()?.studentname
 
     fun executeScheduleData(): LiveData<ScheduleModel> {
         Coroutines.main {

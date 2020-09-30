@@ -123,7 +123,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun openVideoCalling(model: ScheduleModel.Data) {
         if(model.meetinglink.isNullOrBlank()){
             val fullUrl = BuildConfig.VIDEO_CALL_URL + model.schid
-            navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl, prefUtils.getUserName()!!)
+            navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl, prefUtils.getUserData()?.studentname!!)
         }else{
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
             if (intent.resolveActivity(packageManager) != null) {
