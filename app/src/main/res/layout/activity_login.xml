@@ -21,9 +21,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.auth.login.LoginActivity">
+        tools:context=".ui.auth.login.LoginActivity"
+        android:paddingBottom="@dimen/_130sdp">
 
         <LinearLayout
+            android:id="@+id/llHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -41,120 +43,118 @@
                 android:layout_marginTop="@dimen/_minus60sdp"
                 android:background="@drawable/ic_signin_graphic" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/_15sdp"
-                android:paddingRight="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_20sdp">
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/calibri"
-                    android:text="@string/email_address"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/_13ssp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/calibri"
+                android:text="@string/email_address"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_13ssp" />
+
+            <EditText
+                android:id="@+id/edtEmailLA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/ivMobileIcon"
+                android:background="@null"
+                android:drawableEnd="@drawable/ic_mail"
+                android:fontFamily="@font/calibri"
+                android:hint="@string/enter_email_id"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="@={loginViewModel.userid}"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/grey_dark"
+                android:textSize="@dimen/_15ssp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorBlack" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/calibri"
+                android:text="@string/password"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_13ssp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/edtPasswordLA"
+                    hideShowPassword="@{loginViewModel.isShowPassword}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:fontFamily="@font/calibri"
+                    android:hint="@string/enter_password"
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:layout_toLeftOf="@+id/ivMobileIcon"
-                    android:background="@null"
-                    android:drawableEnd="@drawable/ic_mail"
-                    android:fontFamily="@font/calibri"
-                    android:hint="@string/enter_email_id"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:text="@={loginViewModel.userid}"
+                    android:text="@={loginViewModel.password}"
                     android:textColor="@android:color/black"
                     android:textColorHint="@color/grey_dark"
                     android:textSize="@dimen/_15ssp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/colorBlack" />
+                <ImageView
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{()-> loginViewModel.setHideShowPassword()}"
+                    android:src="@{loginViewModel.isShowPassword ? @drawable/ic_show_password : @drawable/ic_hide_password}"
+                    tools:src="@drawable/ic_show_password" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/calibri"
-                    android:text="@string/password"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/_13ssp" />
+            </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/edtPasswordLA"
-                        hideShowPassword="@{loginViewModel.isShowPassword}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:background="@null"
-                        android:fontFamily="@font/calibri"
-                        android:hint="@string/enter_password"
-                        android:inputType="textPassword"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:text="@={loginViewModel.password}"
-                        android:textColor="@android:color/black"
-                        android:textColorHint="@color/grey_dark"
-                        android:textSize="@dimen/_15ssp" />
-
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:onClick="@{()-> loginViewModel.setHideShowPassword()}"
-                        android:src="@{loginViewModel.isShowPassword ? @drawable/ic_show_password : @drawable/ic_hide_password}"
-                        tools:src="@drawable/ic_show_password" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:background="@color/colorBlack" />
-
-            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorBlack" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@drawable/bg_login_signup_button"
                 android:fontFamily="@font/calibri"
+                android:gravity="center"
                 android:onClick="@{()->loginViewModel.executeLogin()}"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="@string/sign_in"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_15ssp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp" />
+                android:textSize="@dimen/_15ssp" />
 
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:fontFamily="@font/calibri"
             android:text="@string/sign_in"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_22ssp"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            />
+            android:textSize="@dimen/_22ssp" />
 
         <ProgressBar
             android:layout_width="wrap_content"
