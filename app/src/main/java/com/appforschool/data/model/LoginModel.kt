@@ -18,6 +18,18 @@ data class LoginModel(
         @Expose
         @SerializedName("studentname") var studentname: String = "",
         @Expose
-        @SerializedName("standardname") var standardname: String = ""
+        @SerializedName("standardname") var standardname: String = "",
+        @Expose
+        @SerializedName("ishost") var ishost: Int = 0,
+        @Expose
+        @SerializedName("usertype") var usertype: Int = 0
     )
+
+    /*
+    usertype will be
+    M for teacher (M = Mentor)
+    S for Student
+    A for Admin
+     */
+
 }

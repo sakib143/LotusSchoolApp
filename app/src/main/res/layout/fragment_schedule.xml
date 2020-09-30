@@ -27,14 +27,41 @@
         android:background="@color/colorScheduleBackground"
         android:clickable="true"
         android:focusable="true"
-        android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llHeader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_130sdp"
+            android:background="@color/colorHomeHeader"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingTop="@dimen/_15sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_back_icon"
+                android:onClick="@{()->listner.closeScheduelFragment()}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/calibri"
+                android:text="@string/my_schedule"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_20ssp" />
+
+        </LinearLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             bindScheduleList="@{scheduleList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/llHeader"
+            android:layout_marginTop="@dimen/_15sdp"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_5sdp"
             tools:listitem="@layout/adapter_schedule" />

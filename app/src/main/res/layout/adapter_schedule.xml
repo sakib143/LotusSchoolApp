@@ -53,15 +53,33 @@
             android:paddingRight="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/calibri"
-                android:text="@{scheduleModel.schdatetime}"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="bold"
-                tools:text="Time" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="@{scheduleModel.schdatetime}"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    tools:text="Time" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="@{`Duration: `+ scheduleModel.duration + ` min`}"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_14ssp"
+                    tools:text="Duration"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -79,11 +97,12 @@
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/tvTeacherName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ivSubjectTitle"
                     android:fontFamily="@font/calibri"
-                    android:text="@{scheduleModel.column1}"
+                    android:text="@{scheduleModel.teacher}"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14ssp"
                     tools:text="Teacher name" />
@@ -99,16 +118,27 @@
                     android:text="@string/topic"
                     android:visibility="@{scheduleModel.topic.length() > 0 ? View.VISIBLE : View.GONE}"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvTopicTitle"
-                    android:layout_alignParentRight="true"
-                    android:fontFamily="@font/calibri"
-                    android:text="@{scheduleModel.topic}"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/_14ssp"
-                    tools:text="Course details" />
+                    android:layout_toRightOf="@+id/tvTeacherName"
+                    android:gravity="end"
+                    android:paddingLeft="@dimen/_5sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="@font/calibri"
+                        android:text="@{scheduleModel.topic}"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="This is first "/>
+
+                </RelativeLayout>
+
+
 
             </RelativeLayout>
 

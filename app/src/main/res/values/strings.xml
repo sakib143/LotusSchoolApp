@@ -27,5 +27,6 @@
     <string name="my_subject">My Subject</string>
     <string name="teacher">Teacher</string>
     <string name="files">Files</string>
+    <string name="my_schedule">My Schedule</string>
 
 </resources>

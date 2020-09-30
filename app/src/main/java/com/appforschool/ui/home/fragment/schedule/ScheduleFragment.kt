@@ -80,4 +80,8 @@ class ScheduleFragment  : BaseBindingFragment<FragmentScheduleBinding>() {
         fun popFragment()
     }
 
+    fun closeScheduelFragment() {
+        listener?.popFragment()
+    }
+
 }

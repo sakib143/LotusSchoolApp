@@ -33,9 +33,7 @@ data class ScheduleModel(
         @Expose
         @SerializedName("teacherid") var teacherid: Double = 0.0,
         @Expose
-        @SerializedName("schdatetime") var schdatetime: String = ""
-
-
-
-    )
+        @SerializedName("schdatetime") var schdatetime: String = "",
+        @Expose
+        @SerializedName("teacher") var teacher: String = "")
 }
