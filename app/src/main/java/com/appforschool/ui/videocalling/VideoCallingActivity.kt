@@ -25,6 +25,9 @@ class VideoCallingActivity: FragmentActivity(), JitsiMeetActivityInterface {
         userName = intent.getStringExtra(Constant.REQUEST_USERNAME)
 
         val builder = JitsiMeetConferenceOptions.Builder()
+            .setFeatureFlag("invite.enabled", false)
+            .setFeatureFlag("meeting-name.enabled", false)
+            .setFeatureFlag("live-streaming.enabled", false)
             .setRoom(roomUrl)
         val jitsiMeetUserInfo = JitsiMeetUserInfo()
         jitsiMeetUserInfo.displayName = userName
@@ -97,11 +100,12 @@ class VideoCallingActivity: FragmentActivity(), JitsiMeetActivityInterface {
 
     override fun onResume() {
         super.onResume()
-        JitsiMeetActivityDelegate.onHostResume(this)
+        //If user type is host then use below code otherwiae not
+//        JitsiMeetActivityDelegate.onHostResume(this)
     }
 
     override fun onStop() {
         super.onStop()
-        JitsiMeetActivityDelegate.onHostPause(this)
+//        JitsiMeetActivityDelegate.onHostPause(this)
     }
 }
