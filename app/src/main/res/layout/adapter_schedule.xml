@@ -74,17 +74,18 @@
                     android:fontFamily="@font/calibri"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14ssp"
-                    android:text="@string/subject" />
+                    android:text="@{scheduleModel.courseName}"
+                    tools:text="Subject" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ivSubjectTitle"
                     android:fontFamily="@font/calibri"
-                    android:text="@{scheduleModel.courseName + ` ` + scheduleModel.column1}"
+                    android:text="@{scheduleModel.column1}"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14ssp"
-                    tools:text="Course name" />
+                    tools:text="Teacher name" />
 
                 <TextView
                     android:id="@+id/tvTopicTitle"
@@ -94,7 +95,8 @@
                     android:fontFamily="@font/calibri"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14ssp"
-                    android:text="@string/topic" />
+                    android:text="@string/topic"
+                    android:visibility="@{scheduleModel.topic.length() > 0 ? View.VISIBLE : View.GONE}"/>
 
                 <TextView
                     android:layout_width="wrap_content"
