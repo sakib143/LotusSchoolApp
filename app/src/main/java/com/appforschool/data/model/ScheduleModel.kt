@@ -27,7 +27,7 @@ data class ScheduleModel(
         @Expose
         @SerializedName("scheduletime") var scheduletime: Any = Any(),
         @Expose
-        @SerializedName("schid") var schid: Double = 0.0,
+        @SerializedName("schid") var schid: Int = 0,
         @Expose
         @SerializedName("subjid") var subjid: Double = 0.0,
         @Expose

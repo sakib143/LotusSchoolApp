@@ -160,7 +160,7 @@
                     android:textColor="@color/colorJoinMeeting"
                     android:textSize="@dimen/_20ssp"
                     android:textStyle="bold"
-                    android:text="@string/join_now"
+                    android:text="@string/connect"
                     android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"/>
 
             </RelativeLayout>

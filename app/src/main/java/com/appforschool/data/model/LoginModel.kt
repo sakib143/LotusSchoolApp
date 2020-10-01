@@ -22,7 +22,7 @@ data class LoginModel(
         @Expose
         @SerializedName("ishost") var ishost: Int = 0,
         @Expose
-        @SerializedName("usertype") var usertype: Int = 0
+        @SerializedName("usertype") var usertype: String = ""
     )
 
     /*

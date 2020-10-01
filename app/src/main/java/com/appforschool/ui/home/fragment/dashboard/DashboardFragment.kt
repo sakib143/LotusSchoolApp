@@ -5,6 +5,9 @@ import android.os.Bundle
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
 import com.appforschool.databinding.FragmentDashboardBinding
+import com.appforschool.ui.home.fragment.schedule.ScheduleViewModel
+import com.appforschool.utils.LogM
+import javax.inject.Inject
 
 class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
@@ -12,9 +15,13 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     override fun layoutId(): Int = R.layout.fragment_dashboard
 
+    @Inject
+    lateinit var viewModel: DashboardviewModel
+
     override fun initializeBinding(binding: FragmentDashboardBinding) {
         binding.lifecycleOwner = this
         binding.listner = this
+        binding.viewmodel = viewModel
     }
 
     companion object {
@@ -38,6 +45,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel.getUserName()
     }
 
     interface FragmentListner {
