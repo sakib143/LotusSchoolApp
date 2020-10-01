@@ -1,5 +1,6 @@
 package com.appforschool.ui.home
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -21,6 +22,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
+
 
 class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     Injectable,
@@ -53,6 +55,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         homeFragment = ScheduleFragment.newInstance()
 //        navigateToHomeFragment(false)
         navigateToDashBoardFragment(false)
+        viewModel.getUserData()
 
     }
 
@@ -84,6 +87,34 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         toast("openMyProfile is clicked !!!")
     }
 
+    fun shareAopToFriend() {
+        val type = "text/plain"
+        val title = resources.getString(R.string.app_name)
+        val strBody = """
+            ${resources.getString(R.string.share_to_friend)}
+            http://play.google.com/store/apps/details?id=
+            """.trimIndent()
+        globalMethods.shareAppToFriend(this@HomeActivity, type, title, strBody)
+    }
+
+    fun openPlayStoreURL() {
+        try {
+            val appStoreIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${this.packageName}"))
+            appStoreIntent.setPackage("com.android.vending")
+            startActivity(appStoreIntent)
+        } catch (exception: ActivityNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$this.packageName")
+                )
+            )
+        }
+    }
+
+
+
     fun signOut() {
         prefUtils.clearAll()
         navigationController.navigateToLoginScreen(this@HomeActivity)
@@ -101,7 +132,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         addFragment(
             supportFragmentManager,
             ScheduleFragment.newInstance(),
-            addToBackStack = true)
+            addToBackStack = true
+        )
     }
 
     override fun openHamBurgerMenu() {
@@ -112,7 +144,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         addFragment(
             supportFragmentManager,
             SubjectFragment.newInstance(),
-            addToBackStack = true)
+            addToBackStack = true
+        )
     }
 
     fun performLogout() {
@@ -124,7 +157,12 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         if(model.meetinglink.isNullOrBlank()){
             val isHost:Int = prefUtils.getUserData()!!.ishost
             val fullUrl = BuildConfig.VIDEO_CALL_URL + model.schid
-            navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl, prefUtils.getUserData()?.studentname!!,isHost)
+            navigationController.navigateToVideoCallScreen(
+                this@HomeActivity,
+                fullUrl,
+                prefUtils.getUserData()?.studentname!!,
+                isHost
+            )
         }else{
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
             if (intent.resolveActivity(packageManager) != null) {

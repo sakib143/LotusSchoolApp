@@ -28,5 +28,8 @@
     <string name="teacher">Teacher</string>
     <string name="files">Files</string>
     <string name="my_schedule">My Schedule</string>
+    <string name="user_id">User ID</string>
+    <string name="enter_user_id">Enter User ID</string>
+    <string name="share_to_friend">Friends,  \n\nPlease install this App,  I am sure you would enjoy.</string>
 
 </resources>

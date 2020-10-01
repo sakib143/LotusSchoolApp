@@ -107,34 +107,34 @@
                     android:textSize="@dimen/_14ssp"
                     tools:text="Teacher name" />
 
-                <TextView
-                    android:id="@+id/tvTopicTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:fontFamily="@font/calibri"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/_14ssp"
-                    android:text="@string/topic"
-                    android:visibility="@{scheduleModel.topic.length() > 0 ? View.VISIBLE : View.GONE}"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/tvTopicTitle"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:fontFamily="@font/calibri"-->
+<!--                    android:textColor="@color/colorBlack"-->
+<!--                    android:textSize="@dimen/_14ssp"-->
+<!--                    android:text="@string/topic"-->
+<!--                    android:visibility="@{scheduleModel.topic.length() > 0 ? View.VISIBLE : View.GONE}"/>-->
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvTopicTitle"
                     android:layout_toRightOf="@+id/tvTeacherName"
-                    android:gravity="end"
-                    android:paddingLeft="@dimen/_5sdp">
+                    android:paddingLeft="@dimen/_10sdp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:fontFamily="@font/calibri"
                         android:text="@{scheduleModel.topic}"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_14ssp"
-                        tools:text="This is first "/>
+                        android:gravity="end"
+                        android:minLines="1"
+                        android:maxLines = "2"
+                        tools:text="This This is first "/>
 
                 </RelativeLayout>
 

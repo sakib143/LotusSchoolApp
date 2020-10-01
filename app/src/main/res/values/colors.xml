@@ -13,5 +13,6 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorJoinMeeting">#A38179</color>
     <color name="colorScheduleBackground">#F9F8F3</color>
+    <color name="colormenu_profile">#C5DDE9</color>
 
 </resources>

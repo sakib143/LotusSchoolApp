@@ -17,7 +17,7 @@ data class ScheduleModel(
         @SerializedName("Column1") var column1: String = "",
         @SerializedName("CourseName") var courseName: String = "",
         @Expose
-        @SerializedName("duration") var duration: Double = 0.0,
+        @SerializedName("duration") var duration: Int = 0,
         @Expose
         @SerializedName("meetinglink") var meetinglink: String = "",
         @Expose

@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/calibri"
-                android:text="@string/email_address"
+                android:text="@string/user_id"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_13ssp" />
 
@@ -70,7 +70,7 @@
                 android:background="@null"
                 android:drawableEnd="@drawable/ic_mail"
                 android:fontFamily="@font/calibri"
-                android:hint="@string/enter_email_id"
+                android:hint="@string/enter_user_id"
                 android:inputType="text"
                 android:maxLines="1"
                 android:paddingTop="@dimen/_5sdp"

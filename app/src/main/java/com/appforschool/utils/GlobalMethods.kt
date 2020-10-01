@@ -152,11 +152,19 @@ class GlobalMethods @Inject constructor() {
             .joinToString("")
     }
 
-    fun shareTextToFriend(context: Activity?,  title: String?, text: String?) {
+    fun shareTextToFriend(context: Activity?, title: String?, text: String?) {
         ShareCompat.IntentBuilder.from(context!!)
             .setType("text/plain")
             .setChooserTitle(title)
             .setText(text)
+            .startChooser()
+    }
+
+    fun shareAppToFriend(context: Activity, type: String?, title: String?, text: String) {
+        ShareCompat.IntentBuilder.from(context)
+            .setType(type)
+            .setChooserTitle(title)
+            .setText(text + context.packageName)
             .startChooser()
     }
 
