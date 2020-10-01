@@ -24,6 +24,7 @@ class Constant {
         const val REQUEST_STUDENTID = "studentid"
         const val WEBVIEW_URL = "webview_url"
         const val IS_HOST = "is_host"
+        const val REQUEST_USER_TYPE = "usertype"
 
 
 

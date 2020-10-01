@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimaryDark">#A67B72</color>
     <color name="colorAccent">#03DAC5</color>
 
     <color name="grey_dark">#a1a1a1</color>
@@ -14,5 +14,6 @@
     <color name="colorJoinMeeting">#A38179</color>
     <color name="colorScheduleBackground">#F9F8F3</color>
     <color name="colormenu_profile">#C5DDE9</color>
+    <color name="colorMenuName">#910000</color>
 
 </resources>

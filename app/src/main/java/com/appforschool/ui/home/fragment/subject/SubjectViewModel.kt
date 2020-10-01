@@ -37,7 +37,7 @@ class SubjectViewModel   @Inject constructor(
         Coroutines.main {
             val inputParam = JsonObject()
             inputParam.addProperty(Constant.REQUEST_STUDENTID,prefUtils.getUserId())
-
+            inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
             try {
                 _isViewLoading.postValue(true)
                 val apiResponse = repository.callSubject(inputParam)

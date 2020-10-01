@@ -16,6 +16,7 @@ import com.appforschool.listner.HomeListner
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
+import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -113,8 +114,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
-
-
     fun signOut() {
         prefUtils.clearAll()
         navigationController.navigateToLoginScreen(this@HomeActivity)
@@ -148,15 +147,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         )
     }
 
-    fun performLogout() {
-        prefUtils.clearAll()
-        navigationController.navigateToLoginScreen(this@HomeActivity)
-    }
-
     override fun openVideoCalling(model: ScheduleModel.Data) {
         if(model.meetinglink.isNullOrBlank()){
             val isHost:Int = prefUtils.getUserData()!!.ishost
             val fullUrl = BuildConfig.VIDEO_CALL_URL + model.schid
+            LogM.e("=> video calling url " + fullUrl)
             navigationController.navigateToVideoCallScreen(
                 this@HomeActivity,
                 fullUrl,

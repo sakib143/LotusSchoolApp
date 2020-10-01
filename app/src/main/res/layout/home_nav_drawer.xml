@@ -49,7 +49,7 @@
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_60sdp"
                         android:layout_centerInParent="true"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@drawable/profile_icons" />
 
                 </RelativeLayout>
 
@@ -74,16 +74,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{viewmodel.userName}"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/colorMenuName"
                         android:textSize="@dimen/_20ssp"
-                        tools:text="Name" />
+                        tools:text="Name"
+                        android:maxLines="1"
+                        android:minLines="1"
+                        android:ellipsize="end"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
                         android:textSize="@dimen/_12ssp"
-                        tools:text="Standard" />
+                        tools:text="Standard"
+                        android:text="@{viewmodel.starndard}"
+                        android:textColor="@color/colorMenuName"
+                        />
 
                 </LinearLayout>
 

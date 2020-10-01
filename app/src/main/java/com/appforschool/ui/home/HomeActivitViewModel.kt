@@ -18,8 +18,13 @@ class HomeActivitViewModel  @Inject constructor(
     val userName : LiveData<String>
         get() = _userName
 
+    private var _starndard = MutableLiveData<String>()
+    val starndard : LiveData<String>
+        get() = _starndard
+
     fun getUserData() {
         _userName.value = prefUtils.getUserData()?.studentname
+        _starndard.value = prefUtils.getUserData()?.standardname
     }
 
 }

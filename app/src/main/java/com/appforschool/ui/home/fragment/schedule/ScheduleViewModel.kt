@@ -37,6 +37,7 @@ class ScheduleViewModel  @Inject constructor(
             try {
                 val inputParam = JsonObject()
                 inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserId())
+                inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
                 _isViewLoading.postValue(true)
                 val apiResponse = repository.callScheduleData(inputParam)
                 _isViewLoading.postValue(false)
