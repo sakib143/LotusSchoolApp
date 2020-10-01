@@ -171,7 +171,7 @@
                     <ImageView
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_28sdp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@drawable/ic_rate_us" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -201,7 +201,7 @@
                     <ImageView
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_28sdp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@drawable/ic_share" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -231,7 +231,7 @@
                     <ImageView
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_28sdp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@drawable/ic_logout" />
 
                     <TextView
                         android:layout_width="match_parent"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App for school</string>
+    <string name="app_name">WBL</string>
     <string name="notification">Notification</string>
     <string name="my_profile">My Profile</string>
     <string name="chat_with_teacher">Chat with teacher</string>
