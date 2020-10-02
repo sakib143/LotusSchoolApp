@@ -54,7 +54,11 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
 
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.subjectData.observe(viewLifecycleOwner, subjectObserver)
-        viewModel.executerSubject()
+        if (globalMethods.isInternetAvailable(activity!!)) {
+            viewModel.executerSubject()
+        }else {
+            activity!!.toast(activity!!.resources.getString(R.string.check_internet_connection))
+        }
     }
 
     private val onMessageErrorObserver = Observer<Any> {

@@ -15,5 +15,7 @@
     <color name="colorScheduleBackground">#F9F8F3</color>
     <color name="colormenu_profile">#C5DDE9</color>
     <color name="colorMenuName">#910000</color>
+    <color name="colorDashboardBackground">#e6e3ca</color>
+
 
 </resources>

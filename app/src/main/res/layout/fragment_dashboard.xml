@@ -24,31 +24,22 @@
             android:orientation="vertical"
             android:clickable="true"
             android:focusable="true"
-            android:background="@android:color/white">
+            android:background="@color/colorDashboardBackground">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
                 android:background="@color/colorHomeHeader"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/_20sdp">
+                android:paddingBottom="@dimen/_20sdp"
+                android:paddingLeft="@dimen/_20sdp">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_open_nav"
-                    android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:onClick="@{()-> listner.openHamBurgerMenu()}"/>
-
-
-                <TextView
-                    android:id="@+id/tvHeaderDesign"
-                    android:layout_width="wrap_content"
-                    android:layout_height="237dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/ic_dashboard_header" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -56,13 +47,22 @@
                     tools:text="User name"
                     android:textSize="@dimen/_15ssp"
                     android:textColor="@color/colorWhite"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/_35sdp"
-                    android:text="@{ `Welcome:- ` + viewmodel.userName}"
+                    android:text="@{viewmodel.userName}"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_gravity="center"
                     />
 
-            </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Standard"
+                    android:textSize="@dimen/_15ssp"
+                    android:textColor="@color/colorWhite"
+                    android:text="@{viewmodel.standard}"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,7 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/subject"
+                        android:text="@string/subjects"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
                 </LinearLayout>
@@ -162,13 +162,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_alert" />
+                        android:background="@drawable/ic_notification" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/my_alert"
+                        android:text="@string/notification"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
                 </LinearLayout>
@@ -222,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="@string/drive"
+                        android:text="@string/my_drive"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp" />
 

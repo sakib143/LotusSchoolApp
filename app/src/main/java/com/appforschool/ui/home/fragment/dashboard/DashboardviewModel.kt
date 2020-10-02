@@ -17,9 +17,13 @@ class DashboardviewModel   @Inject constructor(
     private val _userName = MutableLiveData<String>()
     val userName: LiveData<String> get() = _userName
 
+    private val _standard = MutableLiveData<String>()
+    val standard: LiveData<String> get() = _standard
+
     fun getUserName() {
         LogM.e("=> User name in viewmodel is " + prefUtils.getUserData()?.studentname)
         _userName.value = prefUtils.getUserData()?.studentname
+        _standard.value = prefUtils.getUserData()?.standardname
     }
 
 }
