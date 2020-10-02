@@ -24,11 +24,12 @@
             android:orientation="vertical"
             android:clickable="true"
             android:focusable="true"
-            android:background="@color/colorDashboardBackground">
+            android:background="@color/colorDashboardBackground"
+            android:paddingBottom="@dimen/_20sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
+                android:layout_height="@dimen/_170sdp"
                 android:background="@color/colorHomeHeader"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/_20sdp"
@@ -66,7 +67,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_140sdp"
+                android:layout_height="@dimen/_150sdp"
                 android:layout_marginTop="@dimen/_minus60sdp"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -74,7 +75,7 @@
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -98,8 +99,8 @@
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -123,14 +124,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_140sdp"
+                android:layout_height="@dimen/_150sdp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -153,8 +154,8 @@
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -177,14 +178,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_140sdp"
+                android:layout_height="@dimen/_150sdp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -207,8 +208,8 @@
                 <LinearLayout
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_120sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
                     android:orientation="vertical">
