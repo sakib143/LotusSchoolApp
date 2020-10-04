@@ -1,10 +1,7 @@
 package com.appforschool.api
 
+import com.appforschool.data.model.*
 import com.google.gson.JsonObject
-import com.appforschool.data.model.LoginModel
-import com.appforschool.data.model.ScheduleModel
-import com.appforschool.data.model.SubjectDetailsModel
-import com.appforschool.data.model.SubjectModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -25,6 +22,11 @@ interface WebServiceInterface {
 
     @POST("Get_SpData")
     suspend fun callSubjectDetails(@Body jsonObject: JsonObject): Response<SubjectDetailsModel>
+
+    @POST("Get_SpData")
+    suspend fun callAssignment(@Body jsonObject: JsonObject): Response<AssignmentModel>
+
+
 
 //    @Multipart
 //    @POST("UpdateProfilePic")

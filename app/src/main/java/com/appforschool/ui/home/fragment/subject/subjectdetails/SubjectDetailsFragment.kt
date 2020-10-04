@@ -97,7 +97,6 @@ class SubjectDetailsFragment  : BaseBindingFragment<FragmentSubjectDetailsBindin
 
     interface SubjectDetailsListner {
         fun popFragment()
-        fun openFile(fileType: String , filePath: String)
     }
 
     fun closeSubjectDetails() {

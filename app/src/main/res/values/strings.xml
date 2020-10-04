@@ -35,5 +35,6 @@
     <string name="share_to_friend">Friends,  \n\nPlease install this App,  I am sure you would enjoy.</string>
     <string name="no_data_found">No data found</string>
     <string name="subject_details">Subject Details</string>
+    <string name="my_assignment">My Assignment</string>
 
 </resources>

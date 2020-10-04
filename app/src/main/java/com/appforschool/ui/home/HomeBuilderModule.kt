@@ -1,5 +1,6 @@
 package com.appforschool.ui.home
 
+import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
@@ -26,10 +27,17 @@ abstract class HomeBuilderModule {
      */
     @ContributesAndroidInjector
     abstract fun bindSubjectFragment(): SubjectFragment
+
     /**
      * fun to bind Order SubjectDetailsFragment Fragment, making Injection enable
      */
     @ContributesAndroidInjector
     abstract fun bindSubjectDetailsFragment(): SubjectDetailsFragment
+
+    /**
+     * fun to bind Order SubjectDetailsFragment Fragment, making Injection enable
+     */
+    @ContributesAndroidInjector
+    abstract fun bindAssignmentFragment(): AssignmentFragment
 
 }

@@ -29,6 +29,13 @@ data class SubjectDetailsModel(
         @Expose
         @SerializedName("IsDemoFile") var isDemoFile: Boolean? = false, // false
         @Expose
-        @SerializedName("sizeinkb") var sizeinkb: String? = "" // 4246
+        @SerializedName("sizeinkb") var sizeinkb: String? = "",
+        @Expose
+        @SerializedName("Column1")
+        var Column1: String? = "",
+        @Expose
+        @SerializedName("Column2")
+        var Column2: String? = "" // 4246
+
     )
 }

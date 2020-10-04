@@ -27,7 +27,10 @@ class Constant {
         const val REQUEST_USER_TYPE = "usertype"
         const val REQUEST_MODE = "Mode"
         const val REUQEST_MODE_GET_SUBJECT_FILES = "getsubjectfiles"
+        const val REUQEST_MODE_GET_ASSIGNMENT = "getassignments"
         const val REUQEST_SUBJECT_ID = "subjectid"
+        const val REUQEST_USER_ID = "userid"
+
 
 
 
