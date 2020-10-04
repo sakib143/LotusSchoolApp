@@ -30,6 +30,8 @@ class Constant {
         const val REUQEST_MODE_GET_ASSIGNMENT = "getassignments"
         const val REUQEST_SUBJECT_ID = "subjectid"
         const val REUQEST_USER_ID = "userid"
+        const val REQUEST_GET_ALERT = "getalerts"
+
 
 
 

@@ -54,6 +54,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
         fun openHamBurgerMenu()
         fun openSubjectFragment()
         fun openAssignmentFragment()
+        fun openAlertFragment()
     }
 
     fun openScheduleFragment() {
@@ -70,6 +71,10 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     fun openAssignment() {
         listener?.openAssignmentFragment()
+    }
+
+    fun openAlert() {
+        listener?.openAlertFragment()
     }
 
 }

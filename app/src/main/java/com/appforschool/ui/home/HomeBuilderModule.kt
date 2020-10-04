@@ -1,5 +1,6 @@
 package com.appforschool.ui.home
 
+import com.appforschool.ui.home.fragment.alert.AlertFragment
 import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
@@ -39,5 +40,11 @@ abstract class HomeBuilderModule {
      */
     @ContributesAndroidInjector
     abstract fun bindAssignmentFragment(): AssignmentFragment
+
+    /**
+     * fun to bind Order AlertFragment Fragment, making Injection enable
+     */
+    @ContributesAndroidInjector
+    abstract fun bindAlertFragment(): AlertFragment
 
 }

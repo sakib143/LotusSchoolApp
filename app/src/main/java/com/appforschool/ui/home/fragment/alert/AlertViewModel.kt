@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
+import com.appforschool.data.model.AlertModel
 import com.appforschool.data.model.ScheduleModel
+import com.appforschool.data.repository.AlertRepository
 import com.appforschool.data.repository.ScheduleRepository
 import com.appforschool.utils.Constant
 import com.appforschool.utils.Coroutines
@@ -17,7 +19,7 @@ import javax.inject.Inject
 class AlertViewModel  @Inject constructor(
     private val application: MyApp,
     private val prefUtils: PrefUtils,
-    private val repository: ScheduleRepository
+    private val repository: AlertRepository
 ) : AndroidViewModel(application) {
 
     private val _isViewLoading = MutableLiveData<Boolean>()
@@ -26,17 +28,18 @@ class AlertViewModel  @Inject constructor(
     private val _onMessageError = MutableLiveData<Any>()
     val onMessageError: LiveData<Any> get() = _onMessageError
 
-    private val _alertData : MutableLiveData<ScheduleModel> = MutableLiveData<ScheduleModel>()
-    val alertData: LiveData<ScheduleModel>
+    private val _alertData : MutableLiveData<AlertModel> = MutableLiveData<AlertModel>()
+    val alertData: LiveData<AlertModel>
         get() = _alertData
 
-    fun executeAlert(): LiveData<ScheduleModel> {
+    fun executeAlert(): LiveData<AlertModel> {
         Coroutines.main {
             try {
                 val inputParam = JsonObject()
-                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserId())
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_GET_ALERT)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, "366")
                 _isViewLoading.postValue(true)
-                val apiResponse = repository.callScheduleData(inputParam)
+                val apiResponse = repository.callAlert(inputParam)
                 _isViewLoading.postValue(false)
                 _alertData.postValue(apiResponse)
             } catch (e: ApiExceptions) {

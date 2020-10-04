@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import com.appforschool.BuildConfig
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
+import com.appforschool.data.model.AlertModel
 import com.appforschool.data.model.AssignmentModel
 import com.appforschool.data.model.ScheduleModel
 import com.appforschool.data.model.SubjectDetailsModel
@@ -22,6 +23,7 @@ import com.appforschool.ui.home.fragment.subject.SubjectFragment
 import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
+import com.facebook.react.modules.dialog.AlertFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -34,7 +36,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     HasAndroidInjector,
     ScheduleFragment.HomeListener, HomeListner, DashboardFragment.FragmentListner,
     SubjectFragment.SubjectFragmentListner, SubjectDetailsFragment.SubjectDetailsListner,
-        AssignmentFragment.AssignmentFragmentListner
+        AssignmentFragment.AssignmentFragmentListner,com.appforschool.ui.home.fragment.alert.AlertFragment.AlertListner
 {
 
     override fun layoutId() = R.layout.activity_home
@@ -165,6 +167,14 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         )
     }
 
+    override fun openAlertFragment() {
+        addFragment(
+            supportFragmentManager,
+            com.appforschool.ui.home.fragment.alert.AlertFragment.newInstance(),
+            addToBackStack = true
+        )
+    }
+
     override fun openVideoCalling(model: ScheduleModel.Data) {
         if(model.meetinglink.isNullOrBlank()){
             val isHost:Int = prefUtils.getUserData()!!.ishost
@@ -192,5 +202,9 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun openAssignmentFile(model: AssignmentModel.Data) {
         toast("Open Assignment is clicked")
+    }
+
+    override fun openAlertDetails(model: AlertModel.Data) {
+        toast("Open openAlertDetails is clicked")
     }
 }
