@@ -73,9 +73,8 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
                 override fun popFragment() {
 
                 }
-
-                override fun openVideo(url: String) {
-
+                override fun openSubjectDetails(subjectId: String) {
+                    listener?.openSubjectDetails(subjectId)
                 }
             })
             rvSubjectFragment.adapter = adapter
@@ -86,7 +85,7 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
 
     interface SubjectFragmentListner {
         fun popFragment()
-        fun openVideo(url: String)
+        fun openSubjectDetails(subjectID: String)
     }
 
     fun closeSubjectFragment() {

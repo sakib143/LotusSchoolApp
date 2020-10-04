@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="subjectDetailsModel"
+            type="com.appforschool.data.model.SubjectDetailsModel.Data" />
+
+        <variable
+            name="subjectDetailsListner"
+            type="com.appforschool.listner.HomeListner" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80sdp"
+        android:background="@color/colorScheduleBackground"
+        android:orientation="vertical"
+        android:padding="@dimen/_8sdp">
+
+        <LinearLayout
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_cardview"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/_5sdp">
+
+            <ImageView
+                android:id="@+id/ivFileImage"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_toRightOf="@+id/ivFileImage"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"
+                    tools:text="File Title"
+                    android:text="@{subjectDetailsModel.filetitle}"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:minLines="1"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="File description"
+                    android:text="@{subjectDetailsModel.fileDescr}"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_toRightOf="@+id/ivFileImage"
+                android:orientation="vertical"
+                android:layout_alignParentEnd="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"
+                    tools:text="File Type"
+                    android:text="@{subjectDetailsModel.filetype}"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:minLines="1"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="File Size"
+                    android:text="@{subjectDetailsModel.sizeinkb}"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

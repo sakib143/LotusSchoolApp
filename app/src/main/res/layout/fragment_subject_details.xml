@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <import type="java.util.List" />
+
+        <variable
+            name="viewmodel"
+            type="com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsViewModel" />
+
+        <variable
+            name="listner"
+            type="com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment" />
+
+        <variable
+            name="subjectDetailsList"
+            type="List&lt;com.appforschool.data.model.SubjectDetailsModel.Data>" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorScheduleBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            bindSubjectDetial="@{subjectDetailsList}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            tools:listitem="@layout/adapter_subjectdetails" />
+
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}" />
+
+
+
+    </RelativeLayout>
+</layout>

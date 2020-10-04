@@ -16,6 +16,7 @@ import com.appforschool.listner.HomeListner
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
+import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import dagger.android.AndroidInjector
@@ -29,7 +30,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     Injectable,
     HasAndroidInjector,
     ScheduleFragment.HomeListener, HomeListner, DashboardFragment.FragmentListner,
-    SubjectFragment.SubjectFragmentListner{
+    SubjectFragment.SubjectFragmentListner, SubjectDetailsFragment.SubjectDetailsListner{
 
     override fun layoutId() = R.layout.activity_home
 
@@ -123,8 +124,16 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         onBackPressed()
     }
 
-    override fun openVideo(url: String) {
+    override fun openFile(fileType: String, filePath: String) {
 
+    }
+
+    override fun openSubjectDetails(subjectID: String) {
+        addFragment(
+            supportFragmentManager,
+            SubjectDetailsFragment.newInstance(subjectID),
+            addToBackStack = true
+        )
     }
 
     override fun openScheduleFragment() {

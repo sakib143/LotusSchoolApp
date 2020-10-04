@@ -25,6 +25,9 @@ class Constant {
         const val WEBVIEW_URL = "webview_url"
         const val IS_HOST = "is_host"
         const val REQUEST_USER_TYPE = "usertype"
+        const val REQUEST_MODE = "Mode"
+        const val REUQEST_MODE_GET_SUBJECT_FILES = "getsubjectfiles"
+        const val REUQEST_SUBJECT_ID = "subjectid"
 
 
 

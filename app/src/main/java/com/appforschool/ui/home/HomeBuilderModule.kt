@@ -3,6 +3,7 @@ package com.appforschool.ui.home
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
+import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -25,5 +26,10 @@ abstract class HomeBuilderModule {
      */
     @ContributesAndroidInjector
     abstract fun bindSubjectFragment(): SubjectFragment
+    /**
+     * fun to bind Order SubjectDetailsFragment Fragment, making Injection enable
+     */
+    @ContributesAndroidInjector
+    abstract fun bindSubjectDetailsFragment(): SubjectDetailsFragment
 
 }

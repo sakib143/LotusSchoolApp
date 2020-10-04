@@ -15,7 +15,7 @@ data class SubjectModel(
 ) {
     data class Data(
         @Expose
-        @SerializedName("courseid") var courseid: Double = 0.0,
+        @SerializedName("courseid") var courseid: Int = 0,
         @Expose
         @SerializedName("coursename") var coursename: String = "",
         @Expose

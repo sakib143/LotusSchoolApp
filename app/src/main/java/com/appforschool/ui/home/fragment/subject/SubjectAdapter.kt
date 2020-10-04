@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,10 @@ class SubjectAdapter(
         } else {
 
         }
+
+        holder.llRoom.setOnClickListener() {
+            listner.openSubjectDetails(list.get(position).courseid.toString())
+        }
     }
 
     override fun getItemCount() = list.size
@@ -43,5 +48,6 @@ class SubjectAdapter(
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val rlRoom = itemView.findViewById(R.id.rlRoom) as RelativeLayout
         val tvSubjectName = itemView.findViewById(R.id.tvSubjectName) as TextView
+        val llRoom = itemView.findViewById(R.id.llRoom) as LinearLayout
     }
 }
