@@ -195,16 +195,15 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openSubjectFile(model: SubjectDetailsModel.Data) {
-        toast("Open file is clicked")
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.Column2))
         startActivity(browserIntent)
     }
 
     override fun openAssignmentFile(model: AssignmentModel.Data) {
-        toast("Open Assignment is clicked")
+        toast("Coming soon")
     }
 
     override fun openAlertDetails(model: AlertModel.Data) {
-        toast("Open openAlertDetails is clicked")
+        toast("Coming soon")
     }
 }
