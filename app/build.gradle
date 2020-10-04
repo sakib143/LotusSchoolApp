@@ -42,6 +42,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    //For ExoPlayer 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
             outputFileName = "SchoolApp-${variant.name} ${getTimestamp()}.apk"
@@ -111,5 +116,9 @@ dependencies {
 
     // Jitsi Meet
     implementation ('org.jitsi.react:jitsi-meet-sdk:2.8.2') { transitive = true }
+
+    // ExoPlayer2
+    implementation "com.google.android.exoplayer:exoplayer-core:2.11.7"
+    implementation "com.google.android.exoplayer:exoplayer-ui:2.11.7"
 
 }

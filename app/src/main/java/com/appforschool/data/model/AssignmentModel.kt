@@ -24,7 +24,7 @@ data class AssignmentModel(
         @Expose
         @SerializedName("filetype") var filetype: String? = "", // Text Book
         @Expose
-        @SerializedName("linkurl") var linkurl: Any? = Any(), // null
+        @SerializedName("linkurl") var linkurl: String? = "", // null
         @Expose
         @SerializedName("sharedby") var sharedby: String? = "", // Gayatri Mam
         @Expose

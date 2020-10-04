@@ -37,7 +37,7 @@ class AlertViewModel  @Inject constructor(
             try {
                 val inputParam = JsonObject()
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_GET_ALERT)
-                inputParam.addProperty(Constant.REUQEST_USER_ID, "366")
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserId())
                 _isViewLoading.postValue(true)
                 val apiResponse = repository.callAlert(inputParam)
                 _isViewLoading.postValue(false)

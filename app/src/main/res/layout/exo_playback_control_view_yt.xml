@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#77000000">
+
+    <LinearLayout
+        android:id="@+id/exo_ll_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@id/exo_play"
+            style="@style/ExoMediaButton.Play"
+            android:scaleType="fitCenter"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@id/exo_pause"
+            style="@style/ExoMediaButton.Pause"
+            android:scaleType="fitCenter"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/exo_ll_timebar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@id/exo_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            tools:text="12:30 / 24:13" />
+
+        <com.google.android.exoplayer2.ui.DefaultTimeBar
+            android:id="@id/exo_progress"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            app:bar_height="2dp"
+            app:buffered_color="#ffffff"
+            app:played_color="#ff1111"
+            app:scrubber_color="#ff3333"
+            app:scrubber_dragged_size="2dp"
+            app:unplayed_color="#ff888888"
+            android:layout_toLeftOf="@+id/fullscreen_button"
+            android:layout_toRightOf="@+id/exo_position"/>
+
+        <ImageButton
+            android:id="@+id/fullscreen_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="?selectableItemBackground"
+            android:src="@drawable/ic_baseline_fullscreen_24"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

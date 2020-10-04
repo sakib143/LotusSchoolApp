@@ -21,6 +21,8 @@ import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
 import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment
+import com.appforschool.ui.videoplaying.VideoPlayingActivity
+import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.facebook.react.modules.dialog.AlertFragment
@@ -195,12 +197,25 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openSubjectFile(model: SubjectDetailsModel.Data) {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.Column2))
-        startActivity(browserIntent)
+        if(model.fileext.equals(".mp4",ignoreCase = true)){
+            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+            intent.putExtra(Constant.VIDEO_URL, model.Column2)
+            startActivity(intent)
+        }else {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.Column2))
+            startActivity(browserIntent)
+        }
     }
 
     override fun openAssignmentFile(model: AssignmentModel.Data) {
-        toast("Coming soon")
+        if(model.fileext.equals(".mp4",ignoreCase = true)){
+            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+            intent.putExtra(Constant.VIDEO_URL, model.linkurl)
+            startActivity(intent)
+        }else {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.linkurl))
+            startActivity(browserIntent)
+        }
     }
 
     override fun openAlertDetails(model: AlertModel.Data) {

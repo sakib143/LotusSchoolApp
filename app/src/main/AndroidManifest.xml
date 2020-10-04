@@ -14,8 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.commonwebview.CommonWebviewActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.videoplaying.VideoPlayingActivity"></activity>
+        <activity
+            android:name=".ui.commonwebview.CommonWebviewActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.videocalling.VideoCallingActivity"
             android:screenOrientation="portrait" />
@@ -25,11 +27,11 @@
         <activity
             android:name=".ui.auth.login.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
