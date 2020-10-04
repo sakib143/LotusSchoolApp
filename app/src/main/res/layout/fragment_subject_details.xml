@@ -27,14 +27,40 @@
         android:clickable="true"
         android:focusable="true">
 
+        <LinearLayout
+            android:id="@+id/llHeader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_130sdp"
+            android:background="@color/colorHomeHeader"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingTop="@dimen/_15sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_back_icon"
+                android:onClick="@{()->listner.closeSubjectDetails()}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/calibri"
+                android:text="@string/subject_details"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_20ssp" />
+
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             bindSubjectDetial="@{subjectDetailsList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/_5sdp"
             android:paddingRight="@dimen/_5sdp"
-            tools:listitem="@layout/adapter_subjectdetails" />
-
+            tools:listitem="@layout/adapter_subjectdetails"
+            android:layout_below="@+id/llHeader"/>
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -42,7 +68,6 @@
             android:layout_centerInParent="true"
             android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}" />
 
-
-
     </RelativeLayout>
+
 </layout>
