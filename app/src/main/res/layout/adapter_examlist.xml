@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorScheduleBackground"
+        android:background="#0FFF"
         android:onClick="@{()-> examListListner.openExamDetails(examListModel)}"
         android:orientation="vertical"
         android:padding="@dimen/_8sdp">
@@ -28,13 +28,13 @@
             android:layout_height="match_parent"
             android:background="@drawable/bg_cardview"
             android:orientation="horizontal"
-            android:padding="@dimen/_5sdp"
+            android:padding="@dimen/_10sdp"
             android:weightSum="1">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.39"
+                android:layout_weight="0.53"
                 android:orientation="vertical">
 
                 <TextView
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
                     android:text="@{examListModel.examno}"
-                    android:textSize="@dimen/_12ssp"
+                    android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     tools:text="Exam Number" />
 
@@ -66,9 +66,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
-                    android:text="@{examListModel.duration}"
+                    android:text="@{`Duration:` + examListModel.duration + ` mins`}"
                     android:textSize="@dimen/_12ssp"
                     tools:text="Duration" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="@{examListModel.description}"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Discription" />
 
             </LinearLayout>
 
@@ -76,7 +84,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_weight="0.39"
+                android:layout_weight="0.25"
                 android:orientation="vertical">
 
                 <TextView
@@ -95,19 +103,23 @@
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_55sdp"
-                android:layout_weight="0.2"
-                android:background="@drawable/ic_mark">
+                android:layout_height="match_parent"
+                android:layout_weight="0.2">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_mark"/>
 
                 <TextView
                     android:id="@+id/tvMarks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@{examListModel.totalmarks}"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:text="@{examListModel.totalmarks + ``}"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textStyle="bold"
                     tools:text="20" />
 
@@ -125,6 +137,8 @@
             </RelativeLayout>
 
         </LinearLayout>
+
+
 
     </LinearLayout>
 

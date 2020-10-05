@@ -35,9 +35,9 @@
     <string name="share_to_friend">Friends,  \n\nPlease install this App,  I am sure you would enjoy.</string>
     <string name="no_data_found">No data found</string>
     <string name="subject_details">Subject Details</string>
-    <string name="my_assignment">My Assignment</string>
+    <string name="my_assignment">My Assignments</string>
     <string name="view_more">View more</string>
     <string name="marks">Marks</string>
-    <string name="my_exam">My Exam</string>
+    <string name="my_exam">My Exams</string>
 
 </resources>

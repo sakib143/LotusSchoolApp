@@ -18,7 +18,7 @@ data class ExamModel(
         @Expose
         @SerializedName("description") var description: String? = "", // Descr
         @Expose
-        @SerializedName("duration") var duration: String? = "", // 120.0
+        @SerializedName("duration") var duration: Int? = 0, // 120.0
         @Expose
         @SerializedName("examdate") var examdate: String? = "", // 15-10-20
         @Expose
@@ -38,6 +38,6 @@ data class ExamModel(
         @Expose
         @SerializedName("subjid") var subjid: Int? = 0, // 296
         @Expose
-        @SerializedName("totalmarks") var totalmarks: String? = "" // 120.0
+        @SerializedName("totalmarks") var totalmarks: Int = 0 // 120.0
     )
 }
