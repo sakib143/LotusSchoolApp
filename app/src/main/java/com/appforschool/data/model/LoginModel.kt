@@ -22,8 +22,12 @@ data class LoginModel(
         @Expose
         @SerializedName("ishost") var ishost: Int = 0,
         @Expose
-        @SerializedName("usertype") var usertype: String = ""
-    )
+        @SerializedName("usertype") var usertype: String = "",
+        @Expose
+        @SerializedName("userid") var userid: String = "",
+        @Expose
+        @SerializedName("standardid") var standardid: Int = 0
+        )
 
     /*
     usertype will be

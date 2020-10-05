@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="examListModel"
+            type="com.appforschool.data.model.ExamModel.Data" />
+
+        <variable
+            name="examListListner"
+            type="com.appforschool.listner.HomeListner" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorScheduleBackground"
+        android:onClick="@{()-> examListListner.openExamDetails(examListModel)}"
+        android:orientation="vertical"
+        android:padding="@dimen/_8sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_cardview"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.39"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="@{examListModel.examno}"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold"
+                    tools:text="Exam Number" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="@{examListModel.examdate}"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Date" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="@{examListModel.examtime}"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Time" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:text="@{examListModel.duration}"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Duration" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_weight="0.39"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:maxLines="2"
+                    android:minLines="1"
+                    android:text="@{examListModel.subjectname}"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold"
+                    tools:text="Exam Number" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_55sdp"
+                android:layout_weight="0.2"
+                android:background="@drawable/ic_mark">
+
+                <TextView
+                    android:id="@+id/tvMarks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@{examListModel.totalmarks}"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    tools:text="20" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvMarks"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/marks"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_9ssp"
+                    android:textStyle="bold"
+                    tools:text="@string/marks" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

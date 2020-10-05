@@ -29,6 +29,9 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callAlert(@Body jsonObject: JsonObject): Response<AlertModel>
 
+    @POST("Get_SpData")
+    suspend fun callExam(@Body jsonObject: JsonObject): Response<ExamModel>
+
 
 
 //    @Multipart

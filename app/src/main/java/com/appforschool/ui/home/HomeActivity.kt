@@ -9,15 +9,13 @@ import androidx.core.view.GravityCompat
 import com.appforschool.BuildConfig
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
-import com.appforschool.data.model.AlertModel
-import com.appforschool.data.model.AssignmentModel
-import com.appforschool.data.model.ScheduleModel
-import com.appforschool.data.model.SubjectDetailsModel
+import com.appforschool.data.model.*
 import com.appforschool.databinding.ActivityHomeBinding
 import com.appforschool.di.Injectable
 import com.appforschool.listner.HomeListner
 import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
+import com.appforschool.ui.home.fragment.exam.ExamListFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
 import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment
@@ -38,8 +36,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     HasAndroidInjector,
     ScheduleFragment.HomeListener, HomeListner, DashboardFragment.FragmentListner,
     SubjectFragment.SubjectFragmentListner, SubjectDetailsFragment.SubjectDetailsListner,
-        AssignmentFragment.AssignmentFragmentListner,com.appforschool.ui.home.fragment.alert.AlertFragment.AlertListner
-{
+    AssignmentFragment.AssignmentFragmentListner,
+    com.appforschool.ui.home.fragment.alert.AlertFragment.AlertListner,ExamListFragment.ExamListListner {
 
     override fun layoutId() = R.layout.activity_home
 
@@ -177,9 +175,17 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         )
     }
 
+    override fun openExamListFragment() {
+        addFragment(
+            supportFragmentManager,
+            ExamListFragment.newInstance(),
+            addToBackStack = true
+        )
+    }
+
     override fun openVideoCalling(model: ScheduleModel.Data) {
-        if(model.meetinglink.isNullOrBlank()){
-            val isHost:Int = prefUtils.getUserData()!!.ishost
+        if (model.meetinglink.isNullOrBlank()) {
+            val isHost: Int = prefUtils.getUserData()!!.ishost
             val fullUrl = BuildConfig.VIDEO_CALL_URL + model.schid
             LogM.e("=> video calling url " + fullUrl)
             navigationController.navigateToVideoCallScreen(
@@ -188,7 +194,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 prefUtils.getUserData()?.studentname!!,
                 isHost
             )
-        }else{
+        } else {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)
@@ -197,27 +203,22 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openSubjectFile(model: SubjectDetailsModel.Data) {
-        val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
-            intent.putExtra(Constant.VIDEO_URL, "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
+        if (model.fileext.equals(".mp4", ignoreCase = true)) {
+            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+            intent.putExtra(Constant.VIDEO_URL, model.Column2)
             startActivity(intent)
-
-
-//        if(model.fileext.equals(".mp4",ignoreCase = true)){
-//            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
-//            intent.putExtra(Constant.VIDEO_URL, model.Column2)
-//            startActivity(intent)
-//        }else {
-//            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
-//            startActivity(browserIntent)
-//        }
+        } else {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
+            startActivity(browserIntent)
+        }
     }
 
     override fun openAssignmentFile(model: AssignmentModel.Data) {
-        if(model.fileext.equals(".mp4",ignoreCase = true)){
+        if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
             intent.putExtra(Constant.VIDEO_URL, model.linkurl)
             startActivity(intent)
-        }else {
+        } else {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.linkurl))
             startActivity(browserIntent)
         }
@@ -225,5 +226,9 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun openAlertDetails(model: AlertModel.Data) {
         toast("Coming soon")
+    }
+
+    override fun openExamDetails(model: ExamModel.Data) {
+
     }
 }
