@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.videoplaying.VideoPlayingActivity"></activity>
+        <activity
+            android:name=".ui.videoplaying.VideoPlayingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity
             android:name=".ui.commonwebview.CommonWebviewActivity"
             android:screenOrientation="portrait" />

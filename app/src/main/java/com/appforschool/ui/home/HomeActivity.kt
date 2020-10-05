@@ -197,14 +197,19 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openSubjectFile(model: SubjectDetailsModel.Data) {
-        if(model.fileext.equals(".mp4",ignoreCase = true)){
-            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
-            intent.putExtra(Constant.VIDEO_URL, model.Column2)
+        val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+            intent.putExtra(Constant.VIDEO_URL, "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
             startActivity(intent)
-        }else {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.Column2))
-            startActivity(browserIntent)
-        }
+
+
+//        if(model.fileext.equals(".mp4",ignoreCase = true)){
+//            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+//            intent.putExtra(Constant.VIDEO_URL, model.Column2)
+//            startActivity(intent)
+//        }else {
+//            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
+//            startActivity(browserIntent)
+//        }
     }
 
     override fun openAssignmentFile(model: AssignmentModel.Data) {
