@@ -35,6 +35,7 @@ class VideoPlayingActivity : BaseVideoActivity() {
         }
 
         fullscreen_button.performClick()
+        isVideoFullscreen = true
     }
 
     private fun initDoubleTapPlayerView() {

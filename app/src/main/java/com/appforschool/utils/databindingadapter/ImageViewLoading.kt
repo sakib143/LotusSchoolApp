@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.appforschool.R
+import com.appforschool.data.model.SubjectDetailsModel
 import java.io.IOException
 
 
@@ -20,6 +21,23 @@ fun setImageFromAsset(view: ImageView, fileName: String) {
         view.setImageBitmap(bitmap)
     } catch (e: IOException) {
         e.printStackTrace()
+    }
+}
+
+@BindingAdapter("setSubjectIcons")
+fun setSubjectIcons(view: ImageView, model: SubjectDetailsModel.Data) {
+    if (model.fileext.equals(".pdf", ignoreCase = true)) {
+        view.setImageResource(R.drawable.ic_pdf)
+    } else if(model.fileext.equals(".mp4", ignoreCase = true)) {
+        view.setImageResource(R.drawable.ic_video_file)
+    }else if(model.fileext.equals(".ppt", ignoreCase = true)) {
+        view.setImageResource(R.drawable.ic_ppt)
+    }else if(model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(".xlsx", ignoreCase = true)) {
+        view.setImageResource(R.drawable.ic_excel)
+    }else if(model.fileext.equals(".jpg", ignoreCase = true) || model.fileext.equals(".gif", ignoreCase = true) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(".tiff", ignoreCase = true)) {
+        view.setImageResource(R.drawable.ic_image_file)
+    }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(".docx", ignoreCase = true)) {
+        view.setImageResource(R.drawable.ic_doc)
     }
 }
 
