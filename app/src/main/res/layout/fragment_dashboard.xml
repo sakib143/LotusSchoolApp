@@ -66,7 +66,6 @@
                     android:textSize="@dimen/_15ssp"
                     android:textColor="@color/colorWhite"
                     android:text="@{viewmodel.standard}"
-                    android:layout_marginTop="@dimen/_3sdp"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -221,7 +220,8 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:background="@drawable/bg_cardview"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:onClick="@{()-> listner.openDriveFragment()}">
 
                     <TextView
                         android:layout_width="wrap_content"

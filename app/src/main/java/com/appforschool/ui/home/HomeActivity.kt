@@ -15,6 +15,7 @@ import com.appforschool.di.Injectable
 import com.appforschool.listner.HomeListner
 import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
+import com.appforschool.ui.home.fragment.drive.DriveFragment
 import com.appforschool.ui.home.fragment.exam.ExamListFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
@@ -37,7 +38,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     ScheduleFragment.HomeListener, HomeListner, DashboardFragment.FragmentListner,
     SubjectFragment.SubjectFragmentListner, SubjectDetailsFragment.SubjectDetailsListner,
     AssignmentFragment.AssignmentFragmentListner,
-    com.appforschool.ui.home.fragment.alert.AlertFragment.AlertListner,ExamListFragment.ExamListListner {
+    com.appforschool.ui.home.fragment.alert.AlertFragment.AlertListner,
+    ExamListFragment.ExamListListner,DriveFragment.DriveFragmentListner {
 
     override fun layoutId() = R.layout.activity_home
 
@@ -183,6 +185,14 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         )
     }
 
+    override fun openDriveFragment() {
+        addFragment(
+            supportFragmentManager,
+            DriveFragment.newInstance(),
+            addToBackStack = true
+        )
+    }
+
     override fun openVideoCalling(model: ScheduleModel.Data) {
         if (model.meetinglink.isNullOrBlank()) {
             val isHost: Int = prefUtils.getUserData()!!.ishost
@@ -230,5 +240,20 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun openExamDetails(model: ExamModel.Data) {
 
+    }
+
+    override fun openDriveList(model: DriveModel.Data) {
+
+    }
+
+    override fun shareDriveData(model: DriveModel.Data) {
+        if (model.fileext.equals(".mp4", ignoreCase = true)) {
+            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+            intent.putExtra(Constant.VIDEO_URL, model.filepath)
+            startActivity(intent)
+        } else {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
+            startActivity(browserIntent)
+        }
     }
 }

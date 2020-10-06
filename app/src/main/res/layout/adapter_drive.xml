@@ -7,11 +7,11 @@
         <import type="android.view.View" />
 
         <variable
-            name="assignmentModel"
-            type="com.appforschool.data.model.AssignmentModel.Data" />
+            name="driveModel"
+            type="com.appforschool.data.model.DriveModel.Data" />
 
         <variable
-            name="assignmentListner"
+            name="driveListner"
             type="com.appforschool.listner.HomeListner" />
     </data>
 
@@ -40,13 +40,13 @@
 
                 <ImageView
                     android:id="@+id/ivFileImage"
-                    setAssignmentIcon="@{assignmentModel}"
+                    setDriveListIcon="@{driveModel}"
                     android:layout_width="0dp"
                     android:layout_height="61dp"
                     android:layout_centerVertical="true"
                     android:layout_weight="0.15"
                     android:src="@mipmap/ic_launcher"
-                    android:onClick="@{()-> assignmentListner.openAssignmentFile(assignmentModel)}"/>
+                    android:onClick="@{()-> driveListner.openDriveList(driveModel)}"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -62,7 +62,7 @@
                         android:textSize="@dimen/_15ssp"
                         android:textStyle="bold"
                         tools:text="File Title"
-                        android:text="@{assignmentModel.filetitle}"
+                        android:text="@{driveModel.filetitle}"
                         android:fontFamily="@font/calibri"
                         android:textColor="@color/colorBlack"
                         />
@@ -74,7 +74,7 @@
                         android:minLines="1"
                         android:textSize="@dimen/_12ssp"
                         tools:text="File description"
-                        android:text="@{assignmentModel.filedescr}"
+                        android:text="@{driveModel.filedescr}"
                         android:fontFamily="@font/calibri"
                         android:textColor="@color/colorBlack"/>
 
@@ -85,16 +85,14 @@
                     android:layout_weight="0.25"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_toRightOf="@+id/ivFileImage"
-                    android:orientation="vertical"
-                    android:layout_alignParentEnd="true">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_12ssp"
                         tools:text="File Type"
-                        android:text="@{assignmentModel.assgdate}"
+                        android:text="@{driveModel.filedate}"
                         android:fontFamily="@font/calibri"
                         android:textColor="@color/colorBlack"/>
 
@@ -105,7 +103,7 @@
                         android:minLines="1"
                         android:textSize="@dimen/_12ssp"
                         tools:text="File Size"
-                        android:text="@{assignmentModel.assgtime}"
+                        android:text="@{driveModel.filetime}"
                         android:fontFamily="@font/calibri"
                         android:textColor="@color/colorBlack"/>
 
@@ -116,7 +114,7 @@
                         android:minLines="1"
                         android:textSize="@dimen/_12ssp"
                         tools:text="File Size"
-                        android:text="@{assignmentModel.sizeinkb}"
+                        android:text="@{driveModel.sizeinkb}"
                         android:fontFamily="@font/calibri"
                         android:textColor="@color/colorBlack"/>
 
@@ -124,21 +122,15 @@
 
             </LinearLayout>
 
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/calibri"
-                android:maxLines="2"
-                android:minLines="1"
-                android:text="@{`By: `+assignmentModel.sharedby}"
-                android:textColor="@color/grey_dark"
                 android:textSize="@dimen/_12ssp"
-                tools:text="Shared by"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_gravity="end"
-                android:layout_marginRight="@dimen/_10sdp"/>
+                android:src="@drawable/ic_share"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:onClick="@{()-> driveListner.shareDriveData(driveModel)}"/>
 
         </LinearLayout>
     </LinearLayout>
-
 </layout>

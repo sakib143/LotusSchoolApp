@@ -8,6 +8,9 @@ interface HomeListner {
     fun openAssignmentFile(model: AssignmentModel.Data)
     fun openAlertDetails(model: AlertModel.Data)
     fun openExamDetails(model: ExamModel.Data)
+    fun openDriveList(model: DriveModel.Data)
+    fun shareDriveData(model: DriveModel.Data)
+
 
 
 }

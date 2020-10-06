@@ -32,6 +32,11 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callExam(@Body jsonObject: JsonObject): Response<ExamModel>
 
+    @POST("Get_SpData")
+    suspend fun callDriveList(@Body jsonObject: JsonObject): Response<DriveModel>
+
+
+
 //    @Multipart
 //    @POST("UpdateProfilePic")
 //    suspend fun callUpdateProfilePics(

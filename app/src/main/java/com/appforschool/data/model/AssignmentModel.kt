@@ -34,6 +34,11 @@ data class AssignmentModel(
         @Expose
         @SerializedName("subjectname") var subjectname: String? = "", // Maths
         @Expose
-        @SerializedName("userid") var userid: Int? = 0 // 366
-    )
+        @SerializedName("userid") var userid: Int? = 0,
+        @Expose
+        @SerializedName("assgdate") var assgdate: String? = "",
+        @Expose
+        @SerializedName("assgtime") var assgtime: String? = "",
+        @Expose
+        @SerializedName("filepath") var filepath: String? = "")
 }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.data.model.*
 import com.appforschool.ui.home.fragment.alert.AlertAdapter
 import com.appforschool.ui.home.fragment.assignment.AssignmentAdapter
+import com.appforschool.ui.home.fragment.drive.DriveAdapter
 import com.appforschool.ui.home.fragment.exam.ExamAdapter
 import com.appforschool.ui.home.fragment.schedule.ScheduleAdapter
 import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsAdapter
@@ -98,6 +99,25 @@ fun bindAExamList(view: RecyclerView, list: List<ExamModel.Data>) {
     if (adapter == null) {
         adapter =
             ExamAdapter(
+                view.context,
+                list
+            )
+        view.adapter = adapter
+    }
+}
+
+@BindingAdapter("bindDriveList")
+fun bindDriveList(view: RecyclerView, list: List<DriveModel.Data>) {
+    if (list.isEmpty())
+        return
+    val layoutManager = view.layoutManager
+    if (layoutManager == null)
+        view.layoutManager = LinearLayoutManager(view.context)
+    var adapter = view.adapter
+
+    if (adapter == null) {
+        adapter =
+            DriveAdapter(
                 view.context,
                 list
             )

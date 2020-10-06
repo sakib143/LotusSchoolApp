@@ -56,7 +56,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
         fun openAssignmentFragment()
         fun openAlertFragment()
         fun openExamListFragment()
-
+        fun openDriveFragment()
     }
 
     fun openScheduleFragment() {
@@ -81,6 +81,10 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     fun openExamFragment() {
         listener?.openExamListFragment()
+    }
+
+    fun openDriveFragment() {
+        listener?.openDriveFragment()
     }
 
 }

@@ -3,6 +3,7 @@ package com.appforschool.ui.home
 import com.appforschool.ui.home.fragment.alert.AlertFragment
 import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
+import com.appforschool.ui.home.fragment.drive.DriveFragment
 import com.appforschool.ui.home.fragment.exam.ExamListFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
@@ -54,5 +55,11 @@ abstract class HomeBuilderModule {
     @ContributesAndroidInjector
     abstract fun bindExamListFragment(): ExamListFragment
 
+
+    /**
+     * fun to bind ExamListFragment Fragment, making Injection enable
+     */
+    @ContributesAndroidInjector
+    abstract fun bindDriveFragment(): DriveFragment
 
 }

@@ -32,7 +32,7 @@ class SplashActivity : BaseActivity() {
                 navigationController.navigateToHomeScreen(this@SplashActivity)
             }
             finish()
-        }, 100)
+        }, 1000)
     }
 
     private fun setWindow() {

@@ -35,6 +35,7 @@ class Constant {
         const val REQUEST_GET_EXAMS = "getexams"
         const val REQUEST_GET_SCHEDULE = "getschedule"
         const val REUQEST_GET_SUBJECTS = "getsubjects"
+        const val REQUEST_GET_DRIVE = "getdrive"
 
 
 
