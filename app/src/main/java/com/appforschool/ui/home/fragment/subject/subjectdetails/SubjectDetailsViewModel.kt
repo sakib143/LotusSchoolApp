@@ -38,6 +38,7 @@ class SubjectDetailsViewModel @Inject constructor(
             val inputParam = JsonObject()
             inputParam.addProperty(Constant.REQUEST_MODE, Constant.REUQEST_MODE_GET_SUBJECT_FILES)
             inputParam.addProperty(Constant.REUQEST_SUBJECT_ID, subjectId)
+            inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
             try {
                 _isViewLoading.postValue(true)
                 val apiResponse = repository.callSubjectDetails(inputParam)

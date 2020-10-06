@@ -33,12 +33,8 @@ class Constant {
         const val REQUEST_GET_ALERT = "getalerts"
         const val VIDEO_URL = "videourl"
         const val REQUEST_GET_EXAMS = "getexams"
-
-
-
-
-
-
+        const val REQUEST_GET_SCHEDULE = "getschedule"
+        const val REUQEST_GET_SUBJECTS = "getsubjects"
 
 
 

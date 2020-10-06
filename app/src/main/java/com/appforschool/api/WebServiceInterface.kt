@@ -14,10 +14,10 @@ interface WebServiceInterface {
     @POST("Login")
     suspend fun calllLogin(@Body jsonObject: JsonObject): Response<LoginModel>
 
-    @POST("GetSchedule")
+    @POST("Get_SpData")
     suspend fun callSchedule(@Body jsonObject: JsonObject): Response<ScheduleModel>
 
-    @POST("GetSubjects")
+    @POST("Get_SpData")
     suspend fun callSubject(@Body jsonObject: JsonObject): Response<SubjectModel>
 
     @POST("Get_SpData")
@@ -31,8 +31,6 @@ interface WebServiceInterface {
 
     @POST("Get_SpData")
     suspend fun callExam(@Body jsonObject: JsonObject): Response<ExamModel>
-
-
 
 //    @Multipart
 //    @POST("UpdateProfilePic")

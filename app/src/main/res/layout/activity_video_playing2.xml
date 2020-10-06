@@ -31,7 +31,8 @@
                 app:controller_layout_id="@layout/exo_playback_control_view_yt"
                 app:dtpv_controller="@id/ytOverlay"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
             <com.appforschool.utils.exoplayer_utils.YouTubeOverlay
                 android:id="@+id/ytOverlay"

@@ -36,8 +36,10 @@ class ScheduleViewModel  @Inject constructor(
         Coroutines.main {
             try {
                 val inputParam = JsonObject()
-                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserId())
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_GET_SCHEDULE)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
                 _isViewLoading.postValue(true)
                 val apiResponse = repository.callScheduleData(inputParam)
                 _isViewLoading.postValue(false)
