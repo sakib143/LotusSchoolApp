@@ -215,12 +215,20 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun openSubjectFile(model: SubjectDetailsModel.Data) {
         if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
-            intent.putExtra(Constant.VIDEO_URL, model.Column2)
+            intent.putExtra(Constant.VIDEO_URL, model.filepath)
             startActivity(intent)
         } else {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
             startActivity(browserIntent)
         }
+    }
+
+    override fun openSubjectDetails(model: ScheduleModel.Data) {
+        addFragment(
+            supportFragmentManager,
+            SubjectDetailsFragment.newInstance(model.subjid.toString()),
+            addToBackStack = true
+        )
     }
 
     override fun openAssignmentFile(model: AssignmentModel.Data) {

@@ -40,6 +40,8 @@ fun setSubjectIcons(view: ImageView, model: SubjectDetailsModel.Data) {
         view.setImageResource(R.drawable.ic_image_file)
     }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(".docx", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_doc)
+    }else  {
+        view.setImageResource(R.drawable.ic_subject_file)
     }
 }
 
@@ -57,6 +59,8 @@ fun setAssignmentIcon(view: ImageView, model: AssignmentModel.Data) {
         view.setImageResource(R.drawable.ic_image_file)
     }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(".docx", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_doc)
+    }else  {
+        view.setImageResource(R.drawable.ic_subject_file)
     }
 }
 
@@ -74,6 +78,8 @@ fun setDriveListIcon(view: ImageView, model: DriveModel.Data) {
         view.setImageResource(R.drawable.ic_image_file)
     }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(".docx", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_doc)
+    }else  {
+        view.setImageResource(R.drawable.ic_subject_file)
     }
 }
 

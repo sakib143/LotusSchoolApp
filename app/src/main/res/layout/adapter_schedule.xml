@@ -150,7 +150,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_file_save" />
+                    android:background="@drawable/ic_file_save"
+                    android:onClick="@{()-> scheduleClickListner.openSubjectDetails(scheduleModel)}" />
 
                 <TextView
                     android:layout_width="wrap_content"

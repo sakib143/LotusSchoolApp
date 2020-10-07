@@ -10,7 +10,5 @@ interface HomeListner {
     fun openExamDetails(model: ExamModel.Data)
     fun openDriveList(model: DriveModel.Data)
     fun shareDriveData(model: DriveModel.Data)
-
-
-
+    fun openSubjectDetails(model: ScheduleModel.Data)
 }

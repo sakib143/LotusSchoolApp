@@ -29,7 +29,7 @@ data class ScheduleModel(
         @Expose
         @SerializedName("schid") var schid: Int = 0,
         @Expose
-        @SerializedName("subjid") var subjid: Double = 0.0,
+        @SerializedName("subjid") var subjid: Int = 0,
         @Expose
         @SerializedName("teacherid") var teacherid: Double = 0.0,
         @Expose
