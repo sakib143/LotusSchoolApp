@@ -1,7 +1,10 @@
 package com.appforschool.di
 
 import com.appforschool.BuildConfig
+import com.appforschool.api.ApiExceptions
 import com.appforschool.api.WebServiceInterface
+import com.appforschool.utils.Constant
+import com.appforschool.utils.LogM
 import com.appforschool.utils.PrefUtils
 import dagger.Module
 import dagger.Provides
@@ -9,9 +12,11 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import org.apache.http.conn.ConnectTimeoutException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import java.net.SocketTimeoutException
 import javax.inject.Singleton
 
 /**
@@ -58,10 +63,12 @@ class NetworkModule {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {
             val encodedPath = chain.request().url.encodedPath
-            return if (encodedPath.contains("login") || encodedPath == "/") {
-                chain.proceed(chain.request())
-            } else {
-                var request = chain.request()
+            var request = chain.request()
+            try {
+                return if (encodedPath.contains("login") || encodedPath == "/") {
+                    chain.proceed(chain.request())
+                } else {
+                    var request = chain.request()
 //                if (prefUtils.getAuthenticationToken().isEmpty().not()) {
 //                    request = request.newBuilder()
 //                        .addHeader(
@@ -69,8 +76,16 @@ class NetworkModule {
 //                            Constant.TOKEN + " " + prefUtils.getAuthenticationToken()
 //                        ).build()
 //                }
-                chain.proceed(request)
+                    chain.proceed(request)
+                }
+            }catch (e: SocketTimeoutException) {
+                throw ApiExceptions(Constant.SOCKET_TIMEOUT_EXCEPTIONS)
+            }catch (e: ConnectTimeoutException) {
+                throw ApiExceptions(Constant.CONNECTION_TIMEOUT_EXCEPTIONS)
+            }catch (e: Exception) {
+                throw ApiExceptions(Constant.DEFAULT_SERVER_ERROR)
             }
+            return chain.proceed(request)
         }
     }
 }

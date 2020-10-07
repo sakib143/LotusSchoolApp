@@ -9,6 +9,8 @@ class Constant {
         const val CHECK_INTERNET = "Please check your internet connection"
         const val DEFAULT_SERVER_ERROR = "Something went wrong on server side. Please try again."
         const val APP_PREFERENCES = "app_preferences"
+        const val SOCKET_TIMEOUT_EXCEPTIONS = "Socket Timeout Exception"
+        const val CONNECTION_TIMEOUT_EXCEPTIONS = "Connection Timeout Exception"
         const val SUCCESS_CODE = 200
         const val UNAUTHORIZED_CODE = 401
         const val INTERNAL_SERVER_ERROR_CODE = 500

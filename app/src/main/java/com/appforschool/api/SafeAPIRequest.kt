@@ -1,9 +1,11 @@
 package com.appforschool.api
 
 import com.appforschool.utils.Constant
+import com.appforschool.utils.LogM
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
+import java.net.SocketTimeoutException
 
 abstract class SafeAPIRequest {
 
@@ -23,7 +25,7 @@ abstract class SafeAPIRequest {
                 }
                 throw ApiExceptions(message.toString())
             }
-        }  else if (response.code() == Constant.INTERNAL_SERVER_ERROR_CODE) {
+        } else if (response.code() == Constant.INTERNAL_SERVER_ERROR_CODE) {
             //Todo: APi call response Check failer data with failer code
             val error = response.errorBody()?.string()
             // return response.errorBody()!!
@@ -36,7 +38,7 @@ abstract class SafeAPIRequest {
                 }
                 throw ApiExceptions(message.toString())
             }
-        }else if (response.code() == Constant.NO_DATA_FOUND_CODE) {
+        } else if (response.code() == Constant.NO_DATA_FOUND_CODE) {
             //Todo: APi call response Check failer data with failer code
             val error = response.errorBody()?.string()
             val message = StringBuffer()
