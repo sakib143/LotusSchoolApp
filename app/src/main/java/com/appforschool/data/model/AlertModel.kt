@@ -18,14 +18,16 @@ data class AlertModel(
         @Expose
         @SerializedName("NotificationClass") var notificationClass: String? = "", // warning
         @Expose
-        @SerializedName("NotificationDate") var notificationDate: String? = "", // 2019-09-13T23:02:42.337
-        @Expose
         @SerializedName("NotificationDesc") var notificationDesc: String? = "", // Exam will be on This Monday
         @Expose
         @SerializedName("NotificationIcon") var notificationIcon: String? = "", // fa-hand-paper-o
         @Expose
         @SerializedName("NotificationType") var notificationType: String? = "", // Individual
         @Expose
-        @SerializedName("NotificationViewed") var notificationViewed: String? = "" // Y
+        @SerializedName("NotificationViewed") var notificationViewed: String? = "",
+        @Expose
+        @SerializedName("notidate") var notidate: String? = "",
+        @Expose
+        @SerializedName("notitime") var notitime: String? = ""
     )
 }

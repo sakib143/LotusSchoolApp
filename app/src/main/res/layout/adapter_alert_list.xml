@@ -18,19 +18,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorScheduleBackground"
         android:orientation="vertical"
-        android:padding="@dimen/_8sdp">
+        android:padding="@dimen/_8sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/bg_cardview">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_cardview"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/_5sdp"
-            android:paddingTop="@dimen/_15sdp"
-            android:paddingRight="@dimen/_5sdp"
-            android:paddingBottom="@dimen/_15sdp">
+            android:orientation="horizontal">
 
             <com.appforschool.utils.circle_imageview.CircularImageView
                 android:layout_width="@dimen/_35sdp"
@@ -47,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
-                    android:text="@{alertModel.notificationDate}"
+                    android:text="@{alertModel.notidate}"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
                     tools:text="Date" />
@@ -56,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
-                    android:text="@{alertModel.notificationDate}"
+                    android:text="@{alertModel.notitime}"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
                     tools:text="Time" />
@@ -66,13 +62,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:fontFamily="@font/calibri"
                 android:maxLines="3"
                 android:minLines="1"
                 android:text="@{alertModel.notificationDesc}"
                 android:textSize="@dimen/_13ssp"
-                tools:text="Descriptions" />
+                tools:text="Descriptions"
+                />
 
         </LinearLayout>
 
