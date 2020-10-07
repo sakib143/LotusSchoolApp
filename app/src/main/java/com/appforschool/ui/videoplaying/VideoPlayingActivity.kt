@@ -59,7 +59,6 @@ class VideoPlayingActivity : BaseVideoActivity() {
         releasePlayer()
         initializePlayer()
         ytOverlay.player(player!!)
-
         currentVideoId = (currentVideoId + 1).rem(DataAndUtils.videoList.size)
         buildMediaSource(Uri.parse(url))
     }
