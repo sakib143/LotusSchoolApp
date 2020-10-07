@@ -78,11 +78,9 @@ class NetworkModule {
 //                }
                     chain.proceed(request)
                 }
-            }catch (e: SocketTimeoutException) {
+            } catch (e: SocketTimeoutException) {
                 throw ApiExceptions(Constant.SOCKET_TIMEOUT_EXCEPTIONS)
-            }catch (e: ConnectTimeoutException) {
-                throw ApiExceptions(Constant.CONNECTION_TIMEOUT_EXCEPTIONS)
-            }catch (e: Exception) {
+            } catch (e: Exception) {
                 throw ApiExceptions(Constant.DEFAULT_SERVER_ERROR)
             }
             return chain.proceed(request)
