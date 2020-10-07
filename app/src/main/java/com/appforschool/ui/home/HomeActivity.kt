@@ -226,10 +226,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun openAssignmentFile(model: AssignmentModel.Data) {
         if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
-            intent.putExtra(Constant.VIDEO_URL, model.linkurl)
+            intent.putExtra(Constant.VIDEO_URL, model.filepath)
             startActivity(intent)
         } else {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.linkurl))
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
             startActivity(browserIntent)
         }
     }

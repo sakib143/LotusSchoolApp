@@ -23,16 +23,12 @@ class SplashActivity : BaseActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
 
-        LogM.e("=> User id checking ??? " + prefUtils.getUserId())
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (prefUtils.getUserId().isNullOrEmpty()) {
-                navigationController.navigateToLoginScreen(this@SplashActivity)
-            } else {
-                navigationController.navigateToHomeScreen(this@SplashActivity)
-            }
-            finish()
-        }, 1000)
+        if (prefUtils.getUserId().isNullOrEmpty()) {
+            navigationController.navigateToLoginScreen(this@SplashActivity)
+        } else {
+            navigationController.navigateToHomeScreen(this@SplashActivity)
+        }
+        finish()
     }
 
     private fun setWindow() {
