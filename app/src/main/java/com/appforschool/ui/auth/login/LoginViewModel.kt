@@ -92,7 +92,7 @@ class LoginViewModel @Inject constructor(
         Coroutines.main {
             try {
                 val inputParam = JsonObject()
-                inputParam.addProperty(Constant.REQUEST_DEVICE, Constant.KEY_ANDROID_)
+                inputParam.addProperty(Constant.REQUEST_DEVICE, Constant.KEY_ANDROID)
                 val apiResponse = repository.callLatestVersion(inputParam)
                 _getLatestVersionName.postValue(apiResponse)
             } catch (e: ApiExceptions) {

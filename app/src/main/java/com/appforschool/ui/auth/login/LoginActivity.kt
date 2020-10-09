@@ -71,13 +71,11 @@ class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
         if (it.status) {
             val latestVersion = it.data.get(0).currentVersion
             val currentVersion = globalMethods.getAppVersion(this@LoginActivity)
-            if (latestVersion.equals(
-                    currentVersion,
-                    ignoreCase = true
-                ) && it.data.get(0).isForceUpdate.equals("yes", ignoreCase = true)
-            ) {
+            val isForceUpdate = it.data.get(0).isForceUpdate
+
+            if ( ! latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals("yes", ignoreCase = true)) {
                 AlertDialogUtility.showSingleAlert(
-                    this@LoginActivity, "Please update latest version"
+                    this@LoginActivity, "Please update latest version."
                 ) { dialog, which ->
                     dialog.dismiss()
                     try {
