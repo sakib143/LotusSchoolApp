@@ -121,4 +121,7 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-core:2.11.7"
     implementation "com.google.android.exoplayer:exoplayer-ui:2.11.7"
 
+    //Run time permissions
+    implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'
+
 }

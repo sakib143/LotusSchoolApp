@@ -130,7 +130,7 @@
                 android:fontFamily="@font/calibri"
                 android:maxLines="2"
                 android:minLines="1"
-                android:text="@{`By: `+assignmentModel.sharedby}"
+                android:text="@{assignmentModel.sharedby}"
                 android:textColor="@color/grey_dark"
                 android:textSize="@dimen/_12ssp"
                 tools:text="Shared by"
@@ -138,7 +138,21 @@
                 android:layout_gravity="end"
                 android:layout_marginRight="@dimen/_10sdp"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:fontFamily="@font/calibri"
+                android:textColor="@color/colorJoinMeeting"
+                android:textSize="@dimen/_20ssp"
+                android:textStyle="bold"
+                android:text="@string/attach_answer" />
+
         </LinearLayout>
+
+
+
+
     </LinearLayout>
 
 </layout>

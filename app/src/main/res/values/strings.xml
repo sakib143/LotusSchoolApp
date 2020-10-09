@@ -39,5 +39,6 @@
     <string name="view_more">View more</string>
     <string name="marks">Marks</string>
     <string name="my_exam">My Exams</string>
+    <string name="attach_answer">Attach Answer</string>
 
 </resources>

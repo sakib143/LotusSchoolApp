@@ -59,7 +59,10 @@ class AssignmentFragment : BaseBindingFragment<FragmentAssignmentBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setObserver()
+    }
 
+    private fun setObserver() {
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.subjectDetails.observe(viewLifecycleOwner, assignmentObserver)
         if (globalMethods.isInternetAvailable(activity!!)) {

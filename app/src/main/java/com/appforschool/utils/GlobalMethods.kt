@@ -140,12 +140,12 @@ class GlobalMethods @Inject constructor() {
         }
     }
 
-     fun getFourDigitNumber() : String {
-         val randomNumber  = "" + ((Math.random() * 9000).toInt() + 1000)
-         return "$randomNumber"
-     }
+    fun getFourDigitNumber(): String {
+        val randomNumber = "" + ((Math.random() * 9000).toInt() + 1000)
+        return "$randomNumber"
+    }
 
-    fun getRandomString(length: Int) : String {
+    fun getRandomString(length: Int): String {
         val allowedChars = ('A'..'Z') + ('a'..'z')
         return (1..length)
             .map { allowedChars.random() }
@@ -166,6 +166,17 @@ class GlobalMethods @Inject constructor() {
             .setChooserTitle(title)
             .setText(text + context.packageName)
             .startChooser()
+    }
+
+    fun getAppVersion(context: Context): String {
+        var version = ""
+        try {
+            val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            version = pInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return version
     }
 
 }

@@ -81,7 +81,7 @@ class NetworkModule {
             } catch (e: SocketTimeoutException) {
                 throw ApiExceptions(Constant.SOCKET_TIMEOUT_EXCEPTIONS)
             } catch (e: Exception) {
-                throw ApiExceptions(Constant.DEFAULT_SERVER_ERROR)
+                throw ApiExceptions(e.message!!)
             }
             return chain.proceed(request)
         }

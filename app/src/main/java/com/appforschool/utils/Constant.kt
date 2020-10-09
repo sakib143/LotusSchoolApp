@@ -38,8 +38,10 @@ class Constant {
         const val REQUEST_GET_SCHEDULE = "getschedule"
         const val REUQEST_GET_SUBJECTS = "getsubjects"
         const val REQUEST_GET_DRIVE = "getdrive"
-
-
-
+        const val REQUEST_SET_JOIN_LOG = "setjoinlog"
+        const val REQUEST_SCHEDULE_ID = "scheduleid"
+        const val REQUEST_DEVICE = "Device"
+        const val KEY_ANDROID = "A"
+        const val KEY_ANDROID_ = "Android"
     }
 }

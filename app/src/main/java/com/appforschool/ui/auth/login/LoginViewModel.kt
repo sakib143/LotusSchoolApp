@@ -7,6 +7,7 @@ import com.google.gson.JsonObject
 import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
+import com.appforschool.data.model.GetVersionModel
 import com.appforschool.data.model.LoginModel
 import com.appforschool.data.repository.LoginRepository
 import com.appforschool.utils.Constant
@@ -26,10 +27,16 @@ class LoginViewModel @Inject constructor(
     private val _onMessageError = MutableLiveData<Any>()
     val onMessageError: LiveData<Any> get() = _onMessageError
 
+    //Login observer related data
     private val _login_data: MutableLiveData<LoginModel> =
         MutableLiveData<LoginModel>()
     val login_data: LiveData<LoginModel>
         get() = _login_data
+
+    //Checking latest version
+    private val _getLatestVersionName : MutableLiveData<GetVersionModel> = MutableLiveData<GetVersionModel>()
+    val getLatestVersionName: LiveData<GetVersionModel>
+        get() = _getLatestVersionName
 
     var userid =  MutableLiveData<String>()
     var password = MutableLiveData<String>()
@@ -81,5 +88,20 @@ class LoginViewModel @Inject constructor(
         return true
     }
 
+    fun executeLatestVersion(): LiveData<GetVersionModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_DEVICE, Constant.KEY_ANDROID_)
+                val apiResponse = repository.callLatestVersion(inputParam)
+                _getLatestVersionName.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            }catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _getLatestVersionName!!
+    }
 
 }

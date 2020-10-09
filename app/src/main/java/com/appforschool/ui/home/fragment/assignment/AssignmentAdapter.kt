@@ -20,20 +20,15 @@ class AssignmentAdapter (
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder {
         val rootView: ViewDataBinding =
             AdapterAssignmentListBinding.inflate(LayoutInflater.from(context), parent, false)
-        return BindingViewHolder(
-            rootView
-        )
+        return BindingViewHolder(rootView)
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
         val subjectDetails = dataList[position]
-
         holder.itemBinding.setVariable(BR.assignmentModel, subjectDetails)
         holder.itemBinding.executePendingBindings()
         //Set Item click listner in Adapte
         holder.itemBinding.setVariable(BR.assignmentListner,holder.itemBinding.root.context as HomeListner)
     }
-
     class BindingViewHolder(val itemBinding: ViewDataBinding) : RecyclerView.ViewHolder(itemBinding.root)
-
 }

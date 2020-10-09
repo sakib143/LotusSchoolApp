@@ -35,6 +35,11 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callDriveList(@Body jsonObject: JsonObject): Response<DriveModel>
 
+    @POST("Get_SpData")
+    suspend fun callSetJoinLog(@Body jsonObject: JsonObject): Response<SetJoinModel>
+
+    @POST("GetVersion")
+    suspend fun callLatestVersion(@Body jsonObject: JsonObject): Response<GetVersionModel>
 
 
 //    @Multipart

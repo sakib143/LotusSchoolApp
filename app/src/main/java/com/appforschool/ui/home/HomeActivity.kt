@@ -1,11 +1,13 @@
 package com.appforschool.ui.home
 
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
 import com.appforschool.BuildConfig
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
@@ -25,6 +27,7 @@ import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.facebook.react.modules.dialog.AlertFragment
+import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -39,7 +42,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     SubjectFragment.SubjectFragmentListner, SubjectDetailsFragment.SubjectDetailsListner,
     AssignmentFragment.AssignmentFragmentListner,
     com.appforschool.ui.home.fragment.alert.AlertFragment.AlertListner,
-    ExamListFragment.ExamListListner,DriveFragment.DriveFragmentListner {
+    ExamListFragment.ExamListListner, DriveFragment.DriveFragmentListner {
 
     override fun layoutId() = R.layout.activity_home
 
@@ -64,9 +67,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         super.onCreate(savedInstanceState)
 
         homeFragment = ScheduleFragment.newInstance()
-//        navigateToHomeFragment(false)
         navigateToDashBoardFragment(false)
         viewModel.getUserData()
+        viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
+
+        LogM.e("=> Current version is:-  " + globalMethods.getAppVersion(this@HomeActivity))
 
     }
 
@@ -193,8 +198,20 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         )
     }
 
+    private val joinLogObserver = Observer<SetJoinModel> {
+        if (it.status) {
+        } else {
+            toast(it.message)
+        }
+    }
+
     override fun openVideoCalling(model: ScheduleModel.Data) {
+        permissionForVideoCalling(model)
+    }
+
+    fun permissionForVideoCalling(model: ScheduleModel.Data) = runWithPermissions(Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO) {
         if (model.meetinglink.isNullOrBlank()) {
+            viewModel.executeSetJoinLog(model.schid.toString())
             val isHost: Int = prefUtils.getUserData()!!.ishost
             val fullUrl = BuildConfig.VIDEO_CALL_URL + model.schid
             LogM.e("=> video calling url " + fullUrl)
@@ -251,10 +268,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openDriveList(model: DriveModel.Data) {
-
-    }
-
-    override fun shareDriveData(model: DriveModel.Data) {
         if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
             intent.putExtra(Constant.VIDEO_URL, model.filepath)
@@ -263,5 +276,9 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
             startActivity(browserIntent)
         }
+    }
+
+    override fun shareDriveData(model: DriveModel.Data) {
+        globalMethods.shareTextToFriend(this@HomeActivity,"Share Drive file",model.filepath)
     }
 }

@@ -39,7 +39,7 @@ class ExamViewModel  @Inject constructor(
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_GET_EXAMS)
                 inputParam.addProperty(Constant.REQUEST_STUDENTID,prefUtils.getUserData()?.studentId)
                 inputParam.addProperty(Constant.REUQEST_USER_ID,prefUtils.getUserData()?.userid)
-
+                inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
                 _isViewLoading.postValue(true)
                 val apiResponse = repository.callExam(inputParam)
                 _isViewLoading.postValue(false)

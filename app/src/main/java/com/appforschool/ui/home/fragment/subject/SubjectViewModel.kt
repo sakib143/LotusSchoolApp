@@ -38,6 +38,7 @@ class SubjectViewModel   @Inject constructor(
             val inputParam = JsonObject()
             inputParam.addProperty(Constant.REQUEST_MODE,Constant.REUQEST_GET_SUBJECTS)
             inputParam.addProperty(Constant.REUQEST_USER_ID,prefUtils.getUserData()?.userid)
+            inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
             inputParam.addProperty(Constant.REQUEST_STUDENTID,prefUtils.getUserData()?.studentId)
             try {
                 _isViewLoading.postValue(true)
