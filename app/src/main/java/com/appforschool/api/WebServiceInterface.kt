@@ -41,6 +41,9 @@ interface WebServiceInterface {
     @POST("GetVersion")
     suspend fun callLatestVersion(@Body jsonObject: JsonObject): Response<GetVersionModel>
 
+    @POST("GetVersion")
+    suspend fun callHomeData(@Body jsonObject: JsonObject): Response<HomeApiModel>
+
 
 //    @Multipart
 //    @POST("UpdateProfilePic")

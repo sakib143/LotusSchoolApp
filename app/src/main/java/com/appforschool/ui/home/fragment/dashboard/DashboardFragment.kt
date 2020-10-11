@@ -1,12 +1,21 @@
 package com.appforschool.ui.home.fragment.dashboard
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
+import com.appforschool.data.model.AlertModel
+import com.appforschool.data.model.HomeApiModel
 import com.appforschool.databinding.FragmentDashboardBinding
 import com.appforschool.ui.home.fragment.schedule.ScheduleViewModel
+import com.appforschool.utils.AlertDialogUtility
+import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
+import com.appforschool.utils.toast
 import javax.inject.Inject
 
 class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
@@ -46,7 +55,59 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.getUserName()
+
+        viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
+        viewModel.homeAPI.observe(viewLifecycleOwner, homeAPIObserver)
+
+        //Make API call
+        if (globalMethods.isInternetAvailable(activity!!)) {
+            viewModel.executeHomeAPI()
+        } else {
+            activity!!.toast(Constant.CHECK_INTERNET)
+        }
+
     }
+
+    private val onMessageErrorObserver = Observer<Any> {
+        activity?.toast(it.toString())
+    }
+
+    private val homeAPIObserver = Observer<HomeApiModel> {
+        if (it.status) {
+            viewModel.getUserName()
+            checkLatestVersion(it)
+        }
+    }
+
+    private fun checkLatestVersion(it: HomeApiModel) {
+//        val latestVersion = it.data.get(0).currentVersion
+//        val currentVersion = globalMethods.getAppVersion(activity!!)
+//        val isForceUpdate = it.data.get(0).isForceUpdate
+//
+//        if ( ! latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals("yes", ignoreCase = true)) {
+//            AlertDialogUtility.showSingleAlert(
+//                this@LoginActivity, "Please update latest version."
+//            ) { dialog, which ->
+//                dialog.dismiss()
+//                try {
+//                    val appStoreIntent =
+//                        Intent(
+//                            Intent.ACTION_VIEW,
+//                            Uri.parse("market://details?id=${this.packageName}")
+//                        )
+//                    appStoreIntent.setPackage("com.android.vending")
+//                    startActivity(appStoreIntent)
+//                } catch (exception: ActivityNotFoundException) {
+//                    startActivity(
+//                        Intent(
+//                            Intent.ACTION_VIEW,
+//                            Uri.parse("https://play.google.com/store/apps/details?id=$this.packageName")
+//                        )
+//                    )
+//                }
+//            }
+    }
+
 
     interface FragmentListner {
         fun popFragment()

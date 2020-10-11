@@ -2,8 +2,6 @@ package com.appforschool.data.repository
 
 import com.appforschool.api.SafeAPIRequest
 import com.appforschool.api.WebServiceInterface
-import com.appforschool.data.model.AlertModel
-import com.appforschool.data.model.GetVersionModel
 import com.appforschool.data.model.SetJoinModel
 import com.google.gson.JsonObject
 import javax.inject.Inject

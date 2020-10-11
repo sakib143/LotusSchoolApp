@@ -41,7 +41,9 @@ class Constant {
         const val REQUEST_SET_JOIN_LOG = "setjoinlog"
         const val REQUEST_SCHEDULE_ID = "scheduleid"
         const val REQUEST_DEVICE = "Device"
+        const val REQUEST_DEVICE_SMALL = "device"
         const val KEY_ANDROID = "A"
-        const val KEY_ANDROID_ = "Android"
+        const val REQUEST_HOMEAPI = "homeapi"
+
     }
 }
