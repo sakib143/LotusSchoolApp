@@ -15,19 +15,19 @@ data class HomeApiModel(
 
     data class Data(
         @Expose
-        @SerializedName("ishost") var ishost: Int? = 0, // 0
+        @SerializedName("ishost") var ishost: Int = 0, // 0
         @Expose
-        @SerializedName("standardid") var standardid: Double? = 0.0, // 109.0
+        @SerializedName("standardid") var standardid: Int = 0, // 109.0
         @Expose
-        @SerializedName("standardname") var standardname: String? = "", // Class 2
+        @SerializedName("standardname") var standardname: String = "", // Class 2
         @Expose
-        @SerializedName("StudentId") var studentId: Int? = 0, // 52
+        @SerializedName("StudentId") var studentId: Int = 0, // 52
         @Expose
-        @SerializedName("studentname") var studentname: String? = "", // Sunil Khanna
+        @SerializedName("studentname") var studentname: String= "", // Sunil Khanna
         @Expose
-        @SerializedName("usertype") var usertype: String? = "",
+        @SerializedName("usertype") var usertype: String = "",
         @Expose
-        @SerializedName("currentversion") var currentversion: String? = "",
+        @SerializedName("currentversion") var currentversion: String = "",
         @Expose
-        @SerializedName("isforceupdate") var isforceupdate: String? = "")
+        @SerializedName("isforceupdate") var isforceupdate: String = "")
 }

@@ -10,6 +10,7 @@ import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
 import com.appforschool.data.model.AlertModel
 import com.appforschool.data.model.HomeApiModel
+import com.appforschool.data.model.LoginModel
 import com.appforschool.databinding.FragmentDashboardBinding
 import com.appforschool.ui.home.fragment.schedule.ScheduleViewModel
 import com.appforschool.utils.AlertDialogUtility
@@ -58,14 +59,12 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.homeAPI.observe(viewLifecycleOwner, homeAPIObserver)
-
         //Make API call
         if (globalMethods.isInternetAvailable(activity!!)) {
             viewModel.executeHomeAPI()
         } else {
             activity!!.toast(Constant.CHECK_INTERNET)
         }
-
     }
 
     private val onMessageErrorObserver = Observer<Any> {
@@ -74,40 +73,58 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     private val homeAPIObserver = Observer<HomeApiModel> {
         if (it.status) {
+            //Save data to Session Manager OR Pref Utils
+            val loginModel = LoginModel.Data()
+            loginModel.studentId = it.data.get(0).studentId.toString()
+            loginModel.studentname = it.data.get(0).studentname
+            loginModel.standardname = it.data.get(0).standardname
+            loginModel.ishost = it.data.get(0).ishost
+            loginModel.usertype = it.data.get(0).usertype
+            loginModel.userid = prefUtils.getUserData()!!.userid
+            loginModel.standardid = it.data.get(0).standardid
+            loginModel.currentversion = it.data.get(0).currentversion
+            loginModel.isforceupdate = it.data.get(0).isforceupdate
+            prefUtils.saveUserId(prefUtils.getUserData()!!.userid,loginModel)
+            //Refresh User name from session manager.
             viewModel.getUserName()
             checkLatestVersion(it)
         }
     }
 
     private fun checkLatestVersion(it: HomeApiModel) {
-//        val latestVersion = it.data.get(0).currentVersion
-//        val currentVersion = globalMethods.getAppVersion(activity!!)
-//        val isForceUpdate = it.data.get(0).isForceUpdate
-//
-//        if ( ! latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals("yes", ignoreCase = true)) {
-//            AlertDialogUtility.showSingleAlert(
-//                this@LoginActivity, "Please update latest version."
-//            ) { dialog, which ->
-//                dialog.dismiss()
-//                try {
-//                    val appStoreIntent =
-//                        Intent(
-//                            Intent.ACTION_VIEW,
-//                            Uri.parse("market://details?id=${this.packageName}")
-//                        )
-//                    appStoreIntent.setPackage("com.android.vending")
-//                    startActivity(appStoreIntent)
-//                } catch (exception: ActivityNotFoundException) {
-//                    startActivity(
-//                        Intent(
-//                            Intent.ACTION_VIEW,
-//                            Uri.parse("https://play.google.com/store/apps/details?id=$this.packageName")
-//                        )
-//                    )
-//                }
-//            }
-    }
+        val latestVersion = it.data.get(0).currentversion
+        val currentVersion = globalMethods.getAppVersion(activity!!)
+        val isForceUpdate = it.data.get(0).isforceupdate
 
+        if (!latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals(
+                "yes",
+                ignoreCase = true
+            )
+        ) {
+            prefUtils.clearAll()
+            AlertDialogUtility.showSingleAlert(
+                activity!!, "Please update latest version."
+            ) { dialog, which ->
+                dialog.dismiss()
+                try {
+                    val appStoreIntent =
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=${activity!!.packageName}")
+                        )
+                    appStoreIntent.setPackage("com.android.vending")
+                    startActivity(appStoreIntent)
+                } catch (exception: ActivityNotFoundException) {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=$this.packageName")
+                        )
+                    )
+                }
+            }
+        }
+    }
 
     interface FragmentListner {
         fun popFragment()

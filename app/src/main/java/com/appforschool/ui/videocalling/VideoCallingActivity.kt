@@ -41,14 +41,10 @@ class VideoCallingActivity : BaseActivity(), JitsiMeetActivityInterface {
         fun intentFor(
             context: Context,
             roomId: String,
-            userName: String,
-            ishost: Int,
             scheduleId: Int
         ) =
             Intent(context, VideoCallingActivity::class.java)
                 .putExtra(Constant.KEY_ROOM_URL, roomId)
-                .putExtra(Constant.REQUEST_USERNAME, userName)
-                .putExtra(Constant.IS_HOST, ishost)
                 .putExtra(Constant.REQUEST_SCHEDULE_ID, scheduleId)
 
     }
@@ -79,7 +75,7 @@ class VideoCallingActivity : BaseActivity(), JitsiMeetActivityInterface {
             override fun onConferenceTerminated(map: Map<String, Any>) {
                 if (isHost == 1) {
                     viewModel.executeSetEndcallLog(scheduleId)
-                }else {
+                } else {
                     finish()
                 }
 
@@ -94,9 +90,9 @@ class VideoCallingActivity : BaseActivity(), JitsiMeetActivityInterface {
     private fun getIntentData() {
         view = JitsiMeetView(this)
         roomUrl = intent.getStringExtra(Constant.KEY_ROOM_URL)
-        userName = intent.getStringExtra(Constant.REQUEST_USERNAME)
+        userName = prefUtils.getUserData()?.studentname
         scheduleId = intent.getIntExtra(Constant.REQUEST_SCHEDULE_ID, 0)
-        //        isHost = intent.getIntExtra(Constant.IS_HOST,0)
+        isHost = prefUtils.getUserData()?.ishost!!
     }
 
     private fun setObserver() {

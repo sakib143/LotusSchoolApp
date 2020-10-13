@@ -212,10 +212,9 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     fun permissionForVideoCalling(model: ScheduleModel.Data) = runWithPermissions(Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO) {
         if (model.meetinglink.isNullOrBlank()) {
             viewModel.executeSetJoinLog(model.schid.toString())
-            val isHost: Int = prefUtils.getUserData()!!.ishost
             val fullUrl = BuildConfig.VIDEO_CALL_URL + model.schid
             val scheduleId =  model.schid
-            navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl, prefUtils.getUserData()?.studentname!!, isHost,scheduleId)
+            navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl, scheduleId)
         } else {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
             if (intent.resolveActivity(packageManager) != null) {

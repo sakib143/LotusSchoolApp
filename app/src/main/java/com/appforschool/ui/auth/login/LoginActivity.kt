@@ -47,7 +47,10 @@ class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
         viewModel.onMessageError.observe(this, onMessageErrorObserver)
         viewModel.login_data.observe(this, loginObserver)
         viewModel.getLatestVersionName.observe(this, latestVersionObserver)
+    }
 
+    override fun onResume() {
+        super.onResume()
         if (globalMethods.isInternetAvailable(this@LoginActivity)) {
             viewModel.executeLatestVersion()
         }

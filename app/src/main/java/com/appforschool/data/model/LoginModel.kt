@@ -26,8 +26,12 @@ data class LoginModel(
         @Expose
         @SerializedName("userid") var userid: String = "",
         @Expose
-        @SerializedName("standardid") var standardid: Int = 0
-        )
+        @SerializedName("standardid") var standardid: Int = 0,
+        @Expose
+        @SerializedName("currentversion") var currentversion: String = "",
+        @Expose
+        @SerializedName("isforceupdate") var isforceupdate: String = ""
+    )
 
     /*
     usertype will be

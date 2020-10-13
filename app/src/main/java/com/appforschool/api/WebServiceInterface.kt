@@ -44,7 +44,7 @@ interface WebServiceInterface {
     @POST("GetVersion")
     suspend fun callLatestVersion(@Body jsonObject: JsonObject): Response<GetVersionModel>
 
-    @POST("GetVersion")
+    @POST("Get_SpData")
     suspend fun callHomeData(@Body jsonObject: JsonObject): Response<HomeApiModel>
 
 
