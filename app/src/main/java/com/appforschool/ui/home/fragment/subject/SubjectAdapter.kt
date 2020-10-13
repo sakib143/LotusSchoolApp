@@ -27,16 +27,16 @@ class SubjectAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.tvSubjectName.text = list.get(position).coursename
 
-        if (position % 2 == 1) {
-            val params = RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.setMargins(0, 50, 0, 0)
-            holder.rlRoom.setLayoutParams(params)
-        } else {
-
-        }
+//        if (position % 2 == 1) {
+//            val params = RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT
+//            )
+//            params.setMargins(0, 50, 0, 0)
+//            holder.rlRoom.setLayoutParams(params)
+//        } else {
+//
+//        }
 
         holder.llRoom.setOnClickListener() {
             listner.openSubjectDetails(list.get(position).courseid.toString())

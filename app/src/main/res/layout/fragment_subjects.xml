@@ -60,8 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:listitem="@layout/adapter_subjects"
-                android:layout_marginTop="@dimen/_minus35sdp"
-                android:gravity="center"/>
+                android:gravity="center" />
 
         </LinearLayout>
 

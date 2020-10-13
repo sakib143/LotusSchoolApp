@@ -78,7 +78,6 @@ class VideoCallingActivity : BaseActivity(), JitsiMeetActivityInterface {
                 } else {
                     finish()
                 }
-
             }
 
             override fun onConferenceWillJoin(map: Map<String, Any>) {
