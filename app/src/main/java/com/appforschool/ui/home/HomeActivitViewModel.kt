@@ -52,7 +52,7 @@ class HomeActivitViewModel  @Inject constructor(
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
                 inputParam.addProperty(Constant.REQUEST_SCHEDULE_ID, scheduleId)
-                inputParam.addProperty(Constant.REQUEST_DEVICE, Constant.KEY_ANDROID)
+                inputParam.addProperty(Constant.REQUEST_DEVICE_SMALL, Constant.KEY_ANDROID)
                 val apiResponse = repository.callSetJoinLog(inputParam)
                 _setIsJoinLog.postValue(apiResponse)
             } catch (e: ApiExceptions) {

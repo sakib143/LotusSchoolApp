@@ -199,7 +199,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     private val joinLogObserver = Observer<SetJoinModel> {
-        if (it.status) {
+        if(it.status) {
         } else {
             toast(it.message)
         }
@@ -214,13 +214,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             viewModel.executeSetJoinLog(model.schid.toString())
             val isHost: Int = prefUtils.getUserData()!!.ishost
             val fullUrl = BuildConfig.VIDEO_CALL_URL + model.schid
-            LogM.e("=> video calling url " + fullUrl)
-            navigationController.navigateToVideoCallScreen(
-                this@HomeActivity,
-                fullUrl,
-                prefUtils.getUserData()?.studentname!!,
-                isHost
-            )
+            val scheduleId =  model.schid
+            navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl, prefUtils.getUserData()?.studentname!!, isHost,scheduleId)
         } else {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
             if (intent.resolveActivity(packageManager) != null) {

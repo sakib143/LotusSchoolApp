@@ -44,6 +44,7 @@ class Constant {
         const val REQUEST_DEVICE_SMALL = "device"
         const val KEY_ANDROID = "A"
         const val REQUEST_HOMEAPI = "homeapi"
+        const val REQUEST_SET_END_MEETING_LOG = "setendmeetinglog"
 
     }
 }

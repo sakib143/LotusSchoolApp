@@ -42,8 +42,8 @@ class NavigationController @Inject constructor(var context: Context) {
     //     * Opens Video calling
     //     * @param activity -> to Start the Activity
     //     */
-    fun navigateToVideoCallScreen(activity: BaseActivity, roomUrl: String, userName: String,ishost: Int) {
-        activity.startActivity(VideoCallingActivity.intentFor(context,roomUrl,userName,ishost))
+    fun navigateToVideoCallScreen(activity: BaseActivity, roomUrl: String, userName: String,ishost: Int,scheduleId: Int) {
+        activity.startActivity(VideoCallingActivity.intentFor(context,roomUrl,userName,ishost,scheduleId))
     }
 
     /**

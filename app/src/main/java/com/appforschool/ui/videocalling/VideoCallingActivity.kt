@@ -3,65 +3,119 @@ package com.appforschool.ui.videocalling
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import com.facebook.react.modules.core.PermissionListener
 import com.appforschool.R
+import com.appforschool.base.BaseActivity
+import com.appforschool.data.model.SetCallEndLogModel
 import com.appforschool.utils.Constant
+import com.appforschool.utils.toast
 import org.jitsi.meet.sdk.*
+import javax.inject.Inject
+import org.jitsi.meet.sdk.JitsiMeetConferenceOptions as JitsiMeetConferenceOptions1
 
-class VideoCallingActivity: FragmentActivity(), JitsiMeetActivityInterface {
+class VideoCallingActivity : BaseActivity(), JitsiMeetActivityInterface {
 
     private var view: JitsiMeetView? = null
     private var roomUrl: String? = null
     private var userName: String? = null
-    private var isHost: Int = 0
+    private var isHost: Int = 1
+    private var scheduleId: Int = 0
+
+    override fun layoutId() = R.layout.activity_video_calling
+
+    @Inject
+    lateinit var viewModel: VideoCallingViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video_calling)
+//        setContentView(R.layout.activity_video_calling)
 
-        view = JitsiMeetView(this)
-        roomUrl = intent.getStringExtra(Constant.KEY_ROOM_URL)
-        userName = intent.getStringExtra(Constant.REQUEST_USERNAME)
-        isHost = intent.getIntExtra(Constant.IS_HOST,0)
+        setObserver()
+        getIntentData()
+        setJitsiMeet()
+    }
 
-        val builder = JitsiMeetConferenceOptions.Builder()
+    companion object {
+        @JvmStatic
+        fun intentFor(
+            context: Context,
+            roomId: String,
+            userName: String,
+            ishost: Int,
+            scheduleId: Int
+        ) =
+            Intent(context, VideoCallingActivity::class.java)
+                .putExtra(Constant.KEY_ROOM_URL, roomId)
+                .putExtra(Constant.REQUEST_USERNAME, userName)
+                .putExtra(Constant.IS_HOST, ishost)
+                .putExtra(Constant.REQUEST_SCHEDULE_ID, scheduleId)
+
+    }
+
+    private fun setJitsiMeet() {
+        val builder = JitsiMeetConferenceOptions1.Builder()
             .setFeatureFlag("invite.enabled", false)
             .setFeatureFlag("meeting-name.enabled", false)
             .setFeatureFlag("live-streaming.enabled", false)
             .setFeatureFlag("meeting-password.enabled", false)
             .setRoom(roomUrl)
+
         val jitsiMeetUserInfo = JitsiMeetUserInfo()
         jitsiMeetUserInfo.displayName = userName
         builder.setUserInfo(jitsiMeetUserInfo)
+        //Camera off when user is NOT host
+        if (isHost == 0) {
+            builder.setVideoMuted(true)
+        }
+
         val options = builder.build()
+
         view!!.join(options)
         view!!.listener = object : JitsiMeetViewListener {
             override fun onConferenceJoined(map: Map<String, Any>) {
-                Log.e("onConferenceJoined", map.toString())
             }
 
             override fun onConferenceTerminated(map: Map<String, Any>) {
-                finish()
+                if (isHost == 1) {
+                    viewModel.executeSetEndcallLog(scheduleId)
+                }else {
+                    finish()
+                }
+
             }
 
             override fun onConferenceWillJoin(map: Map<String, Any>) {
-                Log.e("onConferenceWillJoin", map.toString())
             }
         }
         setContentView(view)
     }
 
-    companion object {
-        @JvmStatic
-        fun intentFor(context: Context, roomId: String, userName: String,ishost: Int) =
-            Intent(context, VideoCallingActivity::class.java)
-                .putExtra(Constant.KEY_ROOM_URL, roomId)
-                .putExtra(Constant.REQUEST_USERNAME, userName)
-                .putExtra(Constant.IS_HOST, ishost)
+    private fun getIntentData() {
+        view = JitsiMeetView(this)
+        roomUrl = intent.getStringExtra(Constant.KEY_ROOM_URL)
+        userName = intent.getStringExtra(Constant.REQUEST_USERNAME)
+        scheduleId = intent.getIntExtra(Constant.REQUEST_SCHEDULE_ID, 0)
+        //        isHost = intent.getIntExtra(Constant.IS_HOST,0)
     }
 
+    private fun setObserver() {
+        viewModel.onMessageError.observe(this, onMessageErrorObserver)
+        viewModel.call_end_log.observe(this, callEndObserver)
+    }
+
+    private val onMessageErrorObserver = Observer<Any> {
+        toast(it.toString())
+    }
+
+    private val callEndObserver = Observer<SetCallEndLogModel> {
+        if (it.status) {
+            toast(it!!.message)
+        } else {
+            toast(it!!.message)
+        }
+        finish()
+    }
 
     override fun onActivityResult(
         requestCode: Int,
@@ -90,7 +144,11 @@ class VideoCallingActivity: FragmentActivity(), JitsiMeetActivityInterface {
         JitsiMeetActivityDelegate.onNewIntent(intent)
     }
 
-    override fun requestPermissions(permissions: Array<String>, requestCode: Int, listener: PermissionListener) {
+    override fun requestPermissions(
+        permissions: Array<String>,
+        requestCode: Int,
+        listener: PermissionListener
+    ) {
         JitsiMeetActivityDelegate.requestPermissions(this, permissions, requestCode, listener)
     }
 
@@ -105,7 +163,7 @@ class VideoCallingActivity: FragmentActivity(), JitsiMeetActivityInterface {
     override fun onResume() {
         super.onResume()
         //If user type is host then use below code otherwiae not
-        if(isHost == 1){
+        if (isHost == 1) {
             JitsiMeetActivityDelegate.onHostResume(this)
         }
 
@@ -113,8 +171,10 @@ class VideoCallingActivity: FragmentActivity(), JitsiMeetActivityInterface {
 
     override fun onStop() {
         super.onStop()
-        if(isHost == 1){
+        if (isHost == 1) {
             JitsiMeetActivityDelegate.onHostPause(this)
         }
     }
+
+
 }

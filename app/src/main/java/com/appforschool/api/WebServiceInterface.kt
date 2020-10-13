@@ -38,6 +38,9 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callSetJoinLog(@Body jsonObject: JsonObject): Response<SetJoinModel>
 
+    @POST("Get_SpData")
+    suspend fun callEndLog(@Body jsonObject: JsonObject): Response<SetCallEndLogModel>
+
     @POST("GetVersion")
     suspend fun callLatestVersion(@Body jsonObject: JsonObject): Response<GetVersionModel>
 

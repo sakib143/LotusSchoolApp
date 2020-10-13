@@ -5,6 +5,7 @@ import com.appforschool.ui.home.HomeBuilderModule
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
 import com.appforschool.ui.splash.SplashActivity
+import com.appforschool.ui.videocalling.VideoCallingActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -39,6 +40,12 @@ abstract class ActivityBuilder {
      **/
     @ContributesAndroidInjector()
     abstract fun bindCommonWebviewActivity(): CommonWebviewActivity
+
+    /**
+     * fun to bind VideoCalling screen , making Injection enable
+     **/
+    @ContributesAndroidInjector()
+    abstract fun bindVideoCallingActivity(): VideoCallingActivity
 
 
 

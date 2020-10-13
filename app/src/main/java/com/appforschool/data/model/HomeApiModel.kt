@@ -25,6 +25,9 @@ data class HomeApiModel(
         @Expose
         @SerializedName("studentname") var studentname: String? = "", // Sunil Khanna
         @Expose
-        @SerializedName("usertype") var usertype: String? = "" // S
-    )
+        @SerializedName("usertype") var usertype: String? = "",
+        @Expose
+        @SerializedName("currentversion") var currentversion: String? = "",
+        @Expose
+        @SerializedName("isforceupdate") var isforceupdate: String? = "")
 }
