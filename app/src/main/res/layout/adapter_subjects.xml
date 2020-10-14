@@ -27,7 +27,8 @@
             android:text="@string/subject"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_12ssp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,7 +44,7 @@
                 android:drawablePadding="@dimen/_5sdp"
                 android:fontFamily="@font/calibri"
                 android:text="@string/teacher"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="@dimen/_12ssp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,7 +54,7 @@
                 android:drawablePadding="@dimen/_5sdp"
                 android:fontFamily="@font/calibri"
                 android:text="@string/files"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="@dimen/_12ssp" />
 
         </RelativeLayout>
 
