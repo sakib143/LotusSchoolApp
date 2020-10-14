@@ -62,6 +62,8 @@
                 android:layout_height="match_parent"
                 tools:listitem="@layout/adapter_subjects"
                 android:scrollbars="vertical"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </LinearLayout>

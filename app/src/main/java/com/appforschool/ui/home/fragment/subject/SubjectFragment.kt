@@ -67,8 +67,8 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
     private val subjectObserver = Observer<SubjectModel> {
         if (it.status) {
             rvSubjectFragment.setHasFixedSize(true)
-//            rvSubjectFragment.layoutManager = GridLayoutManager(activity!!.applicationContext, 2)
-            rvSubjectFragment.layoutManager = AutoFitGridLayoutManager(activity!!,450)
+            rvSubjectFragment.layoutManager = GridLayoutManager(activity!!.applicationContext, 2)
+//            rvSubjectFragment.layoutManager = AutoFitGridLayoutManager(activity!!,350)
 
             adapter = SubjectAdapter(it.data, activity!!, object : SubjectFragmentListner {
                 override fun popFragment() {

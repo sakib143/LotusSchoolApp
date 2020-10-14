@@ -47,6 +47,7 @@
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/temp_image"
                     android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_minus20sdp"
                     />
 
                 <TextView
