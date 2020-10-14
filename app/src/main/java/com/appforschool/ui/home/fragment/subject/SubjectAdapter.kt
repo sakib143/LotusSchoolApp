@@ -26,19 +26,7 @@ class SubjectAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.tvSubjectName.text = list.get(position).coursename
-
-//        if (position % 2 == 1) {
-//            val params = RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                RelativeLayout.LayoutParams.WRAP_CONTENT
-//            )
-//            params.setMargins(0, 50, 0, 0)
-//            holder.rlRoom.setLayoutParams(params)
-//        } else {
-//
-//        }
-
-        holder.llRoom.setOnClickListener() {
+        holder.tvFile.setOnClickListener() {
             listner.openSubjectDetails(list.get(position).courseid.toString(),list.get(position).coursename)
         }
     }
@@ -49,5 +37,6 @@ class SubjectAdapter(
         val rlRoom = itemView.findViewById(R.id.rlRoom) as RelativeLayout
         val tvSubjectName = itemView.findViewById(R.id.tvSubjectName) as TextView
         val llRoom = itemView.findViewById(R.id.llRoom) as LinearLayout
+        val tvFile = itemView.findViewById(R.id.tvFile) as TextView
     }
 }

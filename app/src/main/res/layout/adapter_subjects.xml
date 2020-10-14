@@ -47,6 +47,7 @@
                 android:textSize="@dimen/_12ssp" />
 
             <TextView
+                android:id="@+id/tvFile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

@@ -40,5 +40,6 @@
     <string name="marks">Marks</string>
     <string name="my_exam">My Exams</string>
     <string name="attach_answer">Attach Answer</string>
+    <string name="study_material">Study Material</string>
 
 </resources>

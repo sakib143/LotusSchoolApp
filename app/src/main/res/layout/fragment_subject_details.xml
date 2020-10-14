@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/calibri"
-                android:text="@string/subject_details"
+                android:text="@string/study_material"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_20ssp" />
 
