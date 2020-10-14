@@ -4,12 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
 import com.appforschool.data.model.SubjectModel
 import com.appforschool.databinding.FragmentSubjectsBinding
-import com.appforschool.ui.home.fragment.schedule.ScheduleViewModel
+import com.appforschool.utils.AutoFitGridLayoutManager
 import com.appforschool.utils.toast
 import kotlinx.android.synthetic.main.fragment_subjects.*
 import javax.inject.Inject
@@ -68,7 +67,9 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
     private val subjectObserver = Observer<SubjectModel> {
         if (it.status) {
             rvSubjectFragment.setHasFixedSize(true)
-            rvSubjectFragment.layoutManager = GridLayoutManager(activity!!.applicationContext, 2)
+//            rvSubjectFragment.layoutManager = GridLayoutManager(activity!!.applicationContext, 2)
+            rvSubjectFragment.layoutManager = AutoFitGridLayoutManager(activity!!,450)
+
             adapter = SubjectAdapter(it.data, activity!!, object : SubjectFragmentListner {
                 override fun popFragment() {
 

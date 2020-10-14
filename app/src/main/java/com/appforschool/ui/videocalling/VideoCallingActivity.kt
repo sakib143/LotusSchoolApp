@@ -29,7 +29,6 @@ class VideoCallingActivity : BaseActivity(), JitsiMeetActivityInterface {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_video_calling)
 
         setObserver()
         getIntentData()
@@ -73,11 +72,7 @@ class VideoCallingActivity : BaseActivity(), JitsiMeetActivityInterface {
             }
 
             override fun onConferenceTerminated(map: Map<String, Any>) {
-                if (isHost == 1) {
-                    viewModel.executeSetEndcallLog(scheduleId)
-                } else {
-                    finish()
-                }
+                viewModel.executeSetEndcallLog(scheduleId)
             }
 
             override fun onConferenceWillJoin(map: Map<String, Any>) {
