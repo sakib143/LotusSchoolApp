@@ -54,6 +54,8 @@ class VideoCallingActivity : BaseActivity(), JitsiMeetActivityInterface {
             .setFeatureFlag("meeting-name.enabled", false)
             .setFeatureFlag("live-streaming.enabled", false)
             .setFeatureFlag("meeting-password.enabled", false)
+            .setFeatureFlag("video-share.enabled", false)   // Hide Youtube option from list.
+            .setFeatureFlag("close-captions.enabled", false) // Hide Start showing subtitles from list.
             .setRoom(roomUrl)
 
         val jitsiMeetUserInfo = JitsiMeetUserInfo()
