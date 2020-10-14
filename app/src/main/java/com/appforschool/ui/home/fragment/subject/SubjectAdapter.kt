@@ -39,7 +39,7 @@ class SubjectAdapter(
 //        }
 
         holder.llRoom.setOnClickListener() {
-            listner.openSubjectDetails(list.get(position).courseid.toString())
+            listner.openSubjectDetails(list.get(position).courseid.toString(),list.get(position).coursename)
         }
     }
 

@@ -45,6 +45,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="Subject Name"
+                android:layout_gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_20ssp"
+                android:layout_marginTop="@dimen/_minus15sdp"
+                android:text="@{viewmodel.subjectName}"
+                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/calibri"
                 android:text="@string/subject_details"

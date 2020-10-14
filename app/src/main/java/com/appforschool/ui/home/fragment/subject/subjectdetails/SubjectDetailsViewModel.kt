@@ -33,6 +33,14 @@ class SubjectDetailsViewModel @Inject constructor(
     val subjectDetails: LiveData<SubjectDetailsModel>
         get() = _subjectDetails
 
+    private val _subjectName = MutableLiveData<String>()
+    val subjectName: LiveData<String> get() = _subjectName
+
+
+    fun setSubjectName(subjectName: String) {
+        _subjectName.value = subjectName
+    }
+
     fun executerDetails(subjectId: String): LiveData<SubjectDetailsModel> {
         Coroutines.main {
             val inputParam = JsonObject()

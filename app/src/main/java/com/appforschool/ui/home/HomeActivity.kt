@@ -138,10 +138,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         onBackPressed()
     }
 
-    override fun openSubjectDetails(subjectID: String) {
+    override fun openSubjectDetails(subjectID: String,subjectName: String) {
         addFragment(
             supportFragmentManager,
-            SubjectDetailsFragment.newInstance(subjectID),
+            SubjectDetailsFragment.newInstance(subjectID,subjectName),
             addToBackStack = true
         )
     }
@@ -237,7 +237,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun openSubjectDetails(model: ScheduleModel.Data) {
         addFragment(
             supportFragmentManager,
-            SubjectDetailsFragment.newInstance(model.subjid.toString()),
+            SubjectDetailsFragment.newInstance(model.subjid.toString(),model.courseName),
             addToBackStack = true
         )
     }

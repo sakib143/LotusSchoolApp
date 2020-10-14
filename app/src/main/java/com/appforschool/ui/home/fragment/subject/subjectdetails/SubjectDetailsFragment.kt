@@ -34,6 +34,7 @@ class SubjectDetailsFragment  : BaseBindingFragment<FragmentSubjectDetailsBindin
     private var alSubjectDetails: ArrayList<SubjectDetailsModel.Data>? = ArrayList()
     private var binding: FragmentSubjectDetailsBinding? = null
     private var subjectId : String? = null
+    private var subjectName: String?= null
 
 
     override fun initializeBinding(binding: FragmentSubjectDetailsBinding) {
@@ -45,10 +46,11 @@ class SubjectDetailsFragment  : BaseBindingFragment<FragmentSubjectDetailsBindin
     }
 
     companion object {
-        fun newInstance(subjectId: String): SubjectDetailsFragment {
+        fun newInstance(subjectId: String, subjectName: String): SubjectDetailsFragment {
             val productFragment = SubjectDetailsFragment()
             val bundle = Bundle().apply {
                 putString(Constant.REUQEST_SUBJECT_ID, subjectId)
+                putString(Constant.REUQEST_GET_SUBJECTS, subjectName)
             }
             productFragment.arguments = bundle
             return productFragment
@@ -59,9 +61,9 @@ class SubjectDetailsFragment  : BaseBindingFragment<FragmentSubjectDetailsBindin
         super.onCreate(savedInstanceState)
         arguments?.let {
             subjectId = it.getString(Constant.REUQEST_SUBJECT_ID)
+            subjectName = it.getString(Constant.REUQEST_GET_SUBJECTS)
         }
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -82,6 +84,8 @@ class SubjectDetailsFragment  : BaseBindingFragment<FragmentSubjectDetailsBindin
         }else {
             activity!!.toast(activity!!.resources.getString(R.string.check_internet_connection))
         }
+
+        viewModel.setSubjectName(subjectName!!)
     }
 
     private val subjectDetails = Observer<SubjectDetailsModel> {

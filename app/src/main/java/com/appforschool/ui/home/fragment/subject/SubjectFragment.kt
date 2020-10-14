@@ -68,14 +68,13 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
         if (it.status) {
             rvSubjectFragment.setHasFixedSize(true)
             rvSubjectFragment.layoutManager = GridLayoutManager(activity!!.applicationContext, 2)
-//            rvSubjectFragment.layoutManager = AutoFitGridLayoutManager(activity!!,350)
 
             adapter = SubjectAdapter(it.data, activity!!, object : SubjectFragmentListner {
                 override fun popFragment() {
 
                 }
-                override fun openSubjectDetails(subjectId: String) {
-                    listener?.openSubjectDetails(subjectId)
+                override fun openSubjectDetails(subjectId: String,subjectName: String) {
+                    listener?.openSubjectDetails(subjectId,subjectName)
                 }
             })
             rvSubjectFragment.adapter = adapter
@@ -86,7 +85,7 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
 
     interface SubjectFragmentListner {
         fun popFragment()
-        fun openSubjectDetails(subjectID: String)
+        fun openSubjectDetails(subjectID: String,subjectName: String)
     }
 
     fun closeSubjectFragment() {
