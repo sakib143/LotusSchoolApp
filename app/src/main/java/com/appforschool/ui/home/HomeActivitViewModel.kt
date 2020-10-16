@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
+import com.appforschool.data.model.FileViewLogModel
 import com.appforschool.data.model.GetVersionModel
 import com.appforschool.data.model.ScheduleModel
 import com.appforschool.data.model.SetJoinModel
@@ -18,18 +19,18 @@ import com.appforschool.utils.PrefUtils
 import com.google.gson.JsonObject
 import javax.inject.Inject
 
-class HomeActivitViewModel  @Inject constructor(
+class HomeActivitViewModel @Inject constructor(
     private val application: MyApp,
     private val prefUtils: PrefUtils,
     private val repository: HomeActivityRepository
-) : AndroidViewModel(application)  {
+) : AndroidViewModel(application) {
 
     private var _userName = MutableLiveData<String>()
-    val userName : LiveData<String>
+    val userName: LiveData<String>
         get() = _userName
 
     private var _starndard = MutableLiveData<String>()
-    val starndard : LiveData<String>
+    val starndard: LiveData<String>
         get() = _starndard
 
     fun getUserData() {
@@ -40,9 +41,17 @@ class HomeActivitViewModel  @Inject constructor(
     private val _onMessageError = MutableLiveData<Any>()
     val onMessageError: LiveData<Any> get() = _onMessageError
 
-    private val _setIsJoinLog : MutableLiveData<SetJoinModel> = MutableLiveData<SetJoinModel>()
+    //Video calling log related stuff
+    private val _setIsJoinLog: MutableLiveData<SetJoinModel> = MutableLiveData<SetJoinModel>()
     val setIsJoinLog: LiveData<SetJoinModel>
         get() = _setIsJoinLog
+
+    //Open file log related stuff
+    private val _fileViewLog: MutableLiveData<FileViewLogModel> =
+        MutableLiveData<FileViewLogModel>()
+    val fileViewLog: LiveData<FileViewLogModel>
+        get() = _fileViewLog
+
 
     fun executeSetJoinLog(scheduleId: String): LiveData<SetJoinModel> {
         Coroutines.main {
@@ -50,14 +59,45 @@ class HomeActivitViewModel  @Inject constructor(
                 val inputParam = JsonObject()
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_SET_JOIN_LOG)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
-                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(
+                    Constant.REQUEST_STUDENTID,
+                    prefUtils.getUserData()?.studentId
+                )
                 inputParam.addProperty(Constant.REQUEST_SCHEDULE_ID, scheduleId)
                 inputParam.addProperty(Constant.REQUEST_DEVICE_SMALL, Constant.KEY_ANDROID)
                 val apiResponse = repository.callSetJoinLog(inputParam)
                 _setIsJoinLog.postValue(apiResponse)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
-            }catch (e: NoInternetException) {
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _setIsJoinLog!!
+    }
+
+    fun executeFileViewLog(shareId: String, viewType: String): LiveData<SetJoinModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_SETFILE_VIEW_LOG)
+                inputParam.addProperty(Constant.REQUEST_VIEW_TYPE, viewType)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+                inputParam.addProperty(
+                    Constant.REQUEST_STUDENTID,
+                    prefUtils.getUserData()?.studentId
+                )
+                inputParam.addProperty(
+                    Constant.REQUEST_USER_TYPE,
+                    prefUtils.getUserData()?.usertype
+                )
+                inputParam.addProperty(Constant.REUQEST_SHARE_ID, shareId)
+                inputParam.addProperty(Constant.REQUEST_DEVICE_SMALL, Constant.KEY_ANDROID)
+                val apiResponse = repository.callSetJoinLog(inputParam)
+                _setIsJoinLog.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            } catch (e: NoInternetException) {
                 _onMessageError.postValue(e.message)
             }
         }

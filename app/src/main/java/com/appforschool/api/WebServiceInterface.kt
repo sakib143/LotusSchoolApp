@@ -39,6 +39,9 @@ interface WebServiceInterface {
     suspend fun callSetJoinLog(@Body jsonObject: JsonObject): Response<SetJoinModel>
 
     @POST("Get_SpData")
+    suspend fun callFileViewLog(@Body jsonObject: JsonObject): Response<FileViewLogModel>
+
+    @POST("Get_SpData")
     suspend fun callEndLog(@Body jsonObject: JsonObject): Response<SetCallEndLogModel>
 
     @POST("GetVersion")

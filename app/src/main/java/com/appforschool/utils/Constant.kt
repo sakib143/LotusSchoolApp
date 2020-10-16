@@ -38,13 +38,16 @@ class Constant {
         const val REQUEST_GET_SCHEDULE = "getschedule"
         const val REUQEST_GET_SUBJECTS = "getsubjects"
         const val REQUEST_GET_DRIVE = "getdrive"
+        const val REQUEST_VIEW_TYPE = "viewtype"
         const val REQUEST_SET_JOIN_LOG = "setjoinlog"
+        const val REQUEST_SETFILE_VIEW_LOG = "setfileviewlog"
         const val REQUEST_SCHEDULE_ID = "scheduleid"
         const val REQUEST_DEVICE = "Device"
         const val REQUEST_DEVICE_SMALL = "device"
         const val KEY_ANDROID = "A"
         const val REQUEST_HOMEAPI = "homeapi"
         const val REQUEST_SET_END_MEETING_LOG = "setendmeetinglog"
+        const val REUQEST_SHARE_ID = "shareid"
 
     }
 }

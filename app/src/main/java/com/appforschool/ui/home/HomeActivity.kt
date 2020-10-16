@@ -70,9 +70,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         navigateToDashBoardFragment(false)
         viewModel.getUserData()
         viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
-
-        LogM.e("=> Current version is:-  " + globalMethods.getAppVersion(this@HomeActivity))
-
+        viewModel.fileViewLog.observe(this@HomeActivity,fileViewLogObserver)
     }
 
     private fun navigateToDashBoardFragment(addToBackStack: Boolean) {
@@ -205,6 +203,14 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
+    private val fileViewLogObserver = Observer<FileViewLogModel> {
+        if(it.status) {
+            toast(it.message)
+        } else {
+            toast(it.message)
+        }
+    }
+
     override fun openVideoCalling(model: ScheduleModel.Data) {
         permissionForVideoCalling(model)
     }
@@ -243,6 +249,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openAssignmentFile(model: AssignmentModel.Data) {
+        viewModel.executeFileViewLog(model.shareid,"A")
         if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
             intent.putExtra(Constant.VIDEO_URL, model.filepath)
@@ -262,6 +269,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openDriveList(model: DriveModel.Data) {
+        viewModel.executeFileViewLog(model.shareid,"D")
         if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
             intent.putExtra(Constant.VIDEO_URL, model.filepath)

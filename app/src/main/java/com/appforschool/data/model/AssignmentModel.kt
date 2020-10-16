@@ -40,5 +40,7 @@ data class AssignmentModel(
         @Expose
         @SerializedName("assgtime") var assgtime: String? = "",
         @Expose
-        @SerializedName("filepath") var filepath: String? = "")
+        @SerializedName("filepath") var filepath: String? = "",
+        @Expose
+        @SerializedName("shareid") var shareid: String = "")
 }
