@@ -244,7 +244,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     private val fileSubmitObserver = Observer<AssignmentSubmissionModel> {
-        LogM.e("File submit calling !!! ${it.message}")
         if (it.status) {
             toast(it.message)
         } else {
