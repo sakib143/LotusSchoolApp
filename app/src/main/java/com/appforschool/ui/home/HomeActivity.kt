@@ -99,10 +99,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 viewModel.filePath.value = file
                 val fileSizeInBytes = file.length()
                 val fileSizeInKB = fileSizeInBytes/ 1024
-                val fileExtension = MimeTypeMap.getFileExtensionFromUrl(data?.data.toString())
-
-                LogM.e("=> fileSize $fileSizeInKB file extension $fileExtension")
-                viewModel.uploadAssignmentFile(shareId,"title","description",fileExtension,fileSizeInKB.toString(),"A")
+                val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
+                viewModel.uploadAssignmentFile(shareId,"title","description","." + fileExtension,fileSizeInKB.toString(),"A")
             }
         }
     }

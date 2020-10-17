@@ -109,8 +109,9 @@ class HomeActivitViewModel @Inject constructor(
         return _fileViewLog!!
     }
 
-    fun uploadAssignmentFile(shareId: String,filetitle: String,filedescr: String,fileext: String, filesize: String,uploadtype:String): LiveData<AssignmentSubmissionModel> {
+    fun uploadAssignmentFile(shareId: String,fileTitle: String,fileDesc: String,fileText: String, fileSize: String,uploadType:String): LiveData<AssignmentSubmissionModel> {
         Coroutines.main {
+            val a = "A"
             val fileReqBodyLicense =
                 filePath.value?.asRequestBody("image/*".toMediaTypeOrNull())
             val userImageBody = MultipartBody.Part.createFormData(
@@ -122,12 +123,12 @@ class HomeActivitViewModel @Inject constructor(
             val userid =  prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
             val usertype = prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
             val studentid = prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
-            val filetitle = filetitle.toRequestBody("text/plain".toMediaTypeOrNull())
-            val filedescr = filedescr.toRequestBody("text/plain".toMediaTypeOrNull())
-            val filetype = "A".toRequestBody("text/plain".toMediaTypeOrNull())
-            val fileext = fileext.toRequestBody("text/plain".toMediaTypeOrNull())
-            val filesize = filesize.toRequestBody("text/plain".toMediaTypeOrNull())
-            val uploadtype = uploadtype.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filetitle = fileTitle.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filedescr = fileDesc.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filetype = a.toRequestBody("text/plain".toMediaTypeOrNull())
+            val fileext = fileText.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filesize = fileSize.toRequestBody("text/plain".toMediaTypeOrNull())
+            val uploadtype = uploadType.toRequestBody("text/plain".toMediaTypeOrNull())
             try {
                 val response = repository.callUploadAssignment(userImageBody, shareid,userid,usertype,studentid,filetitle,filedescr,filetype,fileext,filesize,uploadtype)
                 _fileSubmit.postValue(response)
@@ -139,5 +140,4 @@ class HomeActivitViewModel @Inject constructor(
         }
         return _fileSubmit!!
     }
-
 }
