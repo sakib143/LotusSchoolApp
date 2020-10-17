@@ -70,8 +70,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
         homeFragment = ScheduleFragment.newInstance()
         navigateToDashBoardFragment(false)
-        viewModel.getUserData()
         setObserver()
+        viewModel.getUserData()
     }
 
     private fun setObserver() {

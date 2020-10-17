@@ -44,7 +44,7 @@ abstract class SafeAPIRequest {
             val message = StringBuffer()
             error.let {
                 try {
-                    message.append("Error 404 DataNot Found")
+                    message.append("Error 404 Data Not Found")
                 } catch (e: JSONException) {
 
                 }
