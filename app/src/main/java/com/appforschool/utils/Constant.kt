@@ -48,6 +48,13 @@ class Constant {
         const val REQUEST_HOMEAPI = "homeapi"
         const val REQUEST_SET_END_MEETING_LOG = "setendmeetinglog"
         const val REUQEST_SHARE_ID = "shareid"
+        const val REQUEST_FILE_TITLE = "filetitle"
+        const val REQUEST_FILE_DESCR = "filedescr"
+        const val REQUEST_FILE_TYPE ="filetype"
+        const val REQUEST_FILE_EXT = "fileext"
+        const val REQUEST_FILE_SIZE = "filesize"
+        const val REUQEST_UPLOAD_TYPE = "uploadtype"
+        const val REQUEST_IMAGE = "Image "
 
     }
 }

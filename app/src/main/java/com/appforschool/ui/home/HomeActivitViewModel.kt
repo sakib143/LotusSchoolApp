@@ -6,17 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
-import com.appforschool.data.model.FileViewLogModel
-import com.appforschool.data.model.GetVersionModel
-import com.appforschool.data.model.ScheduleModel
-import com.appforschool.data.model.SetJoinModel
+import com.appforschool.data.model.*
 import com.appforschool.data.repository.DriveRepository
 import com.appforschool.data.repository.HomeActivityRepository
-import com.appforschool.utils.Constant
-import com.appforschool.utils.Coroutines
-import com.appforschool.utils.GlobalMethods
-import com.appforschool.utils.PrefUtils
+import com.appforschool.utils.*
 import com.google.gson.JsonObject
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import javax.inject.Inject
 
 class HomeActivitViewModel @Inject constructor(
@@ -52,6 +51,12 @@ class HomeActivitViewModel @Inject constructor(
     val fileViewLog: LiveData<FileViewLogModel>
         get() = _fileViewLog
 
+    //Uplolad assignment
+    val filePath = MutableLiveData<File>()
+    private val _fileSubmit: MutableLiveData<AssignmentSubmissionModel> =
+        MutableLiveData<AssignmentSubmissionModel>()
+    val fileSubmit: LiveData<AssignmentSubmissionModel>
+        get() = _fileSubmit
 
     fun executeSetJoinLog(scheduleId: String): LiveData<SetJoinModel> {
         Coroutines.main {
@@ -76,7 +81,7 @@ class HomeActivitViewModel @Inject constructor(
         return _setIsJoinLog!!
     }
 
-    fun executeFileViewLog(shareId: String, viewType: String): LiveData<SetJoinModel> {
+    fun executeFileViewLog(shareId: String, viewType: String): LiveData<FileViewLogModel> {
         Coroutines.main {
             try {
                 val inputParam = JsonObject()
@@ -93,15 +98,46 @@ class HomeActivitViewModel @Inject constructor(
                 )
                 inputParam.addProperty(Constant.REUQEST_SHARE_ID, shareId)
                 inputParam.addProperty(Constant.REQUEST_DEVICE_SMALL, Constant.KEY_ANDROID)
-                val apiResponse = repository.callSetJoinLog(inputParam)
-                _setIsJoinLog.postValue(apiResponse)
+                val apiResponse = repository.callFileViewLogLog(inputParam)
+                _fileViewLog.postValue(apiResponse)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
             } catch (e: NoInternetException) {
                 _onMessageError.postValue(e.message)
             }
         }
-        return _setIsJoinLog!!
+        return _fileViewLog!!
+    }
+
+    fun uploadAssignmentFile(shareId: String,filetitle: String,filedescr: String,fileext: String, filesize: String,uploadtype:String): LiveData<AssignmentSubmissionModel> {
+        Coroutines.main {
+            val fileReqBodyLicense =
+                filePath.value?.asRequestBody("image/*".toMediaTypeOrNull())
+            val userImageBody = MultipartBody.Part.createFormData(
+                Constant.REQUEST_IMAGE,
+                filePath.value?.name,
+                fileReqBodyLicense!!
+            )
+            val shareid = shareId.toRequestBody("text/plain".toMediaTypeOrNull())
+            val userid =  prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val usertype = prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val studentid = prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filetitle = filetitle.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filedescr = filedescr.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filetype = "A".toRequestBody("text/plain".toMediaTypeOrNull())
+            val fileext = fileext.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filesize = filesize.toRequestBody("text/plain".toMediaTypeOrNull())
+            val uploadtype = uploadtype.toRequestBody("text/plain".toMediaTypeOrNull())
+            try {
+                val response = repository.callUploadAssignment(userImageBody, shareid,userid,usertype,studentid,filetitle,filedescr,filetype,fileext,filesize,uploadtype)
+                _fileSubmit.postValue(response)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _fileSubmit!!
     }
 
 }

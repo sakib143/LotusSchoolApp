@@ -48,6 +48,7 @@ abstract class BaseActivity : AppCompatActivity(), Injectable {
     @Inject
     lateinit var globalMethods: GlobalMethods
 
+    protected val PICKFILE_RESULT_CODE = 786
 
     /**
      * request code for storage permission

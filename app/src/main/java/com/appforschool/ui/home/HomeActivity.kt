@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.webkit.MimeTypeMap
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import com.appforschool.BuildConfig
@@ -24,14 +25,15 @@ import com.appforschool.ui.home.fragment.subject.SubjectFragment
 import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment
 import com.appforschool.ui.videoplaying.VideoPlayingActivity
 import com.appforschool.utils.Constant
+import com.appforschool.utils.ImageFilePath
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
-import com.facebook.react.modules.dialog.AlertFragment
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_home.*
+import java.io.File
 import javax.inject.Inject
 
 
@@ -54,8 +56,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
-
     private var homeFragment: ScheduleFragment? = null
+
+
+    private var shareId: String = ""
 
     override fun initializeBinding(binding: ActivityHomeBinding) {
         binding.viewmodel = viewModel
@@ -69,8 +73,40 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         homeFragment = ScheduleFragment.newInstance()
         navigateToDashBoardFragment(false)
         viewModel.getUserData()
+        setObserver()
+    }
+
+    private fun setObserver() {
         viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
-        viewModel.fileViewLog.observe(this@HomeActivity,fileViewLogObserver)
+        viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
+        viewModel.fileSubmit.observe(this@HomeActivity,fileSubmitObserver)
+        viewModel.onMessageError.observe(this, onMessageErrorObserver)
+    }
+
+    companion object {
+        @JvmStatic
+        fun intentFor(context: Context) =
+            Intent(
+                context,
+                HomeActivity::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            PICKFILE_RESULT_CODE -> {
+                val filePath = ImageFilePath.getPath(this@HomeActivity, data?.data)
+                val file: File = File(filePath)
+                viewModel.filePath.value = file
+                val fileSizeInBytes = file.length()
+                val fileSizeInKB = fileSizeInBytes/ 1024
+                val fileExtension = MimeTypeMap.getFileExtensionFromUrl(data?.data.toString())
+
+                LogM.e("=> fileSize $fileSizeInKB file extension $fileExtension")
+                viewModel.uploadAssignmentFile(shareId,"title","description",fileExtension,fileSizeInKB.toString(),"A")
+            }
+        }
     }
 
     private fun navigateToDashBoardFragment(addToBackStack: Boolean) {
@@ -88,14 +124,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun intentFor(context: Context) =
-            Intent(
-                context,
-                HomeActivity::class.java
-            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-    }
 
     fun openMyProfile() {
         toast("openMyProfile is clicked !!!")
@@ -136,10 +164,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         onBackPressed()
     }
 
-    override fun openSubjectDetails(subjectID: String,subjectName: String) {
+    override fun openSubjectDetails(subjectID: String, subjectName: String) {
         addFragment(
             supportFragmentManager,
-            SubjectDetailsFragment.newInstance(subjectID,subjectName),
+            SubjectDetailsFragment.newInstance(subjectID, subjectName),
             addToBackStack = true
         )
     }
@@ -197,14 +225,27 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     private val joinLogObserver = Observer<SetJoinModel> {
-        if(it.status) {
+        if (it.status) {
         } else {
             toast(it.message)
         }
     }
 
     private val fileViewLogObserver = Observer<FileViewLogModel> {
-        if(it.status) {
+        if (it.status) {
+            toast(it.message)
+        } else {
+            toast(it.message)
+        }
+    }
+
+    private val onMessageErrorObserver = Observer<Any> {
+        toast(it.toString())
+    }
+
+    private val fileSubmitObserver = Observer<AssignmentSubmissionModel> {
+        LogM.e("File submit calling !!! ${it.message}")
+        if (it.status) {
             toast(it.message)
         } else {
             toast(it.message)
@@ -215,11 +256,14 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         permissionForVideoCalling(model)
     }
 
-    fun permissionForVideoCalling(model: ScheduleModel.Data) = runWithPermissions(Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO) {
+    fun permissionForVideoCalling(model: ScheduleModel.Data) = runWithPermissions(
+        Manifest.permission.CAMERA,
+        Manifest.permission.RECORD_AUDIO
+    ) {
         if (model.meetinglink.isNullOrBlank()) {
             viewModel.executeSetJoinLog(model.schid.toString())
             val fullUrl = BuildConfig.VIDEO_CALL_URL + model.schid
-            val scheduleId =  model.schid
+            val scheduleId = model.schid
             navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl, scheduleId)
         } else {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
@@ -243,13 +287,25 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun openSubjectDetails(model: ScheduleModel.Data) {
         addFragment(
             supportFragmentManager,
-            SubjectDetailsFragment.newInstance(model.subjid.toString(),model.courseName),
+            SubjectDetailsFragment.newInstance(model.subjid.toString(), model.courseName),
             addToBackStack = true
         )
     }
 
+    override fun openSubmissionFile(model: AssignmentModel.Data) {
+        checkFileSubmitPermission(model)
+    }
+
+    fun checkFileSubmitPermission(model: AssignmentModel.Data) = runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
+        shareId = model.shareid
+        var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+        chooseFile.setType("*/*")
+        chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+        startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
+    }
+
     override fun openAssignmentFile(model: AssignmentModel.Data) {
-        viewModel.executeFileViewLog(model.shareid,"A")
+        viewModel.executeFileViewLog(model.shareid, "A")
         if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
             intent.putExtra(Constant.VIDEO_URL, model.filepath)
@@ -269,7 +325,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openDriveList(model: DriveModel.Data) {
-        viewModel.executeFileViewLog(model.shareid,"D")
+        viewModel.executeFileViewLog(model.shareid, "D")
         if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
             intent.putExtra(Constant.VIDEO_URL, model.filepath)
@@ -281,6 +337,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun shareDriveData(model: DriveModel.Data) {
-        globalMethods.shareTextToFriend(this@HomeActivity,"Share Drive file",model.filepath)
+        globalMethods.shareTextToFriend(this@HomeActivity, "Share Drive file", model.filepath)
     }
 }
