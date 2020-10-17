@@ -57,8 +57,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     private var homeFragment: ScheduleFragment? = null
-
-
     private var shareId: String = ""
 
     override fun initializeBinding(binding: ActivityHomeBinding) {
@@ -80,7 +78,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
         viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
         viewModel.fileSubmit.observe(this@HomeActivity,fileSubmitObserver)
-        viewModel.onMessageError.observe(this, onMessageErrorObserver)
+        viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
     }
 
     companion object {
