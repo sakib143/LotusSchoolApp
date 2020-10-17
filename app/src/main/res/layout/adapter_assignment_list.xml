@@ -147,7 +147,7 @@
                 android:textSize="@dimen/_20ssp"
                 android:textStyle="bold"
                 android:text="@string/attach_answer"
-                android:visibility="gone"/>
+                android:visibility="@{assignmentModel.completedstatus == 1 ? View.VISIBLE : View.GONE}"/>
 
         </LinearLayout>
 

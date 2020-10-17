@@ -6,12 +6,7 @@ import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
 import com.appforschool.data.model.AssignmentModel
-import com.appforschool.data.model.SubjectDetailsModel
 import com.appforschool.databinding.FragmentAssignmentBinding
-import com.appforschool.databinding.FragmentSubjectDetailsBinding
-import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment
-import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsViewModel
-import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import javax.inject.Inject

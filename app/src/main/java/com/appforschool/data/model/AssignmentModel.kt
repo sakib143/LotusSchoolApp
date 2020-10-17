@@ -42,5 +42,8 @@ data class AssignmentModel(
         @Expose
         @SerializedName("filepath") var filepath: String? = "",
         @Expose
-        @SerializedName("shareid") var shareid: String = "")
+        @SerializedName("shareid") var shareid: String = "",
+        @Expose
+        @SerializedName("completedstatus") var completedstatus: Int = 0
+    )
 }
