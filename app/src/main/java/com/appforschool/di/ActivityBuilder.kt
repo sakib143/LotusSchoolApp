@@ -1,5 +1,6 @@
 package com.appforschool.di
 
+import com.appforschool.ui.addtodrive.AddToDriveActivity
 import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.home.HomeBuilderModule
 import com.appforschool.ui.auth.login.LoginActivity
@@ -47,7 +48,11 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector()
     abstract fun bindVideoCallingActivity(): VideoCallingActivity
 
-
+    /**
+     * fun to bind AddToDriveActivity screen , making Injection enable
+     **/
+    @ContributesAndroidInjector()
+    abstract fun bindAddToDriveActivity(): AddToDriveActivity
 
 //
 //    /**

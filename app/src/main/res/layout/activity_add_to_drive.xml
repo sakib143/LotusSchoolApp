@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewmodel"
+            type="com.appforschool.ui.addtodrive.AddToDriveViewModel" />
+
+        <variable
+            name="listner"
+            type="com.appforschool.ui.addtodrive.AddToDriveActivity" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorScheduleBackground"
+        tools:context=".ui.addtodrive.AddToDriveActivity">
+
+        <LinearLayout
+            android:id="@+id/llHeader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_130sdp"
+            android:background="@color/colorHomeHeader"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingTop="@dimen/_15sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_back_icon"
+                android:onClick="@{()->listner.closeScreen()}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/calibri"
+                android:text="Add to Deive"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_20ssp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@+id/llHeader"
+            android:padding="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload new file"
+                android:background="@drawable/bg_login_signup_button"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5ssp"
+                android:textSize="@dimen/_14ssp"
+                android:fontFamily="@font/calibri"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:fontFamily="@font/calibri"
+                android:hint="@string/enter_user_id"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="@={viewmodel.title}"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/grey_dark"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorBlack" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:fontFamily="@font/calibri"
+                android:hint="@string/enter_user_id"
+                android:inputType="textMultiLine"
+                android:maxLines="8"
+                android:minLines="3"
+                tools:text="Testing"
+                android:text="@={viewmodel.description}"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/grey_dark"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_gravity="top"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorBlack" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+        </LinearLayout>
+
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}" />
+
+
+    </RelativeLayout>
+</layout>
