@@ -16,6 +16,7 @@
     <color name="colormenu_profile">#C5DDE9</color>
     <color name="colorMenuName">#910000</color>
     <color name="colorDashboardBackground">#e6e3ca</color>
+    <color name="colorGreen">#008000</color>
 
 
 </resources>

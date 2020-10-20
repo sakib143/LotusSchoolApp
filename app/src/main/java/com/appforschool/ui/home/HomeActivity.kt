@@ -241,6 +241,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     private val fileSubmitObserver = Observer<AssignmentSubmissionModel> {
         if (it.status) {
+            openAssignmentFragment()
             toast(it.message)
         } else {
             toast(it.message)
