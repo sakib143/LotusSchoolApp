@@ -2,6 +2,9 @@ package com.appforschool.utils
 
 import android.content.Context
 import com.appforschool.base.BaseActivity
+import com.appforschool.data.repository.AddToDriveRepository
+import com.appforschool.ui.addtodrive.AddToDriveActivity
+import com.appforschool.ui.addtodrive.AddToDriveActivity.Companion.intentFor
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
 import com.appforschool.ui.home.HomeActivity
@@ -52,6 +55,14 @@ class NavigationController @Inject constructor(var context: Context) {
     //     */
     fun navigateToCommonWebviewScreen(activity: BaseActivity, url: String) {
         activity.startActivity(CommonWebviewActivity.intentFor(context, url))
+    }
+
+    /**
+    //     * Opens Add to drive Screen
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToAddToDrive(activity: BaseActivity) {
+        activity.startActivity(AddToDriveActivity.intentFor(context))
     }
 
 

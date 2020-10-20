@@ -42,5 +42,10 @@
     <string name="attach_answer">Attach Answer</string>
     <string name="study_material">Study Material</string>
     <string name="title">Title</string>
+    <string name="enter_topic">Enter topic</string>
+    <string name="enter_description">Enter description</string>
+    <string name="enter_direct_link">Enter direct link</string>
+    <string name="upload_new_file">Upload new file</string>
+    <string name="submit">Submit</string>
 
 </resources>

@@ -2,18 +2,14 @@ package com.appforschool.ui.addtodrive
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.databinding.ActivityAddToDriveBinding
-import com.appforschool.databinding.ActivityLoginBinding
-import com.appforschool.ui.auth.login.LoginViewModel
-import com.appforschool.ui.videocalling.VideoCallingActivity
-import com.appforschool.utils.Constant
+import kotlinx.android.synthetic.main.activity_add_to_drive.*
 import javax.inject.Inject
 
-class AddToDriveActivity  : BaseBindingActivity<ActivityAddToDriveBinding>() {
+class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
 
     override fun layoutId() = R.layout.activity_add_to_drive
 
@@ -28,6 +24,11 @@ class AddToDriveActivity  : BaseBindingActivity<ActivityAddToDriveBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.setFileSelect(true)
+
+        val adapter = KnowledgeSpinnerAdapter(this@AddToDriveActivity, viewModel.alKnowledge)
+        spinnerKnowledgeList.adapter = adapter
     }
 
     companion object {
@@ -38,7 +39,7 @@ class AddToDriveActivity  : BaseBindingActivity<ActivityAddToDriveBinding>() {
 
     }
 
-    fun closeScreen(){
+    fun closeScreen() {
         finish()
     }
 }

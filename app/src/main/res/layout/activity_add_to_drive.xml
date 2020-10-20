@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="com.appforschool.ui.addtodrive.AddToDriveViewModel" />
@@ -49,39 +51,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_below="@+id/llHeader"
+            android:orientation="vertical"
             android:padding="@dimen/_10sdp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Upload new file"
-                android:background="@drawable/bg_login_signup_button"
-                android:paddingLeft="@dimen/_10sdp"
-                android:paddingRight="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5ssp"
-                android:textSize="@dimen/_14ssp"
-                android:fontFamily="@font/calibri"
-                android:textColor="@color/colorWhite"
-                android:layout_gravity="center"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@null"
                 android:fontFamily="@font/calibri"
-                android:hint="@string/enter_user_id"
+                android:hint="@string/enter_topic"
                 android:inputType="text"
                 android:maxLines="1"
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="@={viewmodel.title}"
+                android:text="@={viewmodel.topic}"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/grey_dark"
-                android:textSize="@dimen/_15ssp"
-                android:layout_marginTop="@dimen/_10sdp"/>
+                android:textSize="@dimen/_15ssp" />
 
             <View
                 android:layout_width="match_parent"
@@ -91,19 +79,19 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@null"
                 android:fontFamily="@font/calibri"
-                android:hint="@string/enter_user_id"
+                android:hint="@string/enter_description"
                 android:inputType="textMultiLine"
                 android:maxLines="8"
-                android:minLines="3"
-                tools:text="Testing"
+                android:minLines="2"
                 android:text="@={viewmodel.description}"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/grey_dark"
                 android:textSize="@dimen/_15ssp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_gravity="top"/>
+                tools:text="Testing" />
 
             <View
                 android:layout_width="match_parent"
@@ -111,19 +99,122 @@
                 android:background="@color/colorBlack" />
 
             <Spinner
+                android:id="@+id/spinnerKnowledgeList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"/>
+                android:onItemSelected="@{(parent,view,pos,id)->viewmodel.onKnoledgeSelection(parent,view,pos,id)}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorBlack" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp">
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:checked="@{viewmodel.isFileSelected().booleanValue()}"
+                    android:onClick="@{()-> viewmodel.setFileSelect(true)}"
+                    android:text="Upload File"
+                    android:textSize="@dimen/_15ssp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:checked="false"
+                    android:fontFamily="@font/calibri"
+                    android:onClick="@{()-> viewmodel.setFileSelect(false)}"
+                    android:text="Direct Link"
+                    android:textSize="@dimen/_15ssp" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorBlack" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/bg_login_signup_button"
+                android:fontFamily="@font/calibri"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5ssp"
+                android:text="Choose file"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="@{viewmodel.isFileSelected().booleanValue() ? View.VISIBLE : View.GONE}"
+                tools:visibility="visible" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/colorBlack"
+                android:visibility="@{viewmodel.isFileSelected().booleanValue() ? View.VISIBLE : View.GONE}" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@null"
+                android:fontFamily="@font/calibri"
+                android:hint="@string/enter_direct_link"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:text="@={viewmodel.directLinkUrl}"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/grey_dark"
+                android:textSize="@dimen/_15ssp"
+                android:visibility="@{viewmodel.isFileSelected().booleanValue() ? View.GONE : View.VISIBLE}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorBlack" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/bg_login_signup_button"
+                android:fontFamily="@font/calibri"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_5ssp"
+                android:text="@string/submit"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14ssp"
+                tools:visibility="visible"
+                android:onClick="@{()-> viewmodel.uploadToDrive()}"/>
 
         </LinearLayout>
-
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}" />
-
+            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone" />
 
     </RelativeLayout>
+
 </layout>
