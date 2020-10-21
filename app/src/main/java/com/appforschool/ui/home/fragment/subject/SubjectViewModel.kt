@@ -33,6 +33,14 @@ class SubjectViewModel   @Inject constructor(
     val subjectData: LiveData<SubjectModel>
         get() = _subjectData
 
+    private val _isDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isDataFound: LiveData<Boolean>
+        get() = _isDataFound
+
+    fun setDataFound(isFound: Boolean) {
+        _isDataFound.value = isFound
+    }
+
     fun executerSubject() : LiveData<SubjectModel> {
         Coroutines.main {
             val inputParam = JsonObject()

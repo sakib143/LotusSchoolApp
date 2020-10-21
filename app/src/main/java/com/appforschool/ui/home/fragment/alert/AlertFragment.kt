@@ -56,6 +56,7 @@ class AlertFragment: BaseBindingFragment<FragmentAlertBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.setDataFound(true)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.alertData.observe(viewLifecycleOwner, alertObserver)
 
@@ -74,8 +75,12 @@ class AlertFragment: BaseBindingFragment<FragmentAlertBinding>() {
     private val alertObserver = Observer<AlertModel> {
         alAlert = ArrayList()
         alAlert!!.addAll(it!!.data!!)
-        LogM.e("=> Arraylist size checking " + alAlert?.size)
         binding?.alAlert = alAlert
+        if (alAlert?.size == 0) {
+            viewModel.setDataFound(false)
+        } else {
+            viewModel.setDataFound(true)
+        }
     }
 
     interface AlertListner {

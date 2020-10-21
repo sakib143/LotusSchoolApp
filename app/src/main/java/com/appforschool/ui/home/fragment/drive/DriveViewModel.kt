@@ -33,6 +33,14 @@ class DriveViewModel @Inject constructor(
     val driveList: LiveData<DriveModel>
         get() = _driveList
 
+    private val _isDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isDataFound: LiveData<Boolean>
+        get() = _isDataFound
+
+    fun setDataFound(isFound: Boolean) {
+        _isDataFound.value = isFound
+    }
+
     fun executerDriveList(): LiveData<DriveModel> {
         Coroutines.main {
             val inputParam = JsonObject()

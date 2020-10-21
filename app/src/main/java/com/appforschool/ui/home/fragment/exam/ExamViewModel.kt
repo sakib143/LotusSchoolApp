@@ -32,6 +32,14 @@ class ExamViewModel  @Inject constructor(
     val examData: LiveData<ExamModel>
         get() = _examData
 
+    private val _isDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isDataFound: LiveData<Boolean>
+        get() = _isDataFound
+
+    fun setDataFound(isFound: Boolean) {
+        _isDataFound.value = isFound
+    }
+
     fun executeExamData(): LiveData<ExamModel> {
         Coroutines.main {
             try {

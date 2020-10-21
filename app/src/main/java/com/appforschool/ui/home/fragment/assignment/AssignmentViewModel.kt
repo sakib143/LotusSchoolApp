@@ -33,6 +33,14 @@ class AssignmentViewModel  @Inject constructor(
     val subjectDetails: LiveData<AssignmentModel>
         get() = _subjectDetails
 
+    private val _isDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isDataFound: LiveData<Boolean>
+        get() = _isDataFound
+
+    fun setDataFound(isFound: Boolean) {
+        _isDataFound.value = isFound
+    }
+
     fun executerAssigment(): LiveData<AssignmentModel> {
         Coroutines.main {
             val inputParam = JsonObject()

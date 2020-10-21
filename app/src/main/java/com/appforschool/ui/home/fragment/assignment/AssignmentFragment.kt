@@ -58,6 +58,7 @@ class AssignmentFragment : BaseBindingFragment<FragmentAssignmentBinding>() {
     }
 
     private fun setObserver() {
+        viewModel.setDataFound(true)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.subjectDetails.observe(viewLifecycleOwner, assignmentObserver)
         if (globalMethods.isInternetAvailable(activity!!)) {
@@ -70,8 +71,12 @@ class AssignmentFragment : BaseBindingFragment<FragmentAssignmentBinding>() {
     private val assignmentObserver = Observer<AssignmentModel> {
         alAssignment = ArrayList()
         alAssignment!!.addAll(it.data)
-        LogM.e("=> Arraylist size checking " + alAssignment?.size)
         binding?.assignmentList = alAssignment
+        if (alAssignment?.size == 0) {
+            viewModel.setDataFound(false)
+        } else {
+            viewModel.setDataFound(true)
+        }
     }
 
     private val onMessageErrorObserver = Observer<Any> {

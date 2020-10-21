@@ -36,9 +36,16 @@ class SubjectDetailsViewModel @Inject constructor(
     private val _subjectName = MutableLiveData<String>()
     val subjectName: LiveData<String> get() = _subjectName
 
-
     fun setSubjectName(subjectName: String) {
         _subjectName.value = subjectName
+    }
+
+    private val _isDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isDataFound: LiveData<Boolean>
+        get() = _isDataFound
+
+    fun setDataFound(isFound: Boolean) {
+        _isDataFound.value = isFound
     }
 
     fun executerDetails(subjectId: String): LiveData<SubjectDetailsModel> {

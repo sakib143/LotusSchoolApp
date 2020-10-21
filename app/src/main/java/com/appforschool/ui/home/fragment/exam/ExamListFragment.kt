@@ -55,6 +55,7 @@ class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.setDataFound(true)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.examData.observe(viewLifecycleOwner, examListObserver)
 
@@ -74,6 +75,11 @@ class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>() {
         alExamp = ArrayList()
         alExamp!!.addAll(it!!.data!!)
         binding?.examList = alExamp
+        if (alExamp?.size == 0) {
+            viewModel.setDataFound(false)
+        } else {
+            viewModel.setDataFound(true)
+        }
     }
 
     interface ExamListListner {

@@ -12,7 +12,7 @@ import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import javax.inject.Inject
 
-class ScheduleFragment  : BaseBindingFragment<FragmentScheduleBinding>() {
+class ScheduleFragment : BaseBindingFragment<FragmentScheduleBinding>() {
 
     private var listener: HomeListener? = null
 
@@ -54,6 +54,7 @@ class ScheduleFragment  : BaseBindingFragment<FragmentScheduleBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.setDataFound(true)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.scheduleData.observe(viewLifecycleOwner, scheduleData)
 
@@ -72,8 +73,12 @@ class ScheduleFragment  : BaseBindingFragment<FragmentScheduleBinding>() {
     private val scheduleData = Observer<ScheduleModel> {
         alSchedule = ArrayList()
         alSchedule!!.addAll(it!!.data!!)
-        LogM.e("=> Arraylist size checking " + alSchedule?.size)
         binding?.scheduleList = alSchedule
+        if (alSchedule?.size == 0) {
+            viewModel.setDataFound(false)
+        } else {
+            viewModel.setDataFound(true)
+        }
     }
 
     interface HomeListener {

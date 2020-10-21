@@ -14,7 +14,7 @@ import com.appforschool.utils.Coroutines
 import com.appforschool.utils.PrefUtils
 import javax.inject.Inject
 
-class ScheduleViewModel  @Inject constructor(
+class ScheduleViewModel @Inject constructor(
     private val application: MyApp,
     private val prefUtils: PrefUtils,
     private val repository: ScheduleRepository
@@ -26,11 +26,17 @@ class ScheduleViewModel  @Inject constructor(
     private val _onMessageError = MutableLiveData<Any>()
     val onMessageError: LiveData<Any> get() = _onMessageError
 
-    private val _scheduleData : MutableLiveData<ScheduleModel> = MutableLiveData<ScheduleModel>()
+    private val _scheduleData: MutableLiveData<ScheduleModel> = MutableLiveData<ScheduleModel>()
     val scheduleData: LiveData<ScheduleModel>
         get() = _scheduleData
 
-    val studentName: String? = prefUtils.getUserData()?.studentname
+    private val _isDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isDataFound: LiveData<Boolean>
+        get() = _isDataFound
+
+    fun setDataFound(isFound: Boolean) {
+        _isDataFound.value = isFound
+    }
 
     fun executeScheduleData(): LiveData<ScheduleModel> {
         Coroutines.main {
@@ -38,8 +44,14 @@ class ScheduleViewModel  @Inject constructor(
                 val inputParam = JsonObject()
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_GET_SCHEDULE)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
-                inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
-                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(
+                    Constant.REQUEST_USER_TYPE,
+                    prefUtils.getUserData()?.usertype
+                )
+                inputParam.addProperty(
+                    Constant.REQUEST_STUDENTID,
+                    prefUtils.getUserData()?.studentId
+                )
                 _isViewLoading.postValue(true)
                 val apiResponse = repository.callScheduleData(inputParam)
                 _isViewLoading.postValue(false)
@@ -47,7 +59,7 @@ class ScheduleViewModel  @Inject constructor(
             } catch (e: ApiExceptions) {
                 _isViewLoading.postValue(false)
                 _onMessageError.postValue(e.message)
-            }catch (e: NoInternetException) {
+            } catch (e: NoInternetException) {
                 _isViewLoading.postValue(false)
                 _onMessageError.postValue(e.message)
             }

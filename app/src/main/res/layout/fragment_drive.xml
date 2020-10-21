@@ -62,6 +62,16 @@
             tools:listitem="@layout/adapter_drive"
             android:layout_below="@+id/llHeader"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/calibri"
+            android:text="@string/no_data_found"
+            android:textSize="@dimen/_20ssp"
+            android:layout_centerInParent="true"
+            tools:visibility="gone"
+            android:visibility="@{viewmodel.isDataFound ? View.GONE : View.VISIBLE}" />
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

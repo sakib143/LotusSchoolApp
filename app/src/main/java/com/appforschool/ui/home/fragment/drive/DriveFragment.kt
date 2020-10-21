@@ -59,6 +59,7 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.setDataFound(true)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.driveList.observe(viewLifecycleOwner, driveListObserver)
         if (globalMethods.isInternetAvailable(activity!!)) {
@@ -75,8 +76,12 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>() {
     private val driveListObserver = Observer<DriveModel> {
         alDriveData = ArrayList()
         alDriveData!!.addAll(it.data)
-        LogM.e("=> Arraylist size checking " + alDriveData?.size)
         binding?.driveList = alDriveData
+        if (alDriveData?.size == 0) {
+            viewModel.setDataFound(false)
+        } else {
+            viewModel.setDataFound(true)
+        }
     }
 
     interface DriveFragmentListner {

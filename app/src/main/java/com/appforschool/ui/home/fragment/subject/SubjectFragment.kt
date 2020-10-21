@@ -51,6 +51,7 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.setDataFound(true)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.subjectData.observe(viewLifecycleOwner, subjectObserver)
         if (globalMethods.isInternetAvailable(activity!!)) {
@@ -78,6 +79,13 @@ class SubjectFragment : BaseBindingFragment<FragmentSubjectsBinding>() {
                 }
             })
             rvSubjectFragment.adapter = adapter
+
+            if (it?.data?.size == 0) {
+                viewModel.setDataFound(false)
+            } else {
+                viewModel.setDataFound(true)
+            }
+
         } else {
             activity?.toast(it!!.message)
         }

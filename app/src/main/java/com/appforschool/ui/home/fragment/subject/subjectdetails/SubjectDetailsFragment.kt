@@ -77,6 +77,7 @@ class SubjectDetailsFragment  : BaseBindingFragment<FragmentSubjectDetailsBindin
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel.setDataFound(true)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.subjectDetails.observe(viewLifecycleOwner, subjectDetails)
         if (globalMethods.isInternetAvailable(activity!!)) {
@@ -91,8 +92,12 @@ class SubjectDetailsFragment  : BaseBindingFragment<FragmentSubjectDetailsBindin
     private val subjectDetails = Observer<SubjectDetailsModel> {
         alSubjectDetails = ArrayList()
         alSubjectDetails!!.addAll(it.data)
-        LogM.e("=> Arraylist size checking " + alSubjectDetails?.size)
         binding?.subjectDetailsList = alSubjectDetails
+        if (alSubjectDetails?.size == 0) {
+            viewModel.setDataFound(false)
+        } else {
+            viewModel.setDataFound(true)
+        }
     }
 
     private val onMessageErrorObserver = Observer<Any> {

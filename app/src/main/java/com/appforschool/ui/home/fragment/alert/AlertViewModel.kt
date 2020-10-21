@@ -32,6 +32,14 @@ class AlertViewModel  @Inject constructor(
     val alertData: LiveData<AlertModel>
         get() = _alertData
 
+    private val _isDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isDataFound: LiveData<Boolean>
+        get() = _isDataFound
+
+    fun setDataFound(isFound: Boolean) {
+        _isDataFound.value = isFound
+    }
+
     fun executeAlert(): LiveData<AlertModel> {
         Coroutines.main {
             try {
