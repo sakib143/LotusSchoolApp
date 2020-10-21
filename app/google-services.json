@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:927439833428:android:a18c01ab4dbfb41a2660c1",
+        "mobilesdk_app_id": "1:927439833428:android:337d8b9692800a122660c1",
         "android_client_info": {
           "package_name": "com.appforschool"
         }
       },
       "oauth_client": [
         {
-          "client_id": "927439833428-ajhbe19arl96ai5501pvobc1kbt3vdkh.apps.googleusercontent.com",
+          "client_id": "927439833428-96juk487hmoftg52ajfgv1u26qdgpd6n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.appforschool",
-            "certificate_hash": "a42d2758f5e5597aa2caa17a131d4bec3d393318"
+            "certificate_hash": "74f230edb6949e7b3b8bef6bd1b6eb36b8570ebf"
           }
         },
         {
