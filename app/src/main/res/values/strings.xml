@@ -47,5 +47,6 @@
     <string name="enter_direct_link">Enter direct link</string>
     <string name="upload_new_file">Upload new file</string>
     <string name="submit">Submit</string>
+    <string name="add_to_drive">Add to Drive</string>
 
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -42,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/calibri"
-                android:text="Add to Deive"
+                android:text="@string/add_to_drive"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_20ssp" />
 
@@ -99,10 +98,32 @@
                 android:background="@color/colorBlack" />
 
             <Spinner
-                android:id="@+id/spinnerKnowledgeList"
+                android:id="@+id/spKnowledgeAD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onItemSelected="@{(parent,view,pos,id)->viewmodel.onKnoledgeSelection(parent,view,pos,id)}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorBlack" />
+
+            <Spinner
+                android:id="@+id/spStandardAD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onItemSelected="@{(parent,view,pos,id)->viewmodel.onStandardSelection(parent,view,pos,id)}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/colorBlack" />
+
+            <Spinner
+                android:id="@+id/spSubjectAD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onItemSelected="@{(parent,view,pos,id)->viewmodel.onSubjectSelection(parent,view,pos,id)}" />
 
             <View
                 android:layout_width="match_parent"

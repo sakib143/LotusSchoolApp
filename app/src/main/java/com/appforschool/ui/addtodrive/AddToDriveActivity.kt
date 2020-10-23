@@ -10,6 +10,8 @@ import com.appforschool.data.model.StandardListModel
 import com.appforschool.data.model.SubjectListModel
 import com.appforschool.databinding.ActivityAddToDriveBinding
 import com.appforschool.ui.addtodrive.adapter.KnowledgeSpinnerAdapter
+import com.appforschool.ui.addtodrive.adapter.StandardAdapter
+import com.appforschool.ui.addtodrive.adapter.SubjectAdapter
 import com.appforschool.utils.toast
 import kotlinx.android.synthetic.main.activity_add_to_drive.*
 import javax.inject.Inject
@@ -31,11 +33,14 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         super.onCreate(savedInstanceState)
 
         setObserver()
-
         viewModel.setFileSelect(true)
+        setKnowledgeSpinner()
 
+    }
+
+    private fun setKnowledgeSpinner() {
         val adapter = KnowledgeSpinnerAdapter(this@AddToDriveActivity, viewModel.alKnowledge)
-        spinnerKnowledgeList.adapter = adapter
+        spKnowledgeAD.adapter = adapter
     }
 
     companion object {
@@ -59,18 +64,28 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
 
     private val standardObserver = Observer<StandardListModel> {
         if (it.status) {
-            toast(it!!.message)
+            setStandardSpinner(it)
         } else {
             toast(it!!.message)
         }
     }
 
+    private fun setStandardSpinner(standardListModel: StandardListModel) {
+        val adapter = StandardAdapter(this@AddToDriveActivity, standardListModel.data)
+        spStandardAD.adapter = adapter
+    }
+
     private val subjectObserver = Observer<SubjectListModel> {
         if (it.status) {
-            toast(it!!.message)
+            setSubjectAdapter(it)
         } else {
             toast(it!!.message)
         }
+    }
+
+    private fun setSubjectAdapter(it: SubjectListModel) {
+        val adapter = SubjectAdapter(this@AddToDriveActivity, it.data)
+        spSubjectAD.adapter = adapter
     }
 
     fun closeScreen() {

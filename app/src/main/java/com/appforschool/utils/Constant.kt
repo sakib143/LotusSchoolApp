@@ -55,6 +55,10 @@ class Constant {
         const val REQUEST_FILE_SIZE = "filesize"
         const val REUQEST_UPLOAD_TYPE = "uploadtype"
         const val REQUEST_IMAGE = "Image "
+        const val REQUEST_GETSUBJECTSBYSTANDARD= "getsubjectsbystandard"
+        const val REQUEST_STANDARDID = "standardid"
+        const val REQUEST_GETALLSTANDARDS = "getallstandards"
+
 
     }
 }

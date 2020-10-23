@@ -6,18 +6,21 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
+import com.appforschool.api.ApiExceptions
+import com.appforschool.api.NoInternetException
+import com.appforschool.data.model.GetVersionModel
 import com.appforschool.data.model.LoginModel
 import com.appforschool.data.model.StandardListModel
 import com.appforschool.data.model.SubjectListModel
 import com.appforschool.data.repository.AddToDriveRepository
-import com.appforschool.utils.GlobalMethods
-import com.appforschool.utils.LogM
+import com.appforschool.utils.*
+import com.google.gson.JsonObject
 import javax.inject.Inject
 
 
 class AddToDriveViewModel @Inject constructor(
     private val application: MyApp,
-    private val globalMethods: GlobalMethods,
+    private val prefUtils: PrefUtils,
     private val repository: AddToDriveRepository
 ) : AndroidViewModel(application) {
 
@@ -33,7 +36,7 @@ class AddToDriveViewModel @Inject constructor(
     val standard: LiveData<StandardListModel>
         get() = _standard
 
-    //Standard observer
+    //Subject observer
     private val _subject: MutableLiveData<SubjectListModel> =
         MutableLiveData<SubjectListModel>()
     val subject: LiveData<SubjectListModel>
@@ -51,6 +54,44 @@ class AddToDriveViewModel @Inject constructor(
 
     fun setFileSelect(isSelected: Boolean) {
         _isFileSelected.value = isSelected
+    }
+
+    fun executerSubjectList(studentId: String): LiveData<SubjectListModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(
+                    Constant.REQUEST_MODE,
+                    Constant.REQUEST_GETSUBJECTSBYSTANDARD
+                )
+                inputParam.addProperty(Constant.REQUEST_STANDARDID, studentId)
+                val apiResponse = repository.callSubjectListForAddDrive(inputParam)
+                _subject.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _subject!!
+    }
+
+    fun executeStandardList(): LiveData<StandardListModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_GETALLSTANDARDS)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+
+                val apiResponse = repository.callStandardListForAddDrive(inputParam)
+                _standard.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _standard!!
     }
 
     fun onKnoledgeSelection(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
