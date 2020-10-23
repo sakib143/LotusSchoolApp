@@ -69,4 +69,11 @@ interface WebServiceInterface {
         @Part(Constant.REQUEST_FILE_EXT) fileext : RequestBody,
         @Part(Constant.REQUEST_FILE_SIZE) filesize : RequestBody,
         @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype : RequestBody) : Response<AssignmentSubmissionModel>
+
+    @POST("Get_SpData")
+    suspend fun callStandardListForAddDrive(@Body jsonObject: JsonObject): Response<StandardListModel>
+
+    @POST("Get_SpData")
+    suspend fun callSubjectListForAddDrive(@Body jsonObject: JsonObject): Response<SubjectListModel>
+
 }
