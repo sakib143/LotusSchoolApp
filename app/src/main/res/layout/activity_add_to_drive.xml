@@ -112,22 +112,30 @@
                 android:id="@+id/spStandardAD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:visibility="gone"
+                android:visibility="@{viewmodel.setStandardVisiblity ? View.VISIBLE : View.GONE}"
                 android:onItemSelected="@{(parent,view,pos,id)->viewmodel.onStandardSelection(parent,view,pos,id)}" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:background="@color/colorBlack" />
+                android:background="@color/colorBlack"
+                tools:visibility="gone"
+                android:visibility="@{viewmodel.setStandardVisiblity ? View.VISIBLE : View.GONE}"/>
 
             <Spinner
                 android:id="@+id/spSubjectAD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:visibility="gone"
+                android:visibility="@{viewmodel.setSubjectVisiblity ? View.VISIBLE : View.GONE}"
                 android:onItemSelected="@{(parent,view,pos,id)->viewmodel.onSubjectSelection(parent,view,pos,id)}" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
+                tools:visibility="gone"
+                android:visibility="@{viewmodel.setSubjectVisiblity ? View.VISIBLE : View.GONE}"
                 android:background="@color/colorBlack" />
 
             <RadioGroup

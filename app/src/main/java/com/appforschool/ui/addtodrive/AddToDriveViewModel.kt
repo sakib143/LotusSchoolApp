@@ -42,6 +42,16 @@ class AddToDriveViewModel @Inject constructor(
     val subject: LiveData<SubjectListModel>
         get() = _subject
 
+    //Set Starndard spinner visiblity
+    private val _setStandardVisiblity: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val setStandardVisiblity: LiveData<Boolean>
+        get() = _setStandardVisiblity
+
+    //Set Subject spinner visiblity
+    private val _setSubjectVisiblity: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val setSubjectVisiblity: LiveData<Boolean>
+        get() = _setSubjectVisiblity
+
 
     var topic = MutableLiveData<String>()
     var description = MutableLiveData<String>()
@@ -56,9 +66,22 @@ class AddToDriveViewModel @Inject constructor(
         _isFileSelected.value = isSelected
     }
 
+    fun checkUserType() {
+        if (prefUtils.getUserData()?.usertype.equals("S", ignoreCase = true)) {
+            _setStandardVisiblity.value = false
+            _setSubjectVisiblity.value = true
+            executerSubjectList(prefUtils.getUserData()?.studentId!!)
+        } else {
+            _setStandardVisiblity.value = true
+            _setSubjectVisiblity.value = true
+            executeStandardList()
+        }
+    }
+
     fun executerSubjectList(studentId: String): LiveData<SubjectListModel> {
         Coroutines.main {
             try {
+                _isViewLoading.postValue(true)
                 val inputParam = JsonObject()
                 inputParam.addProperty(
                     Constant.REQUEST_MODE,
@@ -67,10 +90,13 @@ class AddToDriveViewModel @Inject constructor(
                 inputParam.addProperty(Constant.REQUEST_STANDARDID, studentId)
                 val apiResponse = repository.callSubjectListForAddDrive(inputParam)
                 _subject.postValue(apiResponse)
+                _isViewLoading.postValue(false)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
+                _isViewLoading.postValue(false)
             } catch (e: NoInternetException) {
                 _onMessageError.postValue(e.message)
+                _isViewLoading.postValue(false)
             }
         }
         return _subject!!
@@ -79,15 +105,18 @@ class AddToDriveViewModel @Inject constructor(
     fun executeStandardList(): LiveData<StandardListModel> {
         Coroutines.main {
             try {
+                _isViewLoading.postValue(true)
                 val inputParam = JsonObject()
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_GETALLSTANDARDS)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
-
                 val apiResponse = repository.callStandardListForAddDrive(inputParam)
                 _standard.postValue(apiResponse)
+                _isViewLoading.postValue(false)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
+                _isViewLoading.postValue(false)
             } catch (e: NoInternetException) {
+                _isViewLoading.postValue(false)
                 _onMessageError.postValue(e.message)
             }
         }
@@ -107,6 +136,7 @@ class AddToDriveViewModel @Inject constructor(
 
     fun onStandardSelection(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         LogM.e("=> testing " + pos)
+        executerSubjectList(_standard.value?.data?.get(pos)?.groupid.toString())
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
         //parent.getAdapter().getItem(pos)    get item by pos

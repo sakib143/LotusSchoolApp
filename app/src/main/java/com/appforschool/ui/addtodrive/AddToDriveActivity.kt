@@ -34,6 +34,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
 
         setObserver()
         viewModel.setFileSelect(true)
+        viewModel.checkUserType()
         setKnowledgeSpinner()
 
     }
