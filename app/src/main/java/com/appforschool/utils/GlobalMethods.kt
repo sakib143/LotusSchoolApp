@@ -12,6 +12,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import androidx.core.app.ShareCompat
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -177,6 +179,25 @@ class GlobalMethods @Inject constructor() {
             e.printStackTrace()
         }
         return version
+    }
+
+    fun getDeviceName(): String =
+        (if (Build.MODEL.startsWith(Build.MANUFACTURER, ignoreCase = true)) {
+            Build.MODEL
+        } else {
+            "${Build.MANUFACTURER} ${Build.MODEL}"
+        }).capitalize()
+
+    // TODO: 28-09-2018 full image path to Bitmap by Sakib END
+    fun getDeviceID(context: Context): String? {
+        var android_id: String? = ""
+        try {
+            android_id =
+                Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return android_id
     }
 
 }

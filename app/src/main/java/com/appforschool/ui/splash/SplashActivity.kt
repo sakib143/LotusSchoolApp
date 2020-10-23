@@ -26,7 +26,7 @@ class SplashActivity : BaseActivity() {
         if (prefUtils.getUserId().isNullOrEmpty()) {
             navigationController.navigateToLoginScreen((this@SplashActivity))
         } else {
-            navigationController.navigateToAddToDrive(this@SplashActivity)
+            navigationController.navigateToHomeScreen(this@SplashActivity)
         }
         finish()
     }

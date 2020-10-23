@@ -21,6 +21,7 @@ data class SubjectModel(
         @Expose
         @SerializedName("isselective") var isselective: Boolean = false,
         @Expose
-        @SerializedName("topic") var topic: Any = Any()
-    )
+        @SerializedName("topic") var topic: String = "",
+        @Expose
+        @SerializedName("standardname") var standardname: String = "")
 }

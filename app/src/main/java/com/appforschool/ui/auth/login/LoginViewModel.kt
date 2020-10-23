@@ -57,6 +57,7 @@ class LoginViewModel @Inject constructor(
                 val loginParam = JsonObject()
                 loginParam.addProperty(Constant.REQUEST_USERNAME, userid.value)
                 loginParam.addProperty(Constant.REQUEST_PASSWORD, password.value)
+                loginParam.addProperty(Constant.REQUEST_DEVICE_DETAILS, globalMethods.getDeviceName())
                 try {
                     _isViewLoading.postValue(true)
                     val apiResponse = repository.callLogin(loginParam)

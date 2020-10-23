@@ -58,6 +58,7 @@ class Constant {
         const val REQUEST_GETSUBJECTSBYSTANDARD= "getsubjectsbystandard"
         const val REQUEST_STANDARDID = "standardid"
         const val REQUEST_GETALLSTANDARDS = "getallstandards"
+        const val REQUEST_DEVICE_DETAILS = "devicedetails"
 
 
     }
