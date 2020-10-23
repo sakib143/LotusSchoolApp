@@ -1,4 +1,4 @@
-package com.appforschool.ui.addtodrive
+package com.appforschool.ui.addtodrive.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.appforschool.R
+import com.appforschool.data.model.SubjectListModel
 
-class KnowledgeSpinnerAdapter (val context: Context, var dataSource: List<String>) : BaseAdapter() {
+class SubjectAdapter(val context: Context, var dataSource: List<SubjectListModel.Data>) : BaseAdapter() {
 
-    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val inflater: LayoutInflater =
+        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
@@ -24,7 +26,7 @@ class KnowledgeSpinnerAdapter (val context: Context, var dataSource: List<String
             view = convertView
             vh = view.tag as ItemHolder
         }
-        vh.tvKnowledgeType.text = dataSource.get(position)
+        vh.tvKnowledgeType.text = dataSource.get(position).coursename
         return view
     }
 
@@ -42,9 +44,9 @@ class KnowledgeSpinnerAdapter (val context: Context, var dataSource: List<String
 
     private class ItemHolder(row: View?) {
         val tvKnowledgeType: TextView
+
         init {
             tvKnowledgeType = row?.findViewById(R.id.tvKnowledgeType) as TextView
         }
     }
-
 }

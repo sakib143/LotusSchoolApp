@@ -8,16 +8,16 @@ import androidx.annotation.Keep
 
 data class SubjectListModel(
     @Expose
-    @SerializedName("data") var `data`: List<Data?>? = listOf(),
+    @SerializedName("data") var `data`: List<Data> = listOf(),
     @Expose
-    @SerializedName("message") var message: String? = "", // success
+    @SerializedName("message") var message: String= "", // success
     @Expose
-    @SerializedName("status") var status: Boolean? = false // true
+    @SerializedName("status") var status: Boolean = false // true
 ) {
     data class Data(
         @Expose
-        @SerializedName("courseid") var courseid: Double? = 0.0, // 714.0
+        @SerializedName("courseid") var courseid: Double = 0.0, // 714.0
         @Expose
-        @SerializedName("coursename") var coursename: String? = "" // Hindi
+        @SerializedName("coursename") var coursename: String = "" // Hindi
     )
 }

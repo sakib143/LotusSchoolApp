@@ -8,11 +8,11 @@ import androidx.annotation.Keep
 
 data class StandardListModel(
     @Expose
-    @SerializedName("data") var `data`: List<Data?>? = listOf(),
+    @SerializedName("data") var `data`: List<Data> = listOf(),
     @Expose
-    @SerializedName("message") var message: String? = "", // success
+    @SerializedName("message") var message: String = "", // success
     @Expose
-    @SerializedName("status") var status: Boolean? = false // true
+    @SerializedName("status") var status: Boolean = false // true
 ) {
     data class Data(
         @Expose
