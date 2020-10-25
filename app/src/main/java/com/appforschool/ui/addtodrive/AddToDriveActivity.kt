@@ -8,6 +8,7 @@ import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.StandardListModel
 import com.appforschool.data.model.SubjectListModel
+import com.appforschool.data.model.UploadFileUrlModel
 import com.appforschool.databinding.ActivityAddToDriveBinding
 import com.appforschool.ui.addtodrive.adapter.KnowledgeSpinnerAdapter
 import com.appforschool.ui.addtodrive.adapter.StandardAdapter
@@ -57,6 +58,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         viewModel.onMessageError.observe(this, onMessageErrorObserver)
         viewModel.standard.observe(this, standardObserver)
         viewModel.subject.observe(this, subjectObserver)
+        viewModel.uploadFileLink.observe(this, uploadFileLinkObserver)
     }
 
     private val onMessageErrorObserver = Observer<Any> {
@@ -66,6 +68,14 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     private val standardObserver = Observer<StandardListModel> {
         if (it.status) {
             setStandardSpinner(it)
+        } else {
+            toast(it!!.message)
+        }
+    }
+
+    private val uploadFileLinkObserver = Observer<UploadFileUrlModel> {
+        if (it.status) {
+            toast(it!!.message)
         } else {
             toast(it!!.message)
         }

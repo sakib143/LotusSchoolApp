@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.appforschool.R
+import com.appforschool.data.model.KnwledgeTypeModel
 
-class KnowledgeSpinnerAdapter (val context: Context, var dataSource: List<String>) : BaseAdapter() {
+class KnowledgeSpinnerAdapter (val context: Context, var dataSource: List<KnwledgeTypeModel>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -24,7 +25,7 @@ class KnowledgeSpinnerAdapter (val context: Context, var dataSource: List<String
             view = convertView
             vh = view.tag as ItemHolder
         }
-        vh.tvKnowledgeType.text = dataSource.get(position)
+        vh.tvKnowledgeType.text = dataSource.get(position).name
         return view
     }
 

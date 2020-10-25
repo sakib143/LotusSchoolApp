@@ -8,13 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
-import com.appforschool.data.model.GetVersionModel
-import com.appforschool.data.model.LoginModel
-import com.appforschool.data.model.StandardListModel
-import com.appforschool.data.model.SubjectListModel
+import com.appforschool.data.model.*
 import com.appforschool.data.repository.AddToDriveRepository
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
+import java.io.File
 import javax.inject.Inject
 
 
@@ -52,15 +50,29 @@ class AddToDriveViewModel @Inject constructor(
     val setSubjectVisiblity: LiveData<Boolean>
         get() = _setSubjectVisiblity
 
+    //Upload file link
+    private val _uploadFileLink: MutableLiveData<UploadFileUrlModel> =
+        MutableLiveData<UploadFileUrlModel>()
+    val uploadFileLink: LiveData<UploadFileUrlModel>
+        get() = _uploadFileLink
 
-    var topic = MutableLiveData<String>()
-    var description = MutableLiveData<String>()
-    var directLinkUrl = MutableLiveData<String>()
+
+    // value for uploading files
+    val topic = MutableLiveData<String>()
+    val description = MutableLiveData<String>()
+    val standardid = MutableLiveData<Int>()
+    val filetype = MutableLiveData<String>()
+    val kwtype = MutableLiveData<String>()
+    val fileext = MutableLiveData<String>()
+    val filesize = MutableLiveData<String>()
+    val linkurl = MutableLiveData<String>()
+    val file = MutableLiveData<File>()
+
 
     private val _isFileSelected = MutableLiveData<Boolean>()
     val isFileSelected: LiveData<Boolean> get() = _isFileSelected
 
-    var alKnowledge: ArrayList<String> = repository.knowledgeTypeList()
+    val alKnowledge: ArrayList<KnwledgeTypeModel> = repository.knowledgeTypeList()
 
     fun setFileSelect(isSelected: Boolean) {
         _isFileSelected.value = isSelected
@@ -70,6 +82,7 @@ class AddToDriveViewModel @Inject constructor(
         if (prefUtils.getUserData()?.usertype.equals("S", ignoreCase = true)) {
             _setStandardVisiblity.value = false
             _setSubjectVisiblity.value = true
+            standardid.value = prefUtils.getUserData()?.standardid
             executerSubjectList(prefUtils.getUserData()?.studentId!!)
         } else {
             _setStandardVisiblity.value = true
@@ -125,6 +138,7 @@ class AddToDriveViewModel @Inject constructor(
 
     fun onKnoledgeSelection(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         LogM.e("=> testing " + pos)
+        kwtype.value = alKnowledge.get(pos).id
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
         //parent.getAdapter().getItem(pos)    get item by pos
@@ -136,6 +150,7 @@ class AddToDriveViewModel @Inject constructor(
 
     fun onStandardSelection(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         LogM.e("=> testing " + pos)
+        standardid.value = _standard.value?.data?.get(pos)?.groupid
         executerSubjectList(_standard.value?.data?.get(pos)?.groupid.toString())
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
@@ -158,7 +173,84 @@ class AddToDriveViewModel @Inject constructor(
     }
 
     fun uploadToDrive() {
-
+        if (isFileSelected.value == true) {
+            checkValidation()
+        } else {
+            if(checkValidation()){
+                executerUploadFileUrlModelDrive()
+            }
+        }
     }
 
+    private fun checkValidation(): Boolean {
+        var isValid = false
+        if (topic.value.isNullOrEmpty()) {
+            application.toast("Please add topic")
+        } else if (description.value.isNullOrEmpty()) {
+            application.toast("Please add description")
+        } else if (isFileSelected.value == true && file.value == null) {
+            application.toast("Please choose file")
+        } else if (isFileSelected.value == false && linkurl.value.isNullOrEmpty()) {
+            application.toast("Please enter url")
+        } else {
+            isValid = true
+        }
+        return isValid
+    }
+
+    fun executerUploadFileUrlModelDrive(): LiveData<UploadFileUrlModel> {
+        Coroutines.main {
+            try {
+                _isViewLoading.postValue(true)
+                val inputParam = uploadLInkParam()
+                val apiResponse = repository.callUploadFileUrlModelDrive(inputParam)
+                _uploadFileLink.postValue(apiResponse)
+                _isViewLoading.postValue(false)
+                if(apiResponse.status){
+                    resetValues()
+                }
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+                _isViewLoading.postValue(false)
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+                _isViewLoading.postValue(false)
+            }
+        }
+        return _uploadFileLink!!
+    }
+
+    private fun uploadLInkParam(): JsonObject {
+        val inputParam = JsonObject()
+        inputParam.addProperty(
+            Constant.REQUEST_MODE,
+            Constant.REQUEST_ADD_TO_DRIVE_WITH_LINK
+        )
+        inputParam.addProperty(Constant.REUQEST_SHARE_ID, 0)
+        inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+        inputParam.addProperty(
+            Constant.REQUEST_USER_TYPE,
+            prefUtils.getUserData()?.usertype
+        )
+        inputParam.addProperty(
+            Constant.REQUEST_STUDENTID,
+            prefUtils.getUserData()?.studentId
+        )
+        inputParam.addProperty(Constant.REQUEST_STANDARDID, standardid.value)
+        inputParam.addProperty(Constant.REQUEST_FILE_TITLE, topic.value)
+        inputParam.addProperty(Constant.REQUEST_FILE_DESCR, description.value)
+        inputParam.addProperty(Constant.REQUEST_FILE_TYPE, "L")
+        inputParam.addProperty(Constant.REQUEST_KW_TYPE, kwtype.value)
+        inputParam.addProperty(Constant.REQUEST_FILE_EXT, "")
+        inputParam.addProperty(Constant.REQUEST_FILE_SIZE, "")
+        inputParam.addProperty(Constant.REQUEST_LINK_URL, linkurl.value)
+        return inputParam
+    }
+
+    private fun resetValues() {
+        topic.value = ""
+        description.value = ""
+        linkurl.value = ""
+        file.value = null
+    }
 }

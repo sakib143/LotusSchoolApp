@@ -76,4 +76,7 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callSubjectListForAddDrive(@Body jsonObject: JsonObject): Response<SubjectListModel>
 
+    @POST("Get_SpData")
+    suspend fun callUploadFileUrlModelDrive(@Body jsonObject: JsonObject): Response<UploadFileUrlModel>
+
 }

@@ -50,15 +50,18 @@ class Constant {
         const val REUQEST_SHARE_ID = "shareid"
         const val REQUEST_FILE_TITLE = "filetitle"
         const val REQUEST_FILE_DESCR = "filedescr"
-        const val REQUEST_FILE_TYPE ="filetype"
+        const val REQUEST_FILE_TYPE = "filetype"
         const val REQUEST_FILE_EXT = "fileext"
         const val REQUEST_FILE_SIZE = "filesize"
         const val REUQEST_UPLOAD_TYPE = "uploadtype"
         const val REQUEST_IMAGE = "Image "
-        const val REQUEST_GETSUBJECTSBYSTANDARD= "getsubjectsbystandard"
+        const val REQUEST_GETSUBJECTSBYSTANDARD = "getsubjectsbystandard"
         const val REQUEST_STANDARDID = "standardid"
         const val REQUEST_GETALLSTANDARDS = "getallstandards"
         const val REQUEST_DEVICE_DETAILS = "devicedetails"
+        const val REQUEST_ADD_TO_DRIVE_WITH_LINK = "addtodrivewithlink"
+        const val REQUEST_KW_TYPE = "kwtype"
+        const val REQUEST_LINK_URL = "linkurl"
 
 
     }
