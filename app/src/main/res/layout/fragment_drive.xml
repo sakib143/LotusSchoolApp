@@ -34,6 +34,7 @@
             android:background="@color/colorHomeHeader"
             android:orientation="vertical"
             android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp"
             android:paddingTop="@dimen/_15sdp">
 
             <TextView
@@ -50,6 +51,14 @@
                 android:text="@string/my_drive"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_20ssp" />
+
+            <ImageView
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/ic_add_to_drive"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/colorWhite"
+                android:onClick="@{()-> listner.openAddToDrive()}"/>
 
         </LinearLayout>
 

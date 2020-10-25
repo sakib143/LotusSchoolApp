@@ -77,6 +77,21 @@ interface WebServiceInterface {
     suspend fun callSubjectListForAddDrive(@Body jsonObject: JsonObject): Response<SubjectListModel>
 
     @POST("Get_SpData")
-    suspend fun callUploadFileUrlModelDrive(@Body jsonObject: JsonObject): Response<UploadFileUrlModel>
+    suspend fun callLinkAddDrive(@Body jsonObject: JsonObject): Response<UploadFileUrlModel>
+
+    @Multipart
+    @POST("UploadFile")
+    suspend fun callFileAddDrive(
+        @Part Image: MultipartBody.Part,
+        @Part(Constant.REUQEST_SHARE_ID) shareid: RequestBody,
+        @Part(Constant.REUQEST_USER_ID) userid : RequestBody,
+        @Part(Constant.REQUEST_USER_TYPE) usertype : RequestBody,
+        @Part(Constant.REQUEST_STUDENTID) studentid : RequestBody,
+        @Part(Constant.REQUEST_FILE_TITLE) filetitle : RequestBody,
+        @Part(Constant.REQUEST_FILE_DESCR) filedescr : RequestBody,
+        @Part(Constant.REQUEST_FILE_TYPE) filetype : RequestBody,
+        @Part(Constant.REQUEST_FILE_EXT) fileext : RequestBody,
+        @Part(Constant.REQUEST_FILE_SIZE) filesize : RequestBody,
+        @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype : RequestBody) : Response<AssignmentSubmissionModel>
 
 }

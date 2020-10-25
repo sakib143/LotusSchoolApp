@@ -4,6 +4,8 @@ import com.appforschool.api.SafeAPIRequest
 import com.appforschool.api.WebServiceInterface
 import com.appforschool.data.model.*
 import com.google.gson.JsonObject
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class AddToDriveRepository   @Inject constructor(
@@ -22,9 +24,27 @@ class AddToDriveRepository   @Inject constructor(
         }
     }
 
-    suspend fun callUploadFileUrlModelDrive(objectLogin: JsonObject): UploadFileUrlModel {
+    suspend fun callLinkAddDrive(objectLogin: JsonObject): UploadFileUrlModel {
         return apiRequest {
-            webServiceInterface.callUploadFileUrlModelDrive(objectLogin)
+            webServiceInterface.callLinkAddDrive(objectLogin)
+        }
+    }
+
+    suspend fun callFileAddDrive(
+        Image : MultipartBody.Part,
+        shareid: RequestBody,
+        userid: RequestBody,
+        usertype: RequestBody,
+        studentid: RequestBody,
+        filetitle: RequestBody,
+        filedescr: RequestBody,
+        filetype: RequestBody,
+        fileext: RequestBody,
+        filesize: RequestBody,
+        uploadtype: RequestBody
+    ): AssignmentSubmissionModel {
+        return apiRequest {
+            webServiceInterface.callFileAddDrive(Image, shareid,userid,usertype,studentid,filetitle,filedescr,filetype,fileext,filesize,uploadtype)
         }
     }
 

@@ -160,6 +160,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         onBackPressed()
     }
 
+    override fun openAddToFragment() {
+        navigationController.navigateToAddToDrive(this@HomeActivity)
+    }
+
     override fun openSubjectDetails(subjectID: String, subjectName: String) {
         addFragment(
             supportFragmentManager,

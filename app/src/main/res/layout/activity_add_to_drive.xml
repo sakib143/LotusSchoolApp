@@ -172,21 +172,44 @@
                 android:layout_height="@dimen/_1sdp"
                 android:background="@color/colorBlack" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/bg_login_signup_button"
-                android:fontFamily="@font/calibri"
-                android:paddingLeft="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingRight="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_5ssp"
-                android:text="Choose file"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_14ssp"
-                android:visibility="@{viewmodel.isFileSelected().booleanValue() ? View.VISIBLE : View.GONE}"
-                tools:visibility="visible" />
+                android:orientation="vertical"
+                android:visibility="@{viewmodel.isFileSelected().booleanValue() ? View.VISIBLE : View.GONE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/bg_login_signup_button"
+                    android:fontFamily="@font/calibri"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5ssp"
+                    android:text="@string/choose_file"
+                    android:onClick="@{()-> listner.chooseFile()}"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14ssp"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/calibri"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5ssp"
+                    android:text="@{viewmodel.file.path.toString()}"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_14ssp"
+                    tools:text="Selected file path" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

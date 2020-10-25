@@ -86,9 +86,14 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>() {
 
     interface DriveFragmentListner {
         fun popFragment()
+        fun openAddToFragment()
     }
 
     fun closeDriveFragment() {
         listener?.popFragment()
+    }
+
+    fun openAddToDrive(){
+        listener?.openAddToFragment()
     }
 }

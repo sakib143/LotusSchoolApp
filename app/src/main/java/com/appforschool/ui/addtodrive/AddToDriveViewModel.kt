@@ -12,6 +12,10 @@ import com.appforschool.data.model.*
 import com.appforschool.data.repository.AddToDriveRepository
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -55,6 +59,12 @@ class AddToDriveViewModel @Inject constructor(
         MutableLiveData<UploadFileUrlModel>()
     val uploadFileLink: LiveData<UploadFileUrlModel>
         get() = _uploadFileLink
+
+    //Upload selected File
+    private val _upload_selected_file: MutableLiveData<AssignmentSubmissionModel> =
+        MutableLiveData<AssignmentSubmissionModel>()
+    val upload_selected_file: LiveData<AssignmentSubmissionModel>
+        get() = _upload_selected_file
 
 
     // value for uploading files
@@ -173,11 +183,13 @@ class AddToDriveViewModel @Inject constructor(
     }
 
     fun uploadToDrive() {
-        if (isFileSelected.value == true) {
-            checkValidation()
-        } else {
-            if(checkValidation()){
-                executerUploadFileUrlModelDrive()
+        if (checkValidation()) {
+            if (isFileSelected.value == true) {
+                callFileAddDrive()
+            } else {
+                if (checkValidation()) {
+                    executerUploadFileUrlModelDrive()
+                }
             }
         }
     }
@@ -203,10 +215,10 @@ class AddToDriveViewModel @Inject constructor(
             try {
                 _isViewLoading.postValue(true)
                 val inputParam = uploadLInkParam()
-                val apiResponse = repository.callUploadFileUrlModelDrive(inputParam)
+                val apiResponse = repository.callLinkAddDrive(inputParam)
                 _uploadFileLink.postValue(apiResponse)
                 _isViewLoading.postValue(false)
-                if(apiResponse.status){
+                if (apiResponse.status) {
                     resetValues()
                 }
             } catch (e: ApiExceptions) {
@@ -252,5 +264,51 @@ class AddToDriveViewModel @Inject constructor(
         description.value = ""
         linkurl.value = ""
         file.value = null
+    }
+
+    fun callFileAddDrive(): LiveData<AssignmentSubmissionModel> {
+        Coroutines.main {
+            val fileReqBodyLicense =
+                file.value?.asRequestBody("image/*".toMediaTypeOrNull())
+            val userImageBody = MultipartBody.Part.createFormData(
+                Constant.REQUEST_IMAGE,
+                file.value?.name,
+                fileReqBodyLicense!!
+            )
+            val shareid = "".toRequestBody("text/plain".toMediaTypeOrNull())
+            val userid =
+                prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val usertype =
+                prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val studentid =
+                prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filetitle = topic.value?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filedescr = description.value?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filetype = "F".toRequestBody("text/plain".toMediaTypeOrNull())
+            val fileext = fileext.value?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filesize = filesize.value?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val uploadtype = "D".toRequestBody("text/plain".toMediaTypeOrNull())
+            try {
+                val response = repository.callFileAddDrive(
+                    userImageBody,
+                    shareid,
+                    userid,
+                    usertype,
+                    studentid,
+                    filetitle!!,
+                    filedescr!!,
+                    filetype,
+                    fileext!!,
+                    filesize!!,
+                    uploadtype
+                )
+                _upload_selected_file.postValue(response)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _upload_selected_file!!
     }
 }
