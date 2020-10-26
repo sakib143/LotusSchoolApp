@@ -26,7 +26,7 @@ data class DriveModel(
         @Expose
         @SerializedName("filetype") var filetype: String? = "", // Assignment
         @Expose
-        @SerializedName("linkurl") var linkurl: Any? = Any(), // null
+        @SerializedName("linkurl") var linkurl: String? = "", // null
         @Expose
         @SerializedName("sizeinkb") var sizeinkb: String? = "", // 327KB
         @Expose

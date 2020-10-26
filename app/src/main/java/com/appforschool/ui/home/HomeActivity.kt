@@ -77,7 +77,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     private fun setObserver() {
         viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
         viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
-        viewModel.fileSubmit.observe(this@HomeActivity,fileSubmitObserver)
+        viewModel.fileSubmit.observe(this@HomeActivity, fileSubmitObserver)
         viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
     }
 
@@ -98,9 +98,16 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 val file: File = File(filePath)
                 viewModel.filePath.value = file
                 val fileSizeInBytes = file.length()
-                val fileSizeInKB = fileSizeInBytes/ 1024
+                val fileSizeInKB = fileSizeInBytes / 1024
                 val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
-                viewModel.uploadAssignmentFile(shareId,"title","description","." + fileExtension,fileSizeInKB.toString(),"A")
+                viewModel.uploadAssignmentFile(
+                    shareId,
+                    "title",
+                    "description",
+                    "." + fileExtension,
+                    fileSizeInKB.toString(),
+                    "A"
+                )
             }
         }
     }
@@ -296,13 +303,14 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         checkFileSubmitPermission(model)
     }
 
-    fun checkFileSubmitPermission(model: AssignmentModel.Data) = runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
-        shareId = model.shareid
-        var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-        chooseFile.setType("*/*")
-        chooseFile = Intent.createChooser(chooseFile, "Choose a file")
-        startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
-    }
+    fun checkFileSubmitPermission(model: AssignmentModel.Data) =
+        runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
+            shareId = model.shareid
+            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+            chooseFile.setType("*/*")
+            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+            startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
+        }
 
     override fun openAssignmentFile(model: AssignmentModel.Data) {
         viewModel.executeFileViewLog(model.shareid, "A")
@@ -326,12 +334,17 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun openDriveList(model: DriveModel.Data) {
         viewModel.executeFileViewLog(model.shareid, "D")
-        if (model.fileext.equals(".mp4", ignoreCase = true)) {
-            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
-            intent.putExtra(Constant.VIDEO_URL, model.filepath)
-            startActivity(intent)
+        if (model.linkurl.isNullOrEmpty()) {
+            if (model.fileext.equals(".mp4", ignoreCase = true)) {
+                val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+                intent.putExtra(Constant.VIDEO_URL, model.filepath)
+                startActivity(intent)
+            } else {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
+                startActivity(browserIntent)
+            }
         } else {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.linkurl))
             startActivity(browserIntent)
         }
     }
