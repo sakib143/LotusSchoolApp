@@ -1,6 +1,7 @@
 package com.appforschool.ui.addtodrive
 
 import android.view.View
+import android.webkit.URLUtil.isValidUrl
 import android.widget.AdapterView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -23,6 +24,7 @@ import javax.inject.Inject
 class AddToDriveViewModel @Inject constructor(
     private val application: MyApp,
     private val prefUtils: PrefUtils,
+    private val globalMethods: GlobalMethods,
     private val repository: AddToDriveRepository
 ) : AndroidViewModel(application) {
 
@@ -93,7 +95,7 @@ class AddToDriveViewModel @Inject constructor(
             _setStandardVisiblity.value = false
             _setSubjectVisiblity.value = true
             standardid.value = prefUtils.getUserData()?.standardid
-            executerSubjectList(prefUtils.getUserData()?.studentId!!)
+            executerSubjectList(prefUtils.getUserData()?.standardid.toString())
         } else {
             _setStandardVisiblity.value = true
             _setSubjectVisiblity.value = true
@@ -204,6 +206,8 @@ class AddToDriveViewModel @Inject constructor(
             application.toast("Please choose file")
         } else if (isFileSelected.value == false && linkurl.value.isNullOrEmpty()) {
             application.toast("Please enter url")
+        } else if(isFileSelected.value == false && ! globalMethods.isValidUrl(linkurl.value.toString())){
+            application.toast("Please enter valid URL")
         } else {
             isValid = true
         }
@@ -213,6 +217,10 @@ class AddToDriveViewModel @Inject constructor(
     fun executerUploadFileUrlModelDrive(): LiveData<UploadFileUrlModel> {
         Coroutines.main {
             try {
+
+
+
+
                 _isViewLoading.postValue(true)
                 val inputParam = uploadLInkParam()
                 val apiResponse = repository.callLinkAddDrive(inputParam)

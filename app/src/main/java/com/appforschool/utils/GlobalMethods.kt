@@ -14,7 +14,11 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.util.Patterns
+import android.webkit.URLUtil
 import androidx.core.app.ShareCompat
+import java.net.MalformedURLException
+import java.net.URL
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -198,6 +202,11 @@ class GlobalMethods @Inject constructor() {
             e.printStackTrace()
         }
         return android_id
+    }
+
+    fun isValidUrl(urlString: String): Boolean {
+        var isValidUrl: Boolean = Patterns.WEB_URL.matcher(urlString).matches()
+        return isValidUrl
     }
 
 }
