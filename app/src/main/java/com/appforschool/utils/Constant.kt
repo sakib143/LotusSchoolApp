@@ -16,7 +16,6 @@ class Constant {
         const val INTERNAL_SERVER_ERROR_CODE = 500
         const val NO_DATA_FOUND_CODE = 404
         const val METHOD_NOT_ALLOW = 405
-        const val NON_AUTHORITATIVE_INFORMATION = 203
         const val RESPONSE_MESSAGE = "message"
         const val TWITTER_NAME = "pented_learning"
         const val KEY_ROOM_URL = ""

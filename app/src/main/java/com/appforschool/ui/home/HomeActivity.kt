@@ -350,6 +350,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun shareDriveData(model: DriveModel.Data) {
-        globalMethods.shareTextToFriend(this@HomeActivity, "Share Drive file", model.filepath)
+        if (model.linkurl == null) {
+            globalMethods.shareTextToFriend(this@HomeActivity, "Share Drive file", model.filepath)
+        } else {
+            globalMethods.shareTextToFriend(this@HomeActivity, "Share Drive file", model.linkurl)
+        }
     }
 }

@@ -50,6 +50,7 @@ class AddToDriveRepository   @Inject constructor(
 
     fun knowledgeTypeList() : ArrayList<KnwledgeTypeModel>{
         val arrayList : ArrayList<KnwledgeTypeModel> = ArrayList<KnwledgeTypeModel>()
+        arrayList.add(KnwledgeTypeModel(null,"Select type"))
         arrayList.add(KnwledgeTypeModel("A","Assignment"))
         arrayList.add(KnwledgeTypeModel("Q","Question Paper"))
         arrayList.add(KnwledgeTypeModel("B","Textbook"))
@@ -59,6 +60,7 @@ class AddToDriveRepository   @Inject constructor(
         arrayList.add(KnwledgeTypeModel("R","Research"))
         arrayList.add(KnwledgeTypeModel("F","Ref. Book"))
         arrayList.add(KnwledgeTypeModel("T","Test/Quiz"))
+        arrayList.add(KnwledgeTypeModel("O","Other"))
         return arrayList
     }
 

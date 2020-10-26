@@ -7,12 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
+import com.appforschool.R
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.*
 import com.appforschool.data.repository.AddToDriveRepository
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.adapter_drive.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -202,11 +204,13 @@ class AddToDriveViewModel @Inject constructor(
             application.toast("Please add topic")
         } else if (description.value.isNullOrEmpty()) {
             application.toast("Please add description")
+        } else if (kwtype.value == null) {
+            application.toast("Please select knowledge type")
         } else if (isFileSelected.value == true && file.value == null) {
             application.toast("Please choose file")
         } else if (isFileSelected.value == false && linkurl.value.isNullOrEmpty()) {
             application.toast("Please enter url")
-        } else if(isFileSelected.value == false && ! globalMethods.isValidUrl(linkurl.value.toString())){
+        } else if (isFileSelected.value == false && !globalMethods.isValidUrl(linkurl.value.toString())) {
             application.toast("Please enter valid URL")
         } else {
             isValid = true
@@ -217,10 +221,6 @@ class AddToDriveViewModel @Inject constructor(
     fun executerUploadFileUrlModelDrive(): LiveData<UploadFileUrlModel> {
         Coroutines.main {
             try {
-
-
-
-
                 _isViewLoading.postValue(true)
                 val inputParam = uploadLInkParam()
                 val apiResponse = repository.callLinkAddDrive(inputParam)
@@ -261,8 +261,8 @@ class AddToDriveViewModel @Inject constructor(
         inputParam.addProperty(Constant.REQUEST_FILE_DESCR, description.value)
         inputParam.addProperty(Constant.REQUEST_FILE_TYPE, "L")
         inputParam.addProperty(Constant.REQUEST_KW_TYPE, kwtype.value)
-        inputParam.addProperty(Constant.REQUEST_FILE_EXT, "")
-        inputParam.addProperty(Constant.REQUEST_FILE_SIZE, "")
+//        inputParam.addProperty(Constant.REQUEST_FILE_EXT, "")
+//        inputParam.addProperty(Constant.REQUEST_FILE_SIZE, "")
         inputParam.addProperty(Constant.REQUEST_LINK_URL, linkurl.value)
         return inputParam
     }

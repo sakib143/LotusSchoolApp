@@ -11,7 +11,7 @@ abstract class SafeAPIRequest {
 
     suspend fun <T : Any> apiRequest(call: suspend () -> Response<T>): T {
         val response = call.invoke()
-        if (response.code() == Constant.SUCCESS_CODE) {
+        if (response.code() in 200..299) {
             return response.body()!!
         } else if (response.code() == Constant.UNAUTHORIZED_CODE) {
             //Todo: APi call response Check failer data with failer code
@@ -45,18 +45,6 @@ abstract class SafeAPIRequest {
             error.let {
                 try {
                     message.append("Error 404 Data Not Found")
-                } catch (e: JSONException) {
-
-                }
-                throw ApiExceptions(message.toString())
-            }
-        } else if (response.code() == Constant.NON_AUTHORITATIVE_INFORMATION) {
-            //Todo: APi call response Check failer data with failer code
-            val error = response.errorBody()?.string()
-            val message = StringBuffer()
-            error.let {
-                try {
-                    message.append("203 non-authoritative information")
                 } catch (e: JSONException) {
 
                 }

@@ -110,13 +110,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
                         android:maxLines="2"
                         android:minLines="1"
-                        android:textSize="@dimen/_12ssp"
-                        tools:text="File Size"
+                        android:visibility="@{driveModel.linkurl != null ? View.VISIBLE : View.GONE  }"
                         android:text="@{driveModel.sizeinkb}"
-                        android:fontFamily="@font/calibri"
-                        android:textColor="@color/colorBlack"/>
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="File Size" />
 
                 </LinearLayout>
 
