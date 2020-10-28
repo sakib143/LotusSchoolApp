@@ -1,6 +1,7 @@
 package com.appforschool
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.appforschool.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -24,6 +25,7 @@ class MyApp  : Application(), HasAndroidInjector {
      * */
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         AppInjector.init(this)
     }
 }
