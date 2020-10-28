@@ -276,6 +276,7 @@ class AddToDriveViewModel @Inject constructor(
 
     fun callFileAddDrive(): LiveData<AssignmentSubmissionModel> {
         Coroutines.main {
+            _isViewLoading.postValue(true)
             val fileReqBodyLicense =
                 file.value?.asRequestBody("image/*".toMediaTypeOrNull())
             val userImageBody = MultipartBody.Part.createFormData(
@@ -311,9 +312,15 @@ class AddToDriveViewModel @Inject constructor(
                     uploadtype
                 )
                 _upload_selected_file.postValue(response)
+                _isViewLoading.postValue(false)
+                if (response.status) {
+                    resetValues()
+                }
             } catch (e: ApiExceptions) {
+                _isViewLoading.postValue(false)
                 _onMessageError.postValue(e.message)
             } catch (e: NoInternetException) {
+                _isViewLoading.postValue(false)
                 _onMessageError.postValue(e.message)
             }
         }
