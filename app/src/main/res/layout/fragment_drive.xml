@@ -59,11 +59,11 @@
                 android:paddingBottom="@dimen/_10sdp"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_10sdp"
-                android:background="@drawable/choose_file_background"
+                android:background="@drawable/bg_add_to_drive_btn"
                 android:layout_gravity="end"
                 android:gravity="center"
                 android:text="@string/add_to_drive"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_13ssp"
                 android:fontFamily="@font/calibri"
                 android:onClick="@{()-> listner.openAddToDrive()}"/>
