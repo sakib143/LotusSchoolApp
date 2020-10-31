@@ -7,8 +7,8 @@
 
     <LinearLayout
         android:id="@+id/llRoom"
-        android:layout_width="@dimen/_110sdp"
-        android:layout_height="@dimen/_110sdp"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
         android:background="@drawable/bg_cardview"
         android:gravity="center"
         android:orientation="vertical"
@@ -25,6 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:text="@string/subject"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
@@ -37,7 +39,9 @@
             android:text="@string/subject"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_10ssp"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

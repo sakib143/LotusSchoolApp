@@ -1,6 +1,7 @@
 package com.appforschool.ui.home.fragment.subject
 
 import android.content.Context
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,9 +27,18 @@ class SubjectAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.tvSubjectName.text = list.get(position).coursename
-        holder.tvStandard.text =  list.get(position).standardname
+        if (list.get(position).standardname.isNullOrEmpty()) {
+            holder.tvStandard.visibility = View.GONE
+        } else {
+            holder.tvStandard.text = list.get(position).standardname
+            holder.tvStandard.visibility = View.VISIBLE
+        }
+        holder.tvStandard.text = list.get(position).standardname
         holder.tvFile.setOnClickListener() {
-            listner.openSubjectDetails(list.get(position).courseid.toString(),list.get(position).coursename)
+            listner.openSubjectDetails(
+                list.get(position).courseid.toString(),
+                list.get(position).coursename
+            )
         }
     }
 
