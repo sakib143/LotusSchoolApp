@@ -61,6 +61,11 @@ class Constant {
         const val REQUEST_ADD_TO_DRIVE_WITH_LINK = "addtodrivewithlink"
         const val REQUEST_KW_TYPE = "kwtype"
         const val REQUEST_LINK_URL = "linkurl"
+        const val REQUEST_OLD_PASSWORD = "oldpassword"
+        const val REQUEST_NEW_PASSWORD = "newpassword"
+        const val REQUEST_CHANGE_PASSWORD = "changepassword"
+
+
 
 
     }

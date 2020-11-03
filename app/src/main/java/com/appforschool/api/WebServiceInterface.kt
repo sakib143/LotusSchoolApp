@@ -94,4 +94,8 @@ interface WebServiceInterface {
         @Part(Constant.REQUEST_FILE_SIZE) filesize : RequestBody,
         @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype : RequestBody) : Response<AssignmentSubmissionModel>
 
+
+    @POST("Get_SpData")
+    suspend fun callChangePasswordd(@Body jsonObject: JsonObject): Response<ChangePasswordModel>
+
 }
