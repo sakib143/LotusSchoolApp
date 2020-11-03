@@ -158,6 +158,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
+    fun openChangePassword(){
+        navigationController.navigateToChangePassword(this@HomeActivity)
+    }
+
     fun signOut() {
         prefUtils.clearAll()
         navigationController.navigateToLoginScreen(this@HomeActivity)

@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.addtodrive.AddToDriveActivity"></activity>
+        <activity android:name=".ui.auth.changepassword.ChangePasswordActivity"></activity>
+        <activity android:name=".ui.addtodrive.AddToDriveActivity" />
         <activity
             android:name=".ui.videoplaying.VideoPlayingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />

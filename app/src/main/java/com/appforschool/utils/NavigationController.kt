@@ -5,6 +5,7 @@ import com.appforschool.base.BaseActivity
 import com.appforschool.data.repository.AddToDriveRepository
 import com.appforschool.ui.addtodrive.AddToDriveActivity
 import com.appforschool.ui.addtodrive.AddToDriveActivity.Companion.intentFor
+import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
 import com.appforschool.ui.home.HomeActivity
@@ -65,6 +66,14 @@ class NavigationController @Inject constructor(var context: Context) {
         activity.startActivity(AddToDriveActivity.intentFor(context))
     }
 
+
+    /**
+    //     * Opens Change password screen
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToChangePassword(activity: BaseActivity) {
+        activity.startActivity(ChangePasswordActivity.intentFor(context))
+    }
 
 
 }
