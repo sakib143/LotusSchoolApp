@@ -47,7 +47,29 @@ class ChangePasswordViewModel @Inject constructor(
 
 
     fun executeChangePassword() {
+        if (isValidate()) {
+            _onMessageError.postValue("Great job")
+        }
+    }
 
+    private fun isValidate(): Boolean {
+        if (!globalMethods.isInternetAvailable(application.applicationContext)) {
+            _onMessageError.postValue("Please check you internet.")
+            return false
+        } else if (oldPassword.value.isNullOrEmpty()) {
+            _onMessageError.postValue("Please enter old password.")
+            return false
+        } else if (newPassword.value.isNullOrEmpty()) {
+            _onMessageError.postValue("Please enter new password.")
+            return false
+        } else if (confirmPassword.value.isNullOrEmpty()) {
+            _onMessageError.postValue("Please enter confirm password.")
+            return false
+        } else if (newPassword.value != confirmPassword.value) {
+            _onMessageError.postValue("New password and confirm password should be same.")
+            return false
+        }
+        return true
     }
 
 }

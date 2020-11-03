@@ -3,9 +3,11 @@ package com.appforschool.ui.auth.changepassword
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.databinding.ActivityChangePasswordBinding
+import com.appforschool.utils.toast
 import javax.inject.Inject
 
 class ChangePasswordActivity : BaseBindingActivity<ActivityChangePasswordBinding>() {
@@ -23,6 +25,12 @@ class ChangePasswordActivity : BaseBindingActivity<ActivityChangePasswordBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setObserver()
+    }
+
+    private fun setObserver() {
+        viewModel.onMessageError.observe(this, onMessageErrorObserver)
     }
 
     companion object {
@@ -36,4 +44,9 @@ class ChangePasswordActivity : BaseBindingActivity<ActivityChangePasswordBinding
     fun closeScreen() {
         finish()
     }
+
+    private val onMessageErrorObserver = Observer<Any> {
+        toast(it.toString())
+    }
+
 }
