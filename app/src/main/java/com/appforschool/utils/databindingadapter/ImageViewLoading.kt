@@ -50,7 +50,7 @@ fun setAssignmentIcon(view: ImageView, model: AssignmentModel.Data) {
     if (model.fileext.equals(".pdf", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_pdf)
     } else if(model.fileext.equals(".mp4", ignoreCase = true)) {
-        view.setImageResource(R.drawable.ic_video_file)
+        view.setImageResource(R.drawable.ic_video_play)
     }else if(model.fileext.equals(".ppt", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_ppt)
     }else if(model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(".xlsx", ignoreCase = true)) {
@@ -60,7 +60,7 @@ fun setAssignmentIcon(view: ImageView, model: AssignmentModel.Data) {
     }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(".docx", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_doc)
     }else  {
-        view.setImageResource(R.drawable.ic_subject_file)
+        view.setImageResource(R.drawable.ic_file_for_assignment)
     }
 }
 
@@ -79,7 +79,7 @@ fun setDriveListIcon(view: ImageView, model: DriveModel.Data) {
     }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(".docx", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_doc)
     }else  {
-        view.setImageResource(R.drawable.ic_subject_file)
+        view.setImageResource(R.drawable.ic_file_for_assignment)
     }
 }
 
