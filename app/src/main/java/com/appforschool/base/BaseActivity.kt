@@ -78,8 +78,6 @@ abstract class BaseActivity : AppCompatActivity(), Injectable {
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        //Stop screenshot and Screen recording.
-        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         setContentView(layoutId())
     }
 

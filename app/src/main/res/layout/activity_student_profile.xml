@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewmodel"
+            type="com.appforschool.ui.profile.student.StudentProfileViewModel" />
+        <variable
+            name="listner"
+            type="com.appforschool.ui.profile.student.StudentProfileActivity" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.profile.student.StudentProfileActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llHeader"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_130sdp"
+                android:background="@color/colorHomeHeader"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_15sdp"
+                android:paddingTop="@dimen/_15sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_back_icon"
+                    android:onClick="@{()->listner.closeScreen()}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:fontFamily="@font/calibri"
+                    android:text="@string/profile_setup"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_20ssp" />
+
+            </LinearLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp">
+
+                    <com.appforschool.utils.circle_imageview.CircularImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:src="@drawable/ic_change_password" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:background="@drawable/rounded_edittext"
+                        android:fontFamily="@font/calibri"
+                        android:hint="@string/first_name"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@={viewmodel.firstName}"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:background="@drawable/rounded_edittext"
+                        android:fontFamily="@font/calibri"
+                        android:hint="@string/last_name"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@={viewmodel.lastName}"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:background="@drawable/rounded_edittext"
+                        android:fontFamily="@font/calibri"
+                        android:hint="@string/email_address"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@={viewmodel.emailAddress}"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:background="@drawable/rounded_edittext"
+                        android:fontFamily="@font/calibri"
+                        android:hint="@string/phone_number"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@={viewmodel.phoneNumber}"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:background="@drawable/bg_login_signup_button"
+                        android:fontFamily="@font/calibri"
+                        android:gravity="center"
+                        android:onClick="@{()->viewmodel.updateProfile()}"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="@string/submit"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_15ssp" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

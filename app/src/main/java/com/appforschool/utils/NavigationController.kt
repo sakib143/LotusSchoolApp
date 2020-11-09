@@ -9,6 +9,8 @@ import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
 import com.appforschool.ui.home.HomeActivity
+import com.appforschool.ui.profile.student.StudentProfileActivity
+import com.appforschool.ui.profile.teacher.TeacherProfileActivity
 import com.appforschool.ui.videocalling.VideoCallingActivity
 import javax.inject.Inject
 
@@ -66,7 +68,6 @@ class NavigationController @Inject constructor(var context: Context) {
         activity.startActivity(AddToDriveActivity.intentFor(context))
     }
 
-
     /**
     //     * Opens Change password screen
     //     * @param activity -> to Start the Activity
@@ -75,5 +76,20 @@ class NavigationController @Inject constructor(var context: Context) {
         activity.startActivity(ChangePasswordActivity.intentFor(context))
     }
 
+    /**
+    //     * Opens Teacher Profile screen
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToTeacherProfile(activity: BaseActivity) {
+        activity.startActivity(TeacherProfileActivity.intentFor(context))
+    }
+
+    /**
+    //     * Opens Student Profile screen
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToStudentProfile(activity: BaseActivity) {
+        activity.startActivity(StudentProfileActivity.intentFor(context))
+    }
 
 }

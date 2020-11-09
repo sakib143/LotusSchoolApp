@@ -53,5 +53,9 @@
     <string name="new_password">New password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="change_password">Change Password</string>
+    <string name="profile_setup">Profile Setup</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone number</string>
 
 </resources>

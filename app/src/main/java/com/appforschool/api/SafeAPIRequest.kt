@@ -11,7 +11,7 @@ abstract class SafeAPIRequest {
 
     suspend fun <T : Any> apiRequest(call: suspend () -> Response<T>): T {
         val response = call.invoke()
-        if (response.code() == 200 || response.code() == 203) {
+        if (response.code() in 200..299) {
             return response.body()!!
         } else if (response.code() == Constant.UNAUTHORIZED_CODE) {
             //Todo: APi call response Check failer data with failer code

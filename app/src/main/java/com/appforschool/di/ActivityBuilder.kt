@@ -6,6 +6,8 @@ import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.home.HomeBuilderModule
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
+import com.appforschool.ui.profile.student.StudentProfileActivity
+import com.appforschool.ui.profile.teacher.TeacherProfileActivity
 import com.appforschool.ui.splash.SplashActivity
 import com.appforschool.ui.videocalling.VideoCallingActivity
 import dagger.Module
@@ -62,19 +64,18 @@ abstract class ActivityBuilder {
     abstract fun bindChangePasswordActivity(): ChangePasswordActivity
 
 
-//
-//    /**
-//     * fun to bind Help Activity, making Injection enable
-//     **/
-//    @ContributesAndroidInjector(modules = [(HelpScreenModule::class)])
-//    abstract fun bindHomeNewActivity() : HelpScreenActivity
-//
-//    /**
-//     * fun to bind Home  Activity, making Injection enable
-//     **/
-//    @ContributesAndroidInjector()
-//    abstract fun bindHomeActivity() : HomeActivity
-//
+    /**
+     * fun to bind Student Profile Activity, making Injection enable
+     **/
+    @ContributesAndroidInjector()
+    abstract fun bindStudentProfileActivity() : StudentProfileActivity
+
+    /**
+     * fun to bind Teacher Profile Activity, making Injection enable
+     **/
+    @ContributesAndroidInjector()
+    abstract fun bindSTeacherProfileActivity() : TeacherProfileActivity
+
 //    /**
 //     * fun to bind Video calling screen, making Injection enable
 //     **/
