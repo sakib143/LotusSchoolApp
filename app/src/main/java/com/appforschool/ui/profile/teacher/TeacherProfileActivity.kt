@@ -9,13 +9,19 @@ import com.appforschool.base.BaseBindingActivity
 import com.appforschool.databinding.ActivityStudentProfileBinding
 import com.appforschool.databinding.ActivityTeacherProfileBinding
 import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
+import com.appforschool.ui.profile.student.StudentProfileViewModel
+import javax.inject.Inject
 
 class TeacherProfileActivity :  BaseBindingActivity<ActivityTeacherProfileBinding>() {
 
+    @Inject
+    lateinit var viewModel: TeacherProfileViewModel
     override fun layoutId() = R.layout.activity_teacher_profile
 
     override fun initializeBinding(binding: ActivityTeacherProfileBinding) {
         binding.lifecycleOwner = this
+        binding.listner = this
+        binding.viewmodel = viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +34,10 @@ class TeacherProfileActivity :  BaseBindingActivity<ActivityTeacherProfileBindin
             context: Context
         ) = Intent(context, TeacherProfileActivity::class.java)
 
+    }
+
+    fun closeScreen() {
+        finish()
     }
 
 }

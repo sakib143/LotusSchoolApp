@@ -28,7 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:onClick="@{()-> listner.openMyProfile()}">
 
                 <TextView
                     android:id="@+id/ivLeftHalfCircle"
@@ -133,37 +134,6 @@
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/_15sdp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:gravity="center_vertical"
-                    android:onClick="@{()-> listner.openMyProfile()}"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_28sdp"
-                        android:src="@mipmap/ic_launcher" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_25sdp"
-                        android:text="@string/edit_profile"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_15ssp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/_50sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@color/grey_dark"
-                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

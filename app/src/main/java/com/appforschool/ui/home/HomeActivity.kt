@@ -127,9 +127,12 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
-
     fun openMyProfile() {
-        toast("openMyProfile is clicked !!!")
+        if (prefUtils.getUserData()?.usertype.equals("S", ignoreCase = true)) {
+            navigationController.navigateToStudentProfile(this@HomeActivity)
+        } else {
+            navigationController.navigateToTeacherProfile(this@HomeActivity)
+        }
     }
 
     fun shareAopToFriend() {
@@ -158,7 +161,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
-    fun openChangePassword(){
+    fun openChangePassword() {
         navigationController.navigateToChangePassword(this@HomeActivity)
     }
 
