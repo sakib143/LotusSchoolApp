@@ -134,12 +134,13 @@
 
         </LinearLayout>
 
-        <ProgressBar
+        <com.github.ybq.android.spinkit.SpinKitView
+            style="@style/SpinKitView.Large.CubeGrid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}" />
-
+            app:SpinKit_Color="@color/colorHomeHeader"
+            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}"/>
 
     </RelativeLayout>
 </layout>

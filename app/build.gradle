@@ -127,4 +127,7 @@ dependencies {
     //Run time permissions
     implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'
 
+    //Custom progressbar
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
 }

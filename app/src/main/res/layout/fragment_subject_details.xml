@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View" />
@@ -83,11 +84,14 @@
             tools:visibility="gone"
             android:visibility="@{viewmodel.isDataFound ? View.GONE : View.VISIBLE}" />
 
-        <ProgressBar
+        <com.github.ybq.android.spinkit.SpinKitView
+            style="@style/SpinKitView.Large.CubeGrid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}" />
+            app:SpinKit_Color="@color/colorHomeHeader"
+            tools:visibility="gone"
+            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}"/>
 
     </RelativeLayout>
 
