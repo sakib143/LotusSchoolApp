@@ -2,14 +2,12 @@ package com.appforschool.utils
 
 import android.content.Context
 import com.appforschool.base.BaseActivity
-import com.appforschool.data.repository.AddToDriveRepository
 import com.appforschool.ui.addtodrive.AddToDriveActivity
-import com.appforschool.ui.addtodrive.AddToDriveActivity.Companion.intentFor
 import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
 import com.appforschool.ui.home.HomeActivity
-import com.appforschool.ui.profile.student.StudentProfileActivity
+import com.appforschool.ui.profile.user.UserProfileActivity
 import com.appforschool.ui.profile.teacher.TeacherProfileActivity
 import com.appforschool.ui.videocalling.VideoCallingActivity
 import javax.inject.Inject
@@ -89,7 +87,7 @@ class NavigationController @Inject constructor(var context: Context) {
     //     * @param activity -> to Start the Activity
     //     */
     fun navigateToStudentProfile(activity: BaseActivity) {
-        activity.startActivity(StudentProfileActivity.intentFor(context))
+        activity.startActivity(UserProfileActivity.intentFor(context))
     }
 
 }

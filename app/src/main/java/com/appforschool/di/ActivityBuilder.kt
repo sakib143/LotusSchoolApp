@@ -6,7 +6,7 @@ import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.home.HomeBuilderModule
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
-import com.appforschool.ui.profile.student.StudentProfileActivity
+import com.appforschool.ui.profile.user.UserProfileActivity
 import com.appforschool.ui.profile.teacher.TeacherProfileActivity
 import com.appforschool.ui.splash.SplashActivity
 import com.appforschool.ui.videocalling.VideoCallingActivity
@@ -68,7 +68,7 @@ abstract class ActivityBuilder {
      * fun to bind Student Profile Activity, making Injection enable
      **/
     @ContributesAndroidInjector()
-    abstract fun bindStudentProfileActivity() : StudentProfileActivity
+    abstract fun bindStudentProfileActivity() : UserProfileActivity
 
     /**
      * fun to bind Teacher Profile Activity, making Injection enable

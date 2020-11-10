@@ -23,11 +23,20 @@ data class HomeApiModel(
         @Expose
         @SerializedName("StudentId") var studentId: Int = 0, // 52
         @Expose
-        @SerializedName("studentname") var studentname: String= "", // Sunil Khanna
+        @SerializedName("studentname") var studentname: String = "", // Sunil Khanna
         @Expose
         @SerializedName("usertype") var usertype: String = "",
         @Expose
         @SerializedName("currentversion") var currentversion: String = "",
         @Expose
-        @SerializedName("isforceupdate") var isforceupdate: String = "")
+        @SerializedName("isforceupdate") var isforceupdate: String = "",
+        @Expose
+        @SerializedName("emailid") var emailid: String = "",
+        @Expose
+        @SerializedName("phone1") var phone1: String = "",
+        @Expose
+        @SerializedName("lastname") var lastname: String = "",
+        @Expose
+        @SerializedName("firstname") var firstname: String = ""
+    )
 }

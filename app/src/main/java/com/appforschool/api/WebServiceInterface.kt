@@ -55,6 +55,9 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callHomeData(@Body jsonObject: JsonObject): Response<HomeApiModel>
 
+    @POST("Get_SpData")
+    suspend fun callUpdateProfile(@Body jsonObject: JsonObject): Response<UpdateProfileModel>
+
     @Multipart
     @POST("UploadFile")
     suspend fun callUploadAssignment(

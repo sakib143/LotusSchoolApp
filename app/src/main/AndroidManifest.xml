@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.profile.student.StudentProfileActivity"></activity>
+        <activity android:name=".ui.profile.user.UserProfileActivity"></activity>
         <activity android:name=".ui.profile.teacher.TeacherProfileActivity" />
         <activity
             android:name=".ui.auth.changepassword.ChangePasswordActivity"

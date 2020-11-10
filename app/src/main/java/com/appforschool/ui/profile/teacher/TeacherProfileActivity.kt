@@ -2,14 +2,10 @@ package com.appforschool.ui.profile.teacher
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
-import com.appforschool.databinding.ActivityStudentProfileBinding
 import com.appforschool.databinding.ActivityTeacherProfileBinding
-import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
-import com.appforschool.ui.profile.student.StudentProfileViewModel
 import javax.inject.Inject
 
 class TeacherProfileActivity :  BaseBindingActivity<ActivityTeacherProfileBinding>() {

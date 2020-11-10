@@ -64,9 +64,10 @@ class Constant {
         const val REQUEST_OLD_PASSWORD = "oldpassword"
         const val REQUEST_NEW_PASSWORD = "newpassword"
         const val REQUEST_CHANGE_PASSWORD = "changepassword"
-
-
-
-
+        const val REQUEST_UPDATE_USER_PROFILE = "updateuserprofile"
+        const val REQUEST_LAST_NAME = "lastname"
+        const val REQUEST_FIRST_NAME = "firstname"
+        const val REQUEST_PHONE_1 = "phone1"
+        const val REQUEST_EMAIL_ID = "emailid"
     }
 }

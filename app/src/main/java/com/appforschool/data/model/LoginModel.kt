@@ -30,9 +30,16 @@ data class LoginModel(
         @Expose
         @SerializedName("currentversion") var currentversion: String = "",
         @Expose
-        @SerializedName("isforceupdate") var isforceupdate: String = ""
+        @SerializedName("isforceupdate") var isforceupdate: String = "",
+        @Expose
+        @SerializedName("emailid") var emailid: String = "",
+        @Expose
+        @SerializedName("phone1") var phone1: String = "",
+        @Expose
+        @SerializedName("lastname") var lastname: String = "",
+        @Expose
+        @SerializedName("firstname") var firstname: String = ""
     )
-
     /*
     usertype will be
     M for teacher (M = Mentor)

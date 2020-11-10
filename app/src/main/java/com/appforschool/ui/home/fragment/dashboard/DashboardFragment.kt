@@ -84,6 +84,10 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             loginModel.standardid = it.data.get(0).standardid
             loginModel.currentversion = it.data.get(0).currentversion
             loginModel.isforceupdate = it.data.get(0).isforceupdate
+            loginModel.firstname = it.data.get(0).firstname
+            loginModel.lastname = it.data.get(0).lastname
+            loginModel.emailid = it.data.get(0).emailid
+            loginModel.phone1 = it.data.get(0).phone1
             prefUtils.saveUserId(prefUtils.getUserData()!!.userid,loginModel)
             //Refresh User name from session manager.
             viewModel.getUserName()
