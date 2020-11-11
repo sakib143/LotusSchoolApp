@@ -57,5 +57,6 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="phone_number">Phone number</string>
+    <string name="phone_number_instruction">This number will be used for important communications and notifications from school</string>
 
 </resources>

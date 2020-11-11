@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="com.appforschool.ui.profile.user.UserProfileViewModel" />
+
         <variable
             name="listner"
             type="com.appforschool.ui.profile.user.UserProfileActivity" />
@@ -58,42 +61,75 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingRight="@dimen/_10sdp">
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_15sdp">
 
                     <com.appforschool.utils.circle_imageview.CircularImageView
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_20sdp"
-                        app:civ_border_width="@dimen/_2sdp"
-                        android:src="@drawable/ic_change_password" />
+                        android:src="@drawable/ic_change_password"
+                        app:civ_border_width="@dimen/_2sdp" />
 
-                    <EditText
+                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:background="@drawable/rounded_edittext"
-                        android:fontFamily="@font/calibri"
-                        android:hint="@string/first_name"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@={viewmodel.firstName}"
-                        android:textSize="@dimen/_14ssp" />
+                        android:orientation="horizontal">
 
-                    <EditText
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:text="*"
+                            android:textColor="@color/colorRed" />
+
+                         <EditText
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:background="@drawable/rounded_edittext"
+                             android:fontFamily="@font/calibri"
+                             android:hint="@string/first_name"
+                             android:padding="@dimen/_10sdp"
+                             android:text="@={viewmodel.firstName}"
+                             android:textSize="@dimen/_14ssp" />
+
+                     </LinearLayout>
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:background="@drawable/rounded_edittext"
-                        android:fontFamily="@font/calibri"
-                        android:hint="@string/last_name"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@={viewmodel.lastName}"
-                        android:textSize="@dimen/_14ssp" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:text="*"
+                            android:textColor="@color/colorRed" />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_edittext"
+                            android:fontFamily="@font/calibri"
+                            android:hint="@string/last_name"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@={viewmodel.lastName}"
+                            android:textSize="@dimen/_14ssp" />
+
+                    </LinearLayout>
+
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:background="@drawable/rounded_edittext"
                         android:fontFamily="@font/calibri"
@@ -102,17 +138,45 @@
                         android:text="@={viewmodel.emailAddress}"
                         android:textSize="@dimen/_14ssp" />
 
-                    <EditText
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:maxLength="12"
-                        android:background="@drawable/rounded_edittext"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_5sdp"
+                            android:text="*"
+                            android:textColor="@color/colorRed" />
+
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_edittext"
+                            android:fontFamily="@font/calibri"
+                            android:hint="@string/phone_number"
+                            android:maxLength="12"
+                            android:padding="@dimen/_10sdp"
+                            android:text="@={viewmodel.phoneNumber}"
+                            android:textSize="@dimen/_14ssp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone_number_instruction"
+                        android:textSize="@dimen/_12ssp"
                         android:fontFamily="@font/calibri"
-                        android:hint="@string/phone_number"
-                        android:padding="@dimen/_10sdp"
-                        android:text="@={viewmodel.phoneNumber}"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textColor="@color/colorBlack"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -139,8 +203,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            app:SpinKit_Color="@color/colorHomeHeader"
-            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{viewmodel.isViewLoading().booleanValue() ? View.VISIBLE : View.GONE}"
+            app:SpinKit_Color="@color/colorHomeHeader" />
 
     </RelativeLayout>
 </layout>
