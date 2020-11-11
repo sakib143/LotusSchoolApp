@@ -61,6 +61,15 @@ class UserProfileViewModel @Inject constructor(
         } else if (lastName.value.isNullOrEmpty()) {
             _onMessageError.postValue("Please enter last name.")
             return false
+        } else if (!emailAddress.value.isNullOrEmpty() && ! emailAddress.value!!.isEmailValid() ) {
+            _onMessageError.postValue("Please enter valid email address.")
+            return false
+        }else if (phoneNumber.value.isNullOrEmpty()) {
+            _onMessageError.postValue("Please enter mobile number.")
+            return false
+        }else if (phoneNumber.value.toString().length < 10) {
+            _onMessageError.postValue("Please enter valid mobile number.")
+            return false
         }
         return true
     }
@@ -73,10 +82,16 @@ class UserProfileViewModel @Inject constructor(
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 inputParam.addProperty(Constant.REQUEST_LAST_NAME, lastName.value)
                 inputParam.addProperty(Constant.REQUEST_FIRST_NAME, firstName.value)
-                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(
+                    Constant.REQUEST_STUDENTID,
+                    prefUtils.getUserData()?.studentId
+                )
                 inputParam.addProperty(Constant.REQUEST_PHONE_1, phoneNumber.value)
                 inputParam.addProperty(Constant.REQUEST_EMAIL_ID, emailAddress.value)
-                inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
+                inputParam.addProperty(
+                    Constant.REQUEST_USER_TYPE,
+                    prefUtils.getUserData()?.usertype
+                )
                 try {
                     _isViewLoading.postValue(true)
                     val apiResponse = repository.callUpdateProfile(inputParam)
