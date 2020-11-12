@@ -71,14 +71,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         homeFragment = ScheduleFragment.newInstance()
         navigateToDashBoardFragment(false)
         setObserver()
-        viewModel.getUserData()
     }
 
-    private fun setObserver() {
-        viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
-        viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
-        viewModel.fileSubmit.observe(this@HomeActivity, fileSubmitObserver)
-        viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
+    override fun onResume() {
+        super.onResume()
+        viewModel.getUserData()
     }
 
     companion object {
@@ -88,6 +85,13 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 context,
                 HomeActivity::class.java
             ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+    }
+
+    private fun setObserver() {
+        viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
+        viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
+        viewModel.fileSubmit.observe(this@HomeActivity, fileSubmitObserver)
+        viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -280,6 +284,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             val scheduleId = model.schid
             navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl, scheduleId)
         } else {
+            viewModel.executeSetJoinLog(model.schid.toString())
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)
