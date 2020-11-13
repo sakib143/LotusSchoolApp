@@ -34,6 +34,7 @@ class UserProfileViewModel @Inject constructor(
     private val _onMessageError = MutableLiveData<Any>()
     val onMessageError: LiveData<Any> get() = _onMessageError
 
+    //Change profile pic related data
     private val _change_photo: MutableLiveData<ChangeProfilePicModel> =
         MutableLiveData<ChangeProfilePicModel>()
     val change_photo: LiveData<ChangeProfilePicModel>
