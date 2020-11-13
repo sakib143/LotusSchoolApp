@@ -65,12 +65,15 @@
                     android:paddingRight="@dimen/_15sdp">
 
                     <com.appforschool.utils.circle_imageview.CircularImageView
+                        placeholderImage="@{viewmodel.userPlaceHolder}"
+                        loadImagFromBitmap="@{viewmodel.selectedBitmapImage}"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:src="@drawable/ic_change_password"
-                        app:civ_border_width="@dimen/_2sdp" />
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:civ_border_width="@dimen/_1sdp"
+                        app:civ_border_color="@color/colorHomeHeader"
+                        android:onClick="@{()-> listner.openGallery()}" />
 
                      <LinearLayout
                         android:layout_width="match_parent"

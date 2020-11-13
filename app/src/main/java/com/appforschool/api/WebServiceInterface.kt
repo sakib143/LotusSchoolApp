@@ -63,15 +63,16 @@ interface WebServiceInterface {
     suspend fun callUploadAssignment(
         @Part Image: MultipartBody.Part,
         @Part(Constant.REUQEST_SHARE_ID) shareid: RequestBody,
-        @Part(Constant.REUQEST_USER_ID) userid : RequestBody,
-        @Part(Constant.REQUEST_USER_TYPE) usertype : RequestBody,
-        @Part(Constant.REQUEST_STUDENTID) studentid : RequestBody,
-        @Part(Constant.REQUEST_FILE_TITLE) filetitle : RequestBody,
-        @Part(Constant.REQUEST_FILE_DESCR) filedescr : RequestBody,
-        @Part(Constant.REQUEST_FILE_TYPE) filetype : RequestBody,
-        @Part(Constant.REQUEST_FILE_EXT) fileext : RequestBody,
-        @Part(Constant.REQUEST_FILE_SIZE) filesize : RequestBody,
-        @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype : RequestBody) : Response<AssignmentSubmissionModel>
+        @Part(Constant.REUQEST_USER_ID) userid: RequestBody,
+        @Part(Constant.REQUEST_USER_TYPE) usertype: RequestBody,
+        @Part(Constant.REQUEST_STUDENTID) studentid: RequestBody,
+        @Part(Constant.REQUEST_FILE_TITLE) filetitle: RequestBody,
+        @Part(Constant.REQUEST_FILE_DESCR) filedescr: RequestBody,
+        @Part(Constant.REQUEST_FILE_TYPE) filetype: RequestBody,
+        @Part(Constant.REQUEST_FILE_EXT) fileext: RequestBody,
+        @Part(Constant.REQUEST_FILE_SIZE) filesize: RequestBody,
+        @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype: RequestBody
+    ): Response<AssignmentSubmissionModel>
 
     @POST("Get_SpData")
     suspend fun callStandardListForAddDrive(@Body jsonObject: JsonObject): Response<StandardListModel>
@@ -87,18 +88,25 @@ interface WebServiceInterface {
     suspend fun callFileAddDrive(
         @Part Image: MultipartBody.Part,
         @Part(Constant.REUQEST_SHARE_ID) shareid: RequestBody,
-        @Part(Constant.REUQEST_USER_ID) userid : RequestBody,
-        @Part(Constant.REQUEST_USER_TYPE) usertype : RequestBody,
-        @Part(Constant.REQUEST_STUDENTID) studentid : RequestBody,
-        @Part(Constant.REQUEST_FILE_TITLE) filetitle : RequestBody,
-        @Part(Constant.REQUEST_FILE_DESCR) filedescr : RequestBody,
-        @Part(Constant.REQUEST_FILE_TYPE) filetype : RequestBody,
-        @Part(Constant.REQUEST_FILE_EXT) fileext : RequestBody,
-        @Part(Constant.REQUEST_FILE_SIZE) filesize : RequestBody,
-        @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype : RequestBody) : Response<AssignmentSubmissionModel>
+        @Part(Constant.REUQEST_USER_ID) userid: RequestBody,
+        @Part(Constant.REQUEST_USER_TYPE) usertype: RequestBody,
+        @Part(Constant.REQUEST_STUDENTID) studentid: RequestBody,
+        @Part(Constant.REQUEST_FILE_TITLE) filetitle: RequestBody,
+        @Part(Constant.REQUEST_FILE_DESCR) filedescr: RequestBody,
+        @Part(Constant.REQUEST_FILE_TYPE) filetype: RequestBody,
+        @Part(Constant.REQUEST_FILE_EXT) fileext: RequestBody,
+        @Part(Constant.REQUEST_FILE_SIZE) filesize: RequestBody,
+        @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype: RequestBody
+    ): Response<AssignmentSubmissionModel>
 
 
     @POST("Get_SpData")
     suspend fun callChangePasswordd(@Body jsonObject: JsonObject): Response<ChangePasswordModel>
+
+    @Multipart
+    @POST("UpdateProfilePic")
+    suspend fun callChnageProfilePic(
+        @Part Image: MultipartBody.Part,
+        @Part(Constant.REUQEST_USER_ID) userid : RequestBody) : Response<ChangeProfilePicModel>
 
 }
