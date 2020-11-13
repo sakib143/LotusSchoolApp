@@ -30,10 +30,8 @@ class UserProfileActivity :  BaseBindingActivity<ActivityUserProfileBinding>() {
         binding.listner = this
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setObserver()
     }
 
@@ -55,11 +53,7 @@ class UserProfileActivity :  BaseBindingActivity<ActivityUserProfileBinding>() {
     }
 
     private val updateProfileObserver = Observer<UpdateProfileModel> {
-        if (it.status) {
-            toast(it!!.message)
-        } else {
-            toast(it!!.message)
-        }
+        toast(it!!.message)
     }
 
     private val onMessageErrorObserver = Observer<Any> {
