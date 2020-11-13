@@ -56,7 +56,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
-    private var homeFragment: ScheduleFragment? = null
+    private var dashboardFragment: DashboardFragment? = null
     private var shareId: String = ""
 
     override fun initializeBinding(binding: ActivityHomeBinding) {
@@ -68,14 +68,15 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        homeFragment = ScheduleFragment.newInstance()
+        dashboardFragment = DashboardFragment.newInstance()
         navigateToDashBoardFragment(false)
         setObserver()
+        viewModel.getUserData()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.getUserData()
+        dashboardFragment?.callHomeAPI()
     }
 
     companion object {
@@ -124,10 +125,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 }
             }
         } else {
-            addFragmentWithoutAnimation(
-                supportFragmentManager, DashboardFragment.newInstance(),
-                addToBackStack = addToBackStack
-            )
+            addFragmentWithoutAnimation(supportFragmentManager, dashboardFragment!!, addToBackStack = addToBackStack)
         }
     }
 
@@ -240,6 +238,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             DriveFragment.newInstance(),
             addToBackStack = true
         )
+    }
+
+    override fun updateUserName() {
+        LogM.e("=> updateUserName is calling !!!")
+        viewModel.getUserData()
     }
 
     private val joinLogObserver = Observer<SetJoinModel> {

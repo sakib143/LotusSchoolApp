@@ -55,11 +55,14 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.getUserName()
+
+        LogM.e("=> onActivityCreated is calling !!!")
 
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.homeAPI.observe(viewLifecycleOwner, homeAPIObserver)
-        //Make API call
+    }
+
+    fun callHomeAPI() {
         if (globalMethods.isInternetAvailable(activity!!)) {
             viewModel.executeHomeAPI()
         } else {
@@ -92,6 +95,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             //Refresh User name from session manager.
             viewModel.getUserName()
             checkLatestVersion(it)
+            listener?.updateUserName()
         }
     }
 
@@ -139,6 +143,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
         fun openAlertFragment()
         fun openExamListFragment()
         fun openDriveFragment()
+        fun updateUserName()
     }
 
     fun openScheduleFragment() {

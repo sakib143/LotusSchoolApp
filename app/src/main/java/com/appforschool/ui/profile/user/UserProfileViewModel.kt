@@ -52,6 +52,7 @@ class UserProfileViewModel @Inject constructor(
     }
 
     private fun isValidate(): Boolean {
+        val emailId = emailAddress.value?.trim() // Taken another variable for trime
         if (!globalMethods.isInternetAvailable(application.applicationContext)) {
             _onMessageError.postValue("Please check you internet.")
             return false
@@ -61,7 +62,7 @@ class UserProfileViewModel @Inject constructor(
         } else if (lastName.value.isNullOrEmpty()) {
             _onMessageError.postValue("Please enter last name.")
             return false
-        } else if (!emailAddress.value.isNullOrEmpty() && ! emailAddress.value!!.isEmailValid() ) {
+        } else if (!emailId.isNullOrEmpty() && ! emailId.isEmailValid() ) {
             _onMessageError.postValue("Please enter valid email address.")
             return false
         }else if (phoneNumber.value.isNullOrEmpty()) {
@@ -80,18 +81,12 @@ class UserProfileViewModel @Inject constructor(
                 val inputParam = JsonObject()
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_USER_PROFILE)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
-                inputParam.addProperty(Constant.REQUEST_LAST_NAME, lastName.value)
-                inputParam.addProperty(Constant.REQUEST_FIRST_NAME, firstName.value)
-                inputParam.addProperty(
-                    Constant.REQUEST_STUDENTID,
-                    prefUtils.getUserData()?.studentId
-                )
-                inputParam.addProperty(Constant.REQUEST_PHONE_1, phoneNumber.value)
-                inputParam.addProperty(Constant.REQUEST_EMAIL_ID, emailAddress.value)
-                inputParam.addProperty(
-                    Constant.REQUEST_USER_TYPE,
-                    prefUtils.getUserData()?.usertype
-                )
+                inputParam.addProperty(Constant.REQUEST_LAST_NAME, lastName.value?.trim())
+                inputParam.addProperty(Constant.REQUEST_FIRST_NAME, firstName.value?.trim())
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(Constant.REQUEST_PHONE_1, phoneNumber.value?.trim())
+                inputParam.addProperty(Constant.REQUEST_EMAIL_ID, emailAddress.value?.trim())
+                inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
                 try {
                     _isViewLoading.postValue(true)
                     val apiResponse = repository.callUpdateProfile(inputParam)

@@ -39,6 +39,11 @@ class DashboardviewModel @Inject constructor(
     val homeAPI: LiveData<HomeApiModel>
         get() = _homeAPI
 
+    init {
+        _userName.value = prefUtils.getUserData()?.studentname
+        _standard.value = prefUtils.getUserData()?.standardname
+    }
+
     fun getUserName() {
         _userName.value = prefUtils.getUserData()?.studentname
         _standard.value = prefUtils.getUserData()?.standardname
