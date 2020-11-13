@@ -91,6 +91,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             loginModel.lastname = it.data.get(0).lastname
             loginModel.emailid = it.data.get(0).emailid
             loginModel.phone1 = it.data.get(0).phone1
+            loginModel.ProfileImage = it.data.get(0).ProfileImage
             prefUtils.saveUserId(prefUtils.getUserData()!!.userid,loginModel)
             //Refresh User name from session manager.
             viewModel.getUserName()

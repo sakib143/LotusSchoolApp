@@ -50,6 +50,8 @@ class UserProfileViewModel @Inject constructor(
     val lastName = MutableLiveData<String>()
     val emailAddress = MutableLiveData<String>()
     val phoneNumber = MutableLiveData<String>()
+    val profilePicUrl = MutableLiveData<String>()
+
 
     val userPlaceHolder = R.mipmap.ic_launcher
     val imagePath = MutableLiveData<File>()
@@ -63,6 +65,8 @@ class UserProfileViewModel @Inject constructor(
         lastName.postValue(prefUtils.getUserData()?.lastname)
         emailAddress.postValue(prefUtils.getUserData()?.emailid)
         phoneNumber.postValue(prefUtils.getUserData()?.phone1)
+        profilePicUrl.postValue(prefUtils.getUserData()?.ProfileImage)
+        LogM.e("=> Profile pic url " + profilePicUrl.value)
     }
 
     fun updateProfile() {
