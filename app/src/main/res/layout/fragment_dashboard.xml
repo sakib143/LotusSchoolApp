@@ -43,6 +43,8 @@
                     android:onClick="@{()-> listner.openHamBurgerMenu()}"/>
 
                 <com.appforschool.utils.circle_imageview.CircularImageView
+                    placeholderImage="@{viewmodel.userPlaceHolder}"
+                    loadUrlImage="@{viewmodel.profilePicUrl}"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/temp_image"

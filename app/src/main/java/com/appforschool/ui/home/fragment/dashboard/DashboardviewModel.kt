@@ -4,6 +4,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
+import com.appforschool.R
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.AlertModel
@@ -29,6 +30,9 @@ class DashboardviewModel @Inject constructor(
     private val _standard = MutableLiveData<String>()
     val standard: LiveData<String> get() = _standard
 
+    private val _profilePicUrl = MutableLiveData<String>()
+    val profilePicUrl: LiveData<String> get() = _profilePicUrl
+
     private val _isViewLoading = MutableLiveData<Boolean>()
     val isViewLoading: LiveData<Boolean> get() = _isViewLoading
 
@@ -39,14 +43,18 @@ class DashboardviewModel @Inject constructor(
     val homeAPI: LiveData<HomeApiModel>
         get() = _homeAPI
 
+    val userPlaceHolder = R.mipmap.ic_launcher
+
     init {
-        _userName.value = prefUtils.getUserData()?.studentname
-        _standard.value = prefUtils.getUserData()?.standardname
+        _userName.postValue(prefUtils.getUserData()?.studentname)
+        _standard.postValue(prefUtils.getUserData()?.standardname)
+        _profilePicUrl.postValue(prefUtils.getUserData()?.ProfileImage)
     }
 
     fun getUserName() {
         _userName.value = prefUtils.getUserData()?.studentname
         _standard.value = prefUtils.getUserData()?.standardname
+        _profilePicUrl.postValue(prefUtils.getUserData()?.ProfileImage)
     }
 
     fun executeHomeAPI(): LiveData<HomeApiModel> {

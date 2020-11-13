@@ -52,7 +52,6 @@ class UserProfileViewModel @Inject constructor(
     val phoneNumber = MutableLiveData<String>()
     val profilePicUrl = MutableLiveData<String>()
 
-
     val userPlaceHolder = R.mipmap.ic_launcher
     val imagePath = MutableLiveData<File>()
     val selectedBitmapImage = MutableLiveData<Bitmap>().apply {
