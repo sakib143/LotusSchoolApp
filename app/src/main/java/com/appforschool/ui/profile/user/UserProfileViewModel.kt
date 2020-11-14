@@ -71,12 +71,7 @@ class UserProfileViewModel @Inject constructor(
     fun updateProfile() {
         if (isValidate()) {
             Coroutines.main {
-                if (imagePath.value == null) {
-                    executeUpdateProfile()
-                } else {
-                    executeUpdateProfile()
-                    executeChangeProfilePic()
-                }
+                executeUpdateProfile()
             }
         }
     }

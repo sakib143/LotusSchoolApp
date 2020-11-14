@@ -173,8 +173,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="@string/phone_number_instruction"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_11ssp"
                         android:fontFamily="@font/calibri"
                         android:textColor="@color/colorBlack"
                         android:paddingLeft="@dimen/_10sdp"

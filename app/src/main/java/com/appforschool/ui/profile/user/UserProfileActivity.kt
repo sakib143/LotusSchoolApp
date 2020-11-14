@@ -17,7 +17,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import java.io.File
 import javax.inject.Inject
 
-class UserProfileActivity :  BaseBindingActivity<ActivityUserProfileBinding>() {
+class UserProfileActivity : BaseBindingActivity<ActivityUserProfileBinding>() {
 
     @Inject
     lateinit var viewModel: UserProfileViewModel
@@ -45,7 +45,7 @@ class UserProfileActivity :  BaseBindingActivity<ActivityUserProfileBinding>() {
     private fun setObserver() {
         viewModel.onMessageError.observe(this, onMessageErrorObserver)
         viewModel.update_profile.observe(this, updateProfileObserver)
-        viewModel.change_photo.observe(this,changeProfilePics)
+        viewModel.change_photo.observe(this, changeProfilePics)
     }
 
     private val changeProfilePics = Observer<ChangeProfilePicModel> {
@@ -54,6 +54,9 @@ class UserProfileActivity :  BaseBindingActivity<ActivityUserProfileBinding>() {
 
     private val updateProfileObserver = Observer<UpdateProfileModel> {
         toast(it!!.message)
+        if (it.status) {
+            finish()
+        }
     }
 
     private val onMessageErrorObserver = Observer<Any> {
@@ -79,6 +82,7 @@ class UserProfileActivity :  BaseBindingActivity<ActivityUserProfileBinding>() {
                 val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
                 viewModel.selectedBitmapImage.value = bitmap
                 viewModel.imagePath.value = File(result.uri.path)
+                viewModel.executeChangeProfilePic()
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
