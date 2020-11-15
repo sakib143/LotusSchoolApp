@@ -40,7 +40,12 @@ data class LoginModel(
         @Expose
         @SerializedName("firstname") var firstname: String = "",
         @Expose
-        @SerializedName("ProfileImage") var ProfileImage: String = "")
+        @SerializedName("ProfileImage") var ProfileImage: String = "",
+        @Expose
+        @SerializedName("isopenprofile") var isopenprofile:  Int = 0
+    )
+
+
     /*
     usertype will be
     M for teacher (M = Mentor)

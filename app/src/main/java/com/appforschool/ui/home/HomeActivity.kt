@@ -245,6 +245,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         viewModel.getUserData()
     }
 
+    override fun openProfileScreen() {
+        navigationController.navigateToStudentProfile(this@HomeActivity)
+    }
+
     private val joinLogObserver = Observer<SetJoinModel> {
         if (it.status) {
         } else {

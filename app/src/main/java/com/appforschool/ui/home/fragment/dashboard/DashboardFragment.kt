@@ -92,11 +92,17 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             loginModel.emailid = it.data.get(0).emailid
             loginModel.phone1 = it.data.get(0).phone1
             loginModel.ProfileImage = it.data.get(0).ProfileImage
+            loginModel.isopenprofile = it.data.get(0).isopenprofile
             prefUtils.saveUserId(prefUtils.getUserData()!!.userid,loginModel)
+            if(loginModel.isopenprofile == 1){
+                listener?.openProfileScreen()
+            }
+
             //Refresh User name from session manager.
             viewModel.getUserName()
             checkLatestVersion(it)
             listener?.updateUserName()
+
         }
     }
 
@@ -145,6 +151,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
         fun openExamListFragment()
         fun openDriveFragment()
         fun updateUserName()
+        fun openProfileScreen()
     }
 
     fun openScheduleFragment() {
