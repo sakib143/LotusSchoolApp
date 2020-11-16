@@ -130,11 +130,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     fun openMyProfile() {
-        if (prefUtils.getUserData()?.usertype.equals("S", ignoreCase = true)) {
-            navigationController.navigateToStudentProfile(this@HomeActivity)
-        } else {
-            navigationController.navigateToTeacherProfile(this@HomeActivity)
-        }
+        navigationController.navigateToStudentProfile(this@HomeActivity)
     }
 
     fun shareAopToFriend() {
