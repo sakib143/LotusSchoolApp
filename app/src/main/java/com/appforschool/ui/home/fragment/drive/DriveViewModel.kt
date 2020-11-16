@@ -37,8 +37,17 @@ class DriveViewModel @Inject constructor(
     val isDataFound: LiveData<Boolean>
         get() = _isDataFound
 
+    private val _isshowaddbutton: MutableLiveData<Int> = MutableLiveData<Int>()
+    val isshowaddbutton: LiveData<Int>
+        get() = _isshowaddbutton
+
     fun setDataFound(isFound: Boolean) {
         _isDataFound.value = isFound
+    }
+
+    init {
+        _isDataFound.value = true
+        _isshowaddbutton.value = prefUtils.getUserData()?.isshowaddbutton
     }
 
     fun executerDriveList(): LiveData<DriveModel> {

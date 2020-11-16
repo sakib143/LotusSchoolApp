@@ -67,6 +67,8 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_13ssp"
                 android:fontFamily="@font/calibri"
+                android:visibility="@{viewmodel.isshowaddbutton == 1 ? View.VISIBLE : View.GONE}"
+                tools:visibility="gone"
                 android:onClick="@{()-> listner.openAddToDrive()}"/>
 
         </LinearLayout>

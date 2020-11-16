@@ -93,6 +93,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             loginModel.phone1 = it.data.get(0).phone1
             loginModel.ProfileImage = it.data.get(0).ProfileImage
             loginModel.isopenprofile = it.data.get(0).isopenprofile
+            loginModel.isshowaddbutton = it.data.get(0).isshowaddbutton
             prefUtils.saveUserId(prefUtils.getUserData()!!.userid,loginModel)
             if(loginModel.isopenprofile == 1){
                 listener?.openProfileScreen()

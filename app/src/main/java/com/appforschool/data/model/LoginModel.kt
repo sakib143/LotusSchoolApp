@@ -42,7 +42,9 @@ data class LoginModel(
         @Expose
         @SerializedName("ProfileImage") var ProfileImage: String = "",
         @Expose
-        @SerializedName("isopenprofile") var isopenprofile:  Int = 0
+        @SerializedName("isopenprofile") var isopenprofile:  Int = 0,
+        @Expose
+        @SerializedName("isshowaddbutton") var isshowaddbutton: Int = 0
     )
 
 

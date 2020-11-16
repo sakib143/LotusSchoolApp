@@ -59,7 +59,6 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.setDataFound(true)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.driveList.observe(viewLifecycleOwner, driveListObserver)
         if (globalMethods.isInternetAvailable(activity!!)) {
