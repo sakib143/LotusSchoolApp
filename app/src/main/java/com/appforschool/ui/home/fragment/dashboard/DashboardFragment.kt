@@ -8,14 +8,11 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
-import com.appforschool.data.model.AlertModel
 import com.appforschool.data.model.HomeApiModel
 import com.appforschool.data.model.LoginModel
 import com.appforschool.databinding.FragmentDashboardBinding
-import com.appforschool.ui.home.fragment.schedule.ScheduleViewModel
 import com.appforschool.utils.AlertDialogUtility
 import com.appforschool.utils.Constant
-import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import javax.inject.Inject
 
@@ -55,11 +52,9 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        LogM.e("=> onActivityCreated is calling !!!")
-
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.homeAPI.observe(viewLifecycleOwner, homeAPIObserver)
+        callHomeAPI()
     }
 
     fun callHomeAPI() {

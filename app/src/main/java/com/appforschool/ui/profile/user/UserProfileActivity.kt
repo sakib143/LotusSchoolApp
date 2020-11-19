@@ -11,6 +11,8 @@ import com.appforschool.data.model.ChangeProfilePicModel
 import com.appforschool.data.model.LoginModel
 import com.appforschool.data.model.UpdateProfileModel
 import com.appforschool.databinding.ActivityUserProfileBinding
+import com.appforschool.listner.UserProfileListner
+import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -55,7 +57,7 @@ class UserProfileActivity : BaseBindingActivity<ActivityUserProfileBinding>() {
     private val updateProfileObserver = Observer<UpdateProfileModel> {
         toast(it!!.message)
         if (it.status) {
-            finish()
+            closeScreen()
         }
     }
 
@@ -64,6 +66,8 @@ class UserProfileActivity : BaseBindingActivity<ActivityUserProfileBinding>() {
     }
 
     fun closeScreen() {
+        LogM.e("=> closeScreen is calling User Profile screen !!!")
+        UserProfileListner.getInstance().changeState(true)
         finish()
     }
 

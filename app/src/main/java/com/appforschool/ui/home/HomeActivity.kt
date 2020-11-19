@@ -16,6 +16,7 @@ import com.appforschool.data.model.*
 import com.appforschool.databinding.ActivityHomeBinding
 import com.appforschool.di.Injectable
 import com.appforschool.listner.HomeListner
+import com.appforschool.listner.UserProfileListner
 import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.drive.DriveFragment
@@ -29,6 +30,7 @@ import com.appforschool.utils.ImageFilePath
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -44,7 +46,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     SubjectFragment.SubjectFragmentListner, SubjectDetailsFragment.SubjectDetailsListner,
     AssignmentFragment.AssignmentFragmentListner,
     com.appforschool.ui.home.fragment.alert.AlertFragment.AlertListner,
-    ExamListFragment.ExamListListner, DriveFragment.DriveFragmentListner {
+    ExamListFragment.ExamListListner, DriveFragment.DriveFragmentListner,UserProfileListner.onScreenCloseListner {
 
     override fun layoutId() = R.layout.activity_home
 
@@ -67,16 +69,16 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
+
+        UserProfileListner.getInstance().setListener(this@HomeActivity)
+        val model = UserProfileListner.getInstance().state
+        LogM.e("=> Current state $model")
 
         dashboardFragment = DashboardFragment.newInstance()
         navigateToDashBoardFragment(false)
         setObserver()
         viewModel.getUserData()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        dashboardFragment?.callHomeAPI()
     }
 
     companion object {
@@ -370,5 +372,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         } else {
             globalMethods.shareTextToFriend(this@HomeActivity, "Share Drive file", model.linkurl)
         }
+    }
+
+    override fun stateChanged() {
+        LogM.e("=> stateChanged is calling !!!")
+        dashboardFragment?.callHomeAPI()
     }
 }
