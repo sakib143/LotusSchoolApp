@@ -3,17 +3,26 @@ package com.appforschool.utils.databindingadapter
 import android.graphics.BitmapFactory
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.appforschool.R
 import com.appforschool.data.model.AssignmentModel
 import com.appforschool.data.model.DriveModel
+import com.appforschool.data.model.ExamModel
 import com.appforschool.data.model.SubjectDetailsModel
+import com.appforschool.utils.Constant
+import com.appforschool.utils.LogM
+import com.appforschool.utils.hide
+import com.appforschool.utils.show
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @BindingAdapter("imagFromAsset")
@@ -113,4 +122,38 @@ fun setHideShowPassword(editext: EditText, isShow: Boolean) {
     } else {
         editext.setTransformationMethod(PasswordTransformationMethod.getInstance())
     }
+}
+
+@BindingAdapter("setAttentExam")
+fun setAttentExam(attentExam: TextView, examModel: ExamModel.Data) {
+    val strDate = examModel.examdate + " " + examModel.examtime1
+    LogM.e("Full date is $strDate")
+    val currentTime = Calendar.getInstance()
+    val df = SimpleDateFormat(Constant.DATE_FORMAT)
+    val strCurrentTime: String = df.format(currentTime!!.getTime())
+    LogM.e("Current time is $strCurrentTime")
+    if (currentTime!!.after(fromTime(strDate,examModel.duration!!)) && currentTime!!.before(toTime(strDate,examModel.duration!!))) {
+        attentExam.show()
+    }else {
+        attentExam.hide()
+    }
+}
+
+private fun toTime(examTime: String,duration: Int): Calendar? {
+    val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+    val date = dateFormat.parse(examTime)
+    val calendar = Calendar.getInstance()
+    calendar!!.time = date
+    calendar!!.add(Calendar.MINUTE, duration)
+    return calendar
+}
+
+private fun fromTime(examTime: String,duration: Int): Calendar? {
+    val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+    var myDate = dateFormat.parse(examTime)
+    val calendar = Calendar.getInstance()
+    calendar.time = myDate
+//        val formattedDate: String = dateFormat.format(calendar!!.getTime())
+//        Log.e("=>","From time " + formattedDate)
+    return calendar
 }

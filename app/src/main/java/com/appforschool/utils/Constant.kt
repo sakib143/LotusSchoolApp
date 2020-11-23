@@ -6,6 +6,7 @@ package com.appforschool.utils
 class Constant {
 
     companion object {
+        const val DATE_FORMAT = "dd/MM/yy h:mm"
         const val CHECK_INTERNET = "Please check your internet connection"
         const val DEFAULT_SERVER_ERROR = "Something went wrong on server side. Please try again."
         const val APP_PREFERENCES = "app_preferences"

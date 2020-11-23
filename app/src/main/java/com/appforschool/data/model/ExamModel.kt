@@ -38,6 +38,11 @@ data class ExamModel(
         @Expose
         @SerializedName("subjid") var subjid: Int? = 0, // 296
         @Expose
-        @SerializedName("totalmarks") var totalmarks: Int = 0 // 120.0
-    )
+        @SerializedName("totalmarks") var totalmarks: Int = 0,
+        @Expose
+        @SerializedName("StandardName") var StandardName: String = "",
+        @Expose
+        @SerializedName("examtime1") var examtime1: String = "",
+
+        )
 }

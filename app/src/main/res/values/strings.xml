@@ -58,5 +58,6 @@
     <string name="last_name">Last Name</string>
     <string name="phone_number">Phone number</string>
     <string name="phone_number_instruction">This number will be used for important communications and notifications from school</string>
+    <string name="attend">Attend</string>
 
 </resources>
