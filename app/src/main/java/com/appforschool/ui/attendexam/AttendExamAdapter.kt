@@ -5,18 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.databinding.ViewDataBinding
-import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.R
 import com.appforschool.data.model.AttendExamModel
-import com.appforschool.data.model.ExamModel
-import com.appforschool.databinding.AdapterAttendExamBinding
-import com.appforschool.databinding.AdapterExamlistBinding
-import com.appforschool.listner.AttendExamListner
-import com.appforschool.listner.HomeListner
-import com.appforschool.ui.home.fragment.exam.ExamAdapter
-import com.appforschool.ui.home.fragment.subject.SubjectAdapter
 import com.appforschool.utils.hide
 import com.appforschool.utils.show
 import com.bumptech.glide.Glide
@@ -35,6 +26,14 @@ class AttendExamAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+        setText(holder, position)
+        setCheckboxchecked(position, holder)
+        setViewVisibility(position, holder)
+        setListner(position, holder)
+    }
+
+    private fun setText(holder: MyViewHolder, position: Int) {
         holder.tvNumber.text = list.get(position).questionOrder.toString()
         holder.tvQuestionDescription.text =
             list.get(position).questionDesc + "  (Mark(s): " + list.get(position).marks.toString() + ")"
@@ -42,11 +41,34 @@ class AttendExamAdapter(
         holder.cbThree.text = list.get(position).optionC
         holder.cbTwo.text = list.get(position).optionB
         holder.cbOne.text = list.get(position).optionA
+    }
 
+    private fun setCheckboxchecked(position: Int, holder: MyViewHolder) {
+        holder.cbOne.isChecked = list.get(position).isACorrect
+        holder.cbTwo.isChecked = list.get(position).isBCorrect
+        holder.cbThree.isChecked = list.get(position).isCCorrect
+        holder.cbFour.isChecked = list.get(position).isDCorrect
+    }
 
+    private fun setListner(position: Int, holder: MyViewHolder) {
+        holder.cbOne.setOnClickListener() {
+            (context as AttendExamActivity).optionAClicked(position)
+        }
 
+        holder.cbTwo.setOnClickListener() {
+            (context as AttendExamActivity).optionBClicked(position)
+        }
 
+        holder.cbThree.setOnClickListener() {
+            (context as AttendExamActivity).optionCClicked(position)
+        }
 
+        holder.cbFour.setOnClickListener() {
+            (context as AttendExamActivity).optionDClicked(position)
+        }
+    }
+
+    private fun setViewVisibility(position: Int, holder: MyViewHolder) {
         if (list.get(position).qType.equals("S", ignoreCase = true)) {
             holder.llCheckbox.hide()
             holder.edtAnswer.show()

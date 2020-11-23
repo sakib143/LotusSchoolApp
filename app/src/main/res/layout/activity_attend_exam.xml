@@ -23,7 +23,7 @@
         tools:context=".ui.attendexam.AttendExamActivity">
 
         <androidx.recyclerview.widget.RecyclerView
-            bindAttendExam="@{alAttendExam}"
+            android:id="@+id/rvAttendExam"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/_5sdp"

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.AssignmentModel
@@ -12,11 +14,15 @@ import com.appforschool.data.model.ExamModel
 import com.appforschool.databinding.ActivityAttendExamBinding
 import com.appforschool.databinding.FragmentExamlistBinding
 import com.appforschool.listner.AttendExamListner
+import com.appforschool.ui.home.fragment.subject.SubjectAdapter
+import com.appforschool.ui.home.fragment.subject.SubjectFragment
 import com.appforschool.utils.Constant
 import com.appforschool.utils.toast
+import kotlinx.android.synthetic.main.activity_attend_exam.*
+import kotlinx.android.synthetic.main.fragment_subjects.*
 import javax.inject.Inject
 
-class AttendExamActivity  : BaseBindingActivity<ActivityAttendExamBinding>() , AttendExamListner{
+class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
 
     override fun layoutId() = R.layout.activity_attend_exam
 
@@ -24,6 +30,7 @@ class AttendExamActivity  : BaseBindingActivity<ActivityAttendExamBinding>() , A
     lateinit var viewModel: AttendExamViewModel
 
     private var alAttendExam: ArrayList<AttendExamModel.Data> = ArrayList()
+    private var adapter: AttendExamAdapter? = null
     private var binding: ActivityAttendExamBinding? = null
 
     override fun initializeBinding(binding: ActivityAttendExamBinding) {
@@ -44,7 +51,7 @@ class AttendExamActivity  : BaseBindingActivity<ActivityAttendExamBinding>() , A
 
     companion object {
         @JvmStatic
-        fun intentFor(context: Context, examId : String) =
+        fun intentFor(context: Context, examId: String) =
             Intent(context, AttendExamActivity::class.java)
                 .putExtra(Constant.REQUEST_EXAM_ID, examId)
     }
@@ -68,6 +75,10 @@ class AttendExamActivity  : BaseBindingActivity<ActivityAttendExamBinding>() , A
                 viewModel.setDataFound(false)
             } else {
                 viewModel.setDataFound(true)
+                rvAttendExam.setHasFixedSize(true)
+                rvAttendExam.layoutManager = LinearLayoutManager(this@AttendExamActivity)
+                adapter = AttendExamAdapter(this@AttendExamActivity, it.data)
+                rvAttendExam.adapter = adapter
             }
         } else {
             toast(it!!.message)
@@ -75,10 +86,36 @@ class AttendExamActivity  : BaseBindingActivity<ActivityAttendExamBinding>() , A
         }
     }
 
-    override fun attendExamClick(model: AssignmentModel.Data) {
-
+    fun optionAClicked(position: Int) {
+        alAttendExam.get(position).isACorrect = true
+        alAttendExam.get(position).isBCorrect = false
+        alAttendExam.get(position).isCCorrect = false
+        alAttendExam.get(position).isDCorrect = false
+        adapter?.notifyDataSetChanged()
     }
 
+    fun optionBClicked(position: Int) {
+        alAttendExam.get(position).isACorrect = false
+        alAttendExam.get(position).isBCorrect = true
+        alAttendExam.get(position).isCCorrect = false
+        alAttendExam.get(position).isDCorrect = false
+        adapter?.notifyDataSetChanged()
+    }
 
+    fun optionCClicked(position: Int) {
+        alAttendExam.get(position).isACorrect = false
+        alAttendExam.get(position).isBCorrect = false
+        alAttendExam.get(position).isCCorrect = true
+        alAttendExam.get(position).isDCorrect = false
+        adapter?.notifyDataSetChanged()
+    }
+
+    fun optionDClicked(position: Int) {
+        alAttendExam.get(position).isACorrect = false
+        alAttendExam.get(position).isBCorrect = false
+        alAttendExam.get(position).isCCorrect = false
+        alAttendExam.get(position).isDCorrect = true
+        adapter?.notifyDataSetChanged()
+    }
 
 }
