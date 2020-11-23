@@ -2,20 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <import type="android.view.View" />
-        <variable
-            name="attendExamModel"
-            type="com.appforschool.data.model.AttendExamModel.Data" />
-        <variable
-            name="attendExamListner"
-            type="com.appforschool.listner.AttendExamListner" />
-    </data>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp"
+        android:background="@drawable/bg_cardview">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,37 +17,90 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/calibri"
-                android:text="@{attendExamModel.questionOrder + `.`}"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold"
                 tools:text="1." />
 
             <TextView
+                android:id="@+id/tvQuestionDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/calibri"
-                android:text="@{attendExamModel.questionDesc}"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold"
-                tools:text="Question title " />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/calibri"
-                android:text="@{`(Mark(s): ` +attendExamModel.marks + `)`}"
-                android:textSize="@dimen/_15ssp"
-                android:textStyle="bold"
-                tools:text="Marks"
-                android:layout_marginLeft="@dimen/_20sdp"/>
+                tools:text="Question title "
+                android:layout_marginLeft="@dimen/_5sdp"/>
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp"
+            android:visibility="visible"
+            android:scaleType="fitXY"
+            android:background="@mipmap/ic_launcher"/>
 
 
+        <LinearLayout
+            android:id="@+id/llCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <CheckBox
+                android:id="@+id/cbOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@android:color/black"
+                android:fontFamily="@font/calibri"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <CheckBox
+                android:id="@+id/cbTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@android:color/black"
+                android:fontFamily="@font/calibri"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12ssp" />
+            <CheckBox
+                android:id="@+id/cbThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@android:color/black"
+                android:fontFamily="@font/calibri"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <CheckBox
+                android:id="@+id/cbFour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@android:color/black"
+                android:fontFamily="@font/calibri"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12ssp" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edtAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Answer"
+            android:fontFamily="@font/calibri"
+            android:textSize="@dimen/_12ssp"
+            android:minLines="2"
+            android:maxLines="5"
+            android:visibility="visible"
+            />
 
     </LinearLayout>
 </layout>

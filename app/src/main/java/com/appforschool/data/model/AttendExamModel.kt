@@ -45,7 +45,7 @@ data class AttendExamModel(
         @Expose
         @SerializedName("QuestionOrder") var questionOrder: Int = 0,
         @Expose
-        @SerializedName("questionimagefullpath") var questionimagefullpath: Any = Any(),
+        @SerializedName("questionimagefullpath") var questionimagefullpath: String = "",
         @Expose
         @SerializedName("ReqContentNotFoundColor") var reqContentNotFoundColor: String = "",
         @Expose
