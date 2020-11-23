@@ -95,8 +95,8 @@ class NavigationController @Inject constructor(var context: Context) {
     //     * Opens Attend Exam screen
     //     * @param activity -> to Start the Activity
     //     */
-    fun navigateToAttendExam(activity: BaseActivity, examId: String) {
-        activity.startActivity(AttendExamActivity.intentFor(context,examId))
+    fun navigateToAttendExam(activity: BaseActivity, examId: String, examName: String,subject: String,makrs: String,duration: String, time: String) {
+        activity.startActivity(AttendExamActivity.intentFor(context,examId,examName,subject,makrs,duration,time))
     }
 
 }

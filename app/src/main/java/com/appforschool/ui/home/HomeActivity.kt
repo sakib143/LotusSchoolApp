@@ -46,7 +46,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     SubjectFragment.SubjectFragmentListner, SubjectDetailsFragment.SubjectDetailsListner,
     AssignmentFragment.AssignmentFragmentListner,
     com.appforschool.ui.home.fragment.alert.AlertFragment.AlertListner,
-    ExamListFragment.ExamListListner, DriveFragment.DriveFragmentListner,UserProfileListner.onScreenCloseListner {
+    ExamListFragment.ExamListListner, DriveFragment.DriveFragmentListner,
+    UserProfileListner.onScreenCloseListner {
 
     override fun layoutId() = R.layout.activity_home
 
@@ -127,7 +128,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 }
             }
         } else {
-            addFragmentWithoutAnimation(supportFragmentManager, dashboardFragment!!, addToBackStack = addToBackStack)
+            addFragmentWithoutAnimation(
+                supportFragmentManager,
+                dashboardFragment!!,
+                addToBackStack = addToBackStack
+            )
         }
     }
 
@@ -346,7 +351,15 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openExamDetails(model: ExamModel.Data) {
-        navigationController.navigateToAttendExam(this@HomeActivity,model.examid)
+        navigationController.navigateToAttendExam(
+            this@HomeActivity,
+            model.examid,
+            model.examname!!,
+            model.subjectname!!,
+            model.totalmarks.toString()!!,
+            model.duration.toString()!!,
+            model.examtime!!
+        )
     }
 
     override fun openDriveList(model: DriveModel.Data) {

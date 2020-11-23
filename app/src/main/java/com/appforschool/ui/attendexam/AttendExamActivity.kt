@@ -44,16 +44,30 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.setData(intent.getStringExtra(Constant.REQUEST_EXAM_ID))
+        viewModel.setData(
+            intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
+            intent.getStringExtra(Constant.REUQEST_GET_SUBJECTS)!!,
+            intent.getStringExtra(Constant.KEY_DURATION)!!,
+            intent.getStringExtra(Constant.KEY_MAKRS)!!,
+            intent.getStringExtra(Constant.REQUEST_GET_EXAMS)!!,
+            intent.getStringExtra(Constant.KEY_TIME)!!
+            )
+
         setData()
 
     }
 
     companion object {
         @JvmStatic
-        fun intentFor(context: Context, examId: String) =
+        fun intentFor(context: Context, examId: String,subject: String,duration: String,makrs: String,examName: String, time: String) =
             Intent(context, AttendExamActivity::class.java)
                 .putExtra(Constant.REQUEST_EXAM_ID, examId)
+                .putExtra(Constant.REQUEST_GET_EXAMS, examName)
+                .putExtra(Constant.REUQEST_GET_SUBJECTS, subject)
+                .putExtra(Constant.KEY_MAKRS, makrs)
+                .putExtra(Constant.KEY_DURATION, duration)
+                .putExtra(Constant.KEY_TIME, time)
+
     }
 
     private fun setData() {
@@ -116,6 +130,10 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = true
         adapter?.notifyDataSetChanged()
+    }
+
+    fun closeScreen() {
+        finish()
     }
 
 }

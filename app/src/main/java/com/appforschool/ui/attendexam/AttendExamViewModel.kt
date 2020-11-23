@@ -12,6 +12,7 @@ import com.appforschool.utils.Constant
 import com.appforschool.utils.Coroutines
 import com.appforschool.utils.PrefUtils
 import com.google.gson.JsonObject
+import java.time.Duration
 import javax.inject.Inject
 
 class AttendExamViewModel  @Inject constructor(
@@ -43,9 +44,39 @@ class AttendExamViewModel  @Inject constructor(
     val isDataFound: LiveData<Boolean>
         get() = _isDataFound
 
+    private val _examName: MutableLiveData<String> =
+        MutableLiveData<String>()
+    val examName: LiveData<String>
+        get() = _examName
 
-    fun setData(examId: String?) {
+    private val _subjectName: MutableLiveData<String> =
+        MutableLiveData<String>()
+    val subjectName: LiveData<String>
+        get() = _subjectName
+
+    private val _time: MutableLiveData<String> =
+        MutableLiveData<String>()
+    val time: LiveData<String>
+        get() = _time
+
+    private val _duration: MutableLiveData<String> =
+        MutableLiveData<String>()
+    val duration: LiveData<String>
+        get() = _duration
+
+    private val _marks: MutableLiveData<String> =
+        MutableLiveData<String>()
+    val marks: LiveData<String>
+        get() = _marks
+
+
+    fun setData(examId: String,examName: String, subject: String,makrs: String, duration: String,time: String) {
         _examId.postValue(examId)
+        _examName.postValue(examName)
+        _subjectName.postValue(subject)
+        _marks.postValue(makrs)
+        _duration.postValue(duration)
+        _time.postValue(time)
     }
 
     fun setDataFound(isFound: Boolean) {
