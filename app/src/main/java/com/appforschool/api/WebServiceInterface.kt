@@ -109,4 +109,7 @@ interface WebServiceInterface {
         @Part Image: MultipartBody.Part,
         @Part(Constant.REUQEST_USER_ID) userid : RequestBody) : Response<ChangeProfilePicModel>
 
+    @POST("Get_SpData")
+    suspend fun callAttendExam(@Body jsonObject: JsonObject): Response<AttendExamModel>
+
 }

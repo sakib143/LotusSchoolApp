@@ -15,19 +15,11 @@ data class AttendExamModel(
 ) {
     data class Data(
         @Expose
-        @SerializedName("CreatedBy") var createdBy: Int = 0,
-        @Expose
-        @SerializedName("CreatedOn") var createdOn: String = "",
-        @Expose
         @SerializedName("DispExamQuestionMarks") var dispExamQuestionMarks: String = "",
-        @Expose
-        @SerializedName("ExamID") var examID: Int = 0,
         @Expose
         @SerializedName("HdrFileName") var hdrFileName: Any = Any(),
         @Expose
         @SerializedName("IsACorrect") var isACorrect: Boolean = false,
-        @Expose
-        @SerializedName("IsActive") var isActive: Boolean = false,
         @Expose
         @SerializedName("IsBCorrect") var isBCorrect: Boolean = false,
         @Expose
@@ -51,16 +43,12 @@ data class AttendExamModel(
         @Expose
         @SerializedName("QuestionDesc") var questionDesc: String = "",
         @Expose
-        @SerializedName("QuestionFileName") var questionFileName: Any = Any(),
-        @Expose
-        @SerializedName("QuestionFileSize") var questionFileSize: Any = Any(),
-        @Expose
         @SerializedName("QuestionOrder") var questionOrder: Int = 0,
+        @Expose
+        @SerializedName("questionimagefullpath") var questionimagefullpath: Any = Any(),
         @Expose
         @SerializedName("ReqContentNotFoundColor") var reqContentNotFoundColor: String = "",
         @Expose
-        @SerializedName("SrNo") var srNo: Int = 0,
-        @Expose
-        @SerializedName("SubjectiveAnswer") var subjectiveAnswer: Any = Any()
+        @SerializedName("SrNo") var srNo: Int = 0
     )
 }

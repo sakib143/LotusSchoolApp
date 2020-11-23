@@ -136,7 +136,8 @@
                      android:textSize="@dimen/_18ssp"
                      android:textStyle="bold"
                      android:text="@string/attend"
-                     setAttentExam="@{examListModel}"/>
+                     setAttentExam="@{examListModel}"
+                     android:onClick="@{()-> examListListner.openExamDetails(examListModel)}"/>
 
              </LinearLayout>
 

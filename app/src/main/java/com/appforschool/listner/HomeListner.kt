@@ -12,4 +12,5 @@ interface HomeListner {
     fun shareDriveData(model: DriveModel.Data)
     fun openSubjectDetails(model: ScheduleModel.Data)
     fun openSubmissionFile(model: AssignmentModel.Data)
+    fun attendExam(model: AttendExamModel.Data)
 }

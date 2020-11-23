@@ -1,6 +1,7 @@
 package com.appforschool.di
 
 import com.appforschool.ui.addtodrive.AddToDriveActivity
+import com.appforschool.ui.attendexam.AttendExamActivity
 import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
 import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.home.HomeBuilderModule
@@ -75,6 +76,12 @@ abstract class ActivityBuilder {
      **/
     @ContributesAndroidInjector()
     abstract fun bindSTeacherProfileActivity() : TeacherProfileActivity
+
+    /**
+     * fun to bind Teacher Profile Activity, making Injection enable
+     **/
+    @ContributesAndroidInjector()
+    abstract fun bindSAttendExamActivity() : AttendExamActivity
 
 //    /**
 //     * fun to bind Video calling screen, making Injection enable

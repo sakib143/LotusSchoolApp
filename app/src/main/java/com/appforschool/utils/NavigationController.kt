@@ -3,6 +3,7 @@ package com.appforschool.utils
 import android.content.Context
 import com.appforschool.base.BaseActivity
 import com.appforschool.ui.addtodrive.AddToDriveActivity
+import com.appforschool.ui.attendexam.AttendExamActivity
 import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
@@ -88,6 +89,14 @@ class NavigationController @Inject constructor(var context: Context) {
     //     */
     fun navigateToStudentProfile(activity: BaseActivity) {
         activity.startActivity(UserProfileActivity.intentFor(context))
+    }
+
+    /**
+    //     * Opens Attend Exam screen
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToAttendExam(activity: BaseActivity, examId: String) {
+        activity.startActivity(AttendExamActivity.intentFor(context,examId))
     }
 
 }

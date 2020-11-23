@@ -70,5 +70,7 @@ class Constant {
         const val REQUEST_FIRST_NAME = "firstname"
         const val REQUEST_PHONE_1 = "phone1"
         const val REQUEST_EMAIL_ID = "emailid"
+        const val REQUEST_GET_EXAM_QUESTION_BY_EXAM_ID = "getexamquestionbyexamid"
+        const val REQUEST_EXAM_ID = "examid"
     }
 }

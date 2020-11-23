@@ -43,6 +43,6 @@ data class ExamModel(
         @SerializedName("StandardName") var StandardName: String = "",
         @Expose
         @SerializedName("examtime1") var examtime1: String = "",
-
-        )
+        @Expose
+        @SerializedName("examid") var examid: String = "")
 }

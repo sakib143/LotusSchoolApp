@@ -320,6 +320,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         checkFileSubmitPermission(model)
     }
 
+    override fun attendExam(model: AttendExamModel.Data) {
+
+    }
+
     fun checkFileSubmitPermission(model: AssignmentModel.Data) =
         runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
             shareId = model.shareid
@@ -346,7 +350,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openExamDetails(model: ExamModel.Data) {
-
+        navigationController.navigateToAttendExam(this@HomeActivity,model.examid)
     }
 
     override fun openDriveList(model: DriveModel.Data) {
