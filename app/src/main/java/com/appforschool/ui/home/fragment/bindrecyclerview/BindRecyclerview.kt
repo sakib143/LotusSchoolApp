@@ -4,6 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.data.model.*
+import com.appforschool.ui.attendexam.AttendExamAdapter
 import com.appforschool.ui.home.fragment.alert.AlertAdapter
 import com.appforschool.ui.home.fragment.assignment.AssignmentAdapter
 import com.appforschool.ui.home.fragment.drive.DriveAdapter
@@ -118,6 +119,25 @@ fun bindDriveList(view: RecyclerView, list: List<DriveModel.Data>) {
     if (adapter == null) {
         adapter =
             DriveAdapter(
+                view.context,
+                list
+            )
+        view.adapter = adapter
+    }
+}
+
+@BindingAdapter("bindAttendExam")
+fun bindAttendExam(view: RecyclerView, list: List<AttendExamModel.Data>) {
+    if (list.isEmpty())
+        return
+    val layoutManager = view.layoutManager
+    if (layoutManager == null)
+        view.layoutManager = LinearLayoutManager(view.context)
+    var adapter = view.adapter
+
+    if (adapter == null) {
+        adapter =
+            AttendExamAdapter(
                 view.context,
                 list
             )

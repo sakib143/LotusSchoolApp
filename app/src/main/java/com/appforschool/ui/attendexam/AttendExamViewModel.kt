@@ -32,15 +32,25 @@ class AttendExamViewModel  @Inject constructor(
     val attend_exam: LiveData<AttendExamModel>
         get() = _attend_exam
 
+    //Getting Exam id
     private val _examId: MutableLiveData<String> =
         MutableLiveData<String>()
     val examId: LiveData<String>
         get() = _examId
 
+    //Display if data not found
+    private val _isDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isDataFound: LiveData<Boolean>
+        get() = _isDataFound
+
+
     fun setData(examId: String?) {
         _examId.postValue(examId)
     }
 
+    fun setDataFound(isFound: Boolean) {
+        _isDataFound.value = isFound
+    }
 
     fun executeAttentExamList(): LiveData<AttendExamModel> {
         Coroutines.main {

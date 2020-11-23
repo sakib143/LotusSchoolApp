@@ -6,23 +6,32 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
+import com.appforschool.data.model.AssignmentModel
 import com.appforschool.data.model.AttendExamModel
+import com.appforschool.data.model.ExamModel
 import com.appforschool.databinding.ActivityAttendExamBinding
+import com.appforschool.databinding.FragmentExamlistBinding
+import com.appforschool.listner.AttendExamListner
 import com.appforschool.utils.Constant
 import com.appforschool.utils.toast
 import javax.inject.Inject
 
-class AttendExamActivity  : BaseBindingActivity<ActivityAttendExamBinding>() {
+class AttendExamActivity  : BaseBindingActivity<ActivityAttendExamBinding>() , AttendExamListner{
 
     override fun layoutId() = R.layout.activity_attend_exam
 
     @Inject
     lateinit var viewModel: AttendExamViewModel
 
+    private var alAttendExam: ArrayList<AttendExamModel.Data> = ArrayList()
+    private var binding: ActivityAttendExamBinding? = null
+
     override fun initializeBinding(binding: ActivityAttendExamBinding) {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.listner = this
+        this.binding = binding
+        binding.alAttendExam = alAttendExam
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,10 +61,22 @@ class AttendExamActivity  : BaseBindingActivity<ActivityAttendExamBinding>() {
 
     private val attendExamObserver = Observer<AttendExamModel> {
         if (it.status) {
-            toast(it!!.message)
+            alAttendExam = ArrayList()
+            alAttendExam!!.addAll(it!!.data!!)
+            binding?.alAttendExam = alAttendExam
+            if (alAttendExam?.size == 0) {
+                viewModel.setDataFound(false)
+            } else {
+                viewModel.setDataFound(true)
+            }
         } else {
             toast(it!!.message)
+            viewModel.setDataFound(true)
         }
+    }
+
+    override fun attendExamClick(model: AssignmentModel.Data) {
+
     }
 
 

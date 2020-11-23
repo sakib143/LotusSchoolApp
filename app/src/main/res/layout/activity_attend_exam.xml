@@ -5,18 +5,30 @@
 
     <data>
         <import type="android.view.View" />
+        <import type="java.util.List" />
         <variable
             name="viewModel"
             type="com.appforschool.ui.attendexam.AttendExamViewModel" />
         <variable
             name="listner"
             type="com.appforschool.ui.attendexam.AttendExamActivity" />
+        <variable
+            name="alAttendExam"
+            type="List&lt;com.appforschool.data.model.AttendExamModel.Data>" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.attendexam.AttendExamActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            bindAttendExam="@{alAttendExam}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            tools:listitem="@layout/adapter_attend_exam" />
 
 
         <com.github.ybq.android.spinkit.SpinKitView

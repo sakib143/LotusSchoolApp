@@ -40,6 +40,10 @@ class ExamViewModel  @Inject constructor(
         _isDataFound.value = isFound
     }
 
+    init {
+        _isDataFound.postValue(true)
+    }
+
     fun executeExamData(): LiveData<ExamModel> {
         Coroutines.main {
             try {

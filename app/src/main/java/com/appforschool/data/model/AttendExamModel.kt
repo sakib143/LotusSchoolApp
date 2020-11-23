@@ -29,7 +29,7 @@ data class AttendExamModel(
         @Expose
         @SerializedName("IsReqContentNotFound") var isReqContentNotFound: Int = 0,
         @Expose
-        @SerializedName("Marks") var marks: Double = 0.0,
+        @SerializedName("Marks") var marks: Int = 0,
         @Expose
         @SerializedName("OptionA") var optionA: String = "",
         @Expose
