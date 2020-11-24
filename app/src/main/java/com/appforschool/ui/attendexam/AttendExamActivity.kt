@@ -107,19 +107,20 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
 
     private fun setTimeOver() {
         try {
-            val dateFormatter: DateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
-            val date = dateFormatter.parse(formatedTime)
+            val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+            val date = dateFormat.parse(formatedTime)
             val calendar = Calendar.getInstance()
-            calendar.add(Calendar.MINUTE, duration)
-            calendar.time = date
+            calendar!!.time = date
+            calendar!!.add(Calendar.MINUTE, duration)
+            val latestDate = calendar.time
             val timer = Timer()
             timer.schedule(object : TimerTask() {
                 override fun run() {
                     Handler(Looper.getMainLooper()).postDelayed({
-                       closeScreen()
+                        closeScreen()
                     }, 1000)
                 }
-            }, date)
+            }, latestDate)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
