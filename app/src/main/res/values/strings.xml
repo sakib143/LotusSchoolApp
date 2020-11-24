@@ -59,5 +59,8 @@
     <string name="phone_number">Phone number</string>
     <string name="phone_number_instruction">This number will be used for important communications and notifications from school</string>
     <string name="attend">Attend</string>
-
+    <string name="exam_start_title">Your exam will start now</string>
+    <string name="exam_start_message">if you do not SUBMIT your answers on time,system will automatically submit your answers at exam end time</string>
+    <string name="submit_exam_title">Are you sure you want to submit?</string>
+    <string name="submit_exam_message">Once you submit your exam you will not be able to give any more answers.</string>
 </resources>

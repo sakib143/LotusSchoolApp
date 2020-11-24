@@ -17,6 +17,7 @@ import com.appforschool.databinding.FragmentExamlistBinding
 import com.appforschool.listner.AttendExamListner
 import com.appforschool.ui.home.fragment.subject.SubjectAdapter
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
+import com.appforschool.utils.AlertDialogUtility
 import com.appforschool.utils.Constant
 import com.appforschool.utils.toast
 import kotlinx.android.synthetic.main.activity_attend_exam.*
@@ -150,6 +151,22 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
 
     fun updateEditeTextAnswer(srNumber: String, subAnswer: String) {
         viewModel.executeUpdateExamAnswer(srNumber,"",subAnswer)
+    }
+
+    fun submitButtonClick() {
+        AlertDialogUtility.CustomAlert(
+            this@AttendExamActivity,
+            getString(R.string.submit_exam_title),
+            getString(R.string.submit_exam_message),
+            "Yes",
+            "No",
+            { dialog, which ->
+                dialog.dismiss()
+                closeScreen()
+            },
+            { dialog, which ->
+                dialog.dismiss()
+            })
     }
 
     fun closeScreen() {

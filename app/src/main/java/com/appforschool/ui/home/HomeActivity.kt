@@ -25,10 +25,7 @@ import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
 import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment
 import com.appforschool.ui.videoplaying.VideoPlayingActivity
-import com.appforschool.utils.Constant
-import com.appforschool.utils.ImageFilePath
-import com.appforschool.utils.LogM
-import com.appforschool.utils.toast
+import com.appforschool.utils.*
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -349,15 +346,27 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openExamDetails(model: ExamModel.Data) {
-        navigationController.navigateToAttendExam(
+        AlertDialogUtility.CustomAlert(
             this@HomeActivity,
-            model.examid,
-            model.examname!!,
-            model.subjectname!!,
-            model.totalmarks.toString()!!,
-            model.duration.toString()!!,
-            model.examtime!!
-        )
+            getString(R.string.exam_start_title),
+            getString(R.string.exam_start_message),
+            "Yes",
+            "No",
+            { dialog, which ->
+                dialog.dismiss()
+                navigationController.navigateToAttendExam(
+                    this@HomeActivity,
+                    model.examid,
+                    model.examname!!,
+                    model.subjectname!!,
+                    model.totalmarks.toString()!!,
+                    model.duration.toString()!!,
+                    model.examtime!!
+                )
+            },
+            { dialog, which ->
+                dialog.dismiss()
+            })
     }
 
     override fun openDriveList(model: DriveModel.Data) {

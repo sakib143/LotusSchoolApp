@@ -132,7 +132,9 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/bg_login_signup_button"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_20sdp" />
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:onClick="@{()-> listner.submitButtonClick()}"
+            />
 
         <com.github.ybq.android.spinkit.SpinKitView
             style="@style/SpinKitView.Large.CubeGrid"
