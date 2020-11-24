@@ -74,7 +74,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
         UserProfileListner.getInstance().setListener(this@HomeActivity)
         val model = UserProfileListner.getInstance().state
-        LogM.e("=> Current state $model")
 
         dashboardFragment = DashboardFragment.newInstance()
         navigateToDashBoardFragment(false)
@@ -244,7 +243,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun updateUserName() {
-        LogM.e("=> updateUserName is calling !!!")
         viewModel.getUserData()
     }
 

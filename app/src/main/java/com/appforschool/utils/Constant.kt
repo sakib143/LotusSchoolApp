@@ -71,10 +71,14 @@ class Constant {
         const val REQUEST_PHONE_1 = "phone1"
         const val REQUEST_EMAIL_ID = "emailid"
         const val REQUEST_GET_EXAM_QUESTION_BY_EXAM_ID = "getexamquestionbyexamid"
+        const val REQUEST_UPDATE_EXAM_ANSWERS = "updateexamanswers"
         const val REQUEST_EXAM_ID = "examid"
         const val KEY_DURATION = "duration"
         const val KEY_MAKRS = "makrs"
         const val KEY_TIME = "time"
+        const val REQUEST_SR_NO = "SrNo"
+        const val REQUEST_OBJECTIVE_ANSWER = "objectiveanswer"
+        const val REQUEST_SUBJECTIVE_ANSWER = "subjectiveanswer"
 
     }
 }

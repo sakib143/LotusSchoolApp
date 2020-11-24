@@ -51,42 +51,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:fontFamily="@font/calibri"
-                        android:text="@{viewModel.examName}"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/_14ssp"
-                        tools:text="Exam name"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/calibri"
-                        android:text="@{viewModel.subjectName}"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/_14ssp"
-                        tools:text="Subject name"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/calibri"
-                        android:text="@{viewModel.marks + ` Makrs`}"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/_14ssp"
-                        tools:text="Makrs"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="end">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:fontFamily="@font/calibri"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:text="@{viewModel.time}"
@@ -102,6 +66,43 @@
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14ssp"
                         tools:text="Duration"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="end">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:fontFamily="@font/calibri"
+                        android:text="@{viewModel.subjectName}"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Exam name"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="@{viewModel.examName}"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Subject name"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="@{viewModel.marks + ` Makrs`}"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Makrs"/>
 
 
                 </LinearLayout>

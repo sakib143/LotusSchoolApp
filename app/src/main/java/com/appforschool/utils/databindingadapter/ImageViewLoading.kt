@@ -132,7 +132,7 @@ fun setAttentExam(attentExam: TextView, examModel: ExamModel.Data) {
     val df = SimpleDateFormat(Constant.DATE_FORMAT)
     val strCurrentTime: String = df.format(currentTime!!.getTime())
     LogM.e("Current time is $strCurrentTime")
-    if (currentTime!!.after(fromTime(strDate,examModel.duration!!)) && currentTime!!.before(toTime(strDate,examModel.duration!!))) {
+    if (currentTime!!.after(fromTime(strDate)) && currentTime!!.before(toTime(strDate,examModel.duration!!))) {
         attentExam.show()
     }else {
         attentExam.hide()
@@ -148,7 +148,7 @@ private fun toTime(examTime: String,duration: Int): Calendar? {
     return calendar
 }
 
-private fun fromTime(examTime: String,duration: Int): Calendar? {
+private fun fromTime(examTime: String): Calendar? {
     val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
     var myDate = dateFormat.parse(examTime)
     val calendar = Calendar.getInstance()

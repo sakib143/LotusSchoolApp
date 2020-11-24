@@ -7,6 +7,7 @@ import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.AttendExamModel
+import com.appforschool.data.model.UpdateExamAnswerModel
 import com.appforschool.data.repository.AttendExamRepository
 import com.appforschool.utils.Constant
 import com.appforschool.utils.Coroutines
@@ -32,6 +33,12 @@ class AttendExamViewModel  @Inject constructor(
         MutableLiveData<AttendExamModel>()
     val attend_exam: LiveData<AttendExamModel>
         get() = _attend_exam
+
+    //AttendExam observer related data
+    private val _update_answer: MutableLiveData<UpdateExamAnswerModel> =
+        MutableLiveData<UpdateExamAnswerModel>()
+    val update_answer: LiveData<UpdateExamAnswerModel>
+        get() = _update_answer
 
     //Getting Exam id
     private val _examId: MutableLiveData<String> =
@@ -99,6 +106,28 @@ class AttendExamViewModel  @Inject constructor(
             }
         }
         return _attend_exam!!
+    }
+
+    fun executeUpdateExamAnswer(srNo: String,objectAnswer:String, subjectiveAnswer:String): LiveData<UpdateExamAnswerModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+                inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId.value)
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(Constant.REQUEST_SR_NO, srNo)
+                inputParam.addProperty(Constant.REQUEST_OBJECTIVE_ANSWER, objectAnswer)
+                inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subjectiveAnswer)
+                val apiResponse = repository.callUpdateExamAnswer(inputParam)
+                _update_answer.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            }catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _update_answer!!
     }
 
 }

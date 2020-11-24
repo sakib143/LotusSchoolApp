@@ -1,6 +1,10 @@
 package com.appforschool.ui.attendexam
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +12,13 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.R
 import com.appforschool.data.model.AttendExamModel
+import com.appforschool.utils.LogM
 import com.appforschool.utils.hide
 import com.appforschool.utils.show
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
+import java.util.*
 
 class AttendExamAdapter(
     private val context: Context,
@@ -52,20 +58,40 @@ class AttendExamAdapter(
 
     private fun setListner(position: Int, holder: MyViewHolder) {
         holder.cbOne.setOnClickListener() {
-            (context as AttendExamActivity).optionAClicked(position)
+            (context as AttendExamActivity).optionAClicked(position,list.get(position).srNo.toString())
         }
 
         holder.cbTwo.setOnClickListener() {
-            (context as AttendExamActivity).optionBClicked(position)
+            (context as AttendExamActivity).optionBClicked(position,list.get(position).srNo.toString())
         }
 
         holder.cbThree.setOnClickListener() {
-            (context as AttendExamActivity).optionCClicked(position)
+            (context as AttendExamActivity).optionCClicked(position,list.get(position).srNo.toString())
         }
 
         holder.cbFour.setOnClickListener() {
-            (context as AttendExamActivity).optionDClicked(position)
+            (context as AttendExamActivity).optionDClicked(position,list.get(position).srNo.toString())
         }
+
+        var timer = Timer()
+        val DELAY: Long = 3000L
+
+        holder.edtAnswer.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                timer.cancel()
+                timer = Timer()
+                timer.schedule(object : TimerTask() {
+                    override fun run() {
+                        LogM.e("=> file name is  ${s.toString()}")
+                        (context as AttendExamActivity).updateEditeTextAnswer(
+                            list.get(position).srNo.toString(),
+                            s.toString())
+                    }
+                }, DELAY)
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
 
     private fun setViewVisibility(position: Int, holder: MyViewHolder) {

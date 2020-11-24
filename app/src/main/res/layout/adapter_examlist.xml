@@ -16,23 +16,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#0FFF"
-        android:onClick="@{()-> examListListner.openExamDetails(examListModel)}"
         android:orientation="vertical"
         android:padding="@dimen/_8sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@drawable/bg_cardview"
+            android:orientation="horizontal"
             android:padding="@dimen/_10sdp">
 
             <LinearLayout
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:background="@drawable/ic_date"
-                android:orientation="vertical"
                 android:gravity="center"
+                android:orientation="vertical"
                 android:paddingTop="@dimen/_20sdp">
 
                 <TextView
@@ -40,106 +39,109 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
                     android:text="@{examListModel.examtime}"
-                    android:textSize="@dimen/_12ssp"
-                    tools:text="Time"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/_11ssp"
+                    android:textStyle="bold"
+                    tools:text="Time" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
                     android:text="@{examListModel.examdate}"
-                    android:textSize="@dimen/_12ssp"
-                    tools:text="Date"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/_11ssp"
+                    android:textStyle="bold"
+                    tools:text="Date" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="@dimen/_110sdp"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:paddingLeft="@dimen/_10sdp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
+                    android:gravity="start"
                     android:text="@{examListModel.subjectname}"
-                    android:textSize="@dimen/_15ssp"
+                    android:textSize="@dimen/_16ssp"
                     android:textStyle="bold"
                     tools:text="Exam Number" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
                     android:fontFamily="@font/calibri"
+                    android:gravity="start"
                     android:text="@{examListModel.examname}"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     tools:text="Discription" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
                     android:fontFamily="@font/calibri"
+                    android:gravity="start"
                     android:text="@{examListModel.description}"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/_11ssp"
                     android:textStyle="bold"
                     tools:text="Discription" />
 
             </LinearLayout>
 
-             <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_10sdp">
 
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:gravity="center"
-                     android:fontFamily="@font/calibri"
-                     android:text="@{examListModel.StandardName}"
-                     android:textSize="@dimen/_13ssp"
-                     android:textStyle="bold"
-                     tools:text="Standard" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:gravity="left"
+                    android:text="@{examListModel.StandardName}"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    tools:text="Standard" />
 
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:gravity="center"
-                     android:fontFamily="@font/calibri"
-                     android:text="@{examListModel.duration + ` mins`}"
-                     android:textSize="@dimen/_13ssp"
-                     android:textStyle="bold"
-                     tools:text="Duration" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:gravity="left"
+                    android:text="@{examListModel.duration + ` mins`}"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    tools:text="Duration" />
 
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:gravity="center"
-                     android:fontFamily="@font/calibri"
-                     android:text="@{`Marks: ` + examListModel.totalmarks}"
-                     android:textSize="@dimen/_13ssp"
-                     android:textStyle="bold"
-                     tools:text="Total Marks" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:gravity="left"
+                    android:text="@{`Marks: ` + examListModel.totalmarks}"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    tools:text="Total Marks" />
 
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:gravity="center"
-                     android:fontFamily="@font/calibri"
-                     android:textColor="@color/colorJoinMeeting"
-                     android:textSize="@dimen/_18ssp"
-                     android:textStyle="bold"
-                     android:text="@string/attend"
-                     setAttentExam="@{examListModel}"
-                     android:onClick="@{()-> examListListner.openExamDetails(examListModel)}"/>
+                <TextView
+                    setAttentExam="@{examListModel}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/calibri"
+                    android:gravity="left"
+                    android:onClick="@{()-> examListListner.openExamDetails(examListModel)}"
+                    android:text="@string/attend"
+                    android:textColor="@color/colorJoinMeeting"
+                    android:textSize="@dimen/_18ssp"
+                    android:textStyle="bold" />
 
-             </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -150,8 +152,8 @@
             android:background="@drawable/bg_cardview"
             android:orientation="horizontal"
             android:padding="@dimen/_10sdp"
-            android:weightSum="1"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:weightSum="1">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -231,7 +233,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_mark"/>
+                    android:src="@drawable/ic_mark" />
 
                 <TextView
                     android:id="@+id/tvMarks"
@@ -259,7 +261,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
 
 
     </LinearLayout>

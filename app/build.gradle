@@ -115,7 +115,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //Firebase Performance
-    implementation 'com.google.firebase:firebase-perf:19.0.9'
+    implementation 'com.google.firebase:firebase-perf:19.0.10'
 
     // Jitsi Meet
     implementation ('org.jitsi.react:jitsi-meet-sdk:2.10.0') { transitive = true }

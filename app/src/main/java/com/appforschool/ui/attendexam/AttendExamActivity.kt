@@ -11,6 +11,7 @@ import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.AssignmentModel
 import com.appforschool.data.model.AttendExamModel
 import com.appforschool.data.model.ExamModel
+import com.appforschool.data.model.UpdateExamAnswerModel
 import com.appforschool.databinding.ActivityAttendExamBinding
 import com.appforschool.databinding.FragmentExamlistBinding
 import com.appforschool.listner.AttendExamListner
@@ -73,6 +74,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     private fun setData() {
         viewModel.onMessageError.observe(this, onMessageErrorObserver)
         viewModel.attend_exam.observe(this, attendExamObserver)
+        viewModel.update_answer.observe(this,updateAnswer)
         viewModel.executeAttentExamList()
     }
 
@@ -100,36 +102,54 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         }
     }
 
-    fun optionAClicked(position: Int) {
+
+    private val updateAnswer = Observer<UpdateExamAnswerModel> {
+        if (it.status) {
+            toast(it!!.message)
+        } else {
+            toast(it!!.message)
+        }
+    }
+
+
+    fun optionAClicked(position: Int,srNumber: String) {
         alAttendExam.get(position).isACorrect = true
         alAttendExam.get(position).isBCorrect = false
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
+        viewModel.executeUpdateExamAnswer(srNumber,alAttendExam.get(position).optionA,"")
     }
 
-    fun optionBClicked(position: Int) {
+    fun optionBClicked(position: Int,srNumber: String) {
         alAttendExam.get(position).isACorrect = false
         alAttendExam.get(position).isBCorrect = true
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
+        viewModel.executeUpdateExamAnswer(srNumber,alAttendExam.get(position).optionB,"")
     }
 
-    fun optionCClicked(position: Int) {
+    fun optionCClicked(position: Int,srNumber: String) {
         alAttendExam.get(position).isACorrect = false
         alAttendExam.get(position).isBCorrect = false
         alAttendExam.get(position).isCCorrect = true
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
+        viewModel.executeUpdateExamAnswer(srNumber,alAttendExam.get(position).optionC,"")
     }
 
-    fun optionDClicked(position: Int) {
+    fun optionDClicked(position: Int,srNumber: String) {
         alAttendExam.get(position).isACorrect = false
         alAttendExam.get(position).isBCorrect = false
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = true
         adapter?.notifyDataSetChanged()
+        viewModel.executeUpdateExamAnswer(srNumber,alAttendExam.get(position).optionD,"")
+    }
+
+    fun updateEditeTextAnswer(srNumber: String, subAnswer: String) {
+        viewModel.executeUpdateExamAnswer(srNumber,"",subAnswer)
     }
 
     fun closeScreen() {
