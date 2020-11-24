@@ -115,7 +115,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
                 override fun run() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         closeScreen()
-                    }, 1000)
+                    }, 5000)
                 }
             }, latestDate)
         } catch (e: ParseException) {
