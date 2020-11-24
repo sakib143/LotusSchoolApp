@@ -354,6 +354,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             "No",
             { dialog, which ->
                 dialog.dismiss()
+                val formatedDateTime = model.examdate + " " + model.examtime1
                 navigationController.navigateToAttendExam(
                     this@HomeActivity,
                     model.examid,
@@ -361,7 +362,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                     model.subjectname!!,
                     model.totalmarks.toString()!!,
                     model.duration.toString()!!,
-                    model.examtime!!
+                    model.examtime!!,
+                    formatedDateTime
                 )
             },
             { dialog, which ->

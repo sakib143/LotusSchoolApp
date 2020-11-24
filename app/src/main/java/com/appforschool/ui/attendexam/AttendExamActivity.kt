@@ -1,30 +1,36 @@
 package com.appforschool.ui.attendexam
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
-import com.appforschool.data.model.AssignmentModel
 import com.appforschool.data.model.AttendExamModel
 import com.appforschool.data.model.ExamModel
 import com.appforschool.data.model.UpdateExamAnswerModel
 import com.appforschool.databinding.ActivityAttendExamBinding
-import com.appforschool.databinding.FragmentExamlistBinding
-import com.appforschool.listner.AttendExamListner
-import com.appforschool.ui.home.fragment.subject.SubjectAdapter
-import com.appforschool.ui.home.fragment.subject.SubjectFragment
-import com.appforschool.utils.AlertDialogUtility
-import com.appforschool.utils.Constant
-import com.appforschool.utils.toast
+import com.appforschool.utils.*
 import kotlinx.android.synthetic.main.activity_attend_exam.*
 import kotlinx.android.synthetic.main.fragment_subjects.*
+import kotlinx.coroutines.CoroutineScope
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
+
+    private var duration: Int = 0
+    private var formatedTime: String = ""
 
     override fun layoutId() = R.layout.activity_attend_exam
 
@@ -46,22 +52,35 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        duration = intent.getStringExtra(Constant.KEY_DURATION)!!.toInt()!!
+        formatedTime = intent.getStringExtra(Constant.KEY_FORMATED_TIME)!!
+
+        LogM.e("Durationd is$duration + time is $formatedTime")
+
         viewModel.setData(
             intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
             intent.getStringExtra(Constant.REUQEST_GET_SUBJECTS)!!,
             intent.getStringExtra(Constant.KEY_DURATION)!!,
             intent.getStringExtra(Constant.KEY_MAKRS)!!,
             intent.getStringExtra(Constant.REQUEST_GET_EXAMS)!!,
-            intent.getStringExtra(Constant.KEY_TIME)!!
-            )
+            intent.getStringExtra(Constant.KEY_TIME)!!,
+        )
 
         setData()
-
     }
 
     companion object {
         @JvmStatic
-        fun intentFor(context: Context, examId: String,subject: String,duration: String,makrs: String,examName: String, time: String) =
+        fun intentFor(
+            context: Context,
+            examId: String,
+            examName: String,
+            subject: String,
+            makrs: String,
+            duration: String,
+            time: String,
+            formatedTime: String
+        ) =
             Intent(context, AttendExamActivity::class.java)
                 .putExtra(Constant.REQUEST_EXAM_ID, examId)
                 .putExtra(Constant.REQUEST_GET_EXAMS, examName)
@@ -69,14 +88,91 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
                 .putExtra(Constant.KEY_MAKRS, makrs)
                 .putExtra(Constant.KEY_DURATION, duration)
                 .putExtra(Constant.KEY_TIME, time)
+                .putExtra(Constant.KEY_FORMATED_TIME, formatedTime)
+
 
     }
+
 
     private fun setData() {
         viewModel.onMessageError.observe(this, onMessageErrorObserver)
         viewModel.attend_exam.observe(this, attendExamObserver)
-        viewModel.update_answer.observe(this,updateAnswer)
+        viewModel.update_answer.observe(this, updateAnswer)
         viewModel.executeAttentExamList()
+
+        setFirstAlert()
+        setSecondAlert()
+        setTimeOver()
+    }
+
+    private fun setTimeOver() {
+        try {
+            val dateFormatter: DateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+            val date = dateFormatter.parse(formatedTime)
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.MINUTE, duration)
+            calendar.time = date
+            val timer = Timer()
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                       closeScreen()
+                    }, 1000)
+                }
+            }, date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun setFirstAlert() {
+        try {
+            val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+            val date = dateFormat.parse(formatedTime)
+            val calendar = Calendar.getInstance()
+            calendar!!.time = date
+            calendar!!.add(Calendar.MINUTE, duration - 5)
+            val latestDate = calendar.time
+            val timer = Timer()
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        setFiveMinRemainAlert()
+                    }, 1000)
+                }
+            }, latestDate)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun setSecondAlert() {
+        try {
+            val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+            val date = dateFormat.parse(formatedTime)
+            val calendar = Calendar.getInstance()
+            calendar!!.time = date
+            calendar!!.add(Calendar.MINUTE, duration - 1)
+            val latestDate = calendar.time
+            val timer = Timer()
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        toast(resources.getString(R.string.exam_min_left_second_message))
+                    }, 1000)
+                }
+            }, latestDate)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun setFiveMinRemainAlert() {
+        AlertDialogUtility.showSingleAlert(
+            this@AttendExamActivity, getString(R.string.exam_min_left_message)
+        ) { dialog, which ->
+            dialog.dismiss()
+        }
     }
 
     private val onMessageErrorObserver = Observer<Any> {
@@ -113,44 +209,44 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     }
 
 
-    fun optionAClicked(position: Int,srNumber: String) {
+    fun optionAClicked(position: Int, srNumber: String) {
         alAttendExam.get(position).isACorrect = true
         alAttendExam.get(position).isBCorrect = false
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
-        viewModel.executeUpdateExamAnswer(srNumber,alAttendExam.get(position).optionA,"")
+        viewModel.executeUpdateExamAnswer(srNumber, alAttendExam.get(position).optionA, "")
     }
 
-    fun optionBClicked(position: Int,srNumber: String) {
+    fun optionBClicked(position: Int, srNumber: String) {
         alAttendExam.get(position).isACorrect = false
         alAttendExam.get(position).isBCorrect = true
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
-        viewModel.executeUpdateExamAnswer(srNumber,alAttendExam.get(position).optionB,"")
+        viewModel.executeUpdateExamAnswer(srNumber, alAttendExam.get(position).optionB, "")
     }
 
-    fun optionCClicked(position: Int,srNumber: String) {
+    fun optionCClicked(position: Int, srNumber: String) {
         alAttendExam.get(position).isACorrect = false
         alAttendExam.get(position).isBCorrect = false
         alAttendExam.get(position).isCCorrect = true
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
-        viewModel.executeUpdateExamAnswer(srNumber,alAttendExam.get(position).optionC,"")
+        viewModel.executeUpdateExamAnswer(srNumber, alAttendExam.get(position).optionC, "")
     }
 
-    fun optionDClicked(position: Int,srNumber: String) {
+    fun optionDClicked(position: Int, srNumber: String) {
         alAttendExam.get(position).isACorrect = false
         alAttendExam.get(position).isBCorrect = false
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = true
         adapter?.notifyDataSetChanged()
-        viewModel.executeUpdateExamAnswer(srNumber,alAttendExam.get(position).optionD,"")
+        viewModel.executeUpdateExamAnswer(srNumber, alAttendExam.get(position).optionD, "")
     }
 
     fun updateEditeTextAnswer(srNumber: String, subAnswer: String) {
-        viewModel.executeUpdateExamAnswer(srNumber,"",subAnswer)
+        viewModel.executeUpdateExamAnswer(srNumber, "", subAnswer)
     }
 
     fun submitButtonClick() {

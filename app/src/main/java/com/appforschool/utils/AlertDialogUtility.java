@@ -11,7 +11,8 @@ public class AlertDialogUtility {
 
     public static void showInternetAlert(Context context) {
         new AlertDialog.Builder(context).setIcon(0).setTitle(Constant.CHECK_INTERNET).setMessage(Constant.CHECK_INTERNET)
-                .setCancelable(true).setNeutralButton("OK", null).show();
+                .setCancelable(true).setNeutralButton("OK", null)
+                .show();
     }
 
     public static void CustomAlert(Context context, String title, String message, String Positive_text,
@@ -20,6 +21,7 @@ public class AlertDialogUtility {
                                    DialogInterface.OnClickListener NegativeListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(title).setMessage(message).setPositiveButton(Positive_text, PositiveListener).setNegativeButton(Negative_text, NegativeListener);
         AlertDialog dialog = builder.create();
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogZoomEffect;
         dialog.show();
     }
 
@@ -29,12 +31,10 @@ public class AlertDialogUtility {
     }
 
     public static void showSingleAlert(Context context, String strMessege, DialogInterface.OnClickListener onYesClick) {
-        new AlertDialog.Builder(context).setIcon(0).setMessage(strMessege)
-                .setTitle(context.getString(R.string.app_name))
-                .setCancelable(false).setPositiveButton("OK", onYesClick)
-                .show()
-                .getButton(DialogInterface.BUTTON_POSITIVE)
-                .setTextColor(context.getResources().getColor(R.color.colorHomeHeader));
+        AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(context.getString(R.string.app_name)).setMessage(strMessege).setPositiveButton("Ok",onYesClick);
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogZoomEffect;
+        dialog.show();
     }
 
 }

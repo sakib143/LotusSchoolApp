@@ -2,6 +2,7 @@ package com.appforschool.utils
 
 import android.content.Context
 import com.appforschool.base.BaseActivity
+import com.appforschool.data.model.ExamModel
 import com.appforschool.ui.addtodrive.AddToDriveActivity
 import com.appforschool.ui.attendexam.AttendExamActivity
 import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
@@ -47,8 +48,8 @@ class NavigationController @Inject constructor(var context: Context) {
     //     * Opens Video calling
     //     * @param activity -> to Start the Activity
     //     */
-    fun navigateToVideoCallScreen(activity: BaseActivity, roomUrl: String,scheduleId: Int) {
-        activity.startActivity(VideoCallingActivity.intentFor(context,roomUrl,scheduleId))
+    fun navigateToVideoCallScreen(activity: BaseActivity, roomUrl: String, scheduleId: Int) {
+        activity.startActivity(VideoCallingActivity.intentFor(context, roomUrl, scheduleId))
     }
 
     /**
@@ -95,8 +96,29 @@ class NavigationController @Inject constructor(var context: Context) {
     //     * Opens Attend Exam screen
     //     * @param activity -> to Start the Activity
     //     */
-    fun navigateToAttendExam(activity: BaseActivity, examId: String, examName: String,subject: String,makrs: String,duration: String, time: String) {
-        activity.startActivity(AttendExamActivity.intentFor(context,examId,examName,subject,makrs,duration,time))
+    fun navigateToAttendExam(
+        activity: BaseActivity,
+        examId: String,
+        examName: String,
+        subject: String,
+        makrs: String,
+        duration: String,
+        time: String,
+        formatedTime: String
+    ) {
+        activity.startActivity(
+            AttendExamActivity.intentFor(
+                context,
+                examId,
+                examName,
+                subject,
+                makrs,
+                duration,
+                time,
+                formatedTime
+            )
+        )
     }
+
 
 }
