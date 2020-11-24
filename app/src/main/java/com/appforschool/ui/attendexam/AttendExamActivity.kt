@@ -89,10 +89,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
                 .putExtra(Constant.KEY_DURATION, duration)
                 .putExtra(Constant.KEY_TIME, time)
                 .putExtra(Constant.KEY_FORMATED_TIME, formatedTime)
-
-
     }
-
 
     private fun setData() {
         viewModel.onMessageError.observe(this, onMessageErrorObserver)
