@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class AttendExamViewModel  @Inject constructor(
+class AttendExamViewModel @Inject constructor(
     private val application: MyApp,
     private val repository: AttendExamRepository,
     private val prefUtils: PrefUtils
@@ -107,8 +107,15 @@ class AttendExamViewModel  @Inject constructor(
         get() = _setTimeOver
 
 
-
-    fun setData(examId: String,examName: String, subject: String,makrs: String, duration: String,time: String,formatedTime: String) {
+    fun setData(
+        examId: String,
+        examName: String,
+        subject: String,
+        makrs: String,
+        duration: String,
+        time: String,
+        formatedTime: String
+    ) {
         _examId.postValue(examId)
         _examName.postValue(examName)
         _subjectName.postValue(subject)
@@ -126,28 +133,38 @@ class AttendExamViewModel  @Inject constructor(
         Coroutines.main {
             try {
                 val inputParam = JsonObject()
-                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_GET_EXAM_QUESTION_BY_EXAM_ID)
+                inputParam.addProperty(
+                    Constant.REQUEST_MODE,
+                    Constant.REQUEST_GET_EXAM_QUESTION_BY_EXAM_ID
+                )
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId.value)
                 val apiResponse = repository.callAttendExam(inputParam)
                 _attend_exam.postValue(apiResponse)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
-            }catch (e: NoInternetException) {
+            } catch (e: NoInternetException) {
                 _onMessageError.postValue(e.message)
             }
         }
         return _attend_exam!!
     }
 
-    fun executeUpdateExamAnswer(srNo: String,objectAnswer:String, subjectiveAnswer:String): LiveData<UpdateExamAnswerModel> {
+    fun executeUpdateExamAnswer(
+        srNo: String,
+        objectAnswer: String,
+        subjectiveAnswer: String
+    ): LiveData<UpdateExamAnswerModel> {
         Coroutines.main {
             try {
                 val inputParam = JsonObject()
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId.value)
-                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(
+                    Constant.REQUEST_STUDENTID,
+                    prefUtils.getUserData()?.studentId
+                )
                 inputParam.addProperty(Constant.REQUEST_SR_NO, srNo)
                 inputParam.addProperty(Constant.REQUEST_OBJECTIVE_ANSWER, objectAnswer)
                 inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subjectiveAnswer)
@@ -155,7 +172,7 @@ class AttendExamViewModel  @Inject constructor(
                 _update_answer.postValue(apiResponse)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
-            }catch (e: NoInternetException) {
+            } catch (e: NoInternetException) {
                 _onMessageError.postValue(e.message)
             }
         }
@@ -227,7 +244,7 @@ class AttendExamViewModel  @Inject constructor(
                         Handler(Looper.getMainLooper()).postDelayed({
                             application.toast(application.resources.getString(R.string.exam_time_over))
                             _setTimeOver.postValue("")
-                    }, 5000)
+                        }, 5000)
                     }
                 }, latestDate)
             } catch (e: ParseException) {
@@ -249,7 +266,7 @@ class AttendExamViewModel  @Inject constructor(
                 _endExam.postValue(apiResponse)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
-            }catch (e: NoInternetException) {
+            } catch (e: NoInternetException) {
                 _onMessageError.postValue(e.message)
             }
         }

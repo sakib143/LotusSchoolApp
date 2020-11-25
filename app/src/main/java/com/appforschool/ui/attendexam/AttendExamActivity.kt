@@ -206,6 +206,6 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
     }
 
     override fun onBackPressed() {
-        closeScreen()
+//        closeScreen()
     }
 }

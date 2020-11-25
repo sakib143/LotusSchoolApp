@@ -96,15 +96,12 @@ fun bindAExamList(view: RecyclerView, list: List<ExamModel.Data>) {
     if (layoutManager == null)
         view.layoutManager = LinearLayoutManager(view.context)
     var adapter = view.adapter
-
-    if (adapter == null) {
-        adapter =
-            ExamAdapter(
-                view.context,
-                list
-            )
-        view.adapter = adapter
-    }
+    adapter =
+        ExamAdapter(
+            view.context,
+            list
+        )
+    view.adapter = adapter
 }
 
 @BindingAdapter("bindDriveList")

@@ -36,6 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_back_icon"
+                android:visibility="gone"
                 android:onClick="@{()->listner.closeScreen()}" />
 
             <LinearLayout
@@ -99,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/calibri"
-                        android:text="@{viewModel.marks + ` Makrs`}"
+                        android:text="@{`Marks: ` + viewModel.marks}"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14ssp"
                         tools:text="Makrs" />

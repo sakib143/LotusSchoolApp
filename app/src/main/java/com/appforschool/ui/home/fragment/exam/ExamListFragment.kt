@@ -81,7 +81,7 @@ class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>(),
     }
 
     private val examListObserver = Observer<ExamModel> {
-        alExamp = ArrayList()
+        alExamp.clear()
         alExamp!!.addAll(it!!.data!!)
         binding?.examList = alExamp
         if (alExamp?.size == 0) {

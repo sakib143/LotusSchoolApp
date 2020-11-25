@@ -56,6 +56,6 @@ data class StartExamModel(
         @Expose
         @SerializedName("subjid") var subjid: Int = 0,
         @Expose
-        @SerializedName("totalmarks") var totalmarks: Double = 0.0
+        @SerializedName("totalmarks") var totalmarks: Int = 0
     )
 }
