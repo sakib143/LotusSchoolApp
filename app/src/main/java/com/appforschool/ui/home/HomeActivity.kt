@@ -89,6 +89,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     private fun setObserver() {
         viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
+        viewModel.startExam.observe(this@HomeActivity, startExamObserver)
         viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
         viewModel.fileSubmit.observe(this@HomeActivity, fileSubmitObserver)
         viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
@@ -254,6 +255,14 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
+    private val startExamObserver = Observer<StartEndExamModel> {
+        if (it.status) {
+            toast(it!!.data.get(0).message)
+        } else {
+            toast(it!!.message)
+        }
+    }
+
     private val fileViewLogObserver = Observer<FileViewLogModel> {
         if (it.status) {
             toast(it.message)
@@ -354,6 +363,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             "No",
             { dialog, which ->
                 dialog.dismiss()
+                viewModel.executeStartExam(model.examid)
                 val formatedDateTime = model.examdate + " " + model.examtime1
                 navigationController.navigateToAttendExam(
                     this@HomeActivity,

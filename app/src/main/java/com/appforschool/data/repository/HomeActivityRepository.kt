@@ -5,6 +5,7 @@ import com.appforschool.api.WebServiceInterface
 import com.appforschool.data.model.AssignmentSubmissionModel
 import com.appforschool.data.model.FileViewLogModel
 import com.appforschool.data.model.SetJoinModel
+import com.appforschool.data.model.StartEndExamModel
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -42,4 +43,11 @@ class HomeActivityRepository @Inject constructor(
             webServiceInterface.callUploadAssignment(Image, shareid,userid,usertype,studentid,filetitle,filedescr,filetype,fileext,filesize,uploadtype)
         }
     }
+
+    suspend fun callStartExam(objectLogin: JsonObject): StartEndExamModel {
+        return apiRequest {
+            webServiceInterface.callStartEndExam(objectLogin)
+        }
+    }
+
 }

@@ -41,7 +41,7 @@ class AttendExamViewModel  @Inject constructor(
     val attend_exam: LiveData<AttendExamModel>
         get() = _attend_exam
 
-    //AttendExam observer related data
+    //End Exam observer related data
     private val _endExam: MutableLiveData<StartEndExamModel> =
         MutableLiveData<StartEndExamModel>()
     val endExam: LiveData<StartEndExamModel>

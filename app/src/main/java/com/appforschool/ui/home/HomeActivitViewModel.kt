@@ -58,6 +58,12 @@ class HomeActivitViewModel @Inject constructor(
     val fileSubmit: LiveData<AssignmentSubmissionModel>
         get() = _fileSubmit
 
+    //Start Exam observer related data
+    private val _startExam: MutableLiveData<StartEndExamModel> =
+        MutableLiveData<StartEndExamModel>()
+    val startExam: LiveData<StartEndExamModel>
+        get() = _startExam
+
     fun executeSetJoinLog(scheduleId: String): LiveData<SetJoinModel> {
         Coroutines.main {
             try {
@@ -141,4 +147,26 @@ class HomeActivitViewModel @Inject constructor(
         }
         return _fileSubmit!!
     }
+
+
+    fun executeStartExam(examId: String): LiveData<StartEndExamModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_MODE_START_EXAM)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+                inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId)
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                val apiResponse = repository.callStartExam(inputParam)
+                _startExam.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            }catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _startExam!!
+    }
+
+
 }
