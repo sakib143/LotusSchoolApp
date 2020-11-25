@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.AttendExamModel
+import com.appforschool.data.model.StartEndExamModel
 import com.appforschool.databinding.ActivityAttendExamBinding
 import com.appforschool.listner.UserProfileListner
 import com.appforschool.utils.*
@@ -82,6 +83,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
         viewModel.attend_exam.observe(this, attendExamObserver)
         viewModel.setFiveMinuteLeft.observe(this, onFiveMinuteLeft)
         viewModel.setTimeOver.observe(this, onTimeOverObserver)
+        viewModel.endExam.observe(this,endExamObserver)
 
         viewModel.executeAttentExamList() //API call to fetch list
         viewModel.fiveMinuteLeftAlert()
@@ -126,6 +128,15 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
         } else {
             toast(it!!.message)
             viewModel.setDataFound(true)
+        }
+    }
+
+    private val endExamObserver = Observer<StartEndExamModel> {
+        if (it.status) {
+            toast(it!!.data.get(0).message)
+            closeScreen()
+        } else {
+            toast(it!!.message)
         }
     }
 
@@ -178,11 +189,15 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
             "No",
             { dialog, which ->
                 dialog.dismiss()
-                closeScreen()
+                executeEndExamAPI()
             },
             { dialog, which ->
                 dialog.dismiss()
             })
+    }
+
+    fun executeEndExamAPI() {
+        viewModel.executeEndExam()
     }
 
     fun closeScreen() {

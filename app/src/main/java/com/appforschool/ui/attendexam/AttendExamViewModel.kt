@@ -10,6 +10,7 @@ import com.appforschool.R
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.AttendExamModel
+import com.appforschool.data.model.StartEndExamModel
 import com.appforschool.data.model.UpdateExamAnswerModel
 import com.appforschool.data.repository.AttendExamRepository
 import com.appforschool.utils.Constant
@@ -39,6 +40,12 @@ class AttendExamViewModel  @Inject constructor(
         MutableLiveData<AttendExamModel>()
     val attend_exam: LiveData<AttendExamModel>
         get() = _attend_exam
+
+    //AttendExam observer related data
+    private val _endExam: MutableLiveData<StartEndExamModel> =
+        MutableLiveData<StartEndExamModel>()
+    val endExam: LiveData<StartEndExamModel>
+        get() = _endExam
 
     //AttendExam observer related data
     private val _update_answer: MutableLiveData<UpdateExamAnswerModel> =
@@ -228,6 +235,25 @@ class AttendExamViewModel  @Inject constructor(
             }
         }
         return _setTimeOver!!
+    }
+
+    fun executeEndExam(): LiveData<StartEndExamModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_MODE_END_EXAM)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+                inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId.value)
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                val apiResponse = repository.callEndExam(inputParam)
+                _endExam.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            }catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _endExam!!
     }
 
 }

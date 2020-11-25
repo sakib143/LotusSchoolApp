@@ -80,6 +80,9 @@ class Constant {
         const val REQUEST_OBJECTIVE_ANSWER = "objectiveanswer"
         const val REQUEST_SUBJECTIVE_ANSWER = "subjectiveanswer"
         const val KEY_FORMATED_TIME = "formatedtime"
+        const val REQUEST_MODE_END_EXAM = "endexam"
+        const val REQUEST_MODE_START_EXAM = "startexam"
+
 
     }
 }
