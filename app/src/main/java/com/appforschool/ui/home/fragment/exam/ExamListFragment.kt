@@ -9,6 +9,7 @@ import com.appforschool.data.model.AlertModel
 import com.appforschool.data.model.ExamModel
 import com.appforschool.databinding.FragmentAlertBinding
 import com.appforschool.databinding.FragmentExamlistBinding
+import com.appforschool.listner.UserProfileListner
 import com.appforschool.ui.home.fragment.alert.AlertFragment
 import com.appforschool.ui.home.fragment.alert.AlertViewModel
 import com.appforschool.utils.Constant
@@ -18,7 +19,8 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>() {
+class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>(),
+    UserProfileListner.onScreenCloseListner {
 
     private var listener: ExamListListner? = null
 
@@ -62,13 +64,16 @@ class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>() {
         viewModel.examData.observe(viewLifecycleOwner, examListObserver)
 
         //Make API call
+        getExamList()
+        UserProfileListner.getInstance().setListener(this)
+    }
+
+    private fun getExamList() {
         if (globalMethods.isInternetAvailable(activity!!)) {
             viewModel.executeExamData()
         } else {
             activity!!.toast(Constant.CHECK_INTERNET)
         }
-
-        setCountDown()
     }
 
     private val onMessageErrorObserver = Observer<Any> {
@@ -94,17 +99,8 @@ class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>() {
         listener?.popFragment()
     }
 
-    private fun setCountDown() {
-//        val t = Timer()
-//        t.scheduleAtFixedRate(
-//            object : TimerTask() {
-//                override fun run() {
-//                    LogM.e("=> API need to be execute in Exam list fragment !!!")
-//                }
-//            },  //Set how long before to start calling the TimerTask (in milliseconds)
-//            0,  //Set the amount of time between each execution (in milliseconds)
-//            1000
-//        )
+    override fun stateChanged() {
+        getExamList()
     }
 
 }

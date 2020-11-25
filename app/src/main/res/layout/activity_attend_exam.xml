@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/calibri"
                         android:layout_marginTop="@dimen/_15sdp"
-                        android:text="@{viewModel.time}"
+                        android:text="@{`Exam time: ` + viewModel.time}"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14ssp"
                         tools:text="Time"/>

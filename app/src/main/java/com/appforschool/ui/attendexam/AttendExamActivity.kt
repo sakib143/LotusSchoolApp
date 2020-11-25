@@ -9,6 +9,7 @@ import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.AttendExamModel
 import com.appforschool.databinding.ActivityAttendExamBinding
+import com.appforschool.listner.UserProfileListner
 import com.appforschool.utils.*
 import kotlinx.android.synthetic.main.activity_attend_exam.*
 import kotlinx.android.synthetic.main.fragment_subjects.*
@@ -17,10 +18,8 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
+class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
 
-    private var duration: Int = 0
-    private var formatedTime: String = ""
 
     override fun layoutId() = R.layout.activity_attend_exam
 
@@ -42,11 +41,6 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        duration = intent.getStringExtra(Constant.KEY_DURATION)!!.toInt()!!
-        formatedTime = intent.getStringExtra(Constant.KEY_FORMATED_TIME)!!
-
-        LogM.e("Durationd is$duration + time is $formatedTime")
-
         viewModel.setData(
             intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
             intent.getStringExtra(Constant.REQUEST_GET_EXAMS)!!,
@@ -57,6 +51,8 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
             intent.getStringExtra(Constant.KEY_FORMATED_TIME)!!)
 
         setData()
+
+
     }
 
     companion object {
@@ -190,7 +186,11 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     }
 
     fun closeScreen() {
+        UserProfileListner.getInstance().changeState(true)
         finish()
     }
 
+    override fun onBackPressed() {
+        closeScreen()
+    }
 }
