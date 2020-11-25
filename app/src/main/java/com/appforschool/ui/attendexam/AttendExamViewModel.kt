@@ -133,11 +133,9 @@ class AttendExamViewModel @Inject constructor(
         Coroutines.main {
             try {
                 val inputParam = JsonObject()
-                inputParam.addProperty(
-                    Constant.REQUEST_MODE,
-                    Constant.REQUEST_GET_EXAM_QUESTION_BY_EXAM_ID
-                )
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_GET_EXAM_QUESTION_BY_EXAM_ID)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
                 inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId.value)
                 val apiResponse = repository.callAttendExam(inputParam)
                 _attend_exam.postValue(apiResponse)
