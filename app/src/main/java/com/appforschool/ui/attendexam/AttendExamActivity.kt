@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.AttendExamModel
-import com.appforschool.data.model.StartEndExamModel
+import com.appforschool.data.model.EndExamModel
 import com.appforschool.databinding.ActivityAttendExamBinding
 import com.appforschool.listner.UserProfileListner
 import com.appforschool.utils.*
@@ -131,7 +131,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
         }
     }
 
-    private val endExamObserver = Observer<StartEndExamModel> {
+    private val endExamObserver = Observer<EndExamModel> {
         if (it.status) {
             toast(it!!.data.get(0).message)
             closeScreen()

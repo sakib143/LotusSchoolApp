@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-data class StartEndExamModel(
+data class EndExamModel(
     @Expose
     @SerializedName("data") var `data`: List<Data> = listOf(),
     @Expose

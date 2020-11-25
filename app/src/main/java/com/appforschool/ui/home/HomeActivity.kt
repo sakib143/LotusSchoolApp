@@ -255,9 +255,19 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
-    private val startExamObserver = Observer<StartEndExamModel> {
+    private val startExamObserver = Observer<StartExamModel> {
         if (it.status) {
-            toast(it!!.data.get(0).message)
+            val formatedDateTime = it.data.get(0).examdate + " " + it.data.get(0).examtime1
+            navigationController.navigateToAttendExam(
+                this@HomeActivity,
+                it.data.get(0).examid,
+                it.data.get(0).examname!!,
+                it.data.get(0).subjectname!!,
+                it.data.get(0).totalmarks.toString()!!,
+                it.data.get(0).duration.toString()!!,
+                it.data.get(0).examtime!!,
+                formatedDateTime
+            )
         } else {
             toast(it!!.message)
         }
@@ -364,17 +374,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             { dialog, which ->
                 dialog.dismiss()
                 viewModel.executeStartExam(model.examid)
-                val formatedDateTime = model.examdate + " " + model.examtime1
-                navigationController.navigateToAttendExam(
-                    this@HomeActivity,
-                    model.examid,
-                    model.examname!!,
-                    model.subjectname!!,
-                    model.totalmarks.toString()!!,
-                    model.duration.toString()!!,
-                    model.examtime!!,
-                    formatedDateTime
-                )
             },
             { dialog, which ->
                 dialog.dismiss()

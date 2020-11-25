@@ -2,10 +2,7 @@ package com.appforschool.data.repository
 
 import com.appforschool.api.SafeAPIRequest
 import com.appforschool.api.WebServiceInterface
-import com.appforschool.data.model.AssignmentSubmissionModel
-import com.appforschool.data.model.FileViewLogModel
-import com.appforschool.data.model.SetJoinModel
-import com.appforschool.data.model.StartEndExamModel
+import com.appforschool.data.model.*
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -44,9 +41,9 @@ class HomeActivityRepository @Inject constructor(
         }
     }
 
-    suspend fun callStartExam(objectLogin: JsonObject): StartEndExamModel {
+    suspend fun callStartExam(objectLogin: JsonObject): StartExamModel {
         return apiRequest {
-            webServiceInterface.callStartEndExam(objectLogin)
+            webServiceInterface.callStartExam(objectLogin)
         }
     }
 

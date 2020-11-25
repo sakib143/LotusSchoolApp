@@ -25,12 +25,12 @@
         <LinearLayout
             android:id="@+id/llHeader"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_130sdp"
+            android:layout_height="@dimen/_90sdp"
             android:background="@color/colorHomeHeader"
             android:orientation="vertical"
             android:paddingLeft="@dimen/_15sdp"
-            android:paddingRight="@dimen/_15sdp"
-            android:paddingTop="@dimen/_15sdp">
+            android:paddingTop="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,11 +52,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/calibri"
-                        android:layout_marginTop="@dimen/_15sdp"
                         android:text="@{`Exam time: ` + viewModel.time}"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14ssp"
-                        tools:text="Time"/>
+                        tools:text="Time" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
                         android:text="@{`Duration: `+viewModel.duration + ` mins`}"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14ssp"
-                        tools:text="Duration"/>
+                        tools:text="Duration" />
 
 
                 </LinearLayout>
@@ -73,18 +73,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="end">
+                    android:gravity="end"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/calibri"
                         android:text="@{viewModel.subjectName}"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14ssp"
-                        tools:text="Exam name"/>
+                        tools:text="Exam name" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                         android:text="@{viewModel.examName}"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14ssp"
-                        tools:text="Subject name"/>
+                        tools:text="Subject name" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
                         android:text="@{viewModel.marks + ` Makrs`}"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/_14ssp"
-                        tools:text="Makrs"/>
+                        tools:text="Makrs" />
 
 
                 </LinearLayout>

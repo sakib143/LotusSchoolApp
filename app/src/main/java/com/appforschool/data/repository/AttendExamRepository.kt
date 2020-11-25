@@ -3,7 +3,7 @@ package com.appforschool.data.repository
 import com.appforschool.api.SafeAPIRequest
 import com.appforschool.api.WebServiceInterface
 import com.appforschool.data.model.AttendExamModel
-import com.appforschool.data.model.StartEndExamModel
+import com.appforschool.data.model.EndExamModel
 import com.appforschool.data.model.UpdateExamAnswerModel
 import com.google.gson.JsonObject
 import javax.inject.Inject
@@ -23,11 +23,9 @@ class AttendExamRepository   @Inject constructor(
         }
     }
 
-    suspend fun callEndExam(objectLogin: JsonObject): StartEndExamModel {
+    suspend fun callEndExam(objectLogin: JsonObject): EndExamModel {
         return apiRequest {
-            webServiceInterface.callStartEndExam(objectLogin)
+            webServiceInterface.callEndExam(objectLogin)
         }
     }
-
-
 }

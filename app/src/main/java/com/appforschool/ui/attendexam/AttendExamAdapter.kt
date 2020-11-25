@@ -47,6 +47,10 @@ class AttendExamAdapter(
         holder.cbThree.text = list.get(position).optionC
         holder.cbTwo.text = list.get(position).optionB
         holder.cbOne.text = list.get(position).optionA
+
+        if( ! list.get(position).subjectiveanswer.isNullOrEmpty()) {
+            holder.edtAnswer.setText(list.get(position).subjectiveanswer)
+        }
     }
 
     private fun setCheckboxchecked(position: Int, holder: MyViewHolder) {

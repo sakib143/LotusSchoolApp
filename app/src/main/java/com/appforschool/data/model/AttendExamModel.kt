@@ -49,6 +49,8 @@ data class AttendExamModel(
         @Expose
         @SerializedName("ReqContentNotFoundColor") var reqContentNotFoundColor: String = "",
         @Expose
-        @SerializedName("SrNo") var srNo: Int = 0
+        @SerializedName("SrNo") var srNo: Int = 0,
+        @Expose
+        @SerializedName("subjectiveanswer") var subjectiveanswer: String = ""
     )
 }

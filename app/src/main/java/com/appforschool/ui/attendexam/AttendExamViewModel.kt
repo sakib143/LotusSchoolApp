@@ -10,7 +10,7 @@ import com.appforschool.R
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.AttendExamModel
-import com.appforschool.data.model.StartEndExamModel
+import com.appforschool.data.model.EndExamModel
 import com.appforschool.data.model.UpdateExamAnswerModel
 import com.appforschool.data.repository.AttendExamRepository
 import com.appforschool.utils.Constant
@@ -42,9 +42,9 @@ class AttendExamViewModel  @Inject constructor(
         get() = _attend_exam
 
     //End Exam observer related data
-    private val _endExam: MutableLiveData<StartEndExamModel> =
-        MutableLiveData<StartEndExamModel>()
-    val endExam: LiveData<StartEndExamModel>
+    private val _endExam: MutableLiveData<EndExamModel> =
+        MutableLiveData<EndExamModel>()
+    val endExam: LiveData<EndExamModel>
         get() = _endExam
 
     //AttendExam observer related data
@@ -237,7 +237,7 @@ class AttendExamViewModel  @Inject constructor(
         return _setTimeOver!!
     }
 
-    fun executeEndExam(): LiveData<StartEndExamModel> {
+    fun executeEndExam(): LiveData<EndExamModel> {
         Coroutines.main {
             try {
                 val inputParam = JsonObject()

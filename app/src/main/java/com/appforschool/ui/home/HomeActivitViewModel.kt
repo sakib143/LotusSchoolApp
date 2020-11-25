@@ -7,7 +7,6 @@ import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.*
-import com.appforschool.data.repository.DriveRepository
 import com.appforschool.data.repository.HomeActivityRepository
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
@@ -59,9 +58,9 @@ class HomeActivitViewModel @Inject constructor(
         get() = _fileSubmit
 
     //Start Exam observer related data
-    private val _startExam: MutableLiveData<StartEndExamModel> =
-        MutableLiveData<StartEndExamModel>()
-    val startExam: LiveData<StartEndExamModel>
+    private val _startExam: MutableLiveData<StartExamModel> =
+        MutableLiveData<StartExamModel>()
+    val startExam: LiveData<StartExamModel>
         get() = _startExam
 
     fun executeSetJoinLog(scheduleId: String): LiveData<SetJoinModel> {
@@ -149,7 +148,7 @@ class HomeActivitViewModel @Inject constructor(
     }
 
 
-    fun executeStartExam(examId: String): LiveData<StartEndExamModel> {
+    fun executeStartExam(examId: String): LiveData<StartExamModel> {
         Coroutines.main {
             try {
                 val inputParam = JsonObject()
