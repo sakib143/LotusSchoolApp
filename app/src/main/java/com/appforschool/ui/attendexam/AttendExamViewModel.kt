@@ -1,9 +1,12 @@
 package com.appforschool.ui.attendexam
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
+import com.appforschool.R
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.AttendExamModel
@@ -12,8 +15,11 @@ import com.appforschool.data.repository.AttendExamRepository
 import com.appforschool.utils.Constant
 import com.appforschool.utils.Coroutines
 import com.appforschool.utils.PrefUtils
+import com.appforschool.utils.toast
 import com.google.gson.JsonObject
-import java.time.Duration
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class AttendExamViewModel  @Inject constructor(
@@ -76,14 +82,33 @@ class AttendExamViewModel  @Inject constructor(
     val marks: LiveData<String>
         get() = _marks
 
+    private val _formatedDate: MutableLiveData<String> =
+        MutableLiveData<String>()
+    val formatedDate: LiveData<String>
+        get() = _formatedDate
 
-    fun setData(examId: String,examName: String, subject: String,makrs: String, duration: String,time: String) {
+    //Set Five minute left observer
+    private val _setFiveMinuteLeft: MutableLiveData<String> =
+        MutableLiveData<String>()
+    val setFiveMinuteLeft: LiveData<String>
+        get() = _setFiveMinuteLeft
+
+    //Set Time Over observer
+    private val _setTimeOver: MutableLiveData<String> =
+        MutableLiveData<String>()
+    val setTimeOver: LiveData<String>
+        get() = _setTimeOver
+
+
+
+    fun setData(examId: String,examName: String, subject: String,makrs: String, duration: String,time: String,formatedTime: String) {
         _examId.postValue(examId)
         _examName.postValue(examName)
         _subjectName.postValue(subject)
         _marks.postValue(makrs)
         _duration.postValue(duration)
         _time.postValue(time)
+        _formatedDate.postValue(formatedTime)
     }
 
     fun setDataFound(isFound: Boolean) {
@@ -128,6 +153,81 @@ class AttendExamViewModel  @Inject constructor(
             }
         }
         return _update_answer!!
+    }
+
+    fun oneMinuteLeftAlert() {
+        Coroutines.main {
+            try {
+                var duration: Int = duration.value!!.toInt()
+                val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+                val date = dateFormat.parse(_formatedDate.value)
+                val calendar = Calendar.getInstance()
+                calendar!!.time = date
+                calendar!!.add(Calendar.MINUTE, duration - 1)
+                val latestDate = calendar.time
+                val timer = Timer()
+                timer.schedule(object : TimerTask() {
+                    override fun run() {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            application.toast(application.resources.getString(R.string.exam_min_left_second_message))
+                        }, 1000)
+                    }
+                }, latestDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun fiveMinuteLeftAlert(): LiveData<String> {
+        Coroutines.main {
+            try {
+                var duration: Int = duration.value!!.toInt()
+                val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+                val date = dateFormat.parse(_formatedDate.value)
+                val calendar = Calendar.getInstance()
+                calendar!!.time = date
+                calendar!!.add(Calendar.MINUTE, duration - 5)
+                val latestDate = calendar.time
+                val timer = Timer()
+                timer.schedule(object : TimerTask() {
+                    override fun run() {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            _setFiveMinuteLeft.postValue("")
+                        }, 1000)
+                    }
+                }, latestDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+        }
+        return _setFiveMinuteLeft!!
+    }
+
+    fun timeOverAlert(): LiveData<String> {
+        Coroutines.main {
+            try {
+                var duration: Int = duration.value!!.toInt()
+                val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+                val date = dateFormat.parse(_formatedDate.value)
+                val calendar = Calendar.getInstance()
+                calendar!!.time = date
+                calendar!!.add(Calendar.MINUTE, duration)
+                val latestDate = calendar.time
+                val timer = Timer()
+                timer.schedule(object : TimerTask() {
+                    override fun run() {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            application.toast(application.resources.getString(R.string.exam_time_over))
+                            _setTimeOver.postValue("")
+                    }, 5000)
+                    }
+                }, latestDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+        }
+        return _setTimeOver!!
     }
 
 }

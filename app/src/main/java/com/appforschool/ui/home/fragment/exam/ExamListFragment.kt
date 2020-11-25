@@ -14,7 +14,9 @@ import com.appforschool.ui.home.fragment.alert.AlertViewModel
 import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>() {
 
@@ -65,6 +67,8 @@ class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>() {
         } else {
             activity!!.toast(Constant.CHECK_INTERNET)
         }
+
+        setCountDown()
     }
 
     private val onMessageErrorObserver = Observer<Any> {
@@ -88,6 +92,19 @@ class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>() {
 
     fun closeAlertFragment() {
         listener?.popFragment()
+    }
+
+    private fun setCountDown() {
+//        val t = Timer()
+//        t.scheduleAtFixedRate(
+//            object : TimerTask() {
+//                override fun run() {
+//                    LogM.e("=> API need to be execute in Exam list fragment !!!")
+//                }
+//            },  //Set how long before to start calling the TimerTask (in milliseconds)
+//            0,  //Set the amount of time between each execution (in milliseconds)
+//            1000
+//        )
     }
 
 }

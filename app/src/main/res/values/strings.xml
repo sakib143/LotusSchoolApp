@@ -65,6 +65,9 @@
     <string name="submit_exam_message">Once you submit your exam you will not be able to give any more answers.</string>
     <string name="exam_min_left_message">You have only 5 minutes left to complete your answers..</string>
     <string name="exam_min_left_second_message">You have only 1 minute left to complete your answers..</string>
+    <string name="half_time_over">Half Time Over</string>
+    <string name="exam_time_over">TIME OVER!\nYour answers have been submitted successfully.</string>
+
 
 
 </resources>
