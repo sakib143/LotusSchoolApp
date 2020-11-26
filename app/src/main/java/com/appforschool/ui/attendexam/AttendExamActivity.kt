@@ -21,7 +21,7 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 
-class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
+class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
 
 
     override fun layoutId() = R.layout.activity_attend_exam
@@ -51,7 +51,8 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
             intent.getStringExtra(Constant.KEY_MAKRS)!!,
             intent.getStringExtra(Constant.KEY_DURATION)!!,
             intent.getStringExtra(Constant.KEY_TIME)!!,
-            intent.getStringExtra(Constant.KEY_FORMATED_TIME)!!)
+            intent.getStringExtra(Constant.KEY_FORMATED_TIME)!!
+        )
 
         setData()
 
@@ -85,7 +86,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
         viewModel.attend_exam.observe(this, attendExamObserver)
         viewModel.setFiveMinuteLeft.observe(this, onFiveMinuteLeft)
         viewModel.setTimeOver.observe(this, onTimeOverObserver)
-        viewModel.endExam.observe(this,endExamObserver)
+        viewModel.endExam.observe(this, endExamObserver)
 
         viewModel.executeAttentExamList() //API call to fetch list
         viewModel.fiveMinuteLeftAlert()
@@ -106,7 +107,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
     }
 
     private val onTimeOverObserver = Observer<String> {
-       closeScreen()
+        closeScreen()
     }
 
     private val onFiveMinuteLeft = Observer<String> {
@@ -143,18 +144,25 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
     }
 
     fun optionAClicked(position: Int, srNumber: String) {
-        alAttendExam.get(position).isACorrect = true
+        val inputParam = JsonObject()
+        if(alAttendExam.get(position).isACorrect){
+            alAttendExam.get(position).isACorrect = false
+            inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
+        }else {
+            alAttendExam.get(position).isACorrect = true
+            inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "1")
+        }
         alAttendExam.get(position).isBCorrect = false
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
 
-        val inputParam = JsonObject()
+
         inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
         inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
         inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
         inputParam.addProperty(Constant.REQUEST_SR_NO, alAttendExam.get(position).srNo)
-        inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "1")
+
         inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
         inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
         inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
@@ -163,19 +171,24 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
     }
 
     fun optionBClicked(position: Int, srNumber: String) {
+        val inputParam = JsonObject()
         alAttendExam.get(position).isACorrect = false
-        alAttendExam.get(position).isBCorrect = true
+        if(alAttendExam.get(position).isBCorrect) {
+            alAttendExam.get(position).isBCorrect = false
+            inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
+        }else {
+            alAttendExam.get(position).isBCorrect = true
+            inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "1")
+        }
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
 
-        val inputParam = JsonObject()
         inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
         inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
         inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
         inputParam.addProperty(Constant.REQUEST_SR_NO, alAttendExam.get(position).srNo)
         inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
-        inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "1")
         inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
         inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
         inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, "")
@@ -183,33 +196,45 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
     }
 
     fun optionCClicked(position: Int, srNumber: String) {
+        val inputParam = JsonObject()
         alAttendExam.get(position).isACorrect = false
         alAttendExam.get(position).isBCorrect = false
-        alAttendExam.get(position).isCCorrect = true
+        if(alAttendExam.get(position).isCCorrect){
+            alAttendExam.get(position).isCCorrect = false
+            inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
+        }else {
+            alAttendExam.get(position).isCCorrect = true
+            inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "1")
+        }
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
 
-        val inputParam = JsonObject()
+
         inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
         inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
         inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
         inputParam.addProperty(Constant.REQUEST_SR_NO, alAttendExam.get(position).srNo)
         inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
         inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
-        inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "1")
         inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
         inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, "")
         viewModel.executeUpdateExamAnswer(inputParam)
     }
 
     fun optionDClicked(position: Int, srNumber: String) {
+        val inputParam = JsonObject()
         alAttendExam.get(position).isACorrect = false
         alAttendExam.get(position).isBCorrect = false
         alAttendExam.get(position).isCCorrect = false
-        alAttendExam.get(position).isDCorrect = true
+        if (alAttendExam.get(position).isDCorrect) {
+            alAttendExam.get(position).isDCorrect = false
+            inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
+        } else {
+            alAttendExam.get(position).isDCorrect = true
+            inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "1")
+        }
         adapter?.notifyDataSetChanged()
 
-        val inputParam = JsonObject()
         inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
         inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
         inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
@@ -217,23 +242,26 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
         inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
         inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
         inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
-        inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "1")
         inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, "")
         viewModel.executeUpdateExamAnswer(inputParam)
     }
 
-    fun updateEditeTextAnswer(srNumber: String, subAnswer: String) {
-        val inputParam = JsonObject()
-        inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
-        inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
-        inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
-        inputParam.addProperty(Constant.REQUEST_SR_NO, srNumber)
-        inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
-        inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
-        inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
-        inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
-        inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subAnswer)
-        viewModel.executeUpdateExamAnswer(inputParam)
+    fun updateEditeTextAnswer(position: Int, srNumber: String, subAnswer: String) {
+        Coroutines.main {
+            alAttendExam.get(position).subjectiveanswer = subAnswer
+
+            val inputParam = JsonObject()
+            inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
+            inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+            inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+            inputParam.addProperty(Constant.REQUEST_SR_NO, srNumber)
+            inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
+            inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
+            inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
+            inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
+            inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subAnswer)
+            viewModel.executeUpdateExamAnswer(inputParam)
+        }
     }
 
     fun submitButtonClick() {
@@ -267,6 +295,6 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
 
     override fun onDestroy() {
         super.onDestroy()
-       viewModel.resetAllTimer()
+        viewModel.resetAllTimer()
     }
 }
