@@ -103,4 +103,8 @@ class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>(),
         getExamList()
     }
 
+    fun refreshList() {
+        getExamList()
+    }
+
 }

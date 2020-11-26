@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:hint="Enter Answer"
             android:fontFamily="@font/calibri"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_14ssp"
             android:minLines="2"
             android:maxLines="5"
             android:visibility="visible"
