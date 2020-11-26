@@ -32,6 +32,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     private var alAttendExam: ArrayList<AttendExamModel.Data> = ArrayList()
     private var adapter: AttendExamAdapter? = null
     private var binding: ActivityAttendExamBinding? = null
+    private var oldAnswer: String = ""
 
     override fun initializeBinding(binding: ActivityAttendExamBinding) {
         binding.viewModel = viewModel
@@ -53,10 +54,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
             intent.getStringExtra(Constant.KEY_TIME)!!,
             intent.getStringExtra(Constant.KEY_FORMATED_TIME)!!
         )
-
         setData()
-
-
     }
 
     companion object {
@@ -248,19 +246,21 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
 
     fun updateEditeTextAnswer(position: Int, srNumber: String, subAnswer: String) {
         Coroutines.main {
-            alAttendExam.get(position).subjectiveanswer = subAnswer
-
-            val inputParam = JsonObject()
-            inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
-            inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
-            inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
-            inputParam.addProperty(Constant.REQUEST_SR_NO, srNumber)
-            inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
-            inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
-            inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
-            inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
-            inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subAnswer)
-            viewModel.executeUpdateExamAnswer(inputParam)
+            if( ! oldAnswer.trim().equals(subAnswer.trim())){
+                alAttendExam.get(position).subjectiveanswer = subAnswer
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(Constant.REQUEST_SR_NO, srNumber)
+                inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
+                inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
+                inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
+                inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
+                inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subAnswer)
+                viewModel.executeUpdateExamAnswer(inputParam)
+                oldAnswer =  subAnswer
+            }
         }
     }
 

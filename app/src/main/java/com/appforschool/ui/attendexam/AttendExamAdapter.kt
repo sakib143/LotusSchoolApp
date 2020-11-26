@@ -1,8 +1,6 @@
 package com.appforschool.ui.attendexam
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -12,7 +10,6 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.R
 import com.appforschool.data.model.AttendExamModel
-import com.appforschool.utils.LogM
 import com.appforschool.utils.hide
 import com.appforschool.utils.show
 import com.bumptech.glide.Glide
@@ -62,23 +59,35 @@ class AttendExamAdapter(
 
     private fun setListner(position: Int, holder: MyViewHolder) {
         holder.cbOne.setOnClickListener() {
-            (context as AttendExamActivity).optionAClicked(position,list.get(position).srNo.toString())
+            (context as AttendExamActivity).optionAClicked(
+                position,
+                list.get(position).srNo.toString()
+            )
         }
 
         holder.cbTwo.setOnClickListener() {
-            (context as AttendExamActivity).optionBClicked(position,list.get(position).srNo.toString())
+            (context as AttendExamActivity).optionBClicked(
+                position,
+                list.get(position).srNo.toString()
+            )
         }
 
         holder.cbThree.setOnClickListener() {
-            (context as AttendExamActivity).optionCClicked(position,list.get(position).srNo.toString())
+            (context as AttendExamActivity).optionCClicked(
+                position,
+                list.get(position).srNo.toString()
+            )
         }
 
         holder.cbFour.setOnClickListener() {
-            (context as AttendExamActivity).optionDClicked(position,list.get(position).srNo.toString())
+            (context as AttendExamActivity).optionDClicked(
+                position,
+                list.get(position).srNo.toString()
+            )
         }
 
         var timer = Timer()
-        val DELAY: Long = 1200L
+        val DELAY: Long = 700L
 
         holder.edtAnswer.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -86,10 +95,15 @@ class AttendExamAdapter(
                 timer = Timer()
                 timer.schedule(object : TimerTask() {
                     override fun run() {
-                        (context as AttendExamActivity).updateEditeTextAnswer(position,list.get(position).srNo.toString(), s.toString())
+                        (context as AttendExamActivity).updateEditeTextAnswer(
+                            position, list.get(
+                                position
+                            ).srNo.toString(), s.toString()
+                        )
                     }
                 }, DELAY)
             }
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
@@ -119,6 +133,15 @@ class AttendExamAdapter(
     }
 
     override fun getItemCount() = list.size
+
+    //getItemId and getItemId used to fix data repeating related issue
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNumber = itemView.findViewById(R.id.tvNumber) as TextView
