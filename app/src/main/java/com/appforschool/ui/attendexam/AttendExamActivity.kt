@@ -1,5 +1,6 @@
 package com.appforschool.ui.attendexam
 
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -207,5 +208,10 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
 
     override fun onBackPressed() {
 //        closeScreen()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+       viewModel.resetAllTimer()
     }
 }

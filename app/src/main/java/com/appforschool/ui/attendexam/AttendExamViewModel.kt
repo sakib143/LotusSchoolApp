@@ -106,6 +106,10 @@ class AttendExamViewModel @Inject constructor(
     val setTimeOver: LiveData<String>
         get() = _setTimeOver
 
+    var fiveMinTimer: Timer? = null
+    var oneMinTimer: Timer? = null
+    var timeOverMinTimer: Timer? = null
+
 
     fun setData(
         examId: String,
@@ -187,8 +191,8 @@ class AttendExamViewModel @Inject constructor(
                 calendar!!.time = date
                 calendar!!.add(Calendar.MINUTE, duration - 1)
                 val latestDate = calendar.time
-                val timer = Timer()
-                timer.schedule(object : TimerTask() {
+                oneMinTimer = Timer()
+                oneMinTimer?.schedule(object : TimerTask() {
                     override fun run() {
                         Handler(Looper.getMainLooper()).postDelayed({
                             application.toast(application.resources.getString(R.string.exam_min_left_second_message))
@@ -211,8 +215,8 @@ class AttendExamViewModel @Inject constructor(
                 calendar!!.time = date
                 calendar!!.add(Calendar.MINUTE, duration - 5)
                 val latestDate = calendar.time
-                val timer = Timer()
-                timer.schedule(object : TimerTask() {
+                fiveMinTimer = Timer()
+                fiveMinTimer?.schedule(object : TimerTask() {
                     override fun run() {
                         Handler(Looper.getMainLooper()).postDelayed({
                             _setFiveMinuteLeft.postValue("")
@@ -236,8 +240,8 @@ class AttendExamViewModel @Inject constructor(
                 calendar!!.time = date
                 calendar!!.add(Calendar.MINUTE, duration)
                 val latestDate = calendar.time
-                val timer = Timer()
-                timer.schedule(object : TimerTask() {
+                timeOverMinTimer = Timer()
+                timeOverMinTimer?.schedule(object : TimerTask() {
                     override fun run() {
                         Handler(Looper.getMainLooper()).postDelayed({
                             application.toast(application.resources.getString(R.string.exam_time_over))
@@ -269,6 +273,12 @@ class AttendExamViewModel @Inject constructor(
             }
         }
         return _endExam!!
+    }
+
+    fun resetAllTimer() {
+        fiveMinTimer?.cancel()
+        oneMinTimer?.cancel()
+        timeOverMinTimer?.cancel()
     }
 
 }
