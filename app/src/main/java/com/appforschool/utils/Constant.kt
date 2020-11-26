@@ -82,6 +82,10 @@ class Constant {
         const val KEY_FORMATED_TIME = "formatedtime"
         const val REQUEST_MODE_END_EXAM = "endexam"
         const val REQUEST_MODE_START_EXAM = "startexam"
+        const val REQUEST_OPTION_A_VALUE = "optionAvalue"
+        const val REQUEST_OPTION_B_VALUE = "optionBvalue"
+        const val REQUEST_OPTION_C_VALUE = "optionCvalue"
+        const val REQUEST_OPTION_D_VALUE = "optionDvalue"
 
 
     }

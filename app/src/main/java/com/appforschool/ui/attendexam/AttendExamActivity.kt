@@ -13,6 +13,7 @@ import com.appforschool.data.model.EndExamModel
 import com.appforschool.databinding.ActivityAttendExamBinding
 import com.appforschool.listner.UserProfileListner
 import com.appforschool.utils.*
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_attend_exam.*
 import kotlinx.android.synthetic.main.fragment_subjects.*
 import java.util.*
@@ -147,7 +148,18 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
-        viewModel.executeUpdateExamAnswer(srNumber, alAttendExam.get(position).optionA, "")
+
+        val inputParam = JsonObject()
+        inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
+        inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+        inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+        inputParam.addProperty(Constant.REQUEST_SR_NO, alAttendExam.get(position).srNo)
+        inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "1")
+        inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, "")
+        viewModel.executeUpdateExamAnswer(inputParam)
     }
 
     fun optionBClicked(position: Int, srNumber: String) {
@@ -156,7 +168,18 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
-        viewModel.executeUpdateExamAnswer(srNumber, alAttendExam.get(position).optionB, "")
+
+        val inputParam = JsonObject()
+        inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
+        inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+        inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+        inputParam.addProperty(Constant.REQUEST_SR_NO, alAttendExam.get(position).srNo)
+        inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "1")
+        inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, "")
+        viewModel.executeUpdateExamAnswer(inputParam)
     }
 
     fun optionCClicked(position: Int, srNumber: String) {
@@ -165,7 +188,18 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
         alAttendExam.get(position).isCCorrect = true
         alAttendExam.get(position).isDCorrect = false
         adapter?.notifyDataSetChanged()
-        viewModel.executeUpdateExamAnswer(srNumber, alAttendExam.get(position).optionC, "")
+
+        val inputParam = JsonObject()
+        inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
+        inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+        inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+        inputParam.addProperty(Constant.REQUEST_SR_NO, alAttendExam.get(position).srNo)
+        inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "1")
+        inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, "")
+        viewModel.executeUpdateExamAnswer(inputParam)
     }
 
     fun optionDClicked(position: Int, srNumber: String) {
@@ -174,11 +208,32 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>()  {
         alAttendExam.get(position).isCCorrect = false
         alAttendExam.get(position).isDCorrect = true
         adapter?.notifyDataSetChanged()
-        viewModel.executeUpdateExamAnswer(srNumber, alAttendExam.get(position).optionD, "")
+
+        val inputParam = JsonObject()
+        inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
+        inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+        inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+        inputParam.addProperty(Constant.REQUEST_SR_NO, alAttendExam.get(position).srNo)
+        inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "1")
+        inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, "")
+        viewModel.executeUpdateExamAnswer(inputParam)
     }
 
     fun updateEditeTextAnswer(srNumber: String, subAnswer: String) {
-        viewModel.executeUpdateExamAnswer(srNumber, "", subAnswer)
+        val inputParam = JsonObject()
+        inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
+        inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+        inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+        inputParam.addProperty(Constant.REQUEST_SR_NO, srNumber)
+        inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
+        inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subAnswer)
+        viewModel.executeUpdateExamAnswer(inputParam)
     }
 
     fun submitButtonClick() {

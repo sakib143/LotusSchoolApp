@@ -152,24 +152,10 @@ class AttendExamViewModel @Inject constructor(
         return _attend_exam!!
     }
 
-    fun executeUpdateExamAnswer(
-        srNo: String,
-        objectAnswer: String,
-        subjectiveAnswer: String
-    ): LiveData<UpdateExamAnswerModel> {
+    fun executeUpdateExamAnswer(inputParam: JsonObject): LiveData<UpdateExamAnswerModel> {
         Coroutines.main {
             try {
-                val inputParam = JsonObject()
-                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
-                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId.value)
-                inputParam.addProperty(
-                    Constant.REQUEST_STUDENTID,
-                    prefUtils.getUserData()?.studentId
-                )
-                inputParam.addProperty(Constant.REQUEST_SR_NO, srNo)
-                inputParam.addProperty(Constant.REQUEST_OBJECTIVE_ANSWER, objectAnswer)
-                inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subjectiveAnswer)
                 val apiResponse = repository.callUpdateExamAnswer(inputParam)
                 _update_answer.postValue(apiResponse)
             } catch (e: ApiExceptions) {
