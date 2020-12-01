@@ -27,12 +27,15 @@
             android:padding="@dimen/_10sdp">
 
             <LinearLayout
+                android:id="@+id/llData"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:background="@drawable/ic_date"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/_20sdp">
+                android:paddingTop="@dimen/_20sdp"
+                android:onClick="@{(view)-> examListListner.openExamDetailsZoom(llData,examListModel.examtime,examListModel.examdate)}"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"

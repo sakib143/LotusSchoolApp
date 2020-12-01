@@ -92,7 +92,14 @@ fun setDriveListIcon(view: ImageView, model: DriveModel.Data) {
     }
 }
 
-
+@BindingAdapter("imageZoomUsingURL", requireAll = false)
+fun imageZoomUsingURL(view: ImageView, url: String) {
+    view.transitionName = Constant.IMAGE_FULL_ZOOM_ANIM
+    Glide.with(view.context)
+        .load(url)
+        .centerCrop()
+        .into(view)
+}
 
 @BindingAdapter("imagUrl", "placeholderImage", "errorImage", requireAll = false)
 fun loadImageFromUrl(view: ImageView, url: String, isPlacehoder: Boolean, isError: Boolean) {

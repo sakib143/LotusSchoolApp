@@ -58,6 +58,10 @@ class AttendExamAdapter(
     }
 
     private fun setListner(position: Int, holder: MyViewHolder) {
+        holder.ivImage.setOnClickListener() {
+            (context as AttendExamActivity).zoomImage(list.get(position).questionimagefullpath,holder.ivImage)
+        }
+
         holder.cbOne.setOnClickListener() {
             (context as AttendExamActivity).optionAClicked(
                 position,

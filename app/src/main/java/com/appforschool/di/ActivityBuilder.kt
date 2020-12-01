@@ -7,6 +7,7 @@ import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.home.HomeBuilderModule
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
+import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.ui.profile.user.UserProfileActivity
 import com.appforschool.ui.profile.teacher.TeacherProfileActivity
 import com.appforschool.ui.splash.SplashActivity
@@ -82,6 +83,12 @@ abstract class ActivityBuilder {
      **/
     @ContributesAndroidInjector()
     abstract fun bindSAttendExamActivity() : AttendExamActivity
+
+    /**
+     * fun to bind Image full screen Activity, making Injection enable
+     **/
+    @ContributesAndroidInjector()
+    abstract fun bindFullImageActivity() : FullImageActivity
 
 //    /**
 //     * fun to bind Video calling screen, making Injection enable

@@ -1,16 +1,20 @@
 package com.appforschool.utils
 
 import android.content.Context
+import android.content.Intent
+import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import com.appforschool.base.BaseActivity
-import com.appforschool.data.model.ExamModel
 import com.appforschool.ui.addtodrive.AddToDriveActivity
 import com.appforschool.ui.attendexam.AttendExamActivity
 import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
+import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.ui.home.HomeActivity
-import com.appforschool.ui.profile.user.UserProfileActivity
 import com.appforschool.ui.profile.teacher.TeacherProfileActivity
+import com.appforschool.ui.profile.user.UserProfileActivity
 import com.appforschool.ui.videocalling.VideoCallingActivity
 import javax.inject.Inject
 
@@ -119,6 +123,7 @@ class NavigationController @Inject constructor(var context: Context) {
             )
         )
     }
+
 
 
 }

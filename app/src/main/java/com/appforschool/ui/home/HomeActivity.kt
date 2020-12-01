@@ -6,8 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.webkit.MimeTypeMap
+import android.widget.LinearLayout
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import com.appforschool.BuildConfig
 import com.appforschool.R
@@ -17,6 +21,7 @@ import com.appforschool.databinding.ActivityHomeBinding
 import com.appforschool.di.Injectable
 import com.appforschool.listner.HomeListner
 import com.appforschool.listner.UserProfileListner
+import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.drive.DriveFragment
@@ -26,6 +31,7 @@ import com.appforschool.ui.home.fragment.subject.SubjectFragment
 import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFragment
 import com.appforschool.ui.videoplaying.VideoPlayingActivity
 import com.appforschool.utils.*
+import com.appforschool.utils.circle_imageview.CircularImageView
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -248,6 +254,17 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         navigationController.navigateToStudentProfile(this@HomeActivity)
     }
 
+    override fun openFullImage(imgProfilePic: CircularImageView) {
+        ViewCompat.setTransitionName(imgProfilePic, Constant.IMAGE_FULL_ZOOM_ANIM)
+        val intent = Intent(this, FullImageActivity::class.java)
+        intent.putExtra(Constant.REQUEST_LINK_URL, prefUtils.getUserData()!!.ProfileImage)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            imgProfilePic!!,
+            ViewCompat.getTransitionName(imgProfilePic)!!)
+        startActivity(intent, options.toBundle())
+    }
+
     private val joinLogObserver = Observer<SetJoinModel> {
         if (it.status) {
         } else {
@@ -378,6 +395,22 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             { dialog, which ->
                 dialog.dismiss()
             })
+    }
+
+    override fun openExamDetailsZoom(linearLayout: LinearLayout, date: String, time: String) {
+//            ViewCompat.setTransitionName(linearLayout, Constant.IMAGE_FULL_ZOOM_ANIM)
+//
+//            val intent = Intent(this, FullImageActivity::class.java)
+//            intent.putExtra(Constant.DATE_FORMAT, date)
+//            intent.putExtra(Constant.KEY_TIME, time)
+//
+//            intent.putExtra(Constant.IMAGE_FULL_ZOOM_ANIM, ViewCompat.getTransitionName(linearLayout!!))
+//
+//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                this,
+//                linearLayout!!,
+//                ViewCompat.getTransitionName(linearLayout)!!)
+//            startActivity(intent, options.toBundle())
     }
 
     override fun openDriveList(model: DriveModel.Data) {

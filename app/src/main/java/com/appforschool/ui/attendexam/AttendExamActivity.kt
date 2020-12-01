@@ -4,6 +4,9 @@ import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appforschool.R
@@ -12,6 +15,7 @@ import com.appforschool.data.model.AttendExamModel
 import com.appforschool.data.model.EndExamModel
 import com.appforschool.databinding.ActivityAttendExamBinding
 import com.appforschool.listner.UserProfileListner
+import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_attend_exam.*
@@ -139,6 +143,17 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         } else {
             toast(it!!.message)
         }
+    }
+
+    fun zoomImage(imageUrl: String, image:ImageView) {
+        ViewCompat.setTransitionName(image, Constant.IMAGE_FULL_ZOOM_ANIM)
+        val intent = Intent(this, FullImageActivity::class.java)
+        intent.putExtra(Constant.REQUEST_LINK_URL, imageUrl)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            image!!,
+            ViewCompat.getTransitionName(image)!!)
+        startActivity(intent, options.toBundle())
     }
 
     fun optionAClicked(position: Int, srNumber: String) {

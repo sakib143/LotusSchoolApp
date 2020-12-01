@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.attendexam.AttendExamActivity"></activity>
+        <activity android:name=".ui.full_image.FullImageActivity"></activity>
+        <activity android:name=".ui.attendexam.AttendExamActivity" />
         <activity android:name=".ui.profile.user.UserProfileActivity" />
         <activity android:name=".ui.profile.teacher.TeacherProfileActivity" />
         <activity

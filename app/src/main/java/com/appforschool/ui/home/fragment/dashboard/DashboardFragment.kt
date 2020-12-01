@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
@@ -13,6 +14,7 @@ import com.appforschool.data.model.LoginModel
 import com.appforschool.databinding.FragmentDashboardBinding
 import com.appforschool.utils.AlertDialogUtility
 import com.appforschool.utils.Constant
+import com.appforschool.utils.circle_imageview.CircularImageView
 import com.appforschool.utils.toast
 import javax.inject.Inject
 
@@ -148,6 +150,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
         fun openDriveFragment()
         fun updateUserName()
         fun openProfileScreen()
+        fun openFullImage(image: CircularImageView)
     }
 
     fun openScheduleFragment() {
@@ -176,6 +179,10 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     fun openDriveFragment() {
         listener?.openDriveFragment()
+    }
+
+    fun openFullImage(image: CircularImageView) {
+        listener?.openFullImage(image)
     }
 
 }

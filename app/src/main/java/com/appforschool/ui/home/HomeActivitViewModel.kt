@@ -32,8 +32,9 @@ class HomeActivitViewModel @Inject constructor(
         get() = _starndard
 
     fun getUserData() {
-        _userName.value = prefUtils.getUserData()?.studentname
-        _starndard.value = prefUtils.getUserData()?.standardname
+        _userName.postValue(prefUtils.getUserData()?.studentname)
+        _starndard.postValue(prefUtils.getUserData()?.standardname)
+        LogM.e("User name is  " + userName.value)
     }
 
     private val _onMessageError = MutableLiveData<Any>()
