@@ -150,10 +150,10 @@ fun setAttentExam(attentExam: TextView, examModel: ExamModel.Data) {
     val calendarTo = Calendar.getInstance()
     calendarTo!!.time = dateTO
 
-    if (currentTime!!.after(dateFROM) && currentTime!!.before(calendarTo)) {
-        attentExam.hide()
-    }else {
+    if (currentTime!!.after(calendarFrom) && currentTime!!.before(calendarTo)) {
         attentExam.show()
+    } else {
+        attentExam.hide()
     }
 }
 
