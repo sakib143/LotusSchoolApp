@@ -44,5 +44,10 @@ data class ExamModel(
         @Expose
         @SerializedName("examtime1") var examtime1: String = "",
         @Expose
-        @SerializedName("examid") var examid: String = "")
+        @SerializedName("examid") var examid: String = "",
+        @Expose
+        @SerializedName("ExamStartDateTime") var ExamStartDateTime: String = "",
+        @Expose
+        @SerializedName("ExamEndDateTime") var ExamEndDateTime: String = "")
+
 }

@@ -133,34 +133,45 @@ fun setHideShowPassword(editext: EditText, isShow: Boolean) {
 
 @BindingAdapter("setAttentExam")
 fun setAttentExam(attentExam: TextView, examModel: ExamModel.Data) {
-    val strDate = examModel.examdate + " " + examModel.examtime1
-    LogM.e("Full date is $strDate")
+//    val strDate = examModel.examdate + " " + examModel.examtime1
+    LogM.e("Full date is $examModel.ExamStartDateTime")
     val currentTime = Calendar.getInstance()
-    val df = SimpleDateFormat(Constant.DATE_FORMAT)
+    val df = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
     val strCurrentTime: String = df.format(currentTime!!.getTime())
     LogM.e("Current time is $strCurrentTime")
-    if (currentTime!!.after(fromTime(strDate)) && currentTime!!.before(toTime(strDate,examModel.duration!!))) {
-        attentExam.show()
-    }else {
+
+    val SDF_FROM_DATE = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
+
+    val dateFROM = SDF_FROM_DATE.parse(examModel.ExamStartDateTime)
+    val calendarFrom = Calendar.getInstance()
+    calendarFrom!!.time = dateFROM
+
+    val dateTO = SDF_FROM_DATE.parse(examModel.ExamEndDateTime)
+    val calendarTo = Calendar.getInstance()
+    calendarTo!!.time = dateTO
+
+    if (currentTime!!.after(dateFROM) && currentTime!!.before(calendarTo)) {
         attentExam.hide()
+    }else {
+        attentExam.show()
     }
 }
 
-private fun toTime(examTime: String,duration: Int): Calendar? {
-    val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
-    val date = dateFormat.parse(examTime)
-    val calendar = Calendar.getInstance()
-    calendar!!.time = date
-    calendar!!.add(Calendar.MINUTE, duration)
-    return calendar
-}
-
-private fun fromTime(examTime: String): Calendar? {
-    val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
-    var myDate = dateFormat.parse(examTime)
-    val calendar = Calendar.getInstance()
-    calendar.time = myDate
-//        val formattedDate: String = dateFormat.format(calendar!!.getTime())
-//        Log.e("=>","From time " + formattedDate)
-    return calendar
-}
+//private fun toTime(examTime: String,duration: Int): Calendar? {
+//    val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
+//    val date = dateFormat.parse(examTime)
+//    val calendar = Calendar.getInstance()
+//    calendar!!.time = date
+//    calendar!!.add(Calendar.MINUTE, duration)
+//    return calendar
+//}
+//
+//private fun fromTime(examTime: String): Calendar? {
+//    val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
+//    var myDate = dateFormat.parse(examTime)
+//    val calendar = Calendar.getInstance()
+//    calendar.time = myDate
+////        val formattedDate: String = dateFormat.format(calendar!!.getTime())
+////        Log.e("=>","From time " + formattedDate)
+//    return calendar
+//}
