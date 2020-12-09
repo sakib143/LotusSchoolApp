@@ -7,6 +7,7 @@ import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.home.HomeBuilderModule
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
+import com.appforschool.ui.full_image.FullExamDateActivity
 import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.ui.profile.user.UserProfileActivity
 import com.appforschool.ui.profile.teacher.TeacherProfileActivity
@@ -90,10 +91,10 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector()
     abstract fun bindFullImageActivity() : FullImageActivity
 
-//    /**
-//     * fun to bind Video calling screen, making Injection enable
-//     **/
-//    @ContributesAndroidInjector()
-//    abstract fun bindVideoCallingActivity() : VideoCallingActivity
+    /**
+     * fun to bind Full Exam Date time, making Injection enable
+     **/
+    @ContributesAndroidInjector()
+    abstract fun bindFullExamDateActivity() : FullExamDateActivity
 
 }

@@ -21,6 +21,7 @@ import com.appforschool.databinding.ActivityHomeBinding
 import com.appforschool.di.Injectable
 import com.appforschool.listner.HomeListner
 import com.appforschool.listner.UserProfileListner
+import com.appforschool.ui.full_image.FullExamDateActivity
 import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
@@ -398,19 +399,12 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openExamDetailsZoom(linearLayout: LinearLayout, date: String, time: String) {
-//            ViewCompat.setTransitionName(linearLayout, Constant.IMAGE_FULL_ZOOM_ANIM)
-//
-//            val intent = Intent(this, FullImageActivity::class.java)
-//            intent.putExtra(Constant.DATE_FORMAT, date)
-//            intent.putExtra(Constant.KEY_TIME, time)
-//
-//            intent.putExtra(Constant.IMAGE_FULL_ZOOM_ANIM, ViewCompat.getTransitionName(linearLayout!!))
-//
-//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                this,
-//                linearLayout!!,
-//                ViewCompat.getTransitionName(linearLayout)!!)
-//            startActivity(intent, options.toBundle())
+        ViewCompat.setTransitionName(linearLayout, Constant.IMAGE_FULL_ZOOM_ANIM)
+        val intent = Intent(this, FullExamDateActivity::class.java)
+        intent.putExtra(Constant.REQUEST_MODE_START_EXAM, date)
+        intent.putExtra(Constant.REQUEST_MODE_END_EXAM, time)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, linearLayout!!, ViewCompat.getTransitionName(linearLayout)!!)
+        startActivity(intent, options.toBundle())
     }
 
     override fun openDriveList(model: DriveModel.Data) {
