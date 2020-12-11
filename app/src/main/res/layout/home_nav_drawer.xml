@@ -267,7 +267,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/_15ssp"
                     android:gravity="end"
-                    tools:text="Version anem"
+                    tools:text="Version name"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="@{`Version: ` + viewmodel.versionName + `  `}"/>
 
