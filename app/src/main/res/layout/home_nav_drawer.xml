@@ -3,11 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="listner"
             type="com.appforschool.ui.home.HomeActivity" />
-
         <variable
             name="viewmodel"
             type="com.appforschool.ui.home.HomeActivitViewModel" />
@@ -97,32 +95,6 @@
                 </LinearLayout>
 
             </RelativeLayout>
-
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="@dimen/_90sdp"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:paddingLeft="@dimen/_10sdp"-->
-<!--                android:paddingRight="@dimen/_10sdp">-->
-
-<!--                <com.appforschool.utils.circle_imageview.CircularImageView-->
-<!--                    android:layout_width="@dimen/_50sdp"-->
-<!--                    android:layout_height="@dimen/_50sdp"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:src="@mipmap/ic_launcher" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:text="@{viewmodel.userName}"-->
-<!--                    android:textColor="@android:color/black"-->
-<!--                    android:textSize="@dimen/_15ssp"-->
-<!--                    tools:text =" User name "-->
-<!--                    />-->
-
-<!--            </LinearLayout>-->
 
             <View
                 android:layout_width="match_parent"
@@ -281,6 +253,23 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/grey_dark" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_25sdp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15ssp"
+                    android:gravity="end"
+                    tools:text="Version anem"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@{`Version: ` + viewmodel.versionName + `  `}"/>
 
             </LinearLayout>
 

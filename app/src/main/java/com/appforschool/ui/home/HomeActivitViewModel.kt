@@ -3,6 +3,7 @@ package com.appforschool.ui.home
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.appforschool.BuildConfig
 import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class HomeActivitViewModel @Inject constructor(
     private val application: MyApp,
     private val prefUtils: PrefUtils,
-    private val repository: HomeActivityRepository
+    private val repository: HomeActivityRepository,
+    private val globalMethods: GlobalMethods
 ) : AndroidViewModel(application) {
 
     private var _userName = MutableLiveData<String>()
@@ -34,6 +36,8 @@ class HomeActivitViewModel @Inject constructor(
     private var _schoolLogo = MutableLiveData<String>()
     val schoolLogo: LiveData<String>
         get() = _schoolLogo
+
+    val versionName = BuildConfig.VERSION_NAME
 
     init {
         _userName.postValue(prefUtils.getUserData()?.studentname)
@@ -127,7 +131,14 @@ class HomeActivitViewModel @Inject constructor(
     }
 
 
-    fun uploadAssignmentFile(shareId: String,fileTitle: String,fileDesc: String,fileText: String, fileSize: String,uploadType:String): LiveData<AssignmentSubmissionModel> {
+    fun uploadAssignmentFile(
+        shareId: String,
+        fileTitle: String,
+        fileDesc: String,
+        fileText: String,
+        fileSize: String,
+        uploadType: String
+    ): LiveData<AssignmentSubmissionModel> {
         Coroutines.main {
             val a = "A"
             val fileReqBodyLicense =
@@ -138,9 +149,12 @@ class HomeActivitViewModel @Inject constructor(
                 fileReqBodyLicense!!
             )
             val shareid = shareId.toRequestBody("text/plain".toMediaTypeOrNull())
-            val userid =  prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
-            val usertype = prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
-            val studentid = prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val userid =
+                prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val usertype =
+                prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val studentid =
+                prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
             val filetitle = fileTitle.toRequestBody("text/plain".toMediaTypeOrNull())
             val filedescr = fileDesc.toRequestBody("text/plain".toMediaTypeOrNull())
             val filetype = a.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -148,7 +162,19 @@ class HomeActivitViewModel @Inject constructor(
             val filesize = fileSize.toRequestBody("text/plain".toMediaTypeOrNull())
             val uploadtype = uploadType.toRequestBody("text/plain".toMediaTypeOrNull())
             try {
-                val response = repository.callUploadAssignment(userImageBody, shareid,userid,usertype,studentid,filetitle,filedescr,filetype,fileext,filesize,uploadtype)
+                val response = repository.callUploadAssignment(
+                    userImageBody,
+                    shareid,
+                    userid,
+                    usertype,
+                    studentid,
+                    filetitle,
+                    filedescr,
+                    filetype,
+                    fileext,
+                    filesize,
+                    uploadtype
+                )
                 _fileSubmit.postValue(response)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
@@ -167,12 +193,15 @@ class HomeActivitViewModel @Inject constructor(
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_MODE_START_EXAM)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId)
-                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(
+                    Constant.REQUEST_STUDENTID,
+                    prefUtils.getUserData()?.studentId
+                )
                 val apiResponse = repository.callStartExam(inputParam)
                 _startExam.postValue(apiResponse)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
-            }catch (e: NoInternetException) {
+            } catch (e: NoInternetException) {
                 _onMessageError.postValue(e.message)
             }
         }
