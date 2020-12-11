@@ -43,6 +43,8 @@ data class HomeApiModel(
         @Expose
         @SerializedName("isopenprofile") var isopenprofile: Int = 0,
         @Expose
-        @SerializedName("isshowaddbutton") var isshowaddbutton: Int = 0
+        @SerializedName("isshowaddbutton") var isshowaddbutton: Int = 0,
+        @Expose
+        @SerializedName("logofilepath") var logofilepath: String = ""
     )
 }

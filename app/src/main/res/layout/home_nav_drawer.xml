@@ -46,10 +46,12 @@
                     android:background="@drawable/profile_image_background">
 
                     <com.appforschool.utils.circle_imageview.CircularImageView
+                        android:id="@+id/ivLogoHA"
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_60sdp"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/profile_icons" />
+                        android:src="@drawable/profile_icons"
+                        LoadCircularImage="@{viewmodel.schoolLogo}" />
 
                 </RelativeLayout>
 
@@ -71,6 +73,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvUserNameHA"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{viewmodel.userName}"
@@ -82,6 +85,7 @@
                         android:ellipsize="end"/>
 
                     <TextView
+                        android:id="@+id/tvStandardHA"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_12ssp"

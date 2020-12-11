@@ -33,12 +33,14 @@ import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsFr
 import com.appforschool.ui.videoplaying.VideoPlayingActivity
 import com.appforschool.utils.*
 import com.appforschool.utils.circle_imageview.CircularImageView
+import com.bumptech.glide.Glide
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.home_nav_drawer.*
 import java.io.File
 import javax.inject.Inject
 
@@ -82,7 +84,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         dashboardFragment = DashboardFragment.newInstance()
         navigateToDashBoardFragment(false)
         setObserver()
-        viewModel.getUserData()
     }
 
     companion object {
@@ -247,8 +248,13 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         )
     }
 
-    override fun updateUserName() {
-        viewModel.getUserData()
+    override fun updateUserName(strUserName: String, strStandard: String,strLogo: String) {
+        tvUserNameHA.setText(strUserName)
+        tvStandardHA.setText(strStandard)
+        Glide.with(this@HomeActivity)
+            .load(strLogo)
+            .into(ivLogoHA)
+//        viewModel.getUserData(strUserName,strStandard,strLogo)
     }
 
     override fun openProfileScreen() {

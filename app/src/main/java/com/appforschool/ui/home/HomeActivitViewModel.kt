@@ -31,11 +31,22 @@ class HomeActivitViewModel @Inject constructor(
     val starndard: LiveData<String>
         get() = _starndard
 
-    fun getUserData() {
+    private var _schoolLogo = MutableLiveData<String>()
+    val schoolLogo: LiveData<String>
+        get() = _schoolLogo
+
+    init {
         _userName.postValue(prefUtils.getUserData()?.studentname)
         _starndard.postValue(prefUtils.getUserData()?.standardname)
-        LogM.e("User name is  " + userName.value)
+        _schoolLogo.postValue(prefUtils.getUserData()?.logofilepath)
     }
+
+//    fun getUserData(strUserName: String, strStandard: String,strLogo: String ) {
+//        LogM.e("=> User name $strUserName strStandard $strStandard strLogo $strLogo ")
+//        _userName.postValue(strUserName)
+//        _starndard.postValue(strStandard)
+//        _schoolLogo.postValue(strLogo)
+//    }
 
     private val _onMessageError = MutableLiveData<Any>()
     val onMessageError: LiveData<Any> get() = _onMessageError

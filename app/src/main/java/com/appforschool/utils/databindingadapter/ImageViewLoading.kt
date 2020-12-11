@@ -18,6 +18,7 @@ import com.appforschool.data.model.ExamModel
 import com.appforschool.data.model.SubjectDetailsModel
 import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
+import com.appforschool.utils.circle_imageview.CircularImageView
 import com.appforschool.utils.hide
 import com.appforschool.utils.show
 import java.io.IOException
@@ -101,17 +102,29 @@ fun imageZoomUsingURL(view: ImageView, url: String) {
         .into(view)
 }
 
-@BindingAdapter("imagUrl", "placeholderImage", "errorImage", requireAll = false)
-fun loadImageFromUrl(view: ImageView, url: String, isPlacehoder: Boolean, isError: Boolean) {
+@BindingAdapter("ImageUrl", "placeholderImage", "errorImage", requireAll = false)
+fun loadImageFromUrl(view: ImageView, url: String?, isPlacehoder: Boolean, isError: Boolean) {
     val requestOption: RequestOptions = RequestOptions()
     if (isPlacehoder) {
         requestOption.placeholder(R.mipmap.ic_launcher)
     }
-
     if (isError) {
         requestOption.placeholder(R.mipmap.ic_launcher)
     }
+    Glide.with(view.context)
+        .load(url)
+        .into(view)
+}
 
+@BindingAdapter("LoadCircularImage", "placeholderImage", "errorImage", requireAll = false)
+fun loadCircularImage(view: CircularImageView, url: String?, isPlacehoder: Boolean, isError: Boolean) {
+    val requestOption: RequestOptions = RequestOptions()
+    if (isPlacehoder) {
+        requestOption.placeholder(R.drawable.profile_icons)
+    }
+    if (isError) {
+        requestOption.placeholder(R.drawable.profile_icons)
+    }
     Glide.with(view.context)
         .load(url)
         .into(view)

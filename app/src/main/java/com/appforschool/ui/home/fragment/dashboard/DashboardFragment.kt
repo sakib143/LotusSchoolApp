@@ -91,6 +91,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             loginModel.ProfileImage = it.data.get(0).ProfileImage
             loginModel.isopenprofile = it.data.get(0).isopenprofile
             loginModel.isshowaddbutton = it.data.get(0).isshowaddbutton
+            loginModel.logofilepath = it.data.get(0).logofilepath
             prefUtils.saveUserId(prefUtils.getUserData()!!.userid,loginModel)
             if(loginModel.isopenprofile == 1){
                 listener?.openProfileScreen()
@@ -99,8 +100,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             //Refresh User name from session manager.
             viewModel.getUserName()
             checkLatestVersion(it)
-            listener?.updateUserName()
-
+            listener?.updateUserName(it.data.get(0).studentname,it.data.get(0).standardname,it.data.get(0).logofilepath)
         }
     }
 
@@ -148,7 +148,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
         fun openAlertFragment()
         fun openExamListFragment()
         fun openDriveFragment()
-        fun updateUserName()
+        fun updateUserName(strUserName: String, strStandard: String,strLogo: String)
         fun openProfileScreen()
         fun openFullImage(image: CircularImageView)
     }
