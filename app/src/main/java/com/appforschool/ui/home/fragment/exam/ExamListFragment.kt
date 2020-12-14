@@ -5,19 +5,12 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
-import com.appforschool.data.model.AlertModel
 import com.appforschool.data.model.ExamModel
-import com.appforschool.databinding.FragmentAlertBinding
 import com.appforschool.databinding.FragmentExamlistBinding
 import com.appforschool.listner.UserProfileListner
-import com.appforschool.ui.home.fragment.alert.AlertFragment
-import com.appforschool.ui.home.fragment.alert.AlertViewModel
 import com.appforschool.utils.Constant
-import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>(),
     UserProfileListner.onScreenCloseListner {
