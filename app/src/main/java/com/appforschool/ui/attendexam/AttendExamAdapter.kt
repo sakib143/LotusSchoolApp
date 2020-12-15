@@ -95,13 +95,17 @@ class AttendExamAdapter(
 
         holder.edtAnswer.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                timer.cancel()
-                timer = Timer()
-                timer.schedule(object : TimerTask() {
-                    override fun run() {
-                        (context as AttendExamActivity).updateEditeTextAnswer(position, list.get(position).srNo.toString(), s.toString())
-                    }
-                }, DELAY)
+                if(s.toString().equals("",ignoreCase = true)){
+                    (context as AttendExamActivity).updateEditeTextAnswer(position, list.get(position).srNo.toString(), s.toString())
+                }else{
+                    timer.cancel()
+                    timer = Timer()
+                    timer.schedule(object : TimerTask() {
+                        override fun run() {
+                            (context as AttendExamActivity).updateEditeTextAnswer(position, list.get(position).srNo.toString(), s.toString())
+                        }
+                    }, DELAY)
+                }
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}

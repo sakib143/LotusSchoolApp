@@ -152,7 +152,7 @@ fun setTodayExam(attentExam: TextView, examModel: ExamModel.Data) {
     val curretDateFormat = SimpleDateFormat(Constant.DATE_FORMAT_YY_MM_DD)
     val strCurrentDate =  curretDateFormat.format(currentTime.time)
 
-    val dateTO = curretDateFormat.parse(examModel.ExamEndDateTime)
+    val dateTO = curretDateFormat.parse(examModel.ExamStartDateTime)
     val calendarTo = Calendar.getInstance()
     calendarTo!!.time = dateTO
     val strExamTime =  curretDateFormat.format(calendarTo.time)
@@ -170,7 +170,7 @@ fun setTodayTime(attentExam: TextView, examModel: ExamModel.Data) {
     val curretDateFormat = SimpleDateFormat(Constant.DATE_FORMAT_YY_MM_DD)
     val strCurrentDate =  curretDateFormat.format(currentTime.time)
 
-    val dateTO = curretDateFormat.parse(examModel.ExamEndDateTime)
+    val dateTO = curretDateFormat.parse(examModel.ExamStartDateTime)
     val calendarTo = Calendar.getInstance()
     calendarTo!!.time = dateTO
     val strExamTime =  curretDateFormat.format(calendarTo.time)
