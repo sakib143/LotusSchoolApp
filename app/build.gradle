@@ -133,4 +133,8 @@ dependencies {
     //Image cropping librarry
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
 
+    //Date library
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
+
+
 }

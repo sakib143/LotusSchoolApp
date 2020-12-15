@@ -15,10 +15,8 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Patterns
-import android.webkit.URLUtil
 import androidx.core.app.ShareCompat
-import java.net.MalformedURLException
-import java.net.URL
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -208,5 +206,16 @@ class GlobalMethods @Inject constructor() {
         var isValidUrl: Boolean = Patterns.WEB_URL.matcher(urlString).matches()
         return isValidUrl
     }
+
+//    fun isToday(date: Date?): Boolean {
+//        val today: Calendar = Calendar.getInstance()
+//        val specifiedDate: Calendar = Calendar.getInstance()
+//        specifiedDate.setTime(date)
+//        return today.get(Calendar.DAY_OF_MONTH) === specifiedDate.get(Calendar.DAY_OF_MONTH) && today.get(
+//            Calendar.MONTH
+//        ) === specifiedDate.get(Calendar.MONTH) && today.get(Calendar.YEAR) === specifiedDate.get(
+//            Calendar.YEAR
+//        )
+//    }
 
 }

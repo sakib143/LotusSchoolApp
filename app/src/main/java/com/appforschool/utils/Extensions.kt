@@ -34,6 +34,7 @@ import java.io.IOException
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 
@@ -413,3 +414,8 @@ fun Context.toast(message:String) {
     spannableStringBuilder.setSpan(RelativeSizeSpan(1.35f), 0, message.length, 0)
     Toast.makeText(this,spannableStringBuilder, Toast.LENGTH_LONG).show()
 }
+
+
+fun LocalDate.isYesterday(): Boolean = this.isEqual(LocalDate.now().minusDays(1L))
+
+fun LocalDate.isToday(): Boolean = this.isEqual(LocalDate.now())

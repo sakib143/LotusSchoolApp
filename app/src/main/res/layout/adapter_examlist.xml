@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
                     android:text="@{examListModel.examtime}"
+                    setTodayTime="@{examListModel}"
                     android:textSize="@dimen/_11ssp"
                     android:textStyle="bold"
                     tools:text="Time" />
@@ -51,6 +52,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
                     android:text="@{examListModel.examdate}"
+                    setTodayExam="@{examListModel}"
                     android:textSize="@dimen/_11ssp"
                     android:textStyle="bold"
                     tools:text="Date" />

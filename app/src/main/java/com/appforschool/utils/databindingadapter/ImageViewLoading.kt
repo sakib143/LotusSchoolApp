@@ -1,6 +1,8 @@
 package com.appforschool.utils.databindingadapter
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.text.format.DateUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -141,6 +143,40 @@ fun setHideShowPassword(editext: EditText, isShow: Boolean) {
         editext.setTransformationMethod(HideReturnsTransformationMethod.getInstance())
     } else {
         editext.setTransformationMethod(PasswordTransformationMethod.getInstance())
+    }
+}
+
+@BindingAdapter("setTodayExam")
+fun setTodayExam(attentExam: TextView, examModel: ExamModel.Data) {
+    val currentTime = Calendar.getInstance()
+    val curretDateFormat = SimpleDateFormat(Constant.DATE_FORMAT_YY_MM_DD)
+    val strCurrentDate =  curretDateFormat.format(currentTime.time)
+
+    val dateTO = curretDateFormat.parse(examModel.ExamEndDateTime)
+    val calendarTo = Calendar.getInstance()
+    calendarTo!!.time = dateTO
+    val strExamTime =  curretDateFormat.format(calendarTo.time)
+
+    if(strCurrentDate.equals(strExamTime,ignoreCase = true)){
+        attentExam.setText("Today")
+        attentExam.setText(R.string.today)
+        attentExam.setTextColor(Color.parseColor("#FF0000"))
+    }
+}
+
+@BindingAdapter("setTodayTime")
+fun setTodayTime(attentExam: TextView, examModel: ExamModel.Data) {
+    val currentTime = Calendar.getInstance()
+    val curretDateFormat = SimpleDateFormat(Constant.DATE_FORMAT_YY_MM_DD)
+    val strCurrentDate =  curretDateFormat.format(currentTime.time)
+
+    val dateTO = curretDateFormat.parse(examModel.ExamEndDateTime)
+    val calendarTo = Calendar.getInstance()
+    calendarTo!!.time = dateTO
+    val strExamTime =  curretDateFormat.format(calendarTo.time)
+
+    if(strCurrentDate.equals(strExamTime,ignoreCase = true)){
+        attentExam.setTextColor(Color.parseColor("#FF0000"))
     }
 }
 

@@ -8,6 +8,7 @@ class Constant {
     companion object {
         const val DATE_FORMAT = "dd/MM/yy h:mm"
         const val DATE_FORMAT_ONE = "yyyy-MM-dd'T'HH:mm:ss"
+        const val DATE_FORMAT_YY_MM_DD = "yyyy-MM-dd"
         const val CHECK_INTERNET = "Please check your internet connection"
         const val DEFAULT_SERVER_ERROR = "Something went wrong on server side. Please try again."
         const val APP_PREFERENCES = "app_preferences"
