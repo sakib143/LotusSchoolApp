@@ -260,10 +260,17 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     }
 
     fun updateEditeTextAnswer(position: Int, srNumber: String, subAnswer: String) {
+        LogM.e("=> subAnswer " + subAnswer)
         Coroutines.main {
             if( ! oldAnswer.trim().equals(subAnswer.trim())){
-                alAttendExam.get(position).subjectiveanswer = subAnswer
                 val inputParam = JsonObject()
+                if(subAnswer.equals("",ignoreCase = true)){
+                    alAttendExam.get(position).subjectiveanswer = ""
+                    inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, "")
+                }else {
+                    alAttendExam.get(position).subjectiveanswer = subAnswer
+                    inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subAnswer)
+                }
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
@@ -272,7 +279,6 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
                 inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
                 inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
                 inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
-                inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subAnswer)
                 viewModel.executeUpdateExamAnswer(inputParam)
                 oldAnswer =  subAnswer
             }

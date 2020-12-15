@@ -150,6 +150,7 @@ class AttendExamViewModel @Inject constructor(
     }
 
     fun executeUpdateExamAnswer(inputParam: JsonObject): LiveData<UpdateExamAnswerModel> {
+        LogM.e("??  executeUpdateExamAnswer inputParam " + inputParam )
         Coroutines.main {
             try {
                 inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId.value)
@@ -174,9 +175,6 @@ class AttendExamViewModel @Inject constructor(
                 calendar!!.time = date
                 calendar!!.add(Calendar.MINUTE, duration - 1)
                 val latestDate = calendar.time
-
-                LogM.e("?? One  min left $" + dateFormat.format(calendar.time))
-
                 oneMinTimer = Timer()
                 oneMinTimer?.schedule(object : TimerTask() {
                     override fun run() {
@@ -201,9 +199,6 @@ class AttendExamViewModel @Inject constructor(
                 calendar!!.time = date
                 calendar!!.add(Calendar.MINUTE, duration - 5)
                 val latestDate = calendar.time
-
-                LogM.e("?? Five min left $" + dateFormat.format(calendar.time))
-
                 fiveMinTimer = Timer()
                 fiveMinTimer?.schedule(object : TimerTask() {
                     override fun run() {

@@ -91,7 +91,7 @@ class AttendExamAdapter(
         }
 
         var timer = Timer()
-        val DELAY: Long = 700L
+        val DELAY: Long = 500L
 
         holder.edtAnswer.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -99,11 +99,7 @@ class AttendExamAdapter(
                 timer = Timer()
                 timer.schedule(object : TimerTask() {
                     override fun run() {
-                        (context as AttendExamActivity).updateEditeTextAnswer(
-                            position, list.get(
-                                position
-                            ).srNo.toString(), s.toString()
-                        )
+                        (context as AttendExamActivity).updateEditeTextAnswer(position, list.get(position).srNo.toString(), s.toString())
                     }
                 }, DELAY)
             }
