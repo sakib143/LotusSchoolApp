@@ -13,10 +13,7 @@ import com.appforschool.data.model.AttendExamModel
 import com.appforschool.data.model.EndExamModel
 import com.appforschool.data.model.UpdateExamAnswerModel
 import com.appforschool.data.repository.AttendExamRepository
-import com.appforschool.utils.Constant
-import com.appforschool.utils.Coroutines
-import com.appforschool.utils.PrefUtils
-import com.appforschool.utils.toast
+import com.appforschool.utils.*
 import com.google.gson.JsonObject
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -171,12 +168,15 @@ class AttendExamViewModel @Inject constructor(
         Coroutines.main {
             try {
                 var duration: Int = duration.value!!.toInt()
-                val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+                val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
                 val date = dateFormat.parse(_formatedDate.value)
                 val calendar = Calendar.getInstance()
                 calendar!!.time = date
                 calendar!!.add(Calendar.MINUTE, duration - 1)
                 val latestDate = calendar.time
+
+                LogM.e("?? One  min left $" + dateFormat.format(calendar.time))
+
                 oneMinTimer = Timer()
                 oneMinTimer?.schedule(object : TimerTask() {
                     override fun run() {
@@ -195,12 +195,15 @@ class AttendExamViewModel @Inject constructor(
         Coroutines.main {
             try {
                 var duration: Int = duration.value!!.toInt()
-                val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+                val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
                 val date = dateFormat.parse(_formatedDate.value)
                 val calendar = Calendar.getInstance()
                 calendar!!.time = date
                 calendar!!.add(Calendar.MINUTE, duration - 5)
                 val latestDate = calendar.time
+
+                LogM.e("?? Five min left $" + dateFormat.format(calendar.time))
+
                 fiveMinTimer = Timer()
                 fiveMinTimer?.schedule(object : TimerTask() {
                     override fun run() {
@@ -220,7 +223,7 @@ class AttendExamViewModel @Inject constructor(
         Coroutines.main {
             try {
                 var duration: Int = duration.value!!.toInt()
-                val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT)
+                val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
                 val date = dateFormat.parse(_formatedDate.value)
                 val calendar = Calendar.getInstance()
                 calendar!!.time = date

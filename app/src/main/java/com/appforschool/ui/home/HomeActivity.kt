@@ -290,7 +290,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 it.data.get(0).totalmarks.toString()!!,
                 it.data.get(0).duration.toString()!!,
                 it.data.get(0).examtime!!,
-                formatedDateTime
+                it.data.get(0).examStartDateTime!!
             )
         } else {
             toast(it!!.message)
