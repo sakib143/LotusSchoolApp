@@ -135,7 +135,8 @@
                     tools:text="Total Marks" />
 
                 <TextView
-                    setAttentExam="@{examListModel}"
+                    tools:visibility="gone"
+                    android:visibility="@{examListModel.isShowAttendButton == 1 ? View.VISIBLE : View.GONE}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"

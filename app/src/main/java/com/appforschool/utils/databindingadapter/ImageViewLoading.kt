@@ -182,28 +182,28 @@ fun setTodayTime(attentExam: TextView, examModel: ExamModel.Data) {
 
 @BindingAdapter("setAttentExam")
 fun setAttentExam(attentExam: TextView, examModel: ExamModel.Data) {
-//    val strDate = examModel.examdate + " " + examModel.examtime1
-    LogM.e("Full date is $examModel.ExamStartDateTime")
-    val currentTime = Calendar.getInstance()
-    val df = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
-    val strCurrentTime: String = df.format(currentTime!!.getTime())
-    LogM.e("Current time is $strCurrentTime")
-
-    val SDF_FROM_DATE = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
-
-    val dateFROM = SDF_FROM_DATE.parse(examModel.ExamStartDateTime)
-    val calendarFrom = Calendar.getInstance()
-    calendarFrom!!.time = dateFROM
-
-    val dateTO = SDF_FROM_DATE.parse(examModel.ExamEndDateTime)
-    val calendarTo = Calendar.getInstance()
-    calendarTo!!.time = dateTO
-
-    if (currentTime!!.after(calendarFrom) && currentTime!!.before(calendarTo)) {
-        attentExam.show()
-    } else {
-        attentExam.hide()
-    }
+////    val strDate = examModel.examdate + " " + examModel.examtime1
+//    LogM.e("Full date is $examModel.ExamStartDateTime")
+//    val currentTime = Calendar.getInstance()
+//    val df = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
+//    val strCurrentTime: String = df.format(currentTime!!.getTime())
+//    LogM.e("Current time is $strCurrentTime")
+//
+//    val SDF_FROM_DATE = SimpleDateFormat(Constant.DATE_FORMAT_ONE)
+//
+//    val dateFROM = SDF_FROM_DATE.parse(examModel.ExamStartDateTime)
+//    val calendarFrom = Calendar.getInstance()
+//    calendarFrom!!.time = dateFROM
+//
+//    val dateTO = SDF_FROM_DATE.parse(examModel.ExamEndDateTime)
+//    val calendarTo = Calendar.getInstance()
+//    calendarTo!!.time = dateTO
+//
+//    if (currentTime!!.after(calendarFrom) && currentTime!!.before(calendarTo)) {
+//        attentExam.show()
+//    } else {
+//        attentExam.hide()
+//    }
 }
 
 //private fun toTime(examTime: String,duration: Int): Calendar? {
