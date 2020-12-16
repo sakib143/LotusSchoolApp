@@ -50,8 +50,10 @@ data class ExamModel(
         @Expose
         @SerializedName("ExamEndDateTime") var ExamEndDateTime: String = "",
         @Expose
-        @SerializedName("IsShowAttendButton") var IsShowAttendButton: Int = 0
-    )
+        @SerializedName("IsShowAttendButton") var IsShowAttendButton: Int = 0,
+        @Expose
+        @SerializedName("isshowviewresult") var isshowviewresult: Int = 0,
+        )
 
 
 }

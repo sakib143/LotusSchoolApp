@@ -180,8 +180,23 @@ fun setTodayTime(attentExam: TextView, examModel: ExamModel.Data) {
     }
 }
 
-@BindingAdapter("setAttentExam")
-fun setAttentExam(attentExam: TextView, examModel: ExamModel.Data) {
+@BindingAdapter("setAttentAndResult")
+fun setAttentAndResult(textview: TextView, examModel: ExamModel.Data) {
+    if (examModel.IsShowAttendButton == 1) {
+        textview.show()
+        if (examModel.isshowviewresult == 1) {
+            textview.setText(R.string.view_result)
+        } else {
+            textview.setText(R.string.attend)
+        }
+    } else {
+        textview.hide()
+    }
+}
+
+
+//@BindingAdapter("setAttentExam")
+//fun setAttentExam(attentExam: TextView, examModel: ExamModel.Data) {
 ////    val strDate = examModel.examdate + " " + examModel.examtime1
 //    LogM.e("Full date is $examModel.ExamStartDateTime")
 //    val currentTime = Calendar.getInstance()
@@ -204,7 +219,7 @@ fun setAttentExam(attentExam: TextView, examModel: ExamModel.Data) {
 //    } else {
 //        attentExam.hide()
 //    }
-}
+//}
 
 //private fun toTime(examTime: String,duration: Int): Calendar? {
 //    val dateFormat = SimpleDateFormat(Constant.DATE_FORMAT_ONE)

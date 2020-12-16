@@ -135,8 +135,8 @@
                     tools:text="Total Marks" />
 
                 <TextView
-                    tools:visibility="gone"
-                    android:visibility="@{examListModel.isShowAttendButton == 1 ? View.VISIBLE : View.GONE}"
+                    setAttentAndResult="@{examListModel}"
+                    tools:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
@@ -145,7 +145,7 @@
                     android:text="@string/attend"
                     android:textColor="@color/colorJoinMeeting"
                     android:textSize="@dimen/_18ssp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
