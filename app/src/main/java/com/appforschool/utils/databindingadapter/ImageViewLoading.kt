@@ -182,13 +182,12 @@ fun setTodayTime(attentExam: TextView, examModel: ExamModel.Data) {
 
 @BindingAdapter("setAttentAndResult")
 fun setAttentAndResult(textview: TextView, examModel: ExamModel.Data) {
-    if (examModel.IsShowAttendButton == 1) {
+    if (examModel.isshowviewresult == 1) {
+        textview.setText(R.string.view_result)
         textview.show()
-        if (examModel.isshowviewresult == 1) {
-            textview.setText(R.string.view_result)
-        } else {
-            textview.setText(R.string.attend)
-        }
+    } else if (examModel.IsShowAttendButton == 1) {
+        textview.setText(R.string.attend)
+        textview.show()
     } else {
         textview.hide()
     }
