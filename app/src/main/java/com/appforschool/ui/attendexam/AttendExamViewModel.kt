@@ -9,12 +9,18 @@ import com.appforschool.MyApp
 import com.appforschool.R
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
+import com.appforschool.data.model.AssignmentSubmissionModel
 import com.appforschool.data.model.AttendExamModel
 import com.appforschool.data.model.EndExamModel
 import com.appforschool.data.model.UpdateExamAnswerModel
 import com.appforschool.data.repository.AttendExamRepository
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -264,5 +270,17 @@ class AttendExamViewModel @Inject constructor(
         oneMinTimer?.cancel()
         timeOverMinTimer?.cancel()
     }
+
+//    fun uploadAnswerFile(
+//        strExamId: String?,
+//        strQuestionId: String?,
+//        file: File?
+//    ): LiveData<AssignmentSubmissionModel> {
+//        Coroutines.main {
+//
+//        }
+//        return _fileSubmit!!
+//    }
+
 
 }

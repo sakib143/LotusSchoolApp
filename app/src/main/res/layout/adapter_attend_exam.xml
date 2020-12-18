@@ -100,5 +100,18 @@
             android:visibility="visible"
             />
 
+        <LinearLayout
+            android:id="@+id/llUploadFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/updload_file_less_than_5mb"
+                android:textSize="@dimen/_12ssp"/>
+        </LinearLayout>
+
     </LinearLayout>
 </layout>

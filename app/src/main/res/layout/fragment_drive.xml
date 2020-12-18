@@ -68,6 +68,7 @@
                 android:textSize="@dimen/_13ssp"
                 android:fontFamily="@font/calibri"
                 tools:visibility="visible"
+                android:visibility="@{viewmodel.utils.getUserData().isshowaddbutton == 1 ? View.VISIBLE : View.GONE}"
                 android:onClick="@{()-> listner.openAddToDrive()}"/>
 
         </LinearLayout>

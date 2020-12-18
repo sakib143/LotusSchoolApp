@@ -22,6 +22,8 @@ class DriveViewModel @Inject constructor(
     private val repository: DriveRepository
 ) : AndroidViewModel(application) {
 
+    var utils:PrefUtils = prefUtils
+
     private val _isViewLoading = MutableLiveData<Boolean>()
     val isViewLoading: LiveData<Boolean> get() = _isViewLoading
 

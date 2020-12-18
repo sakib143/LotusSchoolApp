@@ -35,5 +35,8 @@ data class ScheduleModel(
         @Expose
         @SerializedName("schdatetime") var schdatetime: String = "",
         @Expose
-        @SerializedName("teacher") var teacher: String = "")
+        @SerializedName("teacher") var teacher: String = "",
+        @Expose
+        @SerializedName("isshowconnectbutton") var isshowconnectbutton: Int = 1,
+    )
 }

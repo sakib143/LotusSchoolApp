@@ -69,8 +69,7 @@
     <string name="exam_time_over">TIME OVER!\nYour answers have been submitted successfully.</string>
     <string name="today">Today</string>
     <string name="view_result">Result</string>
-
-
+    <string name="updload_file_less_than_5mb"><u>Updload File (Less than 5MB)</u></string>
 
 
 </resources>

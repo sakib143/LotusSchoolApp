@@ -1,9 +1,11 @@
 package com.appforschool.ui.attendexam
 
+import android.Manifest
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.webkit.MimeTypeMap
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
@@ -11,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
+import com.appforschool.data.model.AssignmentModel
 import com.appforschool.data.model.AttendExamModel
 import com.appforschool.data.model.EndExamModel
 import com.appforschool.databinding.ActivityAttendExamBinding
@@ -18,8 +21,10 @@ import com.appforschool.listner.UserProfileListner
 import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
+import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.activity_attend_exam.*
 import kotlinx.android.synthetic.main.fragment_subjects.*
+import java.io.File
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -45,6 +50,9 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         this.binding = binding
         binding.alAttendExam = alAttendExam
     }
+
+    private var strExamId: String? =  null
+    private var strQuestionId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -317,5 +325,29 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.resetAllTimer()
+    }
+
+    fun openFile(strExamId: String, strQuestionId: String) {
+        this.strExamId = strExamId
+        this.strQuestionId = strQuestionId
+        checkFileSubmitPermission()
+    }
+
+    fun checkFileSubmitPermission() = runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
+            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+            chooseFile.setType("*/*")
+            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+            startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
+        }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            PICKFILE_RESULT_CODE -> {
+                val filePath = ImageFilePath.getPath(this@AttendExamActivity, data?.data)
+                val file: File = File(filePath)
+//                viewModel.uploadAnswerFile(strExamId,strQuestionId,file)
+            }
+        }
     }
 }

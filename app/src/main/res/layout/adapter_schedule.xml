@@ -162,6 +162,8 @@
                     android:textSize="@dimen/_20ssp"
                     android:textStyle="bold"
                     android:text="@string/connect"
+                    tools:visibility="visible"
+                    android:visibility="@{scheduleModel.isshowconnectbutton == 1 ? View.VISIBLE : View.GONE}"
                     android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"/>
 
             </RelativeLayout>

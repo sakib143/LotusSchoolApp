@@ -117,9 +117,11 @@ class AttendExamAdapter(
         if (list.get(position).qType.equals("S", ignoreCase = true)) {
             holder.llCheckbox.hide()
             holder.edtAnswer.show()
+            holder.llUploadFile.show()
         } else {
             holder.llCheckbox.show()
             holder.edtAnswer.hide()
+            holder.llUploadFile.hide()
         }
 
         if (list.get(position).questionimagefullpath.isNullOrEmpty()) {
@@ -157,6 +159,7 @@ class AttendExamAdapter(
         val llCheckbox = itemView.findViewById(R.id.llCheckbox) as LinearLayout
         val edtAnswer = itemView.findViewById(R.id.edtAnswer) as EditText
         val ivImage = itemView.findViewById(R.id.ivImage) as ImageView
+        val llUploadFile =  itemView.findViewById(R.id.llUploadFile) as LinearLayout
     }
 
 }

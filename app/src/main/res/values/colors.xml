@@ -18,6 +18,6 @@
     <color name="colorDashboardBackground">#e6e3ca</color>
     <color name="colorGreen">#008000</color>
     <color name="colorRed">#FF0000</color>
-
+    <color name="colorUploadFile">#006699</color>
 
 </resources>
