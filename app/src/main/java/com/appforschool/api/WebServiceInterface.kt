@@ -74,6 +74,15 @@ interface WebServiceInterface {
         @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype: RequestBody
     ): Response<AssignmentSubmissionModel>
 
+    @Multipart
+    @POST("UploadFile")
+    suspend fun uploadAnswerFile(
+        @Part Image: MultipartBody.Part,
+        @Part(Constant.REUQEST_SHARE_ID) shareid: RequestBody,
+        @Part(Constant.REUQEST_USER_ID) userid: RequestBody,
+        @Part(Constant.REQUEST_USER_TYPE) usertype: RequestBody
+    ): Response<UploadAnswerFileModel>
+
     @POST("Get_SpData")
     suspend fun callStandardListForAddDrive(@Body jsonObject: JsonObject): Response<StandardListModel>
 

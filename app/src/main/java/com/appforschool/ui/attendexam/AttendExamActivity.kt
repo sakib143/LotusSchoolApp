@@ -16,6 +16,7 @@ import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.AssignmentModel
 import com.appforschool.data.model.AttendExamModel
 import com.appforschool.data.model.EndExamModel
+import com.appforschool.data.model.UploadAnswerFileModel
 import com.appforschool.databinding.ActivityAttendExamBinding
 import com.appforschool.listner.UserProfileListner
 import com.appforschool.ui.full_image.FullImageActivity
@@ -53,9 +54,12 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
 
     private var strExamId: String? =  null
     private var strQuestionId: String? = null
+    private var position: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        strExamId = intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!
 
         viewModel.setData(
             intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
@@ -97,6 +101,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         viewModel.setFiveMinuteLeft.observe(this, onFiveMinuteLeft)
         viewModel.setTimeOver.observe(this, onTimeOverObserver)
         viewModel.endExam.observe(this, endExamObserver)
+        viewModel.uploadAnswer.observe(this,uploadAnswerFileObserver)
 
         viewModel.executeAttentExamList() //API call to fetch list
         viewModel.fiveMinuteLeftAlert()
@@ -143,6 +148,16 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
             viewModel.setDataFound(true)
         }
     }
+
+    private val uploadAnswerFileObserver = Observer<UploadAnswerFileModel> {
+        if (it.status) {
+            toast(it.message)
+        } else {
+            toast(it!!.message)
+            viewModel.setDataFound(true)
+        }
+    }
+
 
     private val endExamObserver = Observer<EndExamModel> {
         if (it.status) {
@@ -327,8 +342,8 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         viewModel.resetAllTimer()
     }
 
-    fun openFile(strExamId: String, strQuestionId: String) {
-        this.strExamId = strExamId
+    fun openFile(strQuestionId: String, position: Int) {
+        this.position = position
         this.strQuestionId = strQuestionId
         checkFileSubmitPermission()
     }
@@ -346,7 +361,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
             PICKFILE_RESULT_CODE -> {
                 val filePath = ImageFilePath.getPath(this@AttendExamActivity, data?.data)
                 val file: File = File(filePath)
-//                viewModel.uploadAnswerFile(strExamId,strQuestionId,file)
+                viewModel.uploadAnswerFile(strExamId,strQuestionId,file)
             }
         }
     }

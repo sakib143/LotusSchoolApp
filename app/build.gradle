@@ -30,10 +30,12 @@ android {
 
             buildConfigField "String", "BASE_URL", "\"http://tv.fahm-technologies.com/api/wbl/\""
             buildConfigField "String", "VIDEO_CALL_URL", "\"https://meet.fahm-technologies.com/FAHM\""
+            buildConfigField "String", "WEB_URL", "\"https://www.mywhiteboardlabs.com\""
         }
         debug {
             buildConfigField "String", "BASE_URL", "\"http://tv.fahm-technologies.com/api/wbl/\""
             buildConfigField "String", "VIDEO_CALL_URL", "\"https://meet.fahm-technologies.com/FAHM\""
+            buildConfigField "String", "WEB_URL", "\"https://www.mywhiteboardlabs.com\""
         }
     }
 

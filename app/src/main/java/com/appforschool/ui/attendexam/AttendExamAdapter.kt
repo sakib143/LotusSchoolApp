@@ -58,6 +58,10 @@ class AttendExamAdapter(
     }
 
     private fun setListner(position: Int, holder: MyViewHolder) {
+        holder.llUploadFile.setOnClickListener() {
+            (context as AttendExamActivity).openFile(list.get(position).srNo.toString(),position)
+        }
+
         holder.ivImage.setOnClickListener() {
             (context as AttendExamActivity).zoomImage(list.get(position).questionimagefullpath,holder.ivImage)
         }

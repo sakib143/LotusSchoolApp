@@ -9,10 +9,7 @@ import com.appforschool.MyApp
 import com.appforschool.R
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
-import com.appforschool.data.model.AssignmentSubmissionModel
-import com.appforschool.data.model.AttendExamModel
-import com.appforschool.data.model.EndExamModel
-import com.appforschool.data.model.UpdateExamAnswerModel
+import com.appforschool.data.model.*
 import com.appforschool.data.repository.AttendExamRepository
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
@@ -37,6 +34,13 @@ class AttendExamViewModel @Inject constructor(
 
     private val _onMessageError = MutableLiveData<Any>()
     val onMessageError: LiveData<Any> get() = _onMessageError
+
+    //Uplolad answer
+    private val _uploadAnswer: MutableLiveData<UploadAnswerFileModel> =
+        MutableLiveData<UploadAnswerFileModel>()
+    val uploadAnswer: LiveData<UploadAnswerFileModel>
+        get() = _uploadAnswer
+
 
     //AttendExam observer related data
     private val _attend_exam: MutableLiveData<AttendExamModel> =
@@ -271,16 +275,33 @@ class AttendExamViewModel @Inject constructor(
         timeOverMinTimer?.cancel()
     }
 
-//    fun uploadAnswerFile(
-//        strExamId: String?,
-//        strQuestionId: String?,
-//        file: File?
-//    ): LiveData<AssignmentSubmissionModel> {
-//        Coroutines.main {
-//
-//        }
-//        return _fileSubmit!!
-//    }
+    fun uploadAnswerFile(
+        strExamId: String?,
+        strQuestionId: String?,
+        file: File?
+    ): LiveData<UploadAnswerFileModel> {
+            Coroutines.main {
+                val fileReqBodyLicense = file?.asRequestBody("image/*".toMediaTypeOrNull())
+                val userImageBody = MultipartBody.Part.createFormData(Constant.REQUEST_IMAGE, file?.name, fileReqBodyLicense!!)
+                val strExamId = strExamId?.toRequestBody("text/plain".toMediaTypeOrNull())
+                val strQuestionId = strQuestionId?.toRequestBody("text/plain".toMediaTypeOrNull())
+                val strStudentId = prefUtils.getUserData()?.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
+                try {
+                    val response = repository.uploadAnswerFile(
+                        userImageBody,
+                        strExamId!!,
+                        strQuestionId!!,
+                        strStudentId!!
+                    )
+                    _uploadAnswer.postValue(response)
+                } catch (e: ApiExceptions) {
+                    _onMessageError.postValue(e.message)
+                } catch (e: NoInternetException) {
+                    _onMessageError.postValue(e.message)
+                }
+            }
+        return _uploadAnswer!!
+    }
 
 
 }

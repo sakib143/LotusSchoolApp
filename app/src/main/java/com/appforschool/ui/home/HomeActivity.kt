@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.LinearLayout
 import androidx.core.app.ActivityOptionsCompat
@@ -175,6 +174,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         navigationController.navigateToChangePassword(this@HomeActivity)
     }
 
+    fun openInWeb() {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.WEB_URL))
+        startActivity(browserIntent)
+    }
+
     fun signOut() {
         prefUtils.clearAll()
         navigationController.navigateToLoginScreen(this@HomeActivity)
@@ -248,7 +252,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         )
     }
 
-    override fun updateUserName(strUserName: String, strStandard: String,strLogo: String) {
+    override fun updateUserName(strUserName: String, strStandard: String, strLogo: String) {
         tvUserNameHA.setText(strUserName)
         tvStandardHA.setText(strStandard)
         Glide.with(this@HomeActivity)
@@ -268,7 +272,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this,
             imgProfilePic!!,
-            ViewCompat.getTransitionName(imgProfilePic)!!)
+            ViewCompat.getTransitionName(imgProfilePic)!!
+        )
         startActivity(intent, options.toBundle())
     }
 
@@ -409,7 +414,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         val intent = Intent(this, FullExamDateActivity::class.java)
         intent.putExtra(Constant.REQUEST_MODE_START_EXAM, date)
         intent.putExtra(Constant.REQUEST_MODE_END_EXAM, time)
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, linearLayout!!, ViewCompat.getTransitionName(linearLayout)!!)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this, linearLayout!!, ViewCompat.getTransitionName(
+                linearLayout
+            )!!
+        )
         startActivity(intent, options.toBundle())
     }
 

@@ -2,10 +2,10 @@ package com.appforschool.data.repository
 
 import com.appforschool.api.SafeAPIRequest
 import com.appforschool.api.WebServiceInterface
-import com.appforschool.data.model.AttendExamModel
-import com.appforschool.data.model.EndExamModel
-import com.appforschool.data.model.UpdateExamAnswerModel
+import com.appforschool.data.model.*
 import com.google.gson.JsonObject
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class AttendExamRepository   @Inject constructor(
@@ -28,4 +28,16 @@ class AttendExamRepository   @Inject constructor(
             webServiceInterface.callEndExam(objectLogin)
         }
     }
+
+    suspend fun uploadAnswerFile(
+        Image : MultipartBody.Part,
+        shareid: RequestBody,
+        userid: RequestBody,
+        usertype: RequestBody
+    ): UploadAnswerFileModel {
+        return apiRequest {
+            webServiceInterface.uploadAnswerFile(Image, shareid,userid,usertype)
+        }
+    }
+
 }

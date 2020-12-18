@@ -70,6 +70,7 @@
     <string name="today">Today</string>
     <string name="view_result">Result</string>
     <string name="updload_file_less_than_5mb"><u>Updload File (Less than 5MB)</u></string>
+    <string name="open_in_web">Open in Web</string>
 
 
 </resources>
