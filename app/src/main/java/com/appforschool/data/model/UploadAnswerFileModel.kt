@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName
 
 data class UploadAnswerFileModel (
     @Expose
-    @SerializedName("data") var `data`: Any = Any(), // null
-    @Expose
     @SerializedName("message") var message: String = "", // File uploaded successfully
     @Expose
     @SerializedName("status") var status: Boolean = false // true

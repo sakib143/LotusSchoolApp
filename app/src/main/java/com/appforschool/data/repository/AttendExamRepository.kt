@@ -31,12 +31,13 @@ class AttendExamRepository   @Inject constructor(
 
     suspend fun uploadAnswerFile(
         Image : MultipartBody.Part,
-        shareid: RequestBody,
-        userid: RequestBody,
-        usertype: RequestBody
-    ): UploadAnswerFileModel {
+        strExamId: RequestBody,
+        strQuestionId: RequestBody,
+        strStudentId: RequestBody,
+        strUserId: RequestBody
+        ): UploadAnswerFileModel {
         return apiRequest {
-            webServiceInterface.uploadAnswerFile(Image, shareid,userid,usertype)
+            webServiceInterface.uploadAnswerFile(Image, strExamId,strQuestionId,strStudentId,strUserId)
         }
     }
 

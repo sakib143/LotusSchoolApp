@@ -60,6 +60,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         super.onCreate(savedInstanceState)
 
         strExamId = intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!
+        LogM.e("Exam id checking Activity" + strExamId)
 
         viewModel.setData(
             intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
@@ -361,6 +362,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
             PICKFILE_RESULT_CODE -> {
                 val filePath = ImageFilePath.getPath(this@AttendExamActivity, data?.data)
                 val file: File = File(filePath)
+                LogM.e("file path is " + file + "  Exam id " + strExamId)
                 viewModel.uploadAnswerFile(strExamId,strQuestionId,file)
             }
         }

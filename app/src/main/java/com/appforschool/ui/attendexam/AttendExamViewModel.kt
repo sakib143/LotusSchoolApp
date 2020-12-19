@@ -281,17 +281,23 @@ class AttendExamViewModel @Inject constructor(
         file: File?
     ): LiveData<UploadAnswerFileModel> {
             Coroutines.main {
+
+                LogM.e("Input param ==> Exam id: $examId strQuestionId: $strQuestionId  strStudentId: ${prefUtils.getUserData()?.studentId}  strUserId: ${prefUtils.getUserData()?.userid}")
+
                 val fileReqBodyLicense = file?.asRequestBody("image/*".toMediaTypeOrNull())
                 val userImageBody = MultipartBody.Part.createFormData(Constant.REQUEST_IMAGE, file?.name, fileReqBodyLicense!!)
                 val strExamId = strExamId?.toRequestBody("text/plain".toMediaTypeOrNull())
                 val strQuestionId = strQuestionId?.toRequestBody("text/plain".toMediaTypeOrNull())
                 val strStudentId = prefUtils.getUserData()?.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
+                val strUserId = prefUtils.getUserData()?.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
+
                 try {
                     val response = repository.uploadAnswerFile(
                         userImageBody,
                         strExamId!!,
                         strQuestionId!!,
-                        strStudentId!!
+                        strStudentId!!,
+                        strUserId!!
                     )
                     _uploadAnswer.postValue(response)
                 } catch (e: ApiExceptions) {
