@@ -1,5 +1,6 @@
 package com.appforschool.ui.home.fragment.dashboard
 
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     private var listener: FragmentListner? = null
+    private var builder: AlertDialog.Builder? = null
 
     override fun layoutId(): Int = R.layout.fragment_dashboard
 
@@ -54,6 +56,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        builder = AlertDialog.Builder(activity!!)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.homeAPI.observe(viewLifecycleOwner, homeAPIObserver)
         callHomeAPI()
@@ -101,6 +104,8 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             viewModel.getUserName()
             checkLatestVersion(it)
             listener?.updateUserName(it.data.get(0).studentname,it.data.get(0).standardname,it.data.get(0).logofilepath)
+        } else {
+            activity!!.toast(it.message)
         }
     }
 
@@ -109,33 +114,51 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
         val currentVersion = globalMethods.getAppVersion(activity!!)
         val isForceUpdate = it.data.get(0).isforceupdate
 
-        if (!latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals(
-                "yes",
-                ignoreCase = true
-            )
-        ) {
-            prefUtils.clearAll()
-            AlertDialogUtility.showSingleAlert(
-                activity!!, "Please update latest version."
-            ) { dialog, which ->
-                dialog.dismiss()
-                try {
-                    val appStoreIntent =
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("market://details?id=${activity!!.packageName}")
-                        )
-                    appStoreIntent.setPackage("com.android.vending")
-                    startActivity(appStoreIntent)
-                } catch (exception: ActivityNotFoundException) {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("https://play.google.com/store/apps/details?id=$this.packageName")
-                        )
-                    )
-                }
+        if ( ! latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals(
+                "yes", ignoreCase = true)) {
+                    activity?.toast("If condition !!!")
+            setForceUpdatedialob()
+        } else  if ( ! latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals(
+                "No", ignoreCase = true)){
+            if( ! prefUtils.isUpdateDialogVisible()) {
+                prefUtils.setUpdateAppDialog(true)
+                informUpdateDialog()
             }
+        }
+    }
+
+    private fun setForceUpdatedialob() {
+        builder?.setTitle(R.string.app_name)
+        builder?.setMessage(getString(R.string.update_force_update))
+        builder?.setPositiveButton(getString(R.string.update)){ dialogInterface, which ->
+            dialogInterface.dismiss()
+            val appStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${activity!!.packageName}"))
+            appStoreIntent.setPackage("com.android.vending")
+            startActivity(appStoreIntent)
+        }
+        val alertDialog: AlertDialog = builder!!.create()
+        alertDialog.setCancelable(false)
+        if( ! alertDialog.isShowing) {
+            alertDialog.show()
+        }
+    }
+
+    private fun informUpdateDialog() {
+        builder?.setTitle(R.string.app_name)
+        builder?.setMessage(getString(R.string.update_force_update))
+        builder?.setPositiveButton(getString(R.string.yes)){ dialogInterface, which ->
+            dialogInterface.dismiss()
+            val appStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${activity!!.packageName}"))
+            appStoreIntent.setPackage("com.android.vending")
+            startActivity(appStoreIntent)
+        }
+        builder?.setNegativeButton(getString(R.string.no)){ dialogInterface, which ->
+            dialogInterface.dismiss()
+        }
+        val alertDialog: AlertDialog = builder!!.create()
+        alertDialog.setCancelable(true)
+        if( ! alertDialog.isShowing) {
+            alertDialog.show()
         }
     }
 

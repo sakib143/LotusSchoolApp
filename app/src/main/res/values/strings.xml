@@ -71,6 +71,10 @@
     <string name="view_result">Result</string>
     <string name="updload_file_less_than_5mb"><u>Updload File (Less than 5MB)</u></string>
     <string name="open_in_web">Open in Web</string>
+    <string name="update">Update</string>
+    <string name="update_force_update">Please update latest version.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 
 </resources>

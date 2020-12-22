@@ -1,5 +1,6 @@
 package com.appforschool.ui.auth.login
 
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -17,10 +18,11 @@ import javax.inject.Inject
 
 class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
 
-    override fun layoutId() = R.layout.activity_login
-
     @Inject
     lateinit var viewModel: LoginViewModel
+    private var builder:AlertDialog.Builder? = null
+
+    override fun layoutId() = R.layout.activity_login
 
     override fun initializeBinding(binding: ActivityLoginBinding) {
         binding.loginViewModel = viewModel
@@ -44,6 +46,7 @@ class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
     }
 
     private fun setData() {
+        builder = AlertDialog.Builder(this@LoginActivity)
         viewModel.onMessageError.observe(this, onMessageErrorObserver)
         viewModel.login_data.observe(this, loginObserver)
         viewModel.getLatestVersionName.observe(this, latestVersionObserver)
@@ -72,35 +75,60 @@ class LoginActivity : BaseBindingActivity<ActivityLoginBinding>() {
 
     private val latestVersionObserver = Observer<GetVersionModel> {
         if (it.status) {
-            val latestVersion = it.data.get(0).currentVersion
             val currentVersion = globalMethods.getAppVersion(this@LoginActivity)
-            val isForceUpdate = it.data.get(0).isForceUpdate
-
-            if ( ! latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals("yes", ignoreCase = true)) {
-                AlertDialogUtility.showSingleAlert(
-                    this@LoginActivity, "Please update latest version."
-                ) { dialog, which ->
-                    dialog.dismiss()
-                    try {
-                        val appStoreIntent =
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("market://details?id=${this.packageName}")
-                            )
-                        appStoreIntent.setPackage("com.android.vending")
-                        startActivity(appStoreIntent)
-                    } catch (exception: ActivityNotFoundException) {
-                        startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("https://play.google.com/store/apps/details?id=$this.packageName")
-                            )
-                        )
-                    }
+            val latestVersion = it.data.get(0).currentVersion
+            val isForceUpdate =  it.data.get(0).isForceUpdate
+            if ( ! latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals(
+                    "yes",
+                    ignoreCase = true
+                )) {
+                setForceUpdatedialob()
+            } else  if ( ! latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals(
+                    "No",
+                    ignoreCase = true
+                )){
+                if( ! prefUtils.isUpdateDialogVisible()) {
+                    prefUtils.setUpdateAppDialog(true)
+                    informUpdateDialog()
                 }
             }
         } else {
             toast(it!!.message)
+        }
+    }
+
+    private fun setForceUpdatedialob() {
+        builder?.setTitle(R.string.app_name)
+        builder?.setMessage(getString(R.string.update_force_update))
+        builder?.setPositiveButton(getString(R.string.update)){ dialogInterface, which ->
+            dialogInterface.dismiss()
+            val appStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${this@LoginActivity.packageName}"))
+            appStoreIntent.setPackage("com.android.vending")
+            startActivity(appStoreIntent)
+        }
+        val alertDialog: AlertDialog = builder!!.create()
+        alertDialog.setCancelable(false)
+        if( ! alertDialog.isShowing) {
+            alertDialog.show()
+        }
+    }
+
+    private fun informUpdateDialog() {
+        builder?.setTitle(R.string.app_name)
+        builder?.setMessage(getString(R.string.update_force_update))
+        builder?.setPositiveButton(getString(R.string.yes)){ dialogInterface, which ->
+            dialogInterface.dismiss()
+            val appStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${this@LoginActivity.packageName}"))
+            appStoreIntent.setPackage("com.android.vending")
+            startActivity(appStoreIntent)
+        }
+        builder?.setNegativeButton(getString(R.string.no)){ dialogInterface, which ->
+            dialogInterface.dismiss()
+        }
+        val alertDialog: AlertDialog = builder!!.create()
+        alertDialog.setCancelable(true)
+        if( ! alertDialog.isShowing) {
+            alertDialog.show()
         }
     }
 

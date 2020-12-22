@@ -18,6 +18,7 @@ class PrefUtils @Inject constructor(context: Context) {
 
     private val USER_ID = "user_id"
     private val SAVE_USER_DATA = "saveUserData"
+    private val IS_UPDATE_APP_VISIBLE = "is_update_app_visible"
 
 
     /**
@@ -50,6 +51,16 @@ class PrefUtils @Inject constructor(context: Context) {
         val data = mPref.getString(SAVE_USER_DATA,null)
         val model : LoginModel.Data  = gson.fromJson(data, LoginModel.Data::class.java)
         return model
+    }
+
+    fun setUpdateAppDialog(isDialogShow: Boolean) {
+        val editor: SharedPreferences.Editor = mPref.edit()
+        editor.putBoolean(IS_UPDATE_APP_VISIBLE, isDialogShow)
+        editor.apply()
+    }
+
+    fun isUpdateDialogVisible() : Boolean{
+        return mPref.getBoolean(IS_UPDATE_APP_VISIBLE, false)
     }
 
 
