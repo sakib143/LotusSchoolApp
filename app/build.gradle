@@ -117,7 +117,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //Firebase Performance
-    implementation 'com.google.firebase:firebase-perf:19.0.10'
+    implementation 'com.google.firebase:firebase-perf:19.0.11'
 
     // Jitsi Meet
     implementation ('org.jitsi.react:jitsi-meet-sdk:2.10.0') { transitive = true }
@@ -133,7 +133,7 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
     //Image cropping librarry
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
     //Date library
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'

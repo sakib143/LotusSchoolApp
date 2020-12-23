@@ -10,10 +10,12 @@ import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.*
 import com.appforschool.databinding.ActivityAddToDriveBinding
+import com.appforschool.listner.UserProfileListner
 import com.appforschool.ui.addtodrive.adapter.KnowledgeSpinnerAdapter
 import com.appforschool.ui.addtodrive.adapter.StandardAdapter
 import com.appforschool.ui.addtodrive.adapter.SubjectAdapter
 import com.appforschool.utils.ImageFilePath
+import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.activity_add_to_drive.*
@@ -110,7 +112,12 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         spSubjectAD.adapter = adapter
     }
 
+    override fun onBackPressed() {
+        closeScreen()
+    }
+
     fun closeScreen() {
+        UserProfileListner.getInstance().changeState(true)
         finish()
     }
 

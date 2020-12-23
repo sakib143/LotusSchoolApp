@@ -7,10 +7,12 @@ import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
 import com.appforschool.data.model.DriveModel
 import com.appforschool.databinding.FragmentDriveBinding
+import com.appforschool.listner.UserProfileListner
 import com.appforschool.utils.toast
 import javax.inject.Inject
 
-class DriveFragment: BaseBindingFragment<FragmentDriveBinding>() {
+class DriveFragment: BaseBindingFragment<FragmentDriveBinding>(),
+    UserProfileListner.onScreenCloseListner {
 
     private var listener: DriveFragmentListner? = null
 
@@ -54,8 +56,13 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        UserProfileListner.getInstance().setListener(this)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.driveList.observe(viewLifecycleOwner, driveListObserver)
+        getDriveList()
+    }
+
+    fun getDriveList() {
         if (globalMethods.isInternetAvailable(activity!!)) {
             viewModel.executerDriveList()
         } else {
@@ -89,5 +96,9 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>() {
 
     fun openAddToDrive(){
         listener?.openAddToFragment()
+    }
+
+    override fun stateChanged() {
+        getDriveList()
     }
 }
