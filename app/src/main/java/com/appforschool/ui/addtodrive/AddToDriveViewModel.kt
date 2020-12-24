@@ -75,6 +75,7 @@ class AddToDriveViewModel @Inject constructor(
     val topic = MutableLiveData<String>()
     val description = MutableLiveData<String>()
     val standardid = MutableLiveData<Int>()
+    val subjectId = MutableLiveData<Int>()
     val filetype = MutableLiveData<String>()
     val kwtype = MutableLiveData<String>()
     val fileext = MutableLiveData<String>()
@@ -176,6 +177,7 @@ class AddToDriveViewModel @Inject constructor(
     }
 
     fun onSubjectSelection(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        subjectId.value = _subject.value?.data?.get(pos)?.courseid!!
         LogM.e("=> testing " + pos)
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
@@ -277,26 +279,22 @@ class AddToDriveViewModel @Inject constructor(
     fun callFileAddDrive(): LiveData<AssignmentSubmissionModel> {
         Coroutines.main {
             _isViewLoading.postValue(true)
-            val fileReqBodyLicense =
-                file.value?.asRequestBody("image/*".toMediaTypeOrNull())
-            val userImageBody = MultipartBody.Part.createFormData(
-                Constant.REQUEST_IMAGE,
-                file.value?.name,
-                fileReqBodyLicense!!
-            )
+            val fileReqBodyLicense = file.value?.asRequestBody("image/*".toMediaTypeOrNull())
+            val userImageBody = MultipartBody.Part.createFormData(Constant.REQUEST_IMAGE, file.value?.name, fileReqBodyLicense!!)
             val shareid = "".toRequestBody("text/plain".toMediaTypeOrNull())
-            val userid =
-                prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
-            val usertype =
-                prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
-            val studentid =
-                prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val userid = prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val usertype = prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val studentid = prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
             val filetitle = topic.value?.toRequestBody("text/plain".toMediaTypeOrNull())
             val filedescr = description.value?.toRequestBody("text/plain".toMediaTypeOrNull())
             val filetype = "F".toRequestBody("text/plain".toMediaTypeOrNull())
             val fileext = fileext.value?.toRequestBody("text/plain".toMediaTypeOrNull())
             val filesize = filesize.value?.toRequestBody("text/plain".toMediaTypeOrNull())
             val uploadtype = "D".toRequestBody("text/plain".toMediaTypeOrNull())
+            val knowledgeType = kwtype.value?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val subjectId = subjectId.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val standardId = standardid.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+
             try {
                 val response = repository.callFileAddDrive(
                     userImageBody,
@@ -309,8 +307,10 @@ class AddToDriveViewModel @Inject constructor(
                     filetype,
                     fileext!!,
                     filesize!!,
-                    uploadtype
-                )
+                    uploadtype,
+                    knowledgeType!!,
+                    subjectId!!,
+                    standardId!!)
                 _upload_selected_file.postValue(response)
                 _isViewLoading.postValue(false)
                 if (response.status) {

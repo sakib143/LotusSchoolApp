@@ -41,10 +41,12 @@ class AddToDriveRepository   @Inject constructor(
         filetype: RequestBody,
         fileext: RequestBody,
         filesize: RequestBody,
-        uploadtype: RequestBody
-    ): AssignmentSubmissionModel {
+        uploadtype: RequestBody,
+        knowledgeType: RequestBody,
+        subjectId: RequestBody,
+        standardId: RequestBody): AssignmentSubmissionModel {
         return apiRequest {
-            webServiceInterface.callFileAddDrive(Image, shareid,userid,usertype,studentid,filetitle,filedescr,filetype,fileext,filesize,uploadtype)
+            webServiceInterface.callFileAddDrive(Image, shareid,userid,usertype,studentid,filetitle,filedescr,filetype,fileext,filesize,uploadtype,knowledgeType,subjectId,standardId)
         }
     }
 

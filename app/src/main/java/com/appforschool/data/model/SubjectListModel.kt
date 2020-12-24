@@ -16,7 +16,7 @@ data class SubjectListModel(
 ) {
     data class Data(
         @Expose
-        @SerializedName("courseid") var courseid: Double = 0.0, // 714.0
+        @SerializedName("courseid") var courseid: Int = 0, // 714.0
         @Expose
         @SerializedName("coursename") var coursename: String = "" // Hindi
     )

@@ -106,8 +106,12 @@ interface WebServiceInterface {
         @Part(Constant.REQUEST_FILE_TYPE) filetype: RequestBody,
         @Part(Constant.REQUEST_FILE_EXT) fileext: RequestBody,
         @Part(Constant.REQUEST_FILE_SIZE) filesize: RequestBody,
-        @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype: RequestBody
-    ): Response<AssignmentSubmissionModel>
+        @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype: RequestBody,
+        @Part(Constant.REQUEST_KW_TYPE) kwType: RequestBody,
+        @Part(Constant.REUQEST_SUBJECT_ID) subjectId: RequestBody,
+        @Part(Constant.REQUEST_STANDARDID) standardId: RequestBody
+
+        ): Response<AssignmentSubmissionModel>
 
 
     @POST("Get_SpData")
