@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="driveModel"
             type="com.appforschool.data.model.DriveModel.Data" />
@@ -75,6 +73,18 @@
                         android:textSize="@dimen/_12ssp"
                         tools:text="File description"
                         android:text="@{driveModel.filedescr}"
+                        android:fontFamily="@font/calibri"
+                        android:textColor="@color/colorBlack"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="4"
+                        android:minLines="1"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="File description"
+                        android:visibility="@{driveModel.subjectname == null ? View.GONE : View.VISIBLE}"
+                        android:text="@{`(` + driveModel.subjectname + `)`}"
                         android:fontFamily="@font/calibri"
                         android:textColor="@color/colorBlack"/>
 

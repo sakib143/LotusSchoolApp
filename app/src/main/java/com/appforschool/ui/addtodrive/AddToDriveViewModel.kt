@@ -254,6 +254,8 @@ class AddToDriveViewModel @Inject constructor(
         inputParam.addProperty(Constant.REQUEST_FILE_DESCR, description.value)
         inputParam.addProperty(Constant.REQUEST_FILE_TYPE, "L")
         inputParam.addProperty(Constant.REQUEST_KW_TYPE, kwtype.value)
+        inputParam.addProperty(Constant.REUQEST_SUBJECT_ID, subjectId.value)
+        inputParam.addProperty(Constant.REQUEST_FILE_EXT, "")
         var urlData:String = linkurl.value!!
         if (!urlData?.contains("http", ignoreCase = true)) {
             urlData = "https://" + urlData
