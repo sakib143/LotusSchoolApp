@@ -194,7 +194,6 @@ class AddToDriveViewModel @Inject constructor(
                 callFileAddDrive()
             } else {
                 if (checkValidation()) {
-                    application.toast("Condition true")
                     executerUploadFileUrlModelDrive()
                 }
             }
@@ -257,7 +256,6 @@ class AddToDriveViewModel @Inject constructor(
         inputParam.addProperty(Constant.REQUEST_KW_TYPE, kwtype.value)
         var urlData:String = linkurl.value!!
         if (!urlData?.contains("http", ignoreCase = true)) {
-            urlData?.insert(0, "https://")
             urlData = "https://" + urlData
         }
         inputParam.addProperty(Constant.REQUEST_LINK_URL, urlData)
