@@ -112,15 +112,8 @@ fun bindDriveList(view: RecyclerView, list: List<DriveModel.Data>) {
     if (layoutManager == null)
         view.layoutManager = LinearLayoutManager(view.context)
     var adapter = view.adapter
-
-    if (adapter == null) {
-        adapter =
-            DriveAdapter(
-                view.context,
-                list
-            )
+        adapter = DriveAdapter(view.context, list)
         view.adapter = adapter
-    }
 }
 
 @BindingAdapter("bindAttendExam")

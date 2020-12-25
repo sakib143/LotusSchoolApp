@@ -15,6 +15,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Patterns
+import android.webkit.URLUtil
 import androidx.core.app.ShareCompat
 import java.util.*
 import java.util.regex.Matcher
@@ -203,8 +204,12 @@ class GlobalMethods @Inject constructor() {
     }
 
     fun isValidUrl(urlString: String): Boolean {
-        var isValidUrl: Boolean = Patterns.WEB_URL.matcher(urlString).matches()
-        return isValidUrl
+        if(URLUtil.isHttpUrl(urlString)) {
+            return true
+        } else if (URLUtil.isHttpsUrl(urlString)) {
+            return true
+        }
+        return false
     }
 
 //    fun isToday(date: Date?): Boolean {
