@@ -195,8 +195,7 @@ class AddToDriveViewModel @Inject constructor(
             } else {
                 if (checkValidation()) {
                     application.toast("Condition true")
-                    uploadLInkParam()
-                    //executerUploadFileUrlModelDrive()
+                    executerUploadFileUrlModelDrive()
                 }
             }
         }
