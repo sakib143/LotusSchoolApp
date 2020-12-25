@@ -206,6 +206,13 @@ fun EditText.setErrorWithFocus(message: String) {
 }
 
 /**
+ * this method is used for insert string in certain position
+ * */
+fun String.insert(index: Int, string: String): String {
+    return this.substring(0, index) + string + this.substring(index, this.length)
+}
+
+/**
  * this method is used for amount format
  * */
 @BindingAdapter("amount")

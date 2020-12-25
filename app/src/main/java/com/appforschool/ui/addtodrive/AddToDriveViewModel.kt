@@ -194,7 +194,9 @@ class AddToDriveViewModel @Inject constructor(
                 callFileAddDrive()
             } else {
                 if (checkValidation()) {
-                    executerUploadFileUrlModelDrive()
+                    application.toast("Condition true")
+                    uploadLInkParam()
+                    //executerUploadFileUrlModelDrive()
                 }
             }
         }
@@ -244,28 +246,22 @@ class AddToDriveViewModel @Inject constructor(
 
     private fun uploadLInkParam(): JsonObject {
         val inputParam = JsonObject()
-        inputParam.addProperty(
-            Constant.REQUEST_MODE,
-            Constant.REQUEST_ADD_TO_DRIVE_WITH_LINK
-        )
+        inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_ADD_TO_DRIVE_WITH_LINK)
         inputParam.addProperty(Constant.REUQEST_SHARE_ID, 0)
         inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
-        inputParam.addProperty(
-            Constant.REQUEST_USER_TYPE,
-            prefUtils.getUserData()?.usertype
-        )
-        inputParam.addProperty(
-            Constant.REQUEST_STUDENTID,
-            prefUtils.getUserData()?.studentId
-        )
+        inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
+        inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
         inputParam.addProperty(Constant.REQUEST_STANDARDID, standardid.value)
         inputParam.addProperty(Constant.REQUEST_FILE_TITLE, topic.value)
         inputParam.addProperty(Constant.REQUEST_FILE_DESCR, description.value)
         inputParam.addProperty(Constant.REQUEST_FILE_TYPE, "L")
         inputParam.addProperty(Constant.REQUEST_KW_TYPE, kwtype.value)
-//        inputParam.addProperty(Constant.REQUEST_FILE_EXT, "")
-//        inputParam.addProperty(Constant.REQUEST_FILE_SIZE, "")
-        inputParam.addProperty(Constant.REQUEST_LINK_URL, linkurl.value)
+        var urlData:String = linkurl.value!!
+        if (!urlData?.contains("http", ignoreCase = true)) {
+            urlData?.insert(0, "https://")
+            urlData = "https://" + urlData
+        }
+        inputParam.addProperty(Constant.REQUEST_LINK_URL, urlData)
         return inputParam
     }
 

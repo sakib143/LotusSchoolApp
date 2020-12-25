@@ -203,13 +203,9 @@ class GlobalMethods @Inject constructor() {
         return android_id
     }
 
-    fun isValidUrl(urlString: String): Boolean {
-        if(URLUtil.isHttpUrl(urlString)) {
-            return true
-        } else if (URLUtil.isHttpsUrl(urlString)) {
-            return true
-        }
-        return false
+    fun isValidUrl(mData: String): Boolean {
+        var isValidUrl: Boolean = Patterns.WEB_URL.matcher(mData).matches()
+        return isValidUrl
     }
 
 //    fun isToday(date: Date?): Boolean {
