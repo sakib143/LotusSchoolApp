@@ -15,7 +15,6 @@ import com.appforschool.ui.addtodrive.adapter.KnowledgeSpinnerAdapter
 import com.appforschool.ui.addtodrive.adapter.StandardAdapter
 import com.appforschool.ui.addtodrive.adapter.SubjectAdapter
 import com.appforschool.utils.ImageFilePath
-import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.activity_add_to_drive.*
@@ -28,6 +27,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
 
     @Inject
     lateinit var viewModel: AddToDriveViewModel
+
 
     override fun initializeBinding(binding: ActivityAddToDriveBinding) {
         binding.viewmodel = viewModel
@@ -95,7 +95,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     }
 
     private fun setStandardSpinner(standardListModel: StandardListModel) {
-        val adapter = StandardAdapter(this@AddToDriveActivity, standardListModel.data)
+        val adapter = StandardAdapter(this@AddToDriveActivity, viewModel.alStandardList)
         spStandardAD.adapter = adapter
     }
 

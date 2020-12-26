@@ -1,20 +1,17 @@
 package com.appforschool.ui.addtodrive
 
 import android.view.View
-import android.webkit.URLUtil.isValidUrl
 import android.widget.AdapterView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
-import com.appforschool.R
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.*
 import com.appforschool.data.repository.AddToDriveRepository
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.adapter_drive.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -41,6 +38,8 @@ class AddToDriveViewModel @Inject constructor(
         MutableLiveData<StandardListModel>()
     val standard: LiveData<StandardListModel>
         get() = _standard
+
+    var alStandardList = ArrayList<StandardListModel.Data>()
 
     //Subject observer
     private val _subject: MutableLiveData<SubjectListModel> =
@@ -139,6 +138,10 @@ class AddToDriveViewModel @Inject constructor(
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 val apiResponse = repository.callStandardListForAddDrive(inputParam)
                 _standard.postValue(apiResponse)
+                alStandardList = ArrayList()
+                alStandardList.addAll(apiResponse.data)
+                val firstData = StandardListModel.Data(0, "Select standard")
+                alStandardList.add(0, firstData)
                 _isViewLoading.postValue(false)
             } catch (e: ApiExceptions) {
                 _onMessageError.postValue(e.message)
@@ -165,8 +168,8 @@ class AddToDriveViewModel @Inject constructor(
 
     fun onStandardSelection(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         LogM.e("=> testing " + pos)
-        standardid.value = _standard.value?.data?.get(pos)?.groupid
-        executerSubjectList(_standard.value?.data?.get(pos)?.groupid.toString())
+        standardid.value = alStandardList.get(pos)?.groupid
+        executerSubjectList(alStandardList.get(pos)?.groupid.toString())
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
         //parent.getAdapter().getItem(pos)    get item by pos
@@ -178,7 +181,7 @@ class AddToDriveViewModel @Inject constructor(
 
     fun onSubjectSelection(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         subjectId.value = _subject.value?.data?.get(pos)?.courseid!!
-        LogM.e("=> testing " + pos)
+        LogM.e("=> onSubjectSelection " + subjectId.value)
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
         //parent.getAdapter().getItem(pos)    get item by pos
@@ -193,14 +196,13 @@ class AddToDriveViewModel @Inject constructor(
             if (isFileSelected.value == true) {
                 callFileAddDrive()
             } else {
-                if (checkValidation()) {
-                    executerUploadFileUrlModelDrive()
-                }
+                executerUploadFileUrlModelDrive()
             }
         }
     }
 
     private fun checkValidation(): Boolean {
+        LogM.e(" Standard id checking ??? " + standardid.value)
         var isValid = false
         if (topic.value.isNullOrEmpty()) {
             application.toast("Please add topic")
@@ -208,6 +210,8 @@ class AddToDriveViewModel @Inject constructor(
             application.toast("Please add description")
         } else if (kwtype.value == null) {
             application.toast("Please select knowledge type")
+        } else if (standardid.value == 0 || standardid.value == null) {
+            application.toast("Please select Standard")
         } else if (isFileSelected.value == true && file.value == null) {
             application.toast("Please choose file")
         } else if (isFileSelected.value == false && linkurl.value.isNullOrEmpty()) {
@@ -256,7 +260,7 @@ class AddToDriveViewModel @Inject constructor(
         inputParam.addProperty(Constant.REQUEST_KW_TYPE, kwtype.value)
         inputParam.addProperty(Constant.REUQEST_SUBJECT_ID, subjectId.value)
         inputParam.addProperty(Constant.REQUEST_FILE_EXT, "")
-        var urlData:String = linkurl.value!!
+        var urlData: String = linkurl.value!!
         if (!urlData?.contains("http", ignoreCase = true)) {
             urlData = "https://" + urlData
         }
@@ -275,11 +279,18 @@ class AddToDriveViewModel @Inject constructor(
         Coroutines.main {
             _isViewLoading.postValue(true)
             val fileReqBodyLicense = file.value?.asRequestBody("image/*".toMediaTypeOrNull())
-            val userImageBody = MultipartBody.Part.createFormData(Constant.REQUEST_IMAGE, file.value?.name, fileReqBodyLicense!!)
+            val userImageBody = MultipartBody.Part.createFormData(
+                Constant.REQUEST_IMAGE,
+                file.value?.name,
+                fileReqBodyLicense!!
+            )
             val shareid = "".toRequestBody("text/plain".toMediaTypeOrNull())
-            val userid = prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
-            val usertype = prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
-            val studentid = prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val userid =
+                prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val usertype =
+                prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val studentid =
+                prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
             val filetitle = topic.value?.toRequestBody("text/plain".toMediaTypeOrNull())
             val filedescr = description.value?.toRequestBody("text/plain".toMediaTypeOrNull())
             val filetype = "F".toRequestBody("text/plain".toMediaTypeOrNull())
@@ -287,8 +298,10 @@ class AddToDriveViewModel @Inject constructor(
             val filesize = filesize.value?.toRequestBody("text/plain".toMediaTypeOrNull())
             val uploadtype = "D".toRequestBody("text/plain".toMediaTypeOrNull())
             val knowledgeType = kwtype.value?.toRequestBody("text/plain".toMediaTypeOrNull())
-            val subjectId = subjectId.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
-            val standardId = standardid.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val subjectId =
+                subjectId.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val standardId =
+                standardid.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
 
             try {
                 val response = repository.callFileAddDrive(
@@ -305,7 +318,8 @@ class AddToDriveViewModel @Inject constructor(
                     uploadtype,
                     knowledgeType!!,
                     subjectId!!,
-                    standardId!!)
+                    standardId!!
+                )
                 _upload_selected_file.postValue(response)
                 _isViewLoading.postValue(false)
                 if (response.status) {
