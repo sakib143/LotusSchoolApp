@@ -6,15 +6,10 @@ import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
 import com.appforschool.data.model.AlertModel
-import com.appforschool.data.model.ScheduleModel
 import com.appforschool.databinding.FragmentAlertBinding
-import com.appforschool.databinding.FragmentScheduleBinding
-import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
-import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
-import com.appforschool.ui.home.fragment.schedule.ScheduleViewModel
 import com.appforschool.utils.Constant
-import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
+import kotlinx.android.synthetic.main.fragment_alert.*
 import javax.inject.Inject
 
 class AlertFragment: BaseBindingFragment<FragmentAlertBinding>() {
@@ -28,6 +23,7 @@ class AlertFragment: BaseBindingFragment<FragmentAlertBinding>() {
 
     private var alAlert: ArrayList<AlertModel.Data> = ArrayList()
     private var binding: FragmentAlertBinding? = null
+    private var adapter: NotificationAdapter? = null
 
     override fun initializeBinding(binding: FragmentAlertBinding) {
         binding.lifecycleOwner = this
@@ -75,12 +71,16 @@ class AlertFragment: BaseBindingFragment<FragmentAlertBinding>() {
     private val alertObserver = Observer<AlertModel> {
         alAlert = ArrayList()
         alAlert!!.addAll(it!!.data!!)
-        binding?.alAlert = alAlert
-        if (alAlert?.size == 0) {
-            viewModel.setDataFound(false)
-        } else {
-            viewModel.setDataFound(true)
-        }
+
+        adapter = NotificationAdapter( it.data)
+        rvNotification.adapter = adapter
+
+//        binding?.alAlert = alAlert
+//        if (alAlert?.size == 0) {
+//            viewModel.setDataFound(false)
+//        } else {
+//            viewModel.setDataFound(true)
+//        }
     }
 
     interface AlertListner {

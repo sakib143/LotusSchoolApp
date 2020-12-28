@@ -2,7 +2,6 @@ package com.appforschool.utils.databindingadapter
 
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.text.format.DateUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -11,18 +10,15 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.appforschool.R
-import com.appforschool.data.model.AssignmentModel
-import com.appforschool.data.model.DriveModel
-import com.appforschool.data.model.ExamModel
-import com.appforschool.data.model.SubjectDetailsModel
+import com.appforschool.data.model.*
 import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
 import com.appforschool.utils.circle_imageview.CircularImageView
 import com.appforschool.utils.hide
 import com.appforschool.utils.show
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,11 +42,23 @@ fun setSubjectIcons(view: ImageView, model: SubjectDetailsModel.Data) {
         view.setImageResource(R.drawable.ic_video_play)
     }else if(model.fileext.equals(".ppt", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_ppt)
-    }else if(model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(".xlsx", ignoreCase = true)) {
+    }else if(model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(
+            ".xlsx",
+            ignoreCase = true
+        )) {
         view.setImageResource(R.drawable.ic_excel)
-    }else if(model.fileext.equals(".jpg", ignoreCase = true) || model.fileext.equals(".gif", ignoreCase = true) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(".tiff", ignoreCase = true)) {
+    }else if(model.fileext.equals(".jpg", ignoreCase = true) || model.fileext.equals(
+            ".gif",
+            ignoreCase = true
+        ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
+            ".tiff",
+            ignoreCase = true
+        )) {
         view.setImageResource(R.drawable.ic_image_file)
-    }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(".docx", ignoreCase = true)) {
+    }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(
+            ".docx",
+            ignoreCase = true
+        )) {
         view.setImageResource(R.drawable.ic_doc)
     }else  {
         view.setImageResource(R.drawable.ic_file_for_assignment)
@@ -65,11 +73,23 @@ fun setAssignmentIcon(view: ImageView, model: AssignmentModel.Data) {
         view.setImageResource(R.drawable.ic_video_play)
     }else if(model.fileext.equals(".ppt", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_ppt)
-    }else if(model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(".xlsx", ignoreCase = true)) {
+    }else if(model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(
+            ".xlsx",
+            ignoreCase = true
+        )) {
         view.setImageResource(R.drawable.ic_excel)
-    }else if(model.fileext.equals(".jpg", ignoreCase = true) || model.fileext.equals(".gif", ignoreCase = true) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(".tiff", ignoreCase = true)) {
+    }else if(model.fileext.equals(".jpg", ignoreCase = true) || model.fileext.equals(
+            ".gif",
+            ignoreCase = true
+        ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
+            ".tiff",
+            ignoreCase = true
+        )) {
         view.setImageResource(R.drawable.ic_image_file)
-    }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(".docx", ignoreCase = true)) {
+    }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(
+            ".docx",
+            ignoreCase = true
+        )) {
         view.setImageResource(R.drawable.ic_doc)
     }else  {
         view.setImageResource(R.drawable.ic_file_for_assignment)
@@ -84,11 +104,23 @@ fun setDriveListIcon(view: ImageView, model: DriveModel.Data) {
         view.setImageResource(R.drawable.ic_video_play)
     }else if(model.fileext.equals(".ppt", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_ppt)
-    }else if(model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(".xlsx", ignoreCase = true)) {
+    }else if(model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(
+            ".xlsx",
+            ignoreCase = true
+        )) {
         view.setImageResource(R.drawable.ic_excel)
-    }else if(model.fileext.equals(".jpg", ignoreCase = true) || model.fileext.equals(".gif", ignoreCase = true) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(".tiff", ignoreCase = true)) {
+    }else if(model.fileext.equals(".jpg", ignoreCase = true) || model.fileext.equals(
+            ".gif",
+            ignoreCase = true
+        ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
+            ".tiff",
+            ignoreCase = true
+        )) {
         view.setImageResource(R.drawable.ic_image_file)
-    }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(".docx", ignoreCase = true)) {
+    }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(
+            ".docx",
+            ignoreCase = true
+        )) {
         view.setImageResource(R.drawable.ic_doc)
     }else  {
         view.setImageResource(R.drawable.ic_file_for_assignment)
@@ -119,7 +151,12 @@ fun loadImageFromUrl(view: ImageView, url: String?, isPlacehoder: Boolean, isErr
 }
 
 @BindingAdapter("LoadCircularImage", "placeholderImage", "errorImage", requireAll = false)
-fun loadCircularImage(view: CircularImageView, url: String?, isPlacehoder: Boolean, isError: Boolean) {
+fun loadCircularImage(
+    view: CircularImageView,
+    url: String?,
+    isPlacehoder: Boolean,
+    isError: Boolean
+) {
     val requestOption: RequestOptions = RequestOptions()
     if (isPlacehoder) {
         requestOption.placeholder(R.drawable.profile_icons)
@@ -157,7 +194,7 @@ fun setTodayExam(attentExam: TextView, examModel: ExamModel.Data) {
     calendarTo!!.time = dateTO
     val strExamTime =  curretDateFormat.format(calendarTo.time)
 
-    if(strCurrentDate.equals(strExamTime,ignoreCase = true)){
+    if(strCurrentDate.equals(strExamTime, ignoreCase = true)){
         attentExam.setText("Today")
         attentExam.setText(R.string.today)
         attentExam.setTextColor(Color.parseColor("#FF0000"))
@@ -175,7 +212,7 @@ fun setTodayTime(attentExam: TextView, examModel: ExamModel.Data) {
     calendarTo!!.time = dateTO
     val strExamTime =  curretDateFormat.format(calendarTo.time)
 
-    if(strCurrentDate.equals(strExamTime,ignoreCase = true)){
+    if(strCurrentDate.equals(strExamTime, ignoreCase = true)){
         attentExam.setTextColor(Color.parseColor("#FF0000"))
     }
 }
@@ -192,6 +229,19 @@ fun setAttentAndResult(textview: TextView, examModel: ExamModel.Data) {
         textview.hide()
     }
 }
+
+//@BindingAdapter("setViewmoreNotification")
+//fun setViewmoreNotification(textview: TextView) {
+//    textview.post(Runnable {
+//        LogM.e("=> text lenght " + textview.lineCount)
+//    })
+//}
+
+
+//@BindingAdapter("setTextviewLineCount")
+//fun setTextviewLineCount(textview: TextView, count: Int) {
+//    textview.maxLines = 5
+//}
 
 
 //@BindingAdapter("setAttentExam")

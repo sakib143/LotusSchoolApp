@@ -54,7 +54,8 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            bindAlert="@{alAlert}"
+            android:id="@+id/rvNotification"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/_5sdp"

@@ -6,12 +6,9 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
-import com.appforschool.data.model.AlertModel
 import com.appforschool.data.model.ExamModel
-import com.appforschool.databinding.AdapterAlertListBinding
 import com.appforschool.databinding.AdapterExamlistBinding
 import com.appforschool.listner.HomeListner
-import com.appforschool.ui.home.fragment.alert.AlertAdapter
 
 class ExamAdapter(
     private val context: Context,

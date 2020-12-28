@@ -6,12 +6,9 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
-import com.appforschool.data.model.AlertModel
 import com.appforschool.data.model.DriveModel
-import com.appforschool.databinding.AdapterAlertListBinding
 import com.appforschool.databinding.AdapterDriveBinding
 import com.appforschool.listner.HomeListner
-import com.appforschool.ui.home.fragment.alert.AlertAdapter
 
 class DriveAdapter (
     private val context: Context,

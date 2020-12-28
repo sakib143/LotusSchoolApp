@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.data.model.*
 import com.appforschool.ui.attendexam.AttendExamAdapter
-import com.appforschool.ui.home.fragment.alert.AlertAdapter
 import com.appforschool.ui.home.fragment.assignment.AssignmentAdapter
 import com.appforschool.ui.home.fragment.drive.DriveAdapter
 import com.appforschool.ui.home.fragment.exam.ExamAdapter
@@ -69,24 +68,24 @@ fun bindAssignment(view: RecyclerView, list: List<AssignmentModel.Data>) {
     }
 }
 
-@BindingAdapter("bindAlert")
-fun bindAlert(view: RecyclerView, list: List<AlertModel.Data>) {
-    if (list.isEmpty())
-        return
-    val layoutManager = view.layoutManager
-    if (layoutManager == null)
-        view.layoutManager = LinearLayoutManager(view.context)
-    var adapter = view.adapter
-
-    if (adapter == null) {
-        adapter =
-            AlertAdapter(
-                view.context,
-                list
-            )
-        view.adapter = adapter
-    }
-}
+//@BindingAdapter("bindAlert")
+//fun bindAlert(view: RecyclerView, list: List<AlertModel.Data>) {
+//    if (list.isEmpty())
+//        return
+//    val layoutManager = view.layoutManager
+//    if (layoutManager == null)
+//        view.layoutManager = LinearLayoutManager(view.context)
+//    var adapter = view.adapter
+//
+//    if (adapter == null) {
+//        adapter =
+//            AlertAdapter(
+//                view.context,
+//                list
+//            )
+//        view.adapter = adapter
+//    }
+//}
 
 @BindingAdapter("bindAExamList")
 fun bindAExamList(view: RecyclerView, list: List<ExamModel.Data>) {

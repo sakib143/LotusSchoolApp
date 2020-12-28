@@ -75,6 +75,7 @@
     <string name="update_force_update">Please update latest version.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="less">Less</string>
 
 
 </resources>
