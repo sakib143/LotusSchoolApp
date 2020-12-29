@@ -9,11 +9,11 @@
 
         <variable
             name="listner"
-            type="com.appforschool.ui.home.fragment.alert.AlertFragment" />
+            type="com.appforschool.ui.home.fragment.notification.AlertFragment" />
 
         <variable
             name="viewmodel"
-            type="com.appforschool.ui.home.fragment.alert.AlertViewModel" />
+            type="com.appforschool.ui.home.fragment.notification.AlertViewModel" />
         <variable
             name="alAlert"
             type="List&lt;com.appforschool.data.model.AlertModel.Data>" />

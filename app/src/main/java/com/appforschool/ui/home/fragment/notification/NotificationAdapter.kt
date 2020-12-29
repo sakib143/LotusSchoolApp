@@ -1,15 +1,20 @@
-package com.appforschool.ui.home.fragment.alert
+package com.appforschool.ui.home.fragment.notification
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.R
 import com.appforschool.data.model.AlertModel
-import com.appforschool.utils.LogM
 import com.appforschool.utils.hide
 import com.appforschool.utils.show
+import com.appforschool.utils.toast
 
 class NotificationAdapter(
     private val list: List<AlertModel.Data>
@@ -47,6 +52,14 @@ class NotificationAdapter(
                 holder.tvMore.setText(holder.tvMore.context.resources.getString(R.string.less))
             }
         }
+        
+        holder.llNotificationRoot.setOnLongClickListener() {
+            holder.llNotificationRoot.context.toast(holder.llNotificationRoot.context.getString(R.string.copied_to_clipboard))
+            val clipBoard = holder.llNotificationRoot.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("label", list.get(position).notificationDesc)
+            clipBoard.setPrimaryClip(clipData)
+            return@setOnLongClickListener true
+        }
     }
 
     override fun getItemCount() = list.size
@@ -65,6 +78,7 @@ class NotificationAdapter(
         val tvTime = itemView.findViewById(R.id.tvTime) as TextView
         val tvDescription = itemView.findViewById(R.id.tvDescription) as TextView
         val tvMore = itemView.findViewById(R.id.tvMore) as TextView
+        val llNotificationRoot = itemView.findViewById(R.id.llNotificationRoot) as LinearLayout
     }
 
 }

@@ -1,4 +1,4 @@
-package com.appforschool.ui.home.fragment.alert
+package com.appforschool.ui.home.fragment.notification
 
 import android.content.Context
 import android.os.Bundle

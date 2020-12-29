@@ -50,7 +50,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     ScheduleFragment.HomeListener, HomeListner, DashboardFragment.FragmentListner,
     SubjectFragment.SubjectFragmentListner, SubjectDetailsFragment.SubjectDetailsListner,
     AssignmentFragment.AssignmentFragmentListner,
-    com.appforschool.ui.home.fragment.alert.AlertFragment.AlertListner,
+    com.appforschool.ui.home.fragment.notification.AlertFragment.AlertListner,
     ExamListFragment.ExamListListner, DriveFragment.DriveFragmentListner,
     UserProfileListner.onScreenCloseListner {
 
@@ -231,7 +231,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun openAlertFragment() {
         addFragment(
             supportFragmentManager,
-            com.appforschool.ui.home.fragment.alert.AlertFragment.newInstance(),
+            com.appforschool.ui.home.fragment.notification.AlertFragment.newInstance(),
             addToBackStack = true
         )
     }

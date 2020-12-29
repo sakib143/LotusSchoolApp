@@ -1,4 +1,4 @@
-package com.appforschool.ui.home.fragment.alert
+package com.appforschool.ui.home.fragment.notification
 
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -7,9 +7,7 @@ import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.AlertModel
-import com.appforschool.data.model.ScheduleModel
 import com.appforschool.data.repository.AlertRepository
-import com.appforschool.data.repository.ScheduleRepository
 import com.appforschool.utils.Constant
 import com.appforschool.utils.Coroutines
 import com.appforschool.utils.PrefUtils
