@@ -62,7 +62,7 @@ class NotificationAdapter(
         }
         
         holder.llNotificationRoot.setOnLongClickListener() {
-            holder.llNotificationRoot.context.toast(context.getString(R.string.copied_to_clipboard))
+            holder.llNotificationRoot.context.toast(holder.llNotificationRoot.context.getString(R.string.copied_to_clipboard))
             val clipBoard = holder.llNotificationRoot.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clipData = ClipData.newPlainText("label", list.get(position).notificationDesc)
             clipBoard.setPrimaryClip(clipData)
