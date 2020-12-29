@@ -3,6 +3,8 @@ package com.appforschool.ui.home.fragment.notification
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +23,7 @@ class NotificationAdapter(
 ) : RecyclerView.Adapter<NotificationAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val v =
-            LayoutInflater.from(parent.context).inflate(R.layout.adapter_alert_list, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_alert_list, parent, false)
         return MyViewHolder(v)
     }
 
@@ -31,6 +32,9 @@ class NotificationAdapter(
         holder.tvDate.setText(list.get(position).notidate)
         holder.tvTime.setText(list.get(position).notitime)
         holder.tvDescription.setText(list.get(position).notificationDesc)
+
+        //It will open web browser when text will have any URLs
+        Linkify.addLinks(holder.tvDescription, Linkify.WEB_URLS);
 
         //Getting textview length
         holder.tvDescription.post(Runnable {
@@ -44,6 +48,10 @@ class NotificationAdapter(
         }
 
         holder.tvMore.setOnClickListener() {
+            holder.tvDescription.setText(list.get(position).notificationDesc)
+            //It will open web browser when text will have any URLs
+            Linkify.addLinks(holder.tvDescription, Linkify.WEB_URLS);
+
             if (holder.tvMore.text.toString().equals(holder.tvMore.context.resources.getString(R.string.less), ignoreCase = true)) {
                 holder.tvDescription.maxLines = 1
                 holder.tvMore.setText(holder.tvMore.context.resources.getString(R.string.view_more))
