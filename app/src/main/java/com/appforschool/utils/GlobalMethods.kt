@@ -11,13 +11,12 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Patterns
-import android.webkit.URLUtil
 import androidx.core.app.ShareCompat
-import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -55,12 +54,15 @@ class GlobalMethods @Inject constructor() {
     }
 
     fun isInternetAvailable(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE)
-                    as ConnectivityManager
-        connectivityManager.activeNetworkInfo.also {
-            return it != null && it.isConnected
+        var isOnline = false
+        val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        try {
+            val capabilities = manager.getNetworkCapabilities(manager.activeNetwork)
+            isOnline =  capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
         }
+        return isOnline
     }
 
     fun drawableToBitmap(drawable: Drawable): Bitmap? {
