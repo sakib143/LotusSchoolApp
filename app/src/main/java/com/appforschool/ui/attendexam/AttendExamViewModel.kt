@@ -60,6 +60,12 @@ class AttendExamViewModel @Inject constructor(
     val update_answer: LiveData<UpdateExamAnswerModel>
         get() = _update_answer
 
+    //Check if is from View result OR Attent exam
+    private val _isFromViewResult: MutableLiveData<Boolean> =
+        MutableLiveData<Boolean>()
+    val isFromViewResult: LiveData<Boolean>
+        get() = _isFromViewResult
+
     //Getting Exam id
     private val _examId: MutableLiveData<String> =
         MutableLiveData<String>()
@@ -125,7 +131,8 @@ class AttendExamViewModel @Inject constructor(
         makrs: String,
         duration: String,
         time: String,
-        formatedTime: String
+        formatedTime: String,
+        isFromViewResult: Boolean
     ) {
         _examId.postValue(examId)
         _examName.postValue(examName)
@@ -134,6 +141,7 @@ class AttendExamViewModel @Inject constructor(
         _duration.postValue(duration)
         _time.postValue(time)
         _formatedDate.postValue(formatedTime)
+        _isFromViewResult.postValue(isFromViewResult)
     }
 
     fun setDataFound(isFound: Boolean) {

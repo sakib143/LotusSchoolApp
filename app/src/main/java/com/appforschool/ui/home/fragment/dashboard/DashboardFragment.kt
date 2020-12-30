@@ -152,7 +152,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             appStoreIntent.setPackage("com.android.vending")
             startActivity(appStoreIntent)
         }
-        builder?.setNegativeButton(getString(R.string.no)){ dialogInterface, which ->
+        builder?.setNegativeButton(getString(R.string.ask_me_letter)){ dialogInterface, which ->
             dialogInterface.dismiss()
         }
         val alertDialog: AlertDialog = builder!!.create()

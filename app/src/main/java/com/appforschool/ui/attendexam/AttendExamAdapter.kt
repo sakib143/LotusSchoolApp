@@ -19,12 +19,12 @@ import java.util.*
 
 class AttendExamAdapter(
     private val context: Context,
-    private val list: List<AttendExamModel.Data>
+    private val list: List<AttendExamModel.Data>,
+    private val isFromViewAnswer: Boolean
 ) : RecyclerView.Adapter<AttendExamAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val v =
-            LayoutInflater.from(parent.context).inflate(R.layout.adapter_attend_exam, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_attend_exam, parent, false)
         return MyViewHolder(v)
     }
 
@@ -33,13 +33,20 @@ class AttendExamAdapter(
         setText(holder, position)
         setCheckboxchecked(position, holder)
         setViewVisibility(position, holder)
-        setListner(position, holder)
+        if( ! isFromViewAnswer) {
+            setListner(position, holder)
+        }
     }
 
     private fun setText(holder: MyViewHolder, position: Int) {
         holder.tvNumber.text = list.get(position).questionOrder.toString()
-        holder.tvQuestionDescription.text =
-            list.get(position).questionDesc + "  (Mark(s): " + list.get(position).marks.toString() + ")"
+        if(isFromViewAnswer) {
+            holder.tvQuestionDescription.text =
+                list.get(position).questionDesc + "  (Mark: " + list.get(position).ObtainedMarks + "/" + list.get(position).marks.toString() + ")"
+        } else {
+            holder.tvQuestionDescription.text =
+                list.get(position).questionDesc + "  (Mark(s): " + list.get(position).marks.toString() + ")"
+        }
         holder.cbFour.text = list.get(position).optionD
         holder.cbThree.text = list.get(position).optionC
         holder.cbTwo.text = list.get(position).optionB
@@ -118,6 +125,7 @@ class AttendExamAdapter(
     }
 
     private fun setViewVisibility(position: Int, holder: MyViewHolder) {
+        //If answer is subjective then hide checkbox and show edittext
         if (list.get(position).qType.equals("S", ignoreCase = true)) {
             holder.llCheckbox.hide()
             holder.edtAnswer.show()

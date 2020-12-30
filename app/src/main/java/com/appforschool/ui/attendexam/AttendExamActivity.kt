@@ -52,25 +52,45 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         binding.alAttendExam = alAttendExam
     }
 
-    private var strExamId: String? =  null
+    private var strExamId: String? = null
     private var strQuestionId: String? = null
     private var position: Int? = null
+    private var isFromViewResult: Boolean = false
+    private var totalobtainedmarks: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        isFromViewResult = intent.getBooleanExtra(Constant.REQUEST_MODE_VIEW_RESULT, false)
         strExamId = intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!
-        LogM.e("Exam id checking Activity" + strExamId)
+        totalobtainedmarks = intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!
+        totalobtainedmarks = intent.getStringExtra(Constant.KEY_OBTAIN_MARKS)!!
 
-        viewModel.setData(
-            intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
-            intent.getStringExtra(Constant.REQUEST_GET_EXAMS)!!,
-            intent.getStringExtra(Constant.REUQEST_GET_SUBJECTS)!!,
-            intent.getStringExtra(Constant.KEY_MAKRS)!!,
-            intent.getStringExtra(Constant.KEY_DURATION)!!,
-            intent.getStringExtra(Constant.KEY_TIME)!!,
-            intent.getStringExtra(Constant.KEY_FORMATED_TIME)!!
-        )
+        if (isFromViewResult) {
+            val marksForResult = totalobtainedmarks + " / " + intent.getStringExtra(Constant.KEY_MAKRS)
+            viewModel.setData(
+                intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
+                intent.getStringExtra(Constant.REQUEST_GET_EXAMS)!!,
+                intent.getStringExtra(Constant.REUQEST_GET_SUBJECTS)!!,
+                marksForResult,
+                intent.getStringExtra(Constant.KEY_DURATION)!!,
+                intent.getStringExtra(Constant.KEY_TIME)!!,
+                intent.getStringExtra(Constant.KEY_FORMATED_TIME)!!,
+                intent.getBooleanExtra(Constant.REQUEST_MODE_VIEW_RESULT, false)
+            )
+        } else {
+            viewModel.setData(
+                intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
+                intent.getStringExtra(Constant.REQUEST_GET_EXAMS)!!,
+                intent.getStringExtra(Constant.REUQEST_GET_SUBJECTS)!!,
+                intent.getStringExtra(Constant.KEY_MAKRS)!!,
+                intent.getStringExtra(Constant.KEY_DURATION)!!,
+                intent.getStringExtra(Constant.KEY_TIME)!!,
+                intent.getStringExtra(Constant.KEY_FORMATED_TIME)!!,
+                intent.getBooleanExtra(Constant.REQUEST_MODE_VIEW_RESULT, false)
+            )
+        }
+
         setData()
     }
 
@@ -84,7 +104,9 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
             makrs: String,
             duration: String,
             time: String,
-            formatedTime: String
+            formatedTime: String,
+            isFromResult: Boolean,
+            totalobtainedmarks: String
         ) =
             Intent(context, AttendExamActivity::class.java)
                 .putExtra(Constant.REQUEST_EXAM_ID, examId)
@@ -94,6 +116,8 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
                 .putExtra(Constant.KEY_DURATION, duration)
                 .putExtra(Constant.KEY_TIME, time)
                 .putExtra(Constant.KEY_FORMATED_TIME, formatedTime)
+                .putExtra(Constant.REQUEST_MODE_VIEW_RESULT, isFromResult)
+                .putExtra(Constant.KEY_OBTAIN_MARKS, totalobtainedmarks)
     }
 
     private fun setData() {
@@ -102,12 +126,21 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         viewModel.setFiveMinuteLeft.observe(this, onFiveMinuteLeft)
         viewModel.setTimeOver.observe(this, onTimeOverObserver)
         viewModel.endExam.observe(this, endExamObserver)
-        viewModel.uploadAnswer.observe(this,uploadAnswerFileObserver)
+        viewModel.uploadAnswer.observe(this, uploadAnswerFileObserver)
 
         viewModel.executeAttentExamList() //API call to fetch list
-        viewModel.fiveMinuteLeftAlert()
-        viewModel.oneMinuteLeftAlert()
-        viewModel.timeOverAlert()
+
+        /*
+            If user come from view result then fiveMinuteLeftAlert, oneMinuteLeftAlert and timeOverAlert
+            dialogs will not be apear and will not execute any API anymore.
+         */
+        if (isFromViewResult) {
+
+        } else {
+            viewModel.fiveMinuteLeftAlert()
+            viewModel.oneMinuteLeftAlert()
+            viewModel.timeOverAlert()
+        }
     }
 
     private fun setFiveMinRemainAlert() {
@@ -141,7 +174,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
                 viewModel.setDataFound(true)
                 rvAttendExam.setHasFixedSize(true)
                 rvAttendExam.layoutManager = LinearLayoutManager(this@AttendExamActivity)
-                adapter = AttendExamAdapter(this@AttendExamActivity, it.data)
+                adapter = AttendExamAdapter(this@AttendExamActivity, it.data, isFromViewResult)
                 rvAttendExam.adapter = adapter
             }
         } else {
@@ -169,23 +202,24 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         }
     }
 
-    fun zoomImage(imageUrl: String, image:ImageView) {
+    fun zoomImage(imageUrl: String, image: ImageView) {
         ViewCompat.setTransitionName(image, Constant.IMAGE_FULL_ZOOM_ANIM)
         val intent = Intent(this, FullImageActivity::class.java)
         intent.putExtra(Constant.REQUEST_LINK_URL, imageUrl)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this,
             image!!,
-            ViewCompat.getTransitionName(image)!!)
+            ViewCompat.getTransitionName(image)!!
+        )
         startActivity(intent, options.toBundle())
     }
 
     fun optionAClicked(position: Int, srNumber: String) {
         val inputParam = JsonObject()
-        if(alAttendExam.get(position).isACorrect){
+        if (alAttendExam.get(position).isACorrect) {
             alAttendExam.get(position).isACorrect = false
             inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
-        }else {
+        } else {
             alAttendExam.get(position).isACorrect = true
             inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "1")
         }
@@ -210,10 +244,10 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     fun optionBClicked(position: Int, srNumber: String) {
         val inputParam = JsonObject()
         alAttendExam.get(position).isACorrect = false
-        if(alAttendExam.get(position).isBCorrect) {
+        if (alAttendExam.get(position).isBCorrect) {
             alAttendExam.get(position).isBCorrect = false
             inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
-        }else {
+        } else {
             alAttendExam.get(position).isBCorrect = true
             inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "1")
         }
@@ -236,10 +270,10 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         val inputParam = JsonObject()
         alAttendExam.get(position).isACorrect = false
         alAttendExam.get(position).isBCorrect = false
-        if(alAttendExam.get(position).isCCorrect){
+        if (alAttendExam.get(position).isCCorrect) {
             alAttendExam.get(position).isCCorrect = false
             inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
-        }else {
+        } else {
             alAttendExam.get(position).isCCorrect = true
             inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "1")
         }
@@ -286,25 +320,28 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     fun updateEditeTextAnswer(position: Int, srNumber: String, subAnswer: String) {
         LogM.e("=> subAnswer " + subAnswer)
         Coroutines.main {
-            if( ! oldAnswer.trim().equals(subAnswer.trim())){
+            if (!oldAnswer.trim().equals(subAnswer.trim())) {
                 val inputParam = JsonObject()
-                if(subAnswer.equals("",ignoreCase = true)){
+                if (subAnswer.equals("", ignoreCase = true)) {
                     alAttendExam.get(position).subjectiveanswer = ""
                     inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, "")
-                }else {
+                } else {
                     alAttendExam.get(position).subjectiveanswer = subAnswer
                     inputParam.addProperty(Constant.REQUEST_SUBJECTIVE_ANSWER, subAnswer)
                 }
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_UPDATE_EXAM_ANSWERS)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
-                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(
+                    Constant.REQUEST_STUDENTID,
+                    prefUtils.getUserData()?.studentId
+                )
                 inputParam.addProperty(Constant.REQUEST_SR_NO, srNumber)
                 inputParam.addProperty(Constant.REQUEST_OPTION_A_VALUE, "0")
                 inputParam.addProperty(Constant.REQUEST_OPTION_B_VALUE, "0")
                 inputParam.addProperty(Constant.REQUEST_OPTION_C_VALUE, "0")
                 inputParam.addProperty(Constant.REQUEST_OPTION_D_VALUE, "0")
                 viewModel.executeUpdateExamAnswer(inputParam)
-                oldAnswer =  subAnswer
+                oldAnswer = subAnswer
             }
         }
     }
@@ -349,7 +386,8 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         checkFileSubmitPermission()
     }
 
-    fun checkFileSubmitPermission() = runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
+    fun checkFileSubmitPermission() =
+        runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
             var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
             chooseFile.setType("*/*")
             chooseFile = Intent.createChooser(chooseFile, "Choose a file")
@@ -363,7 +401,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
                 val filePath = ImageFilePath.getPath(this@AttendExamActivity, data?.data)
                 val file: File = File(filePath)
                 LogM.e("file path is " + file + "  Exam id " + strExamId)
-                viewModel.uploadAnswerFile(strExamId,strQuestionId,file)
+                viewModel.uploadAnswerFile(strExamId, strQuestionId, file)
             }
         }
     }

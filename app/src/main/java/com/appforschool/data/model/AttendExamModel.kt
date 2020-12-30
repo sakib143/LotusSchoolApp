@@ -51,6 +51,16 @@ data class AttendExamModel(
         @Expose
         @SerializedName("SrNo") var srNo: Int = 0,
         @Expose
-        @SerializedName("subjectiveanswer") var subjectiveanswer: String = ""
+        @SerializedName("subjectiveanswer") var subjectiveanswer: String = "",
+        @Expose
+        @SerializedName("isAcutalAnsA") var isAcutalAnsA: Boolean = false,
+        @Expose
+        @SerializedName("isAcutalAnsB") var isAcutalAnsB: Boolean = false,
+        @Expose
+        @SerializedName("isAcutalAnsC") var isAcutalAnsC: Boolean = false,
+        @Expose
+        @SerializedName("isAcutalAnsD") var isAcutalAnsD: Boolean = false,
+        @Expose
+        @SerializedName("ObtainedMarks") var ObtainedMarks: String = ""
     )
 }

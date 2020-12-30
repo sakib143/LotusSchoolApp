@@ -108,7 +108,9 @@ class NavigationController @Inject constructor(var context: Context) {
         makrs: String,
         duration: String,
         time: String,
-        formatedTime: String
+        formatedTime: String,
+        isFromResult: Boolean,
+        totalobtainedmarks: String
     ) {
         activity.startActivity(
             AttendExamActivity.intentFor(
@@ -119,7 +121,9 @@ class NavigationController @Inject constructor(var context: Context) {
                 makrs,
                 duration,
                 time,
-                formatedTime
+                formatedTime,
+                isFromResult,
+                totalobtainedmarks
             )
         )
     }

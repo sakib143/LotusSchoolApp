@@ -135,4 +135,7 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callStartExam(@Body jsonObject: JsonObject): Response<StartExamModel>
 
+    @POST("Get_SpData")
+    suspend fun callViewResult(@Body jsonObject: JsonObject): Response<ViewResultModel>
+
 }

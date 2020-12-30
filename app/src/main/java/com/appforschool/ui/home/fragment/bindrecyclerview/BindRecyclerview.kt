@@ -115,21 +115,21 @@ fun bindDriveList(view: RecyclerView, list: List<DriveModel.Data>) {
         view.adapter = adapter
 }
 
-@BindingAdapter("bindAttendExam")
-fun bindAttendExam(view: RecyclerView, list: List<AttendExamModel.Data>) {
-    if (list.isEmpty())
-        return
-    val layoutManager = view.layoutManager
-    if (layoutManager == null)
-        view.layoutManager = LinearLayoutManager(view.context)
-    var adapter = view.adapter
-
-    if (adapter == null) {
-        adapter =
-            AttendExamAdapter(
-                view.context,
-                list
-            )
-        view.adapter = adapter
-    }
-}
+//@BindingAdapter("bindAttendExam")
+//fun bindAttendExam(view: RecyclerView, list: List<AttendExamModel.Data>) {
+//    if (list.isEmpty())
+//        return
+//    val layoutManager = view.layoutManager
+//    if (layoutManager == null)
+//        view.layoutManager = LinearLayoutManager(view.context)
+//    var adapter = view.adapter
+//
+//    if (adapter == null) {
+//        adapter =
+//            AttendExamAdapter(
+//                view.context,
+//                list
+//            )
+//        view.adapter = adapter
+//    }
+//}

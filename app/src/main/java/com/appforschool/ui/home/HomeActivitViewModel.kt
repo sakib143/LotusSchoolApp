@@ -79,6 +79,12 @@ class HomeActivitViewModel @Inject constructor(
     val startExam: LiveData<StartExamModel>
         get() = _startExam
 
+    //View Result observer related data
+    private val _viewResult: MutableLiveData<ViewResultModel> =
+        MutableLiveData<ViewResultModel>()
+    val viewResult: LiveData<ViewResultModel>
+        get() = _viewResult
+
     fun executeSetJoinLog(scheduleId: String): LiveData<SetJoinModel> {
         Coroutines.main {
             try {
@@ -193,10 +199,7 @@ class HomeActivitViewModel @Inject constructor(
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_MODE_START_EXAM)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
                 inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId)
-                inputParam.addProperty(
-                    Constant.REQUEST_STUDENTID,
-                    prefUtils.getUserData()?.studentId
-                )
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
                 val apiResponse = repository.callStartExam(inputParam)
                 _startExam.postValue(apiResponse)
             } catch (e: ApiExceptions) {
@@ -208,5 +211,23 @@ class HomeActivitViewModel @Inject constructor(
         return _startExam!!
     }
 
+    fun executeViewResult(examId: String): LiveData<ViewResultModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_MODE_VIEW_RESULT)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+                inputParam.addProperty(Constant.REQUEST_EXAM_ID, examId)
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                val apiResponse = repository.callViewResult(inputParam)
+                _viewResult.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _viewResult!!
+    }
 
 }

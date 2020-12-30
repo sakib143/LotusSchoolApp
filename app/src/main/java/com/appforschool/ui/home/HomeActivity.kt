@@ -97,6 +97,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     private fun setObserver() {
         viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
         viewModel.startExam.observe(this@HomeActivity, startExamObserver)
+        viewModel.viewResult.observe(this@HomeActivity, viewResultObserver)
         viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
         viewModel.fileSubmit.observe(this@HomeActivity, fileSubmitObserver)
         viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
@@ -286,7 +287,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     private val startExamObserver = Observer<StartExamModel> {
         if (it.status) {
-            val formatedDateTime = it.data.get(0).examdate + " " + it.data.get(0).examtime1
             navigationController.navigateToAttendExam(
                 this@HomeActivity,
                 it.data.get(0).examid,
@@ -295,7 +295,28 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 it.data.get(0).totalmarks.toString()!!,
                 it.data.get(0).duration.toString()!!,
                 it.data.get(0).examtime!!,
-                it.data.get(0).examStartDateTime!!
+                it.data.get(0).examStartDateTime!!,
+                false,
+                ""
+            )
+        } else {
+            toast(it!!.message)
+        }
+    }
+
+    private val viewResultObserver = Observer<ViewResultModel> {
+        if (it.status) {
+            navigationController.navigateToAttendExam(
+                this@HomeActivity,
+                it.data.get(0).examid,
+                it.data.get(0).examname!!,
+                it.data.get(0).subjectname!!,
+                it.data.get(0).totalmarks.toString()!!,
+                it.data.get(0).duration.toString()!!,
+                it.data.get(0).examtime!!,
+                it.data.get(0).examStartDateTime!!,
+                true,
+                it.data.get(0).totalobtainedmarks.toString()
             )
         } else {
             toast(it!!.message)
@@ -394,19 +415,21 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openExamDetails(model: ExamModel.Data) {
-        AlertDialogUtility.CustomAlert(
-            this@HomeActivity,
-            getString(R.string.exam_start_title),
-            getString(R.string.exam_start_message),
-            "Yes",
-            "No",
-            { dialog, which ->
-                dialog.dismiss()
-                viewModel.executeStartExam(model.examid)
-            },
-            { dialog, which ->
-                dialog.dismiss()
-            })
+        if (model.isshowviewresult == 1) {
+            LogM.e("=> view exam id " + model.examid)
+            viewModel.executeViewResult(model.examid)
+        } else {
+            AlertDialogUtility.CustomAlert(this@HomeActivity, getString(R.string.exam_start_title), getString(R.string.exam_start_message),
+                "Yes",
+                "No",
+                { dialog, which ->
+                    dialog.dismiss()
+                    viewModel.executeStartExam(model.examid)
+                },
+                { dialog, which ->
+                    dialog.dismiss()
+                })
+        }
     }
 
     override fun openExamDetailsZoom(linearLayout: LinearLayout, date: String, time: String) {

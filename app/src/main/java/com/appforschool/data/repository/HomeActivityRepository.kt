@@ -47,4 +47,9 @@ class HomeActivityRepository @Inject constructor(
         }
     }
 
+    suspend fun callViewResult(objectLogin: JsonObject): ViewResultModel {
+        return apiRequest {
+            webServiceInterface.callViewResult(objectLogin)
+        }
+    }
 }

@@ -4,12 +4,12 @@
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/_10sdp"
+        android:background="@drawable/bg_cardview"
+        android:orientation="vertical"
         android:padding="@dimen/_10sdp"
-        android:background="@drawable/bg_cardview">
+        android:paddingTop="@dimen/_10sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,12 +28,12 @@
             <TextView
                 android:id="@+id/tvQuestionDescription"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:fontFamily="@font/calibri"
                 android:textSize="@dimen/_15ssp"
                 android:textStyle="bold"
-                tools:text="Question title "
-                android:layout_marginLeft="@dimen/_5sdp"/>
+                tools:text="Question title " />
 
         </LinearLayout>
 
@@ -43,7 +43,6 @@
             android:layout_height="wrap_content"
             android:visibility="visible" />
 
-
         <LinearLayout
             android:id="@+id/llCheckbox"
             android:layout_width="match_parent"
@@ -51,40 +50,93 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-            <CheckBox
-                android:id="@+id/cbOne"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@android:color/black"
-                android:fontFamily="@font/calibri"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_12ssp" />
+                android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/cbTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@android:color/black"
-                android:fontFamily="@font/calibri"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_12ssp" />
-            <CheckBox
-                android:id="@+id/cbThree"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@android:color/black"
-                android:fontFamily="@font/calibri"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_12ssp" />
+                <CheckBox
+                    android:id="@+id/cbOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@android:color/black"
+                    android:fontFamily="@font/calibri"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_12ssp" />
 
-            <CheckBox
-                android:id="@+id/cbFour"
+                <TextView
+                    android:id="@+id/tvOne"
+                    android:background="@drawable/ic_correct_ans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@android:color/black"
-                android:fontFamily="@font/calibri"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_12ssp" />
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cbTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@android:color/black"
+                    android:fontFamily="@font/calibri"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/tvTwo"
+                    android:background="@drawable/ic_correct_ans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cbThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@android:color/black"
+                    android:fontFamily="@font/calibri"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/tvThree"
+                    android:background="@drawable/ic_correct_ans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cbFour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@android:color/black"
+                    android:fontFamily="@font/calibri"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+                <TextView
+                    android:id="@+id/tvFour"
+                    android:background="@drawable/ic_correct_ans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -92,13 +144,12 @@
             android:id="@+id/edtAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Answer"
             android:fontFamily="@font/calibri"
-            android:textSize="@dimen/_14ssp"
-            android:minLines="2"
+            android:hint="Enter Answer"
             android:maxLines="5"
-            android:visibility="visible"
-            />
+            android:minLines="2"
+            android:textSize="@dimen/_14ssp"
+            android:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/llUploadFile"
@@ -110,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/updload_file_less_than_5mb"
-                android:textSize="@dimen/_12ssp"/>
+                android:textSize="@dimen/_12ssp" />
         </LinearLayout>
 
     </LinearLayout>
