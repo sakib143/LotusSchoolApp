@@ -63,11 +63,12 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
 
         isFromViewResult = intent.getBooleanExtra(Constant.REQUEST_MODE_VIEW_RESULT, false)
         strExamId = intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!
-        totalobtainedmarks = intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!
         totalobtainedmarks = intent.getStringExtra(Constant.KEY_OBTAIN_MARKS)!!
 
         if (isFromViewResult) {
+            tvSubmit.setText(resources.getString(R.string.close))
             val marksForResult = totalobtainedmarks + " / " + intent.getStringExtra(Constant.KEY_MAKRS)
+            setPercent()
             viewModel.setData(
                 intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
                 intent.getStringExtra(Constant.REQUEST_GET_EXAMS)!!,
@@ -92,6 +93,13 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         }
 
         setData()
+    }
+
+    private fun setPercent() {
+        //Getting percentage.
+        val totalMark:Double = intent.getStringExtra(Constant.KEY_MAKRS)!!.toDouble()
+        val percentage:Double = ( 100 * totalobtainedmarks.toDouble()) / totalMark
+        viewModel.setPercentage(percentage.toString())
     }
 
     companion object {
@@ -347,19 +355,23 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     }
 
     fun submitButtonClick() {
-        AlertDialogUtility.CustomAlert(
-            this@AttendExamActivity,
-            getString(R.string.submit_exam_title),
-            getString(R.string.submit_exam_message),
-            "Yes",
-            "No",
-            { dialog, which ->
-                dialog.dismiss()
-                executeEndExamAPI()
-            },
-            { dialog, which ->
-                dialog.dismiss()
-            })
+        if(isFromViewResult) {
+            closeScreen()
+        } else {
+            AlertDialogUtility.CustomAlert(
+                this@AttendExamActivity,
+                getString(R.string.submit_exam_title),
+                getString(R.string.submit_exam_message),
+                "Yes",
+                "No",
+                { dialog, which ->
+                    dialog.dismiss()
+                    executeEndExamAPI()
+                },
+                { dialog, which ->
+                    dialog.dismiss()
+                })
+        }
     }
 
     fun executeEndExamAPI() {
@@ -372,7 +384,12 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     }
 
     override fun onBackPressed() {
-//        closeScreen()
+        /*We will allow backpress only is user is from View result.
+        If user will from Attent exam then user should submit current question so that back press is stoped
+         */
+        if(isFromViewResult) {
+            closeScreen()
+        }
     }
 
     override fun onDestroy() {

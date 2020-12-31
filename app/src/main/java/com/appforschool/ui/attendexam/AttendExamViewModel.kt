@@ -102,6 +102,11 @@ class AttendExamViewModel @Inject constructor(
     val marks: LiveData<String>
         get() = _marks
 
+    private val _percentage: MutableLiveData<String> =
+        MutableLiveData<String>()
+    val percentage: LiveData<String>
+        get() = _percentage
+
     private val _formatedDate: MutableLiveData<String> =
         MutableLiveData<String>()
     val formatedDate: LiveData<String>
@@ -317,5 +322,7 @@ class AttendExamViewModel @Inject constructor(
         return _uploadAnswer!!
     }
 
-
+    fun setPercentage(strPercent: String) {
+        _percentage.postValue(strPercent)
+    }
 }

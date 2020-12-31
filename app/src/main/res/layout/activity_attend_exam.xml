@@ -68,6 +68,15 @@
                         android:textSize="@dimen/_14ssp"
                         tools:text="Duration" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:text="@{`Percentage: `+viewModel.percentage}"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Percentage" />
+
 
                 </LinearLayout>
 
