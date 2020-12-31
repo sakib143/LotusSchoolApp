@@ -28,7 +28,7 @@
             <TextView
                 android:id="@+id/tvQuestionDescription"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:fontFamily="@font/calibri"
                 android:textSize="@dimen/_15ssp"
@@ -65,8 +65,12 @@
                     android:textSize="@dimen/_12ssp" />
 
                 <TextView
-                    android:id="@+id/tvOne"
-                    android:background="@drawable/ic_correct_ans"
+                    android:id="@+id/tvACorrect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvAInCorrect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -87,8 +91,12 @@
                     android:textSize="@dimen/_12ssp" />
 
                 <TextView
-                    android:id="@+id/tvTwo"
-                    android:background="@drawable/ic_correct_ans"
+                    android:id="@+id/tvBCorrect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tvBInCorrect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -109,8 +117,12 @@
                     android:textSize="@dimen/_12ssp" />
 
                 <TextView
-                    android:id="@+id/tvThree"
-                    android:background="@drawable/ic_correct_ans"
+                    android:id="@+id/tvCCorrect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvCInCorrect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -131,8 +143,12 @@
                     android:textSize="@dimen/_12ssp" />
 
                 <TextView
-                    android:id="@+id/tvFour"
-                    android:background="@drawable/ic_correct_ans"
+                    android:id="@+id/tvDCorrect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tvDInCorrect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
