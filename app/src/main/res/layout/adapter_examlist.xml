@@ -125,11 +125,11 @@
                     tools:text="Duration" />
 
                 <TextView
+                    setTotakAndObtainMarks="@{examListModel}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri"
                     android:gravity="left"
-                    android:text="@{`Marks: ` + examListModel.totalmarks}"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     tools:text="Total Marks" />

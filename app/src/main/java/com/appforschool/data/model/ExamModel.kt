@@ -53,7 +53,8 @@ data class ExamModel(
         @SerializedName("IsShowAttendButton") var IsShowAttendButton: Int = 0,
         @Expose
         @SerializedName("isshowviewresult") var isshowviewresult: Int = 0,
-        )
+        @Expose
+        @SerializedName("ObtainedMarks") var ObtainedMarks: String = "")
 
 
 }

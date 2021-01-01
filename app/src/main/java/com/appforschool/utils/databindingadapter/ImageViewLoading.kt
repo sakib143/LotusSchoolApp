@@ -230,6 +230,16 @@ fun setAttentAndResult(textview: TextView, examModel: ExamModel.Data) {
     }
 }
 
+@BindingAdapter("setTotakAndObtainMarks")
+fun setTotakAndObtainMarks(textview: TextView, examModel: ExamModel.Data) {
+    if (examModel.isshowviewresult == 1) {
+        val obtainMarks: String = "Marks: "  + examModel.ObtainedMarks + "/"+examModel.totalmarks.toString()
+        textview.setText(obtainMarks)
+    } else {
+        textview.setText( "Marks: " + examModel.totalmarks)
+    }
+}
+
 //@BindingAdapter("setViewmoreNotification")
 //fun setViewmoreNotification(textview: TextView) {
 //    textview.post(Runnable {
