@@ -2,6 +2,7 @@ package com.appforschool.ui.home.fragment.exam
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
@@ -9,6 +10,7 @@ import com.appforschool.data.model.ExamModel
 import com.appforschool.databinding.FragmentExamlistBinding
 import com.appforschool.listner.UserProfileListner
 import com.appforschool.utils.Constant
+import com.appforschool.utils.OnDragTouchListener
 import com.appforschool.utils.toast
 import javax.inject.Inject
 
@@ -98,6 +100,10 @@ class ExamListFragment : BaseBindingFragment<FragmentExamlistBinding>(),
 
     fun refreshList() {
         getExamList()
+    }
+
+    fun setMovableLayout(view: TextView) {
+        view.setOnTouchListener(OnDragTouchListener(view))
     }
 
 }

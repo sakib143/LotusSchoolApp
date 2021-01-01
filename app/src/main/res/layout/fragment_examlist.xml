@@ -81,7 +81,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:onClick="@{()-> listner.refreshList()}"/>
+            android:onClick="@{()-> listner.refreshList()}"
+            app:setTouchListner="@{true}" />
 
         <com.github.ybq.android.spinkit.SpinKitView
             style="@style/SpinKitView.Large.CubeGrid"

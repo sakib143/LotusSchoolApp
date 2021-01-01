@@ -4,16 +4,20 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.appforschool.R
-import com.appforschool.data.model.*
+import com.appforschool.data.model.AssignmentModel
+import com.appforschool.data.model.DriveModel
+import com.appforschool.data.model.ExamModel
+import com.appforschool.data.model.SubjectDetailsModel
 import com.appforschool.utils.Constant
-import com.appforschool.utils.LogM
+import com.appforschool.utils.OnDragTouchListener
 import com.appforschool.utils.circle_imageview.CircularImageView
 import com.appforschool.utils.hide
 import com.appforschool.utils.show
@@ -236,9 +240,15 @@ fun setTotakAndObtainMarks(textview: TextView, examModel: ExamModel.Data) {
         val obtainMarks: String = "Marks: "  + examModel.ObtainedMarks + "/"+examModel.totalmarks.toString()
         textview.setText(obtainMarks)
     } else {
-        textview.setText( "Marks: " + examModel.totalmarks)
+        textview.setText("Marks: " + examModel.totalmarks)
     }
 }
+
+@BindingAdapter("setTouchListner")
+fun setTouchListner(textview: TextView, value: Boolean) {
+    textview.setOnTouchListener(OnDragTouchListener(textview))
+}
+
 
 //@BindingAdapter("setViewmoreNotification")
 //fun setViewmoreNotification(textview: TextView) {
