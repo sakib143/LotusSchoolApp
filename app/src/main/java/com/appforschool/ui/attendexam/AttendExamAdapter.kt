@@ -38,6 +38,10 @@ class AttendExamAdapter(
         if (!isFromViewAnswer) {
             setListner(position, holder)
         } else {
+            holder.cbOne.isClickable = false
+            holder.cbTwo.isClickable = false
+            holder.cbThree.isClickable = false
+            holder.cbFour.isClickable = false
             holder.edtAnswer.isEnabled = false
             holder.llUploadFile.hide()
             setRightWrongAnswers(position, holder)
