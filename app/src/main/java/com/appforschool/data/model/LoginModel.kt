@@ -46,7 +46,9 @@ data class LoginModel(
         @Expose
         @SerializedName("isshowaddbutton") var isshowaddbutton: Int = 0,
         @Expose
-        @SerializedName("logofilepath") var logofilepath: String = ""
+        @SerializedName("logofilepath") var logofilepath: String = "",
+        @Expose
+        @SerializedName("videoserverurl") var videoserverurl: String = ""
     )
 
 

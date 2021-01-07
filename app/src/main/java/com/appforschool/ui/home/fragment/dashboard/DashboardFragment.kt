@@ -95,6 +95,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             loginModel.isopenprofile = it.data.get(0).isopenprofile
             loginModel.isshowaddbutton = it.data.get(0).isshowaddbutton
             loginModel.logofilepath = it.data.get(0).logofilepath
+            loginModel.videoserverurl = it.data.get(0).videoserverurl
             prefUtils.saveUserId(prefUtils.getUserData()!!.userid,loginModel)
             if(loginModel.isopenprofile == 1){
                 listener?.openProfileScreen()
