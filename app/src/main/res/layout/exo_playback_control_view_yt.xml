@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="#77000000">
 
+    <ImageView
+        android:id="@+id/ivMoreOptions"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:background="@drawable/ic_more_video"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"/>
+
+
     <LinearLayout
         android:id="@+id/exo_ll_controls"
         android:layout_width="match_parent"
