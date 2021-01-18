@@ -2,17 +2,14 @@ package com.appforschool.ui.videoplaying
 
 import android.content.pm.ActivityInfo
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.appforschool.R
-import com.appforschool.base.BaseActivity
 import com.appforschool.utils.Constant
 import com.appforschool.utils.exoplayer_utils.BaseVideoActivity
 import com.appforschool.utils.exoplayer_utils.DataAndUtils
 import com.appforschool.utils.exoplayer_utils.YouTubeOverlay
 import com.appforschool.utils.toast
-import com.google.android.exoplayer2.ui.PlayerView.SHOW_BUFFERING_WHEN_PLAYING
 import kotlinx.android.synthetic.main.activity_video_playing2.*
 import kotlinx.android.synthetic.main.exo_playback_control_view_yt.*
 

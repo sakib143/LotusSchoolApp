@@ -30,6 +30,8 @@ import com.bumptech.glide.Priority
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import com.appforschool.R
+import com.google.android.exoplayer2.PlaybackParameters
+import com.google.android.exoplayer2.SimpleExoPlayer
 import java.io.IOException
 import java.text.DecimalFormat
 import java.text.ParseException
@@ -415,13 +417,11 @@ fun Activity.openGooglePlayApp(packageName : String){
         )
     }}
 
-
 fun Context.toast(message:String) {
     val spannableStringBuilder = SpannableStringBuilder(message);
     spannableStringBuilder.setSpan(RelativeSizeSpan(1.35f), 0, message.length, 0)
     Toast.makeText(this,spannableStringBuilder, Toast.LENGTH_LONG).show()
 }
-
 
 fun LocalDate.isYesterday(): Boolean = this.isEqual(LocalDate.now().minusDays(1L))
 
