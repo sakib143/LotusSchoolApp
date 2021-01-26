@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,45 +8,47 @@
     tools:context=".ui.videoplaying.VideoPlayingActivity"
     android:background="@color/colorBlack">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:animateLayoutChanges="true"
-            app:layout_constraintDimensionRatio="16:9"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
-            <com.appforschool.utils.exoplayer_utils.DoubleTapPlayerView
-                android:id="@+id/previewPlayerView"
+            <FrameLayout
+                android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:animateLayoutChanges="true"
-                android:background="@android:color/black"
-                app:controller_layout_id="@layout/exo_playback_control_view_yt"
-                app:dtpv_controller="@id/ytOverlay"
+                app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:show_buffering="when_playing"
-                />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <com.appforschool.utils.exoplayer_utils.YouTubeOverlay
-                android:id="@+id/ytOverlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#77000000"
-                android:visibility="invisible"
-                app:yt_playerView="@id/previewPlayerView"
-                tools:visibility="visible" />
+                <com.appforschool.utils.exoplayer_utils.DoubleTapPlayerView
+                    android:id="@+id/previewPlayerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:animateLayoutChanges="true"
+                    android:background="@android:color/black"
+                    app:controller_layout_id="@layout/exo_playback_control_view_yt"
+                    app:dtpv_controller="@id/ytOverlay"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:show_buffering="when_playing"
+                    />
 
-        </FrameLayout>
+                <com.appforschool.utils.exoplayer_utils.YouTubeOverlay
+                    android:id="@+id/ytOverlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#77000000"
+                    android:visibility="invisible"
+                    app:yt_playerView="@id/previewPlayerView"
+                    tools:visibility="visible" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+    <include layout="@layout/layout_playback_speed" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
