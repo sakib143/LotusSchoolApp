@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.R
 import com.appforschool.data.model.AlertModel
+import com.appforschool.utils.LogM
 import com.appforschool.utils.hide
 import com.appforschool.utils.show
 import com.appforschool.utils.toast
@@ -39,13 +40,14 @@ class NotificationAdapter(
         //Getting textview length
         holder.tvDescription.post(Runnable {
             totalLineCount = holder.tvDescription.lineCount
+            if( totalLineCount > 3) {
+                holder.tvMore.show()
+            } else {
+                holder.tvMore.hide()
+            }
         })
 
-        if( totalLineCount == 1) {
-            holder.tvMore.hide()
-        } else {
-            holder.tvMore.show()
-        }
+        holder.tvDescription.maxLines = 3
 
         holder.tvMore.setOnClickListener() {
             holder.tvDescription.setText(list.get(position).notificationDesc)
@@ -53,14 +55,14 @@ class NotificationAdapter(
             Linkify.addLinks(holder.tvDescription, Linkify.WEB_URLS);
 
             if (holder.tvMore.text.toString().equals(holder.tvMore.context.resources.getString(R.string.less), ignoreCase = true)) {
-                holder.tvDescription.maxLines = 1
+                holder.tvDescription.maxLines = 3
                 holder.tvMore.setText(holder.tvMore.context.resources.getString(R.string.view_more))
             } else {
-                holder.tvDescription.maxLines = 8
+                holder.tvDescription.maxLines = 150
                 holder.tvMore.setText(holder.tvMore.context.resources.getString(R.string.less))
             }
         }
-        
+
         holder.llNotificationRoot.setOnLongClickListener() {
             holder.llNotificationRoot.context.toast(holder.llNotificationRoot.context.getString(R.string.copied_to_clipboard))
             val clipBoard = holder.llNotificationRoot.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

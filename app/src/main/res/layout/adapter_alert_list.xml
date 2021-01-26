@@ -63,7 +63,6 @@
                 android:id="@+id/tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:fontFamily="@font/calibri"
                 android:text="@{alertModel.notificationDesc}"
