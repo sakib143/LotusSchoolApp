@@ -106,22 +106,24 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            PICKFILE_RESULT_CODE -> {
-                val filePath = ImageFilePath.getPath(this@HomeActivity, data?.data)
-                val file: File = File(filePath)
-                viewModel.filePath.value = file
-                val fileSizeInBytes = file.length()
-                val fileSizeInKB = fileSizeInBytes / 1024
-                val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
-                viewModel.uploadAssignmentFile(
-                    shareId,
-                    "title",
-                    "description",
-                    "." + fileExtension,
-                    fileSizeInKB.toString(),
-                    "A"
-                )
+        if(data != null) {
+            when (requestCode) {
+                PICKFILE_RESULT_CODE -> {
+                    val filePath = ImageFilePath.getPath(this@HomeActivity, data?.data)
+                    val file: File = File(filePath)
+                    viewModel.filePath.value = file
+                    val fileSizeInBytes = file.length()
+                    val fileSizeInKB = fileSizeInBytes / 1024
+                    val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
+                    viewModel.uploadAssignmentFile(
+                        shareId,
+                        "title",
+                        "description",
+                        "." + fileExtension,
+                        fileSizeInKB.toString(),
+                        "A"
+                    )
+                }
             }
         }
     }
