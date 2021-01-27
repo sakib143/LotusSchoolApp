@@ -41,7 +41,7 @@
                 android:layout_centerVertical="true"
                 android:src="@mipmap/ic_launcher"
                 setSubjectIcons="@{subjectDetailsModel}"
-                android:onClick="@{()-> subjectDetailsListner.openSubjectFile(subjectDetailsModel)}"/>
+                android:onClick="@{()-> subjectDetailsListner.openSubjectFile(ivFileImage,subjectDetailsModel)}"/>
 
             <LinearLayout
                 android:layout_width="0dp"

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.webkit.MimeTypeMap
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.GravityCompat
@@ -366,11 +367,28 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
-    override fun openSubjectFile(model: SubjectDetailsModel.Data) {
+    override fun openSubjectFile(imageView: ImageView, model: SubjectDetailsModel.Data) {
         if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
             intent.putExtra(Constant.VIDEO_URL, model.filepath)
             startActivity(intent)
+        } else if (model.fileext.equals(
+                ".jpg",
+                ignoreCase = true
+            ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
+                ".jpeg",
+                ignoreCase = true
+            )
+        ) {
+            ViewCompat.setTransitionName(imageView, Constant.IMAGE_FULL_ZOOM_ANIM)
+            val intent = Intent(this, FullImageActivity::class.java)
+            intent.putExtra(Constant.REQUEST_LINK_URL, model.filepath)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                imageView!!,
+                ViewCompat.getTransitionName(imageView)!!
+            )
+            startActivity(intent, options.toBundle())
         } else {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
             startActivity(browserIntent)
@@ -398,12 +416,29 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
         }
 
-    override fun openAssignmentFile(model: AssignmentModel.Data) {
+    override fun openAssignmentFile(imageView: ImageView, model: AssignmentModel.Data) {
         viewModel.executeFileViewLog(model.shareid, "A")
         if (model.fileext.equals(".mp4", ignoreCase = true)) {
             val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
             intent.putExtra(Constant.VIDEO_URL, model.filepath)
             startActivity(intent)
+        } else if (model.fileext.equals(
+                ".jpg",
+                ignoreCase = true
+            ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
+                ".jpeg",
+                ignoreCase = true
+            )
+        ) {
+            ViewCompat.setTransitionName(imageView, Constant.IMAGE_FULL_ZOOM_ANIM)
+            val intent = Intent(this, FullImageActivity::class.java)
+            intent.putExtra(Constant.REQUEST_LINK_URL, model.filepath)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                imageView!!,
+                ViewCompat.getTransitionName(imageView)!!
+            )
+            startActivity(intent, options.toBundle())
         } else {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
             startActivity(browserIntent)
@@ -445,13 +480,30 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         startActivity(intent, options.toBundle())
     }
 
-    override fun openDriveList(model: DriveModel.Data) {
+    override fun openDriveList(imageView: ImageView, model: DriveModel.Data) {
         viewModel.executeFileViewLog(model.shareid, "D")
         if (model.linkurl.isNullOrEmpty()) {
             if (model.fileext.equals(".mp4", ignoreCase = true)) {
                 val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
                 intent.putExtra(Constant.VIDEO_URL, model.filepath)
                 startActivity(intent)
+            } else if (model.fileext.equals(
+                    ".jpg",
+                    ignoreCase = true
+                ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
+                    ".jpeg",
+                    ignoreCase = true
+                )
+            ) {
+                ViewCompat.setTransitionName(imageView, Constant.IMAGE_FULL_ZOOM_ANIM)
+                val intent = Intent(this, FullImageActivity::class.java)
+                intent.putExtra(Constant.REQUEST_LINK_URL, model.filepath)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this,
+                    imageView!!,
+                    ViewCompat.getTransitionName(imageView)!!
+                )
+                startActivity(intent, options.toBundle())
             } else {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
                 startActivity(browserIntent)
