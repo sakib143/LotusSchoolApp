@@ -64,17 +64,28 @@
                         tools:text="File Title"
                         android:text="@{assignmentModel.filetitle}"
                         android:fontFamily="@font/calibri"
-                        android:textColor="@color/colorBlack"
-                        />
+                        android:textColor="@color/colorBlack" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="4"
                         android:minLines="1"
-                        android:textSize="@dimen/_14ssp"
+                        android:textSize="@dimen/_12ssp"
                         tools:text="File description"
                         android:text="@{assignmentModel.filedescr}"
+                        android:fontFamily="@font/calibri"
+                        android:textColor="@color/colorBlack"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="4"
+                        android:minLines="1"
+                        android:textSize="@dimen/_12ssp"
+                        tools:text="File description"
+                        android:visibility="@{assignmentModel.subjectname == null ? View.GONE : View.VISIBLE}"
+                        android:text="@{`(` + assignmentModel.subjectname + `)`}"
                         android:fontFamily="@font/calibri"
                         android:textColor="@color/colorBlack"/>
 

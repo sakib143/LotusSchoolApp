@@ -73,16 +73,16 @@
             tools:visibility="gone"
             android:visibility="@{viewmodel.isDataFound ? View.GONE : View.VISIBLE}" />
 
+<!--        app:setTouchListner="@{true}"-->
         <TextView
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:background="@drawable/ic_refresh"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:onClick="@{()-> listner.refreshList()}"
-            app:setTouchListner="@{true}" />
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/ic_refresh"
+            android:onClick="@{()-> listner.refreshList()}" />
 
         <com.github.ybq.android.spinkit.SpinKitView
             style="@style/SpinKitView.Large.CubeGrid"

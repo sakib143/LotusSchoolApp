@@ -164,6 +164,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     }
 
     private val onTimeOverObserver = Observer<String> {
+        executeEndExamAPI()
         closeScreen()
     }
 

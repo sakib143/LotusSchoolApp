@@ -57,7 +57,7 @@ fun setSubjectIcons(view: ImageView, model: SubjectDetailsModel.Data) {
         ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
             ".tiff",
             ignoreCase = true
-        )) {
+        ) || model.fileext.equals(".jpeg", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_image_file)
     }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(
             ".docx",
