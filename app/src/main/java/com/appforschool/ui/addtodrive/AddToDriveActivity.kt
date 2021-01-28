@@ -15,6 +15,7 @@ import com.appforschool.ui.addtodrive.adapter.KnowledgeSpinnerAdapter
 import com.appforschool.ui.addtodrive.adapter.StandardAdapter
 import com.appforschool.ui.addtodrive.adapter.SubjectAdapter
 import com.appforschool.utils.ImageFilePath
+import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.activity_add_to_drive.*
@@ -143,8 +144,9 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
                 val fileSizeInBytes = file.length()
                 val fileSizeInKB = fileSizeInBytes / 1024
                 val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
+                val strFileExtension: String = "." + fileExtension
                 viewModel.filesize.value = fileSizeInKB.toString()
-                viewModel.fileext.value = fileExtension
+                viewModel.fileext.value = strFileExtension
             }
         }
     }

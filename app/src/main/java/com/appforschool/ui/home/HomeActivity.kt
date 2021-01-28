@@ -115,11 +115,12 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                     val fileSizeInBytes = file.length()
                     val fileSizeInKB = fileSizeInBytes / 1024
                     val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
+                    val strFileExtension: String = "." + fileExtension
                     viewModel.uploadAssignmentFile(
                         shareId,
                         "title",
                         "description",
-                        "." + fileExtension,
+                        strFileExtension,
                         fileSizeInKB.toString(),
                         "A"
                     )
