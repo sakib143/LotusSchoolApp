@@ -11,7 +11,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.appforschool"
@@ -121,8 +121,8 @@ dependencies {
     implementation ('org.jitsi.react:jitsi-meet-sdk:2.11.0') { transitive = true }
 
     // ExoPlayer2
-    implementation "com.google.android.exoplayer:exoplayer-core:2.11.7"
-    implementation "com.google.android.exoplayer:exoplayer-ui:2.11.7"
+    implementation "com.google.android.exoplayer:exoplayer-core:2.12.3"
+    implementation "com.google.android.exoplayer:exoplayer-ui:2.12.3"
 
     //Run time permissions
     implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'

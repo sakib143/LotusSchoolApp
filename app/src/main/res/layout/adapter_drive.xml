@@ -123,7 +123,6 @@
                         android:fontFamily="@font/calibri"
                         android:maxLines="2"
                         android:minLines="1"
-                        android:visibility="@{driveModel.linkurl != null ? View.VISIBLE : View.GONE  }"
                         android:text="@{driveModel.sizeinkb}"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12ssp"
