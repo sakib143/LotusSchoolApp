@@ -79,5 +79,7 @@
     <string name="ask_me_letter">Ask me Later</string>
     <string name="copied_to_clipboard">Copied to clipboard.</string>
     <string name="close">Close</string>
+    <string name="file_uploading_starting">File uploading, please wait...</string>
+
 
 </resources>

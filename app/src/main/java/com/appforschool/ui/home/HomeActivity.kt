@@ -109,6 +109,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         if(data != null) {
             when (requestCode) {
                 PICKFILE_RESULT_CODE -> {
+                    toast(resources.getString(R.string.file_uploading_starting))
                     val filePath = ImageFilePath.getPath(this@HomeActivity, data?.data)
                     val file: File = File(filePath)
                     viewModel.filePath.value = file

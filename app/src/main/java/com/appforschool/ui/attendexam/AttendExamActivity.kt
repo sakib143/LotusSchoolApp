@@ -416,6 +416,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             PICKFILE_RESULT_CODE -> {
+                toast(resources.getString(R.string.file_uploading_starting))
                 val filePath = ImageFilePath.getPath(this@AttendExamActivity, data?.data)
                 val file: File = File(filePath)
                 LogM.e("file path is " + file + "  Exam id " + strExamId)

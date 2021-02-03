@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.appforschool.MyApp
+import com.appforschool.R
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
 import com.appforschool.data.model.*
@@ -302,7 +303,7 @@ class AddToDriveViewModel @Inject constructor(
                 subjectId.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
             val standardId =
                 standardid.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
-
+            application.toast(application.resources.getString(R.string.file_uploading_starting))
             try {
                 val response = repository.callFileAddDrive(
                     userImageBody,
