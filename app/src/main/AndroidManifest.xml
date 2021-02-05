@@ -21,11 +21,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.full_image.FullExamDateActivity"></activity>
-        <activity android:name=".ui.full_image.FullImageActivity" />
-        <activity android:name=".ui.attendexam.AttendExamActivity" />
-        <activity android:name=".ui.profile.user.UserProfileActivity" />
-        <activity android:name=".ui.profile.teacher.TeacherProfileActivity" />
+        <activity android:name=".ui.full_image.FullExamDateActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.full_image.FullImageActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.attendexam.AttendExamActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.profile.user.UserProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.profile.teacher.TeacherProfileActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.auth.changepassword.ChangePasswordActivity"
             android:screenOrientation="portrait" />
@@ -70,8 +75,10 @@
         </provider>
 
         <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
     </application>
 
 </manifest>
