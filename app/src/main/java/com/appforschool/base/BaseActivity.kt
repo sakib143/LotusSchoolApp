@@ -50,6 +50,8 @@ abstract class BaseActivity : AppCompatActivity(), Injectable {
     lateinit var globalMethods: GlobalMethods
 
     protected val PICKFILE_RESULT_CODE = 786
+    protected val MULTI_IMAGE_PICKER_RESULT_CODE = 92
+    protected val IMAGE_CROP_RESULT_CODE = 101
 
     /**
      * request code for storage permission

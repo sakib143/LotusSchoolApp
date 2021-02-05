@@ -130,13 +130,14 @@ dependencies {
     //Custom progressbar
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
-//    //Image cropping librarry
-//    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     //Image crop library
     implementation 'com.github.yalantis:ucrop:2.2.6'
 
     //Date library
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
 
+
+    //Multi image selection
+    implementation project(':gligar')
 
 }

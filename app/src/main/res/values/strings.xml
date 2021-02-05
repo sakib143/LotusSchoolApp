@@ -61,6 +61,7 @@
     <string name="attend">Attend</string>
     <string name="exam_start_title">Your exam will start now</string>
     <string name="exam_start_message">if you do not SUBMIT your answers on time, system will automatically submit your answers at exam end time</string>
+    <string name="select_file">Please select file</string>
     <string name="submit_exam_title">Are you sure you want to submit?</string>
     <string name="submit_exam_message">Once you submit your exam you will not be able to give any more answers.</string>
     <string name="exam_min_left_message">You have only 5 minutes left to complete your answers..</string>
@@ -80,6 +81,8 @@
     <string name="copied_to_clipboard">Copied to clipboard.</string>
     <string name="close">Close</string>
     <string name="file_uploading_starting">File uploading, please wait...</string>
+    <string name="image_file_title">Image File</string>
+    <string name="other_file_title">Other File</string>
 
 
 </resources>
