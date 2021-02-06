@@ -4,11 +4,17 @@ import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -35,6 +41,8 @@ import com.appforschool.utils.*
 import com.appforschool.utils.circle_imageview.CircularImageView
 import com.bumptech.glide.Glide
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import com.opensooq.supernova.gligar.GligarPicker
+import com.yalantis.ucrop.UCrop
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -42,6 +50,7 @@ import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_drawer.*
 import java.io.File
+import java.io.FileOutputStream
 import javax.inject.Inject
 
 
@@ -68,6 +77,17 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     private var dashboardFragment: DashboardFragment? = null
     private var shareId: String = ""
 
+    //Multiple Image selection START
+    private val alMultiImage: ArrayList<MultiImageModel> = arrayListOf();
+    private var selected_image = 1;
+    //Multiple Image selection END
+
+    //Add to PDF START
+    var file: File? = null
+    var fileOutputStream: FileOutputStream? = null
+    val pdfDocument = PdfDocument()
+    //Add to PDF END
+
     override fun initializeBinding(binding: ActivityHomeBinding) {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
@@ -84,6 +104,9 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         dashboardFragment = DashboardFragment.newInstance()
         navigateToDashBoardFragment(false)
         setObserver()
+
+        file = getOutputFile()
+        fileOutputStream = FileOutputStream(file)
     }
 
     companion object {
@@ -106,28 +129,41 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(data != null) {
+        if (data != null) {
             when (requestCode) {
                 PICKFILE_RESULT_CODE -> {
-                    toast(resources.getString(R.string.file_uploading_starting))
                     val filePath = ImageFilePath.getPath(this@HomeActivity, data?.data)
                     val file: File = File(filePath)
-                    viewModel.filePath.value = file
-                    val fileSizeInBytes = file.length()
-                    val fileSizeInKB = fileSizeInBytes / 1024
-                    val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
-                    val strFileExtension: String = "." + fileExtension
-                    viewModel.uploadAssignmentFile(
-                        shareId,
-                        "title",
-                        "description",
-                        strFileExtension,
-                        fileSizeInKB.toString(),
-                        "A"
-                    )
+                    fileUpload(file)
+                }
+                MULTI_IMAGE_PICKER_RESULT_CODE -> {
+                    uploadMultiImageFile(data)
+                }
+                UCrop.REQUEST_CROP -> {
+                    handleCropResult(data!!)
+                }
+                else -> {
+                    handleCropError(data!!)
                 }
             }
         }
+    }
+
+    private fun fileUpload(file: File) {
+        toast(resources.getString(R.string.file_uploading_starting))
+        viewModel.filePath.value = file
+        val fileSizeInBytes = file.length()
+        val fileSizeInKB = fileSizeInBytes / 1024
+        val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
+        val strFileExtension: String = "." + fileExtension
+        viewModel.uploadAssignmentFile(
+            shareId,
+            "title",
+            "description",
+            strFileExtension,
+            fileSizeInKB.toString(),
+            "A"
+        )
     }
 
     private fun navigateToDashBoardFragment(addToBackStack: Boolean) {
@@ -414,10 +450,29 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     fun checkFileSubmitPermission(model: AssignmentModel.Data) =
         runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
             shareId = model.shareid
-            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-            chooseFile.setType("*/*")
-            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
-            startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
+            AlertDialogUtility.CustomAlert(this@HomeActivity,
+                getString(R.string.app_name),
+                getString(R.string.select_file),
+                getString(R.string.image_file_title),
+                getString(R.string.other_file_title),
+                { dialog, which ->
+                    dialog.dismiss()
+                    GligarPicker().limit(4).disableCamera(false).cameraDirect(false).requestCode(
+                        MULTI_IMAGE_PICKER_RESULT_CODE
+                    ).withActivity(this).show()
+                },
+                { dialog, which ->
+                    dialog.dismiss()
+                    var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+                    chooseFile.setType("*/*")
+                    chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+                    startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
+                })
+//
+//            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+//            chooseFile.setType("*/*")
+//            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+//            startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
         }
 
     override fun openAssignmentFile(imageView: ImageView, model: AssignmentModel.Data) {
@@ -530,4 +585,147 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         LogM.e("=> stateChanged is calling !!!")
         dashboardFragment?.callHomeAPI()
     }
+
+    //Multiple Image selection START
+    private fun uploadMultiImageFile(data: Intent?) {
+        val imagesList = data?.extras?.getStringArray(GligarPicker.IMAGES_RESULT)
+        val selectedUri = Uri.fromFile(File(imagesList?.get(0)))
+        alMultiImage.clear()
+        for (j in imagesList!!.indices) {
+            val mUri = Uri.fromFile(File(imagesList?.get(j)))
+            alMultiImage.add(MultiImageModel(mUri, false))
+        }
+
+        if (selectedUri != null) {
+            selected_image = 1
+            startCrop(selectedUri)
+        } else {
+            Toast.makeText(
+                this@HomeActivity,
+                "R.string.toast_cannot_retrieve_selected_image",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun startCrop(uri: Uri) {
+        val options = UCrop.Options()
+        options.setFreeStyleCropEnabled(true)
+        options.setHideBottomControls(true)
+
+        val destinationFileName = ".jpg"
+        val uCrop = UCrop.of(uri, Uri.fromFile(File(cacheDir, destinationFileName)))
+        uCrop.withOptions(options)
+        uCrop.start(this@HomeActivity)
+    }
+
+    private fun handleCropError(result: Intent) {
+        val cropError = UCrop.getError(result)
+        if (cropError != null) {
+            Log.e("=> ", "handleCropError: ", cropError)
+            Toast.makeText(this@HomeActivity, cropError.message, Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(this@HomeActivity, "Something went wrong", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private fun handleCropResult(result: Intent) {
+        val resultUri = UCrop.getOutput(result)
+        if (resultUri != null) {
+            LogM.e("Cropped Images path is " + resultUri.path)
+            when (selected_image) {
+                1 -> {
+                    setFirstImage(resultUri)
+                }
+                2 -> {
+                    setSecondImage(resultUri)
+                }
+                3 -> {
+                    setThirdImage(resultUri)
+                }
+                4 -> {
+                    setFourthImage(resultUri)
+                }
+            }
+            if(selected_image == alMultiImage.size + 1) {
+                fileUpload(file!!)
+            }
+        } else {
+            toast(getString(R.string.try_again_crop))
+        }
+    }
+
+    private fun setFourthImage(resultUri: Uri) {
+        selected_image = 5
+        alMultiImage.get(3).imageUri = resultUri
+        alMultiImage.get(3).isSelected = true
+        if (alMultiImage.size > 4) {
+            startCrop(alMultiImage.get(4).imageUri)
+        }
+    }
+
+    private fun setThirdImage(resultUri: Uri) {
+        selected_image = 4
+        alMultiImage.get(2).imageUri = resultUri
+        alMultiImage.get(2).isSelected = true
+        if (alMultiImage.size > 3) {
+            startCrop(alMultiImage.get(3).imageUri)
+        }
+    }
+
+    private fun setSecondImage(resultUri: Uri) {
+        selected_image = 3
+        alMultiImage.get(0).imageUri = resultUri
+        alMultiImage.get(0).isSelected = true
+        addToPdf(1)
+        if (alMultiImage.size > 2) {
+            startCrop(alMultiImage.get(2).imageUri)
+        }
+
+    }
+
+    private fun setFirstImage(resultUri: Uri) {
+        selected_image = 2
+        alMultiImage.get(0).imageUri = resultUri
+        alMultiImage.get(0).isSelected = true
+        addToPdf(0)
+        if (alMultiImage.size > 1) {
+            startCrop(alMultiImage.get(1).imageUri)
+        }
+
+    }
+
+    fun addToPdf(position: Int) {
+        val bitmap = BitmapFactory.decodeFile(alMultiImage.get(position).imageUri.path)
+        val pageInfo =
+            PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, position + 1).create()
+        val page = pdfDocument.startPage(pageInfo)
+        val canvas = page.canvas
+        val paint = Paint()
+        paint.setColor(Color.BLUE)
+        canvas.drawPaint(paint)
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
+        pdfDocument.finishPage(page)
+        bitmap.recycle()
+        pdfDocument.writeTo(fileOutputStream)
+        LogM.e("PDF path is " + file?.absolutePath)
+    }
+
+    private fun getOutputFile(): File? {
+        val root = File(getExternalFilesDir(null), "WhiteBoardLab")
+        var isFolderCreated = true
+        if (!root.exists()) {
+            isFolderCreated = root.mkdir()
+        }
+
+        return if (isFolderCreated) {
+            File(root, "whiteboard_images.pdf")
+        } else {
+            Toast.makeText(this, "Folder is not created", Toast.LENGTH_SHORT).show()
+            null
+        }
+    }
+    //Multiple Image selection END
+
 }

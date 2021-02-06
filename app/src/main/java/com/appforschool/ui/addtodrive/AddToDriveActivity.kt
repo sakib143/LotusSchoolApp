@@ -46,10 +46,11 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     private var selected_image = 1;
     //Multiple Image selection END
 
+    //Add to PDF START
     var file: File? = null
-    //    val fileOutputStream:FileOutputStream = FileOutputStream(file)
     var fileOutputStream: FileOutputStream? = null
     val pdfDocument = PdfDocument()
+    //Add to PDF END
 
     override fun initializeBinding(binding: ActivityAddToDriveBinding) {
         binding.viewmodel = viewModel
@@ -193,6 +194,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     private fun uploadMultiImageFile(data: Intent?) {
         val imagesList = data?.extras?.getStringArray(GligarPicker.IMAGES_RESULT)
         val selectedUri = Uri.fromFile(File(imagesList?.get(0)))
+        alMultiImage.clear()
         for (j in imagesList!!.indices) {
             val mUri = Uri.fromFile(File(imagesList?.get(j)))
             alMultiImage.add(MultiImageModel(mUri, false))
@@ -261,14 +263,6 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
                     setFourthImage(resultUri)
                 }
             }
-
-//            for (i in alMultiImage!!.indices) {
-//                if (alMultiImage.get(i).isSelected == false) {
-//                    break
-//                } else {
-//                    createPDFWithMultipleImage()
-//                }
-//            }
         } else {
             toast(getString(R.string.try_again_crop))
         }
