@@ -204,11 +204,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
             selected_image = 1
             startCrop(selectedUri)
         } else {
-            Toast.makeText(
-                this@AddToDriveActivity,
-                "R.string.toast_cannot_retrieve_selected_image",
-                Toast.LENGTH_SHORT
-            ).show()
+            toast("Can not retrieve selected images")
         }
     }
 
@@ -237,11 +233,9 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     private fun handleCropError(result: Intent) {
         val cropError = UCrop.getError(result)
         if (cropError != null) {
-            Log.e("=> ", "handleCropError: ", cropError)
-            Toast.makeText(this@AddToDriveActivity, cropError.message, Toast.LENGTH_LONG).show()
+            toast(cropError.message!!)
         } else {
-            Toast.makeText(this@AddToDriveActivity, "Something went wrong", Toast.LENGTH_SHORT)
-                .show()
+            toast(resources.getString(R.string.something_went_wrong))
         }
     }
 

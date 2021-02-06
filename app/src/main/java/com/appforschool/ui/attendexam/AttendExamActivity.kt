@@ -4,28 +4,35 @@ import android.Manifest
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
-import com.appforschool.data.model.AssignmentModel
-import com.appforschool.data.model.AttendExamModel
-import com.appforschool.data.model.EndExamModel
-import com.appforschool.data.model.UploadAnswerFileModel
+import com.appforschool.data.model.*
 import com.appforschool.databinding.ActivityAttendExamBinding
 import com.appforschool.listner.UserProfileListner
 import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.utils.*
 import com.google.gson.JsonObject
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import com.opensooq.supernova.gligar.GligarPicker
+import com.yalantis.ucrop.UCrop
 import kotlinx.android.synthetic.main.activity_attend_exam.*
 import kotlinx.android.synthetic.main.fragment_subjects.*
 import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -44,6 +51,17 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     private var binding: ActivityAttendExamBinding? = null
     private var oldAnswer: String = ""
 
+    //Multiple Image selection START
+    private val alMultiImage: ArrayList<MultiImageModel> = arrayListOf();
+    private var selected_image = 1;
+    //Multiple Image selection END
+
+    //Add to PDF START
+    var file: File? = null
+    var fileOutputStream: FileOutputStream? = null
+    val pdfDocument = PdfDocument()
+    //Add to PDF END
+
     override fun initializeBinding(binding: ActivityAttendExamBinding) {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -61,13 +79,17 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        file = getOutputFile()
+        fileOutputStream = FileOutputStream(file)
+
         isFromViewResult = intent.getBooleanExtra(Constant.REQUEST_MODE_VIEW_RESULT, false)
         strExamId = intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!
         totalobtainedmarks = intent.getStringExtra(Constant.KEY_OBTAIN_MARKS)!!
 
         if (isFromViewResult) {
             tvSubmit.setText(resources.getString(R.string.close))
-            val marksForResult = totalobtainedmarks + " / " + intent.getStringExtra(Constant.KEY_MAKRS)
+            val marksForResult =
+                totalobtainedmarks + " / " + intent.getStringExtra(Constant.KEY_MAKRS)
             setPercent()
             viewModel.setData(
                 intent.getStringExtra(Constant.REQUEST_EXAM_ID)!!,
@@ -97,8 +119,8 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
 
     private fun setPercent() {
         //Getting percentage.
-        val totalMark:Double = intent.getStringExtra(Constant.KEY_MAKRS)!!.toDouble()
-        val percentage:Double = ( 100 * totalobtainedmarks.toDouble()) / totalMark
+        val totalMark: Double = intent.getStringExtra(Constant.KEY_MAKRS)!!.toDouble()
+        val percentage: Double = (100 * totalobtainedmarks.toDouble()) / totalMark
         viewModel.setPercentage(percentage.toString())
     }
 
@@ -356,7 +378,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     }
 
     fun submitButtonClick() {
-        if(isFromViewResult) {
+        if (isFromViewResult) {
             closeScreen()
         } else {
             AlertDialogUtility.CustomAlert(
@@ -388,7 +410,7 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         /*We will allow backpress only is user is from View result.
         If user will from Attent exam then user should submit current question so that back press is stoped
          */
-        if(isFromViewResult) {
+        if (isFromViewResult) {
             closeScreen()
         }
     }
@@ -406,22 +428,185 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
 
     fun checkFileSubmitPermission() =
         runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
-            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-            chooseFile.setType("*/*")
-            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
-            startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
+            AlertDialogUtility.CustomAlert(this@AttendExamActivity,
+                getString(R.string.app_name),
+                getString(R.string.select_file),
+                getString(R.string.image_file_title),
+                getString(R.string.other_file_title),
+                { dialog, which ->
+                    dialog.dismiss()
+                    GligarPicker().limit(4).disableCamera(false).cameraDirect(false).requestCode(
+                        MULTI_IMAGE_PICKER_RESULT_CODE
+                    ).withActivity(this).show()
+                },
+                { dialog, which ->
+                    dialog.dismiss()
+                    var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+                    chooseFile.setType("*/*")
+                    chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+                    startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
+                })
         }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             PICKFILE_RESULT_CODE -> {
-                toast(resources.getString(R.string.file_uploading_starting))
-                val filePath = ImageFilePath.getPath(this@AttendExamActivity, data?.data)
-                val file: File = File(filePath)
-                LogM.e("file path is " + file + "  Exam id " + strExamId)
-                viewModel.uploadAnswerFile(strExamId, strQuestionId, file)
+                if(data?.data != null) {
+                    val filePath = ImageFilePath.getPath(this@AttendExamActivity, data?.data)
+                    val file: File = File(filePath)
+                    uploadFile(file)
+                }
+            }
+            MULTI_IMAGE_PICKER_RESULT_CODE -> {
+                uploadMultiImageFile(data)
+            }
+            UCrop.REQUEST_CROP -> {
+                handleCropResult(data!!)
+            }
+            else -> {
+                handleCropError(data!!)
             }
         }
     }
+
+    private fun uploadFile(file: File) {
+        toast(resources.getString(R.string.file_uploading_starting))
+        viewModel.uploadAnswerFile(strExamId, strQuestionId, file)
+    }
+
+    //Multiple Image selection START
+    private fun uploadMultiImageFile(data: Intent?) {
+        val imagesList = data?.extras?.getStringArray(GligarPicker.IMAGES_RESULT)
+        val selectedUri = Uri.fromFile(File(imagesList?.get(0)))
+        alMultiImage.clear()
+        for (j in imagesList!!.indices) {
+            val mUri = Uri.fromFile(File(imagesList?.get(j)))
+            alMultiImage.add(MultiImageModel(mUri, false))
+        }
+
+        if (selectedUri != null) {
+            selected_image = 1
+            startCrop(selectedUri)
+        } else {
+            toast("Can not retrieve selected images")
+        }
+    }
+
+    private fun startCrop(uri: Uri) {
+        val options = UCrop.Options()
+        options.setFreeStyleCropEnabled(true)
+        options.setHideBottomControls(true)
+
+        val destinationFileName = ".jpg"
+        val uCrop = UCrop.of(uri, Uri.fromFile(File(cacheDir, destinationFileName)))
+        uCrop.withOptions(options)
+        uCrop.start(this@AttendExamActivity)
+    }
+
+    private fun handleCropError(result: Intent) {
+        val cropError = UCrop.getError(result)
+        if (cropError != null) {
+            toast(cropError.message!!)
+        } else {
+           toast(resources.getString(R.string.something_went_wrong))
+        }
+    }
+
+    private fun handleCropResult(result: Intent) {
+        val resultUri = UCrop.getOutput(result)
+        if (resultUri != null) {
+            LogM.e("Cropped Images path is " + resultUri.path)
+            when (selected_image) {
+                1 -> {
+                    setFirstImage(resultUri)
+                }
+                2 -> {
+                    setSecondImage(resultUri)
+                }
+                3 -> {
+                    setThirdImage(resultUri)
+                }
+                4 -> {
+                    setFourthImage(resultUri)
+                }
+            }
+            if(selected_image == alMultiImage.size + 1) {
+                uploadFile(file!!)
+            }
+        } else {
+            toast(getString(R.string.try_again_crop))
+        }
+    }
+
+    private fun setFourthImage(resultUri: Uri) {
+        selected_image = 5
+        alMultiImage.get(3).imageUri = resultUri
+        alMultiImage.get(3).isSelected = true
+        if (alMultiImage.size > 4) {
+            startCrop(alMultiImage.get(4).imageUri)
+        }
+    }
+
+    private fun setThirdImage(resultUri: Uri) {
+        selected_image = 4
+        alMultiImage.get(2).imageUri = resultUri
+        alMultiImage.get(2).isSelected = true
+        if (alMultiImage.size > 3) {
+            startCrop(alMultiImage.get(3).imageUri)
+        }
+    }
+
+    private fun setSecondImage(resultUri: Uri) {
+        selected_image = 3
+        alMultiImage.get(1).imageUri = resultUri
+        alMultiImage.get(1).isSelected = true
+        addToPdf(1)
+        if (alMultiImage.size > 2) {
+            startCrop(alMultiImage.get(2).imageUri)
+        }
+    }
+
+    private fun setFirstImage(resultUri: Uri) {
+        selected_image = 2
+        alMultiImage.get(0).imageUri = resultUri
+        alMultiImage.get(0).isSelected = true
+        addToPdf(0)
+        if (alMultiImage.size > 1) {
+            startCrop(alMultiImage.get(1).imageUri)
+        }
+    }
+
+    fun addToPdf(position: Int) {
+        val bitmap = BitmapFactory.decodeFile(alMultiImage.get(position).imageUri.path)
+        val pageInfo =
+            PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, position + 1).create()
+        val page = pdfDocument.startPage(pageInfo)
+        val canvas = page.canvas
+        val paint = Paint()
+        paint.setColor(Color.BLUE)
+        canvas.drawPaint(paint)
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
+        pdfDocument.finishPage(page)
+        bitmap.recycle()
+        pdfDocument.writeTo(fileOutputStream)
+        LogM.e("PDF path is " + file?.absolutePath)
+    }
+
+    private fun getOutputFile(): File? {
+        val root = File(getExternalFilesDir(null), "WhiteBoardLab")
+        var isFolderCreated = true
+        if (!root.exists()) {
+            isFolderCreated = root.mkdir()
+        }
+
+        return if (isFolderCreated) {
+            File(root, "whiteboard_images.pdf")
+        } else {
+            Toast.makeText(this, "Folder is not created", Toast.LENGTH_SHORT).show()
+            null
+        }
+    }
+    //Multiple Image selection END
+
 }
