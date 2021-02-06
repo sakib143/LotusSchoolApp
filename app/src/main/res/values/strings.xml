@@ -83,6 +83,7 @@
     <string name="file_uploading_starting">File uploading, please wait...</string>
     <string name="image_file_title">Image File</string>
     <string name="other_file_title">Other File</string>
+    <string name="try_again_crop">Can not crop image. Please try again</string>
 
 
 </resources>

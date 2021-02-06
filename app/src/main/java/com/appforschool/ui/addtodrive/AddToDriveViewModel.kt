@@ -199,10 +199,6 @@ class AddToDriveViewModel @Inject constructor(
             } else {
                 executerUploadFileUrlModelDrive()
             }
-            //Reset to null if already selected multiple file
-            file.value = null
-            topic.value = null
-            setFileSelect(false)
         }
     }
 

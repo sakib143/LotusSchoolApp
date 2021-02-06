@@ -3,6 +3,10 @@ package com.appforschool.ui.addtodrive
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +30,8 @@ import com.opensooq.supernova.gligar.GligarPicker
 import com.yalantis.ucrop.UCrop
 import kotlinx.android.synthetic.main.activity_add_to_drive.*
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import javax.inject.Inject
 
 class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
@@ -36,9 +42,14 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     lateinit var viewModel: AddToDriveViewModel
 
     //Multiple Image selection START
-    private val alMultiImage: ArrayList<Uri> = arrayListOf();
+    private val alMultiImage: ArrayList<MultiImageModel> = arrayListOf();
     private var selected_image = 1;
     //Multiple Image selection END
+
+    var file: File? = null
+    //    val fileOutputStream:FileOutputStream = FileOutputStream(file)
+    var fileOutputStream: FileOutputStream? = null
+    val pdfDocument = PdfDocument()
 
     override fun initializeBinding(binding: ActivityAddToDriveBinding) {
         binding.viewmodel = viewModel
@@ -53,7 +64,8 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         viewModel.setFileSelect(true)
         viewModel.checkUserType()
         setKnowledgeSpinner()
-
+        file = getOutputFile()
+        fileOutputStream = FileOutputStream(file)
     }
 
     private fun setKnowledgeSpinner() {
@@ -100,10 +112,6 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     private val fileUploadingObserver = Observer<AssignmentSubmissionModel> {
         if (it.status) {
             toast(it!!.message)
-            when (selected_image) {
-
-            }
-
         } else {
             toast(it!!.message)
         }
@@ -142,7 +150,9 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
 
     fun checkFileSubmitPermission() =
         runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
-            AlertDialogUtility.CustomAlert(this@AddToDriveActivity, getString(R.string.app_name), getString(R.string.select_file),
+            AlertDialogUtility.CustomAlert(this@AddToDriveActivity,
+                getString(R.string.app_name),
+                getString(R.string.select_file),
                 getString(R.string.image_file_title),
                 getString(R.string.other_file_title),
                 { dialog, which ->
@@ -185,7 +195,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         val selectedUri = Uri.fromFile(File(imagesList?.get(0)))
         for (j in imagesList!!.indices) {
             val mUri = Uri.fromFile(File(imagesList?.get(j)))
-            alMultiImage.add(mUri)
+            alMultiImage.add(MultiImageModel(mUri, false))
         }
 
         if (selectedUri != null) {
@@ -208,17 +218,6 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         val strFileExtension: String = "." + fileExtension
         viewModel.filesize.value = fileSizeInKB.toString()
         viewModel.fileext.value = strFileExtension
-    }
-
-    private fun uploadMultiImage(file: File) {
-        viewModel.file.value = file
-        val fileSizeInBytes = file.length()
-        val fileSizeInKB = fileSizeInBytes / 1024
-        val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
-        val strFileExtension: String = "." + fileExtension
-        viewModel.filesize.value = fileSizeInKB.toString()
-        viewModel.fileext.value = strFileExtension
-        viewModel.callFileAddDrive()
     }
 
     //Multiple Image selection START
@@ -247,49 +246,102 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     private fun handleCropResult(result: Intent) {
         val resultUri = UCrop.getOutput(result)
         if (resultUri != null) {
+            LogM.e("Cropped Images path is " + resultUri.path)
             when (selected_image) {
                 1 -> {
-                    val file: File = File(resultUri.path)
-                    uploadMultiImage(file)
-                    selected_image = 2
-                    if (alMultiImage.size > 1) {
-                        startCrop(alMultiImage.get(1))
-                    }
+                    setFirstImage(resultUri)
                 }
                 2 -> {
-                    val file: File = File(resultUri.path)
-                    uploadMultiImage(file)
-                    uploadMultiImage(file)
-                    selected_image = 3
-                    if (alMultiImage.size > 2) {
-                        startCrop(alMultiImage.get(2))
-                    }
+                    setSecondImage(resultUri)
                 }
                 3 -> {
-                    val file: File = File(resultUri.path)
-                    uploadMultiImage(file)
-                    uploadMultiImage(file)
-                    selected_image = 4
-                    if (alMultiImage.size > 3) {
-                        startCrop(alMultiImage.get(3))
-                    }
+                    setThirdImage(resultUri)
                 }
                 4 -> {
-                    val file: File = File(resultUri.path)
-                    uploadMultiImage(file)
-                    uploadMultiImage(file)
-                    selected_image = 5
-                    if (alMultiImage.size > 4) {
-                        startCrop(alMultiImage.get(4))
-                    }
+                    setFourthImage(resultUri)
                 }
             }
+
+//            for (i in alMultiImage!!.indices) {
+//                if (alMultiImage.get(i).isSelected == false) {
+//                    break
+//                } else {
+//                    createPDFWithMultipleImage()
+//                }
+//            }
         } else {
-            Toast.makeText(
-                this@AddToDriveActivity,
-                "R.string.toast_cannot_retrieve_cropped_image",
-                Toast.LENGTH_SHORT
-            ).show()
+            toast(getString(R.string.try_again_crop))
+        }
+    }
+
+    private fun setFourthImage(resultUri: Uri) {
+        selected_image = 5
+        alMultiImage.get(3).imageUri = resultUri
+        alMultiImage.get(3).isSelected = true
+        if (alMultiImage.size > 4) {
+            startCrop(alMultiImage.get(4).imageUri)
+        }
+    }
+
+    private fun setThirdImage(resultUri: Uri) {
+        selected_image = 4
+        alMultiImage.get(2).imageUri = resultUri
+        alMultiImage.get(2).isSelected = true
+        if (alMultiImage.size > 3) {
+            startCrop(alMultiImage.get(3).imageUri)
+        }
+    }
+
+    private fun setSecondImage(resultUri: Uri) {
+        selected_image = 3
+        alMultiImage.get(1).imageUri = resultUri
+        alMultiImage.get(1).isSelected = true
+        addToPdf(1)
+        if (alMultiImage.size > 2) {
+            startCrop(alMultiImage.get(2).imageUri)
+        }
+    }
+
+    private fun setFirstImage(resultUri: Uri) {
+        selected_image = 2
+        alMultiImage.get(0).imageUri = resultUri
+        alMultiImage.get(0).isSelected = true
+        addToPdf(0)
+        if (alMultiImage.size > 1) {
+            startCrop(alMultiImage.get(1).imageUri)
+        }
+    }
+
+    fun addToPdf(position: Int) {
+        val bitmap = BitmapFactory.decodeFile(alMultiImage.get(position).imageUri.path)
+        val pageInfo =
+            PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, position + 1).create()
+        val page = pdfDocument.startPage(pageInfo)
+        val canvas = page.canvas
+        val paint = Paint()
+        paint.setColor(Color.BLUE)
+        canvas.drawPaint(paint)
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
+        pdfDocument.finishPage(page)
+        bitmap.recycle()
+        pdfDocument.writeTo(fileOutputStream)
+
+        uploadSingleFile(file!!)
+        LogM.e("PDF path is " + file?.absolutePath)
+    }
+
+    private fun getOutputFile(): File? {
+        val root = File(getExternalFilesDir(null), "WhiteBoardLab")
+        var isFolderCreated = true
+        if (!root.exists()) {
+            isFolderCreated = root.mkdir()
+        }
+
+        return if (isFolderCreated) {
+            File(root, "whiteboard_images.pdf")
+        } else {
+            Toast.makeText(this, "Folder is not created", Toast.LENGTH_SHORT).show()
+            null
         }
     }
     //Multiple Image selection END
