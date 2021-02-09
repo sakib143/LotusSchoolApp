@@ -57,12 +57,12 @@ class VideoCallingActivity : BaseActivity() {
         val defaultOptions = org.jitsi.meet.sdk.JitsiMeetConferenceOptions.Builder()
             .setServerURL(serverURL)
             .setWelcomePageEnabled(false)
-//            .setFeatureFlag("invite.enabled", false)
-//            .setFeatureFlag("meeting-name.enabled", false)
-//            .setFeatureFlag("live-streaming.enabled", false)
-//            .setFeatureFlag("meeting-password.enabled", false)
-//            .setFeatureFlag("video-share.enabled", false)   // Hide Youtube option from list.
-//            .setFeatureFlag("close-captions.enabled", false) // Hide Start showing subtitles from list.
+            .setFeatureFlag("invite.enabled", false)
+            .setFeatureFlag("meeting-name.enabled", false)
+            .setFeatureFlag("live-streaming.enabled", false)
+            .setFeatureFlag("meeting-password.enabled", false)
+            .setFeatureFlag("video-share.enabled", false)   // Hide Youtube option from list.
+            .setFeatureFlag("close-captions.enabled", false) // Hide Start showing subtitles from list.
             .build()
         JitsiMeet.setDefaultConferenceOptions(defaultOptions)
         registerForBroadcastMessages()
