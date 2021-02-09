@@ -55,7 +55,7 @@ class VideoCallingActivity : BaseActivity() {
             e.printStackTrace()
             throw RuntimeException("Invalid server URL!")
         }
-        val defaultOptions = org.jitsi.meet.sdk.JitsiMeetConferenceOptions.Builder()
+        var builder = JitsiMeetConferenceOptions1.Builder()
             .setServerURL(serverURL)
             .setWelcomePageEnabled(false)
             .setFeatureFlag("invite.enabled", false)
@@ -64,9 +64,20 @@ class VideoCallingActivity : BaseActivity() {
             .setFeatureFlag("meeting-password.enabled", false)
             .setFeatureFlag("video-share.enabled", false)   // Hide Youtube option from list.
             .setFeatureFlag("close-captions.enabled", false) // Hide Start showing subtitles from list.
-            .build()
-        JitsiMeet.setDefaultConferenceOptions(defaultOptions)
+
+        val jitsiMeetUserInfo = JitsiMeetUserInfo()
+        jitsiMeetUserInfo.displayName = userName
+        builder.setUserInfo(jitsiMeetUserInfo)
+
+        //Camera off when user is NOT host
+        if (isHost == 0) {
+            builder.setVideoMuted(true)
+        }
+
+        JitsiMeet.setDefaultConferenceOptions(builder.build())
         registerForBroadcastMessages()
+
+        builder.build()
 
         val options = org.jitsi.meet.sdk.JitsiMeetConferenceOptions.Builder()
             .setRoom(scheduleId.toString())
