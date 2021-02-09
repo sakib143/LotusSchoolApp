@@ -44,6 +44,7 @@ class VideoCallingActivity : BaseActivity() {
         setObserver()
         getIntentData()
         setJitsiMeet()
+
     }
 
     private fun setJitsiMeet() {
