@@ -44,7 +44,6 @@ class VideoCallingActivity : BaseActivity() {
         setObserver()
         getIntentData()
         setJitsiMeet()
-
     }
 
     private fun setJitsiMeet() {
@@ -55,6 +54,7 @@ class VideoCallingActivity : BaseActivity() {
             e.printStackTrace()
             throw RuntimeException("Invalid server URL!")
         }
+
         var builder = JitsiMeetConferenceOptions1.Builder()
             .setServerURL(serverURL)
             .setWelcomePageEnabled(false)
@@ -139,13 +139,10 @@ class VideoCallingActivity : BaseActivity() {
         JitsiMeetActivityDelegate.onHostDestroy(this)
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        //If user type is host then use below code otherwiae not
-//        if (isHost == 1) {
-//            JitsiMeetActivityDelegate.onHostResume(this)
-//        }
-//    }
+    public override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        JitsiMeetActivityDelegate.onNewIntent(intent)
+    }
 
     // Screen sharing relates stuff by Sakib Syed START
     private fun onBroadcastReceived(intent: Intent?) {
@@ -160,6 +157,8 @@ class VideoCallingActivity : BaseActivity() {
                     "Participant joined%s",
                     event.getData().get("name")
                 )
+                BroadcastEvent.Type.PARTICIPANT_LEFT ->
+                    finish()
             }
         }
     }
