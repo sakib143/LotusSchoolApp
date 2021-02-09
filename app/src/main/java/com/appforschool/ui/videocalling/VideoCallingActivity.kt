@@ -158,7 +158,7 @@ class VideoCallingActivity : BaseActivity() {
                     event.getData().get("name")
                 )
                 BroadcastEvent.Type.PARTICIPANT_LEFT ->
-                    finish()
+                    viewModel.executeSetEndcallLog(scheduleId)
             }
         }
     }
