@@ -12,6 +12,7 @@ import com.appforschool.R
 import com.appforschool.base.BaseActivity
 import com.appforschool.data.model.SetCallEndLogModel
 import com.appforschool.utils.Constant
+import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import org.jitsi.meet.sdk.*
 import timber.log.Timber
@@ -72,6 +73,7 @@ class VideoCallingActivity : BaseActivity() {
         //Camera off when user is NOT host
         if (isHost == 0) {
             builder.setVideoMuted(true)
+            builder.setFeatureFlag("recording.enabled",false)
         }
 
         JitsiMeet.setDefaultConferenceOptions(builder.build())
@@ -149,16 +151,16 @@ class VideoCallingActivity : BaseActivity() {
         if (intent != null) {
             val event = BroadcastEvent(intent)
             when (event.getType()) {
-                BroadcastEvent.Type.CONFERENCE_JOINED -> Timber.i(
-                    "Conference Joined with url%s",
-                    event.getData().get("url")
-                )
-                BroadcastEvent.Type.PARTICIPANT_JOINED -> Timber.i(
-                    "Participant joined%s",
-                    event.getData().get("name")
-                )
-                BroadcastEvent.Type.PARTICIPANT_LEFT ->
+                BroadcastEvent.Type.CONFERENCE_JOINED -> {
+                    LogM.e("CONFERENCE_JOINED")
+                }
+                BroadcastEvent.Type.PARTICIPANT_JOINED -> {
+                    LogM.e("PARTICIPANT_JOINED")
+                }
+                BroadcastEvent.Type.CONFERENCE_TERMINATED -> {
                     viewModel.executeSetEndcallLog(scheduleId)
+                    LogM.e("CONFERENCE_TERMINATED")
+                }
             }
         }
     }
