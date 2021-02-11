@@ -47,6 +47,14 @@ data class HomeApiModel(
         @Expose
         @SerializedName("logofilepath") var logofilepath: String = "",
         @Expose
-        @SerializedName("videoserverurl") var videoserverurl: String = ""
+        @SerializedName("videoserverurl") var videoserverurl: String = "",
+        @Expose
+        @SerializedName("videoserverurlnew") var videoserverurlnew: String = "",
+        @Expose
+        @SerializedName("ismutealloption") var ismutealloption: Int = 0,
+        @Expose
+        @SerializedName("islobbymodeoption") var islobbymodeoption: Int = 0,
+        @Expose
+        @SerializedName("isrecordingoption") var isrecordingoption: Int = 0
     )
 }
