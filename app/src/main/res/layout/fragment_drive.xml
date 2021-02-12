@@ -72,25 +72,38 @@
                 android:onClick="@{()-> listner.openAddToDrive()}"/>
 
         </LinearLayout>
+        
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_below="@+id/llHeader"
+            app:tabMode="fixed"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            bindDriveList="@{driveList}"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/_5sdp"
-            android:paddingRight="@dimen/_5sdp"
-            tools:listitem="@layout/adapter_drive"
-            android:layout_below="@+id/llHeader"/>
+            android:layout_below="@+id/tabs" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/calibri"
-            android:text="@string/no_data_found"
-            android:textSize="@dimen/_20ssp"
-            android:layout_centerInParent="true"
-            tools:visibility="gone"
-            android:visibility="@{viewmodel.isDataFound ? View.GONE : View.VISIBLE}" />
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            bindDriveList="@{driveList}"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:paddingLeft="@dimen/_5sdp"-->
+<!--            android:paddingRight="@dimen/_5sdp"-->
+<!--            tools:listitem="@layout/adapter_drive"-->
+<!--            android:layout_below="@+id/llHeader"/>-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/calibri"-->
+<!--            android:text="@string/no_data_found"-->
+<!--            android:textSize="@dimen/_20ssp"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            tools:visibility="gone"-->
+<!--            android:visibility="@{viewmodel.isDataFound ? View.GONE : View.VISIBLE}" />-->
 
         <com.github.ybq.android.spinkit.SpinKitView
             style="@style/SpinKitView.Large.CubeGrid"

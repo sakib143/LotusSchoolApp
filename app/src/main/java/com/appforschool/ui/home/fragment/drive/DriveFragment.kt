@@ -1,17 +1,26 @@
 package com.appforschool.ui.home.fragment.drive
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
 import com.appforschool.data.model.DriveModel
 import com.appforschool.databinding.FragmentDriveBinding
 import com.appforschool.listner.UserProfileListner
+import com.appforschool.ui.home.fragment.drive.answer.AnswerFragment
+import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveFragment
+import com.appforschool.ui.home.fragment.drive.shared.SharedFragment
+import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.fragment_drive.*
 import javax.inject.Inject
 
-class DriveFragment: BaseBindingFragment<FragmentDriveBinding>(),
+class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
     UserProfileListner.onScreenCloseListner {
 
     private var listener: DriveFragmentListner? = null
@@ -21,7 +30,10 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>(),
 
     override fun layoutId(): Int = R.layout.fragment_drive
 
-    private var alDriveData: ArrayList<DriveModel.Data>? = ArrayList()
+    private var alMainList: ArrayList<DriveModel.Data>? = ArrayList()
+    private var alDrive: ArrayList<DriveModel.Data>? = ArrayList()
+    private var alShared: ArrayList<DriveModel.Data>? = ArrayList()
+    private var alAnswer: ArrayList<DriveModel.Data>? = ArrayList()
     private var binding: FragmentDriveBinding? = null
 
 
@@ -30,7 +42,7 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>(),
         binding.viewmodel = viewModel
         binding.listner = this
         this.binding = binding
-        binding.driveList = alDriveData
+        binding.driveList = alMainList
     }
 
     companion object {
@@ -56,6 +68,31 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewPager.adapter = object : FragmentStateAdapter(this) {
+            override fun createFragment(position: Int): Fragment {
+                return when (position) {
+                    0 -> MyDriveFragment.newInstance()
+                    1 -> SharedFragment.newInstance()
+                    2 -> AnswerFragment.newInstance()
+                    else -> MyDriveFragment.newInstance()
+                }
+            }
+
+            override fun getItemCount(): Int {
+                return 3
+            }
+        }
+
+        //Tab Cap Inj Syrup Oint Pwdr Spray Drops E&E Pine
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> resources.getString(R.string.drive)
+                1 -> resources.getString(R.string.shared)
+                2 -> resources.getString(R.string.answer)
+                else -> resources.getString(R.string.drive)
+            }
+        }.attach()
+
         UserProfileListner.getInstance().setListener(this)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.driveList.observe(viewLifecycleOwner, driveListObserver)
@@ -75,10 +112,31 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>(),
     }
 
     private val driveListObserver = Observer<DriveModel> {
-        alDriveData = ArrayList()
-        alDriveData!!.addAll(it.data)
-        binding?.driveList = alDriveData
-        if (alDriveData?.size == 0) {
+        alMainList = ArrayList()
+        alMainList!!.addAll(it.data)
+//        binding?.driveList = alMainList
+
+        for (i in alMainList!!.indices) {
+            when (alMainList!!.get(i).Flag) {
+                "answer" -> {
+                    alAnswer?.add(alMainList!!.get(i))
+                }
+                "drive" -> {
+                    alDrive?.add(alMainList!!.get(i))
+                }
+                "shared" -> {
+                    alShared?.add(alMainList!!.get(i))
+                }
+            }
+        }
+
+        LogM.e("Main list size " + alMainList?.size)
+        LogM.e("Answer list size " + alAnswer?.size)
+        LogM.e("Shared list size " + alShared?.size)
+        LogM.e("Drive list size " + alDrive?.size)
+
+
+        if (alMainList?.size == 0) {
             viewModel.setDataFound(false)
         } else {
             viewModel.setDataFound(true)
@@ -94,7 +152,7 @@ class DriveFragment: BaseBindingFragment<FragmentDriveBinding>(),
         listener?.popFragment()
     }
 
-    fun openAddToDrive(){
+    fun openAddToDrive() {
         listener?.openAddToFragment()
     }
 

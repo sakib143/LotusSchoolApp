@@ -38,7 +38,9 @@ data class DriveModel(
         @Expose
         @SerializedName("filetime") var filetime: String? = "",
         @Expose
-        @SerializedName("shareid") var shareid: String = ""
+        @SerializedName("shareid") var shareid: String = "",
+        @Expose
+        @SerializedName("Flag") var Flag: String = ""
 
 
     )

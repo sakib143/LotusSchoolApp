@@ -17,6 +17,8 @@
     <string name="exam">Exams</string>
     <string name="my_drive">My Drive</string>
     <string name="drive">Drive</string>
+    <string name="shared">Shared</string>
+    <string name="answer">Answer</string>
     <string name="score_card">Score Card</string>
     <string name="my_alert">My Alerts</string>
     <string name="edit_profile">Edit Profile</string>

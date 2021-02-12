@@ -4,6 +4,9 @@ import com.appforschool.ui.home.fragment.notification.AlertFragment
 import com.appforschool.ui.home.fragment.assignment.AssignmentFragment
 import com.appforschool.ui.home.fragment.dashboard.DashboardFragment
 import com.appforschool.ui.home.fragment.drive.DriveFragment
+import com.appforschool.ui.home.fragment.drive.answer.AnswerFragment
+import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveFragment
+import com.appforschool.ui.home.fragment.drive.shared.SharedFragment
 import com.appforschool.ui.home.fragment.exam.ExamListFragment
 import com.appforschool.ui.home.fragment.schedule.ScheduleFragment
 import com.appforschool.ui.home.fragment.subject.SubjectFragment
@@ -61,5 +64,24 @@ abstract class HomeBuilderModule {
      */
     @ContributesAndroidInjector
     abstract fun bindDriveFragment(): DriveFragment
+
+    /**
+     * fun to bind MyDriveFragment Fragment, making Injection enable
+     */
+    @ContributesAndroidInjector
+    abstract fun bindMyDriveFragment(): MyDriveFragment
+
+    /**
+     * fun to bind AnswerFragment Fragment, making Injection enable
+     */
+    @ContributesAndroidInjector
+    abstract fun bindAnswerFragment(): AnswerFragment
+
+    /**
+     * fun to bind ExamListFragment Fragment, making Injection enable
+     */
+    @ContributesAndroidInjector
+    abstract fun bindSharedFragment(): SharedFragment
+
 
 }
