@@ -96,7 +96,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             loginModel.isshowaddbutton = it.data.get(0).isshowaddbutton
             loginModel.logofilepath = it.data.get(0).logofilepath
             loginModel.videoserverurl = it.data.get(0).videoserverurl
-            loginModel.videoserverurlnew = it.data.get(0).videoserverurlnew
+            loginModel.avideoserverurlnew = it.data.get(0).avideoserverurlnew
             loginModel.ismutealloption = it.data.get(0).ismutealloption
             loginModel.islobbymodeoption  = it.data.get(0).islobbymodeoption
             loginModel.isrecordingoption  = it.data.get(0).isrecordingoption

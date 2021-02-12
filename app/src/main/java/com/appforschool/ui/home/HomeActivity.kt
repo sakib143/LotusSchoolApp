@@ -395,7 +395,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     ) {
         if (model.meetinglink.isNullOrBlank()) {
             viewModel.executeSetJoinLog(model.schid.toString())
-            val fullUrl = prefUtils.getUserData()?.videoserverurlnew
+            val fullUrl = prefUtils.getUserData()?.avideoserverurlnew
             val scheduleId = model.schid
             navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl!!, scheduleId)
         } else {

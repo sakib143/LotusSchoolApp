@@ -73,7 +73,6 @@ class VideoCallingActivity : BaseActivity() {
 
         if(prefUtils.getUserData()?.isrecordingoption == 0) {
             builder.setFeatureFlag("recording.enabled",false)
-            LogM.e("Condition true !!! ")
         }
 
         //Camera off when user is NOT host
