@@ -20,6 +20,7 @@ class SharedFragment : BaseBindingFragment<FragmentSharedBinding>() {
 
     override fun initializeBinding(binding: FragmentSharedBinding) {
         binding.lifecycleOwner = this
+        binding.driveList = alShared
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

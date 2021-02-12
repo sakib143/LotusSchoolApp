@@ -9,8 +9,10 @@ import com.appforschool.databinding.FragmentAnswerBinding
 import com.appforschool.databinding.FragmentDriveBinding
 import com.appforschool.listner.UserProfileListner
 import com.appforschool.ui.home.fragment.drive.DriveFragment
+import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveViewModel
 import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
+import javax.inject.Inject
 
 class AnswerFragment : BaseBindingFragment<FragmentAnswerBinding>() {
 
@@ -18,8 +20,13 @@ class AnswerFragment : BaseBindingFragment<FragmentAnswerBinding>() {
 
     override fun layoutId(): Int = R.layout.fragment_answer
 
+    @Inject
+    lateinit var viewModel: AnswerViewModel
+
     override fun initializeBinding(binding: FragmentAnswerBinding) {
         binding.lifecycleOwner = this
+        binding.driveList = alAnswer
+        binding.viewmodel = viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

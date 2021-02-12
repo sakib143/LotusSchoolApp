@@ -7,7 +7,7 @@
         <import type="java.util.List" />
         <variable
             name="viewmodel"
-            type="com.appforschool.ui.home.fragment.drive.DriveViewModel" />
+            type="com.appforschool.ui.home.fragment.drive.answer.AnswerViewModel" />
         <variable
             name="listner"
             type="com.appforschool.ui.home.fragment.drive.DriveFragment" />

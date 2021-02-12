@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
 
+    <data>
+        <import type="android.view.View" />
+        <import type="java.util.List" />
+        <variable
+            name="viewmodel"
+            type="com.appforschool.ui.home.fragment.drive.mydrive.MyDriveViewModel" />
+        <variable
+            name="listner"
+            type="com.appforschool.ui.home.fragment.drive.DriveFragment" />
+        <variable
+            name="driveList"
+            type="List&lt;com.appforschool.data.model.DriveModel.Data>" />
     </data>
 
     <RelativeLayout
