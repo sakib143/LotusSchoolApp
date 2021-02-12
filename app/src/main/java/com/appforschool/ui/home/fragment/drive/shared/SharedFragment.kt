@@ -8,22 +8,25 @@ import com.appforschool.data.model.DriveModel
 import com.appforschool.databinding.FragmentAnswerBinding
 import com.appforschool.databinding.FragmentSharedBinding
 import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveFragment
+import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveViewModel
 import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
+import javax.inject.Inject
 
 class SharedFragment : BaseBindingFragment<FragmentSharedBinding>() {
 
+    @Inject
+    lateinit var viewModel: ShareDriveViewModel
     private var alShared: ArrayList<DriveModel.Data>? = ArrayList()
-
+    private var binding: FragmentSharedBinding? = null
 
     override fun layoutId(): Int = R.layout.fragment_shared
-
-    private var binding: FragmentSharedBinding? = null
 
     override fun initializeBinding(binding: FragmentSharedBinding) {
         binding.lifecycleOwner = this
         this.binding = binding
         binding.driveList = alShared
+        binding.viewmodel = viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +55,10 @@ class SharedFragment : BaseBindingFragment<FragmentSharedBinding>() {
 
         val bundle = this.arguments
         alShared?.addAll(bundle?.getParcelableArrayList(Constant.KEY_DRIVE_DATA)!!)
-        LogM.e("Arraylist size is " + alShared?.size)
+        if(alShared?.size == 0) {
+            viewModel.setNoDataFound(false)
+        } else {
+            viewModel.setNoDataFound(true)
+        }
     }
 }

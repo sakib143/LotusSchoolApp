@@ -41,7 +41,7 @@
             android:textSize="@dimen/_20ssp"
             android:layout_centerInParent="true"
             tools:visibility="gone"
-            android:visibility="@{viewmodel.isDataFound ? View.GONE : View.VISIBLE}" />
+            android:visibility="@{viewmodel.isNoDataFound ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>
 </layout>

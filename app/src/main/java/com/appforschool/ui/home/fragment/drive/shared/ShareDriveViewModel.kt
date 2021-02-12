@@ -1,4 +1,4 @@
-package com.appforschool.ui.home.fragment.drive.answer
+package com.appforschool.ui.home.fragment.drive.shared
 
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -7,9 +7,8 @@ import com.appforschool.MyApp
 import com.appforschool.utils.PrefUtils
 import javax.inject.Inject
 
-class AnswerViewModel @Inject constructor(
+class ShareDriveViewModel  @Inject constructor(
     private val application: MyApp,
-    private val prefUtils: PrefUtils,
 ) : AndroidViewModel(application) {
 
     private val _isNoDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -23,5 +22,6 @@ class AnswerViewModel @Inject constructor(
     fun setNoDataFound(isDataFound: Boolean) {
         _isNoDataFound.postValue(isDataFound)
     }
+
 
 }

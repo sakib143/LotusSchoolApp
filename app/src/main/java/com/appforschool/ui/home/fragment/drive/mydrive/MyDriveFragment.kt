@@ -16,12 +16,11 @@ import javax.inject.Inject
 
 class MyDriveFragment : BaseBindingFragment<FragmentMyDriveBinding>()  {
 
+    @Inject
+    lateinit var viewModel: MyDriveViewModel
     private var alDrive: ArrayList<DriveModel.Data>? = ArrayList()
 
     override fun layoutId(): Int = R.layout.fragment_my_drive
-
-    @Inject
-    lateinit var viewModel: MyDriveViewModel
 
     override fun initializeBinding(binding: FragmentMyDriveBinding) {
         binding.lifecycleOwner = this
@@ -31,7 +30,6 @@ class MyDriveFragment : BaseBindingFragment<FragmentMyDriveBinding>()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onAttach(context: Context) {
@@ -55,14 +53,10 @@ class MyDriveFragment : BaseBindingFragment<FragmentMyDriveBinding>()  {
 
         val bundle = this.arguments
         alDrive?.addAll(bundle?.getParcelableArrayList(Constant.KEY_DRIVE_DATA)!!)
-        LogM.e("Arraylist size is " + alDrive?.size)
-
         if(alDrive?.size == 0) {
-
+            viewModel.setNoDataFound(false)
         } else {
-
+            viewModel.setNoDataFound(true)
         }
-
     }
-
 }

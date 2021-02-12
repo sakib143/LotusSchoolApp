@@ -14,21 +14,17 @@ class MyDriveViewModel  @Inject constructor(
     private val prefUtils: PrefUtils,
 ) : AndroidViewModel(application) {
 
-    private val _driveList: MutableLiveData<DriveModel> =
-        MutableLiveData<DriveModel>()
-    val driveList: LiveData<DriveModel>
-        get() = _driveList
+    private val _isNoDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isNoDataFound: LiveData<Boolean>
+        get() = _isNoDataFound
 
-    private val _isDataFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isDataFound: LiveData<Boolean>
-        get() = _isDataFound
 
     init {
-        _isDataFound.postValue(true)
+        _isNoDataFound.postValue(true)
     }
 
-    fun setDataLoad(isDataLoad: Boolean) {
-        _isDataFound.postValue(isDataLoad)
+    fun setNoDataFound(isDataLoad: Boolean) {
+        _isNoDataFound.postValue(isDataLoad)
     }
 
 

@@ -18,12 +18,13 @@ class AnswerFragment : BaseBindingFragment<FragmentAnswerBinding>() {
 
     private var alAnswer: ArrayList<DriveModel.Data>? = ArrayList()
 
-    override fun layoutId(): Int = R.layout.fragment_answer
+
 
     @Inject
     lateinit var viewModel: AnswerViewModel
-
     private var binding: FragmentAnswerBinding? = null
+
+    override fun layoutId(): Int = R.layout.fragment_answer
 
     override fun initializeBinding(binding: FragmentAnswerBinding) {
         binding.lifecycleOwner = this
@@ -34,7 +35,6 @@ class AnswerFragment : BaseBindingFragment<FragmentAnswerBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onAttach(context: Context) {
@@ -58,7 +58,11 @@ class AnswerFragment : BaseBindingFragment<FragmentAnswerBinding>() {
 
         val bundle = this.arguments
         alAnswer?.addAll(bundle?.getParcelableArrayList(Constant.KEY_DRIVE_DATA)!!)
-        LogM.e("Anser list size is " + alAnswer?.size)
+        if(alAnswer?.size == 0) {
+            viewModel.setNoDataFound(false)
+        } else {
+            viewModel.setNoDataFound(true)
+        }
     }
 
 }
