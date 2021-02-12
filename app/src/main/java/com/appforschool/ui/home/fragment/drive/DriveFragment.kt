@@ -14,6 +14,7 @@ import com.appforschool.listner.UserProfileListner
 import com.appforschool.ui.home.fragment.drive.answer.AnswerFragment
 import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveFragment
 import com.appforschool.ui.home.fragment.drive.shared.SharedFragment
+import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.google.android.material.tabs.TabLayoutMediator
@@ -68,13 +69,39 @@ class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        UserProfileListner.getInstance().setListener(this)
+        viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
+        viewModel.driveList.observe(viewLifecycleOwner, driveListObserver)
+        getDriveList()
+    }
+
+    private fun setViewPagerStuff() {
+        //Set My drive
+        val myDriveFragment = MyDriveFragment.newInstance()
+        val bundleMyDrive = Bundle()
+        bundleMyDrive.putParcelableArrayList(Constant.KEY_DRIVE_DATA, alDrive)
+        myDriveFragment.arguments = bundleMyDrive
+
+        //Set Share
+        val sharedfragment = SharedFragment.newInstance()
+        val bundleShare = Bundle()
+        bundleShare.putParcelableArrayList(Constant.KEY_DRIVE_DATA, alShared)
+        sharedfragment.arguments = bundleShare
+
+        //ANSWER
+        val answerfragment = AnswerFragment.newInstance()
+        val bundleAnswer = Bundle()
+        bundleAnswer.putParcelableArrayList(Constant.KEY_DRIVE_DATA, alAnswer)
+        answerfragment.arguments = bundleAnswer
+
+
         viewPager.adapter = object : FragmentStateAdapter(this) {
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
-                    0 -> MyDriveFragment.newInstance()
-                    1 -> SharedFragment.newInstance()
-                    2 -> AnswerFragment.newInstance()
-                    else -> MyDriveFragment.newInstance()
+                    0 -> myDriveFragment
+                    1 -> sharedfragment
+                    2 -> answerfragment
+                    else -> myDriveFragment
                 }
             }
 
@@ -92,11 +119,6 @@ class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
                 else -> resources.getString(R.string.drive)
             }
         }.attach()
-
-        UserProfileListner.getInstance().setListener(this)
-        viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
-        viewModel.driveList.observe(viewLifecycleOwner, driveListObserver)
-        getDriveList()
     }
 
     fun getDriveList() {
@@ -135,6 +157,7 @@ class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
         LogM.e("Shared list size " + alShared?.size)
         LogM.e("Drive list size " + alDrive?.size)
 
+        setViewPagerStuff()
 
         if (alMainList?.size == 0) {
             viewModel.setDataFound(false)

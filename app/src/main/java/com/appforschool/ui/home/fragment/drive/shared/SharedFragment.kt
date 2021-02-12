@@ -4,11 +4,17 @@ import android.content.Context
 import android.os.Bundle
 import com.appforschool.R
 import com.appforschool.base.BaseBindingFragment
+import com.appforschool.data.model.DriveModel
 import com.appforschool.databinding.FragmentAnswerBinding
 import com.appforschool.databinding.FragmentSharedBinding
 import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveFragment
+import com.appforschool.utils.Constant
+import com.appforschool.utils.LogM
 
 class SharedFragment : BaseBindingFragment<FragmentSharedBinding>() {
+
+    private var alShared: ArrayList<DriveModel.Data>? = ArrayList()
+
 
     override fun layoutId(): Int = R.layout.fragment_shared
 
@@ -40,5 +46,8 @@ class SharedFragment : BaseBindingFragment<FragmentSharedBinding>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        val bundle = this.arguments
+        alShared?.addAll(bundle?.getParcelableArrayList(Constant.KEY_DRIVE_DATA)!!)
+        LogM.e("Arraylist size is " + alShared?.size)
     }
 }

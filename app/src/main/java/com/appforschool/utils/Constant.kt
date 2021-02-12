@@ -92,6 +92,8 @@ class Constant {
         const val IMAGE_FULL_ZOOM_ANIM = "image_full_zoom_animation"
         const val REQUEST_QUESTION_ID = "questionid"
         const val KEY_OBTAIN_MARKS = "totalobtainedmarks"
+        const val KEY_DRIVE_DATA = "key_drive_data"
+
 
 
     }

@@ -1,11 +1,14 @@
 package com.appforschool.data.model
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import kotlinx.android.parcel.Parcelize
 
 
+@Parcelize
 data class DriveModel(
     @Expose
     @SerializedName("data") var `data`: List<Data> = listOf(),
@@ -13,7 +16,8 @@ data class DriveModel(
     @SerializedName("message") var message: String? = "", // success
     @Expose
     @SerializedName("status") var status: Boolean? = false // true
-) {
+): Parcelable {
+    @Parcelize
     data class Data(
         @Expose
         @SerializedName("filedescr") var filedescr: String? = "", // To solve first 5 Questions and write summary of method used
@@ -43,5 +47,5 @@ data class DriveModel(
         @SerializedName("Flag") var Flag: String = ""
 
 
-    )
+    ): Parcelable
 }

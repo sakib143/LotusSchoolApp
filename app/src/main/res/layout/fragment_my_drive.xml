@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="android.view.View" />
         <import type="java.util.List" />
-
         <variable
             name="viewmodel"
-            type="com.appforschool.ui.home.fragment.drive.DriveViewModel" />
-
+            type="com.appforschool.ui.home.fragment.drive.mydrive.MyDriveViewModel" />
         <variable
             name="listner"
             type="com.appforschool.ui.home.fragment.drive.DriveFragment" />
-
         <variable
             name="driveList"
             type="List&lt;com.appforschool.data.model.DriveModel.Data>" />
@@ -25,6 +23,25 @@
         android:background="@color/colorScheduleBackground"
         android:clickable="true"
         android:focusable="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            bindDriveList="@{driveList}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            tools:listitem="@layout/adapter_drive"
+            android:layout_below="@+id/llHeader"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/calibri"
+            android:text="@string/no_data_found"
+            android:textSize="@dimen/_20ssp"
+            android:layout_centerInParent="true"
+            tools:visibility="gone"
+            android:visibility="@{viewmodel.isDataFound ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>
 </layout>
