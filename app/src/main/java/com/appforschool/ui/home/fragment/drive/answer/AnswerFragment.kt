@@ -23,8 +23,11 @@ class AnswerFragment : BaseBindingFragment<FragmentAnswerBinding>() {
     @Inject
     lateinit var viewModel: AnswerViewModel
 
+    private var binding: FragmentAnswerBinding? = null
+
     override fun initializeBinding(binding: FragmentAnswerBinding) {
         binding.lifecycleOwner = this
+        this.binding = binding
         binding.driveList = alAnswer
         binding.viewmodel = viewModel
     }
@@ -55,7 +58,7 @@ class AnswerFragment : BaseBindingFragment<FragmentAnswerBinding>() {
 
         val bundle = this.arguments
         alAnswer?.addAll(bundle?.getParcelableArrayList(Constant.KEY_DRIVE_DATA)!!)
-        LogM.e("Arraylist size is " + alAnswer?.size)
+        LogM.e("Anser list size is " + alAnswer?.size)
     }
 
 }

@@ -10,7 +10,7 @@
             type="com.appforschool.ui.home.fragment.drive.answer.AnswerViewModel" />
         <variable
             name="listner"
-            type="com.appforschool.ui.home.fragment.drive.DriveFragment" />
+            type="com.appforschool.ui.home.fragment.drive.answer.AnswerFragment" />
         <variable
             name="driveList"
             type="List&lt;com.appforschool.data.model.DriveModel.Data>" />
@@ -23,24 +23,24 @@
         android:clickable="true"
         android:focusable="true">
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            bindDriveList="@{driveList}"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:paddingLeft="@dimen/_5sdp"-->
-<!--            android:paddingRight="@dimen/_5sdp"-->
-<!--            tools:listitem="@layout/adapter_drive"-->
-<!--            android:layout_below="@+id/llHeader" />-->
+        <androidx.recyclerview.widget.RecyclerView
+            bindDriveList="@{driveList}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            tools:listitem="@layout/adapter_drive"
+            android:layout_below="@+id/llHeader" />
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fontFamily="@font/calibri"-->
-<!--            android:text="@string/no_data_found"-->
-<!--            android:textSize="@dimen/_20ssp"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            tools:visibility="gone"-->
-<!--            android:visibility="@{viewmodel.isDataFound ? View.GONE : View.VISIBLE}" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/calibri"
+            android:text="@string/no_data_found"
+            android:textSize="@dimen/_20ssp"
+            android:layout_centerInParent="true"
+            tools:visibility="gone"
+            android:visibility="@{viewmodel.isDataFound ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>
 </layout>

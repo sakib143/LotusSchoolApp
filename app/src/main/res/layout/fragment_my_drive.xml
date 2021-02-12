@@ -10,7 +10,7 @@
             type="com.appforschool.ui.home.fragment.drive.mydrive.MyDriveViewModel" />
         <variable
             name="listner"
-            type="com.appforschool.ui.home.fragment.drive.DriveFragment" />
+            type="com.appforschool.ui.home.fragment.drive.mydrive.MyDriveFragment" />
         <variable
             name="driveList"
             type="List&lt;com.appforschool.data.model.DriveModel.Data>" />

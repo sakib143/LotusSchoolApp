@@ -18,8 +18,11 @@ class SharedFragment : BaseBindingFragment<FragmentSharedBinding>() {
 
     override fun layoutId(): Int = R.layout.fragment_shared
 
+    private var binding: FragmentSharedBinding? = null
+
     override fun initializeBinding(binding: FragmentSharedBinding) {
         binding.lifecycleOwner = this
+        this.binding = binding
         binding.driveList = alShared
     }
 
