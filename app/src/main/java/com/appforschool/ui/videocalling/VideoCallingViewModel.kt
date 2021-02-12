@@ -32,7 +32,7 @@ class VideoCallingViewModel @Inject constructor(
     val call_end_log: LiveData<SetCallEndLogModel>
         get() = _call_end_log
 
-    fun executeSetEndcallLog(scheduleId: String): LiveData<SetCallEndLogModel> {
+    fun executeSetEndcallLog(scheduleId: Int): LiveData<SetCallEndLogModel> {
         Coroutines.main {
             val inputParam = JsonObject()
             inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_SET_END_MEETING_LOG)

@@ -44,6 +44,7 @@ class Constant {
         const val REQUEST_SET_JOIN_LOG = "setjoinlog"
         const val REQUEST_SETFILE_VIEW_LOG = "setfileviewlog"
         const val REQUEST_SCHEDULE_ID = "scheduleid"
+        const val KEY_ROOM_ID = "room_id"
         const val REQUEST_DEVICE = "Device"
         const val REQUEST_DEVICE_SMALL = "device"
         const val KEY_ANDROID = "A"
