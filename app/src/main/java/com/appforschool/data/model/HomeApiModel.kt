@@ -49,7 +49,7 @@ data class HomeApiModel(
         @Expose
         @SerializedName("videoserverurl") var videoserverurl: String = "",
         @Expose
-        @SerializedName("avideoserverurlnew") var avideoserverurlnew: String = "",
+        @SerializedName("videoserverurlnew") var videoserverurlnew: String = "",
         @Expose
         @SerializedName("ismutealloption") var ismutealloption: Int = 0,
         @Expose

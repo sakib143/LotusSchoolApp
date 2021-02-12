@@ -25,7 +25,7 @@ class VideoCallingActivity : BaseActivity() {
 
     private var userName: String? = null
     private var isHost: Int = 1
-    private var scheduleId: Int = 0
+    private var scheduleId: String = ""
     private var roomUrl: String? = null
 
     override fun layoutId() = R.layout.activity_video_calling
@@ -86,7 +86,7 @@ class VideoCallingActivity : BaseActivity() {
         builder.build()
 
         val options = org.jitsi.meet.sdk.JitsiMeetConferenceOptions.Builder()
-            .setRoom(scheduleId.toString())
+            .setRoom(scheduleId)
             .build()
         JitsiMeetActivity.launch(this, options)
     }
@@ -96,7 +96,7 @@ class VideoCallingActivity : BaseActivity() {
         fun intentFor(
             context: Context,
             roomId: String,
-            scheduleId: Int
+            scheduleId: String
         ) =
             Intent(context, VideoCallingActivity::class.java)
                 .putExtra(Constant.KEY_ROOM_URL, roomId)
@@ -106,7 +106,7 @@ class VideoCallingActivity : BaseActivity() {
     private fun getIntentData() {
         roomUrl = intent.getStringExtra(Constant.KEY_ROOM_URL)
         userName = prefUtils.getUserData()?.studentname
-        scheduleId = intent.getIntExtra(Constant.REQUEST_SCHEDULE_ID, 0)
+        scheduleId = intent.getStringExtra(Constant.REQUEST_SCHEDULE_ID)!!
         isHost = prefUtils.getUserData()?.ishost!!
     }
 
