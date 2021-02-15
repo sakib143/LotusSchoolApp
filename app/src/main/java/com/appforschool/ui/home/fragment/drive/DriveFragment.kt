@@ -1,7 +1,6 @@
 package com.appforschool.ui.home.fragment.drive
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,7 +18,12 @@ import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_drive.*
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+
 
 class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
     UserProfileListner.onScreenCloseListner {
@@ -152,10 +156,9 @@ class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
             }
         }
 
-        LogM.e("Main list size " + alMainList?.size)
-        LogM.e("Answer list size " + alAnswer?.size)
-        LogM.e("Shared list size " + alShared?.size)
-        LogM.e("Drive list size " + alDrive?.size)
+        listSortByDate(alAnswer)//Sorting Drive list
+        listSortByDate(alShared)//Sorting Share  list
+        listSortByDate(alDrive)//Sorting Answer list
 
         setViewPagerStuff()
 
@@ -164,6 +167,26 @@ class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
         } else {
             viewModel.setDataFound(true)
         }
+    }
+
+    private fun listSortByDate(alDrive: ArrayList<DriveModel.Data>?) {
+        Collections.sort(alDrive, object : Comparator<DriveModel.Data> {
+            override fun compare(arg0: DriveModel.Data?, arg1: DriveModel.Data?): Int {
+                val format = SimpleDateFormat("dd-MM-yy hh:mmaa")
+                var compareResult = 0
+                compareResult = try {
+                    val fromDate = arg0?.filedate + " " + arg0?.filetime
+                    val toDate = arg1?.filedate + " " + arg1?.filetime
+                    val arg0Date = format.parse(fromDate)
+                    val arg1Date = format.parse(toDate)
+                    arg1Date.compareTo(arg0Date)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                    arg0?.filedate!!.compareTo(arg1?.filedate!!)
+                }
+                return compareResult
+            }
+        })
     }
 
     interface DriveFragmentListner {
