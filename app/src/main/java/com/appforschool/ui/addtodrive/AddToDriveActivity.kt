@@ -266,6 +266,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         selected_image = 5
         alMultiImage.get(3).imageUri = resultUri
         alMultiImage.get(3).isSelected = true
+        addToPdf(3)
         if (alMultiImage.size > 4) {
             startCrop(alMultiImage.get(4).imageUri)
         }
@@ -275,6 +276,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         selected_image = 4
         alMultiImage.get(2).imageUri = resultUri
         alMultiImage.get(2).isSelected = true
+        addToPdf(2)
         if (alMultiImage.size > 3) {
             startCrop(alMultiImage.get(3).imageUri)
         }
@@ -301,9 +303,11 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     }
 
     fun addToPdf(position: Int) {
+        var pageNumber = position
+        pageNumber += 1
+        LogM.e("Page number testing " + pageNumber)
         val bitmap = BitmapFactory.decodeFile(alMultiImage.get(position).imageUri.path)
-        val pageInfo =
-            PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, position + 1).create()
+        val pageInfo = PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, pageNumber).create()
         val page = pdfDocument.startPage(pageInfo)
         val canvas = page.canvas
         val paint = Paint()
@@ -315,7 +319,6 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         pdfDocument.writeTo(fileOutputStream)
 
         uploadSingleFile(file!!)
-        LogM.e("PDF path is " + file?.absolutePath)
     }
 
     private fun getOutputFile(): File? {

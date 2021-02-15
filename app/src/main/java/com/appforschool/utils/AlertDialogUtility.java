@@ -23,11 +23,14 @@ public class AlertDialogUtility {
         AlertDialog dialog = builder.create();
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogZoomEffect;
         dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setAllCaps(false);
     }
 
     public static void showConfirmAlert(Context context, String msg, DialogInterface.OnClickListener onYesClick) {
         new AlertDialog.Builder(context).setIcon(0).setTitle(context.getString(R.string.app_name)).setMessage(msg).setCancelable(true).setNegativeButton("NO", null)
                 .setPositiveButton("YES", onYesClick).show();
+
     }
 
     public static void showSingleAlert(Context context, String strMessege, DialogInterface.OnClickListener onYesClick) {
@@ -35,6 +38,8 @@ public class AlertDialogUtility {
         AlertDialog dialog = builder.create();
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogZoomEffect;
         dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setAllCaps(false);
     }
 
 }

@@ -83,7 +83,7 @@
     <string name="copied_to_clipboard">Copied to clipboard.</string>
     <string name="close">Close</string>
     <string name="file_uploading_starting">File uploading, please wait...</string>
-    <string name="image_file_title">Multiple File</string>
+    <string name="image_file_title">Multiple Files</string>
     <string name="other_file_title">Single File</string>
     <string name="try_again_crop">Can not crop image. Please try again</string>
     <string name="something_went_wrong">Something went wrong</string>
