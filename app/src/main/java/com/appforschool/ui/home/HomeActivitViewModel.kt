@@ -60,6 +60,11 @@ class HomeActivitViewModel @Inject constructor(
     val setIsJoinLog: LiveData<SetJoinModel>
         get() = _setIsJoinLog
 
+    //Video calling log related stuff
+    private val _deleteDrive: MutableLiveData<DeleteDriveModel> = MutableLiveData<DeleteDriveModel>()
+    val deleteDrive: LiveData<DeleteDriveModel>
+        get() = _deleteDrive
+
     //Open file log related stuff
     private val _fileViewLog: MutableLiveData<FileViewLogModel> =
         MutableLiveData<FileViewLogModel>()
@@ -91,10 +96,7 @@ class HomeActivitViewModel @Inject constructor(
                 val inputParam = JsonObject()
                 inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_SET_JOIN_LOG)
                 inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
-                inputParam.addProperty(
-                    Constant.REQUEST_STUDENTID,
-                    prefUtils.getUserData()?.studentId
-                )
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
                 inputParam.addProperty(Constant.REQUEST_SCHEDULE_ID, scheduleId)
                 inputParam.addProperty(Constant.REQUEST_DEVICE_SMALL, Constant.KEY_ANDROID)
                 val apiResponse = repository.callSetJoinLog(inputParam)
@@ -106,6 +108,26 @@ class HomeActivitViewModel @Inject constructor(
             }
         }
         return _setIsJoinLog!!
+    }
+
+    fun executeDeleteDrive(driveId: String): LiveData<DeleteDriveModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.MODE_DELETE_DRIVE)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
+                inputParam.addProperty(Constant.REQUEST_DRIVE_ID, driveId)
+                val apiResponse = repository.callDeleteDrive(inputParam)
+                _deleteDrive.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _deleteDrive!!
     }
 
     fun executeFileViewLog(shareId: String, viewType: String): LiveData<FileViewLogModel> {

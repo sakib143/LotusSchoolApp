@@ -3,6 +3,7 @@ package com.appforschool.ui.addtodrive
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Paint
@@ -21,13 +22,12 @@ import com.appforschool.listner.UserProfileListner
 import com.appforschool.ui.addtodrive.adapter.KnowledgeSpinnerAdapter
 import com.appforschool.ui.addtodrive.adapter.StandardAdapter
 import com.appforschool.ui.addtodrive.adapter.SubjectAdapter
-import com.appforschool.utils.AlertDialogUtility
-import com.appforschool.utils.ImageFilePath
-import com.appforschool.utils.LogM
-import com.appforschool.utils.toast
+import com.appforschool.utils.*
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.opensooq.supernova.gligar.GligarPicker
 import com.yalantis.ucrop.UCrop
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.default
 import kotlinx.android.synthetic.main.activity_add_to_drive.*
 import java.io.File
 import java.io.FileOutputStream
@@ -317,6 +317,12 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         pdfDocument.finishPage(page)
         bitmap.recycle()
         pdfDocument.writeTo(fileOutputStream)
+
+        Coroutines.main {
+            val compressedImageFile = Compressor.compress(this@AddToDriveActivity, file!!) {
+                default(width = 640, format = Bitmap.CompressFormat.WEBP)
+            }
+        }
 
         uploadSingleFile(file!!)
     }

@@ -12,13 +12,12 @@ import com.appforschool.ui.home.fragment.drive.DriveFragment
 import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveViewModel
 import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
+import com.appforschool.utils.toast
 import javax.inject.Inject
 
 class AnswerFragment : BaseBindingFragment<FragmentAnswerBinding>() {
 
     private var alAnswer: ArrayList<DriveModel.Data>? = ArrayList()
-
-
 
     @Inject
     lateinit var viewModel: AnswerViewModel
@@ -63,6 +62,16 @@ class AnswerFragment : BaseBindingFragment<FragmentAnswerBinding>() {
         } else {
             viewModel.setNoDataFound(true)
         }
+    }
+
+    fun deleteDriveData(shareid: String) {
+        for ( i in alAnswer!!.indices) {
+            if(alAnswer?.get(i)?.shareid == shareid) {
+                alAnswer?.removeAt(i)
+                break
+            }
+        }
+        binding?.driveList = alAnswer
     }
 
 }

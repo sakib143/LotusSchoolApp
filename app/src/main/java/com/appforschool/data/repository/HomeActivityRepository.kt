@@ -18,6 +18,12 @@ class HomeActivityRepository @Inject constructor(
         }
     }
 
+    suspend fun callDeleteDrive(objectLogin: JsonObject): DeleteDriveModel {
+        return apiRequest {
+            webServiceInterface.callDeleteDrive(objectLogin)
+        }
+    }
+
     suspend fun callFileViewLogLog(inputParam: JsonObject): FileViewLogModel {
         return apiRequest {
             webServiceInterface.callFileViewLog(inputParam)

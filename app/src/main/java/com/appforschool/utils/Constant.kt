@@ -94,6 +94,8 @@ class Constant {
         const val REQUEST_QUESTION_ID = "questionid"
         const val KEY_OBTAIN_MARKS = "totalobtainedmarks"
         const val KEY_DRIVE_DATA = "key_drive_data"
+        const val MODE_DELETE_DRIVE = "deletedrive"
+        const val REQUEST_DRIVE_ID = "driveid"
 
 
 

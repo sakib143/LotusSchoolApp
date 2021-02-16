@@ -41,6 +41,10 @@ class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
     private var alAnswer: ArrayList<DriveModel.Data>? = ArrayList()
     private var binding: FragmentDriveBinding? = null
 
+    private var myDriveFragment: MyDriveFragment? = null
+    private var sharedfragment: SharedFragment? = null
+    private var answerfragment: AnswerFragment? = null
+
 
     override fun initializeBinding(binding: FragmentDriveBinding) {
         binding.lifecycleOwner = this
@@ -81,31 +85,31 @@ class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
 
     private fun setViewPagerStuff() {
         //Set My drive
-        val myDriveFragment = MyDriveFragment.newInstance()
+        myDriveFragment = MyDriveFragment.newInstance()
         val bundleMyDrive = Bundle()
         bundleMyDrive.putParcelableArrayList(Constant.KEY_DRIVE_DATA, alDrive)
-        myDriveFragment.arguments = bundleMyDrive
+        myDriveFragment?.arguments = bundleMyDrive
 
         //Set Share
-        val sharedfragment = SharedFragment.newInstance()
+        sharedfragment = SharedFragment.newInstance()
         val bundleShare = Bundle()
         bundleShare.putParcelableArrayList(Constant.KEY_DRIVE_DATA, alShared)
-        sharedfragment.arguments = bundleShare
+        sharedfragment?.arguments = bundleShare
 
         //ANSWER
-        val answerfragment = AnswerFragment.newInstance()
+        answerfragment = AnswerFragment.newInstance()
         val bundleAnswer = Bundle()
         bundleAnswer.putParcelableArrayList(Constant.KEY_DRIVE_DATA, alAnswer)
-        answerfragment.arguments = bundleAnswer
+        answerfragment?.arguments = bundleAnswer
 
 
         viewPager.adapter = object : FragmentStateAdapter(this) {
             override fun createFragment(position: Int): Fragment {
                 return when (position) {
-                    0 -> myDriveFragment
-                    1 -> sharedfragment
-                    2 -> answerfragment
-                    else -> myDriveFragment
+                    0 -> myDriveFragment!!
+                    1 -> sharedfragment!!
+                    2 -> answerfragment!!
+                    else -> myDriveFragment!!
                 }
             }
 
@@ -204,5 +208,21 @@ class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
 
     override fun stateChanged() {
         getDriveList()
+    }
+
+    fun deleteDriveData(shareid: String, flag: String) {
+        when (flag) {
+            "answer" -> {
+                answerfragment?.deleteDriveData(shareid)
+            }
+            "drive" -> {
+                myDriveFragment?.deleteDriveData(shareid)
+            }
+            "shared" -> {
+                sharedfragment?.deleteDriveData(shareid)
+            }
+        }
+
+
     }
 }

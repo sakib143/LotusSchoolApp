@@ -12,7 +12,7 @@ interface HomeListner {
     fun openAlertDetails(model: AlertModel.Data)
     fun openExamDetails(model: ExamModel.Data)
     fun openDriveList(imageView: ImageView,model: DriveModel.Data)
-    fun shareDriveData(model: DriveModel.Data)
+    fun shareDriveData(view: View, model: DriveModel.Data)
     fun openSubjectDetails(model: ScheduleModel.Data)
     fun openSubmissionFile(model: AssignmentModel.Data)
     fun openExamDetailsZoom(view: LinearLayout, date:String, time:String)

@@ -11,6 +11,7 @@ import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveFragment
 import com.appforschool.ui.home.fragment.drive.mydrive.MyDriveViewModel
 import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
+import com.appforschool.utils.toast
 import javax.inject.Inject
 
 class SharedFragment : BaseBindingFragment<FragmentSharedBinding>() {
@@ -61,4 +62,15 @@ class SharedFragment : BaseBindingFragment<FragmentSharedBinding>() {
             viewModel.setNoDataFound(true)
         }
     }
+
+    fun deleteDriveData(shareid: String) {
+        for ( i in alShared!!.indices) {
+            if(alShared?.get(i)?.shareid == shareid) {
+                alShared?.removeAt(i)
+                break
+            }
+        }
+        binding?.driveList = alShared
+    }
+
 }

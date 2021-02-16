@@ -11,10 +11,12 @@ import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -88,6 +90,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     val pdfDocument = PdfDocument()
     //Add to PDF END
 
+    private var driveFragment: DriveFragment? = null
+
     override fun initializeBinding(binding: ActivityHomeBinding) {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
@@ -125,6 +129,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
         viewModel.fileSubmit.observe(this@HomeActivity, fileSubmitObserver)
         viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
+        viewModel.deleteDrive.observe(this@HomeActivity, deleteDriveObserver)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -287,9 +292,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openDriveFragment() {
+        driveFragment = DriveFragment.newInstance()
         addFragment(
             supportFragmentManager,
-            DriveFragment.newInstance(),
+            driveFragment!!,
             addToBackStack = true
         )
     }
@@ -324,6 +330,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         } else {
             toast(it.message)
         }
+    }
+
+    private val deleteDriveObserver = Observer<DeleteDriveModel> {
+        toast(it.data.get(0).message)
     }
 
     private val startExamObserver = Observer<StartExamModel> {
@@ -398,7 +408,12 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             val fullUrl = prefUtils.getUserData()?.videoserverurlnew
             val scheduleId = model.schid
             var roomId = model.roomno
-            navigationController.navigateToVideoCallScreen(this@HomeActivity, fullUrl!!, scheduleId,roomId)
+            navigationController.navigateToVideoCallScreen(
+                this@HomeActivity,
+                fullUrl!!,
+                scheduleId,
+                roomId
+            )
         } else {
             viewModel.executeSetJoinLog(model.schid.toString())
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
@@ -514,7 +529,9 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             LogM.e("=> view exam id " + model.examid)
             viewModel.executeViewResult(model.examid)
         } else {
-            AlertDialogUtility.CustomAlert(this@HomeActivity, getString(R.string.exam_start_title), getString(R.string.exam_start_message),
+            AlertDialogUtility.CustomAlert(this@HomeActivity,
+                getString(R.string.exam_start_title),
+                getString(R.string.exam_start_message),
                 "Yes",
                 "No",
                 { dialog, which ->
@@ -574,16 +591,29 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
-    override fun shareDriveData(model: DriveModel.Data) {
-        if (model.linkurl == null) {
-            globalMethods.shareTextToFriend(this@HomeActivity, "Share Drive file", model.filepath)
-        } else {
-            globalMethods.shareTextToFriend(this@HomeActivity, "Share Drive file", model.linkurl)
-        }
+    override fun shareDriveData(view: View, model: DriveModel.Data) {
+        val popupMenu: PopupMenu = PopupMenu(this, view)
+        popupMenu.menuInflater.inflate(R.menu.drive_menu, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.actionShare -> {
+                    if (model.linkurl == null) {
+                        globalMethods.shareTextToFriend(this@HomeActivity, "Share Drive file", model.filepath)
+                    } else {
+                        globalMethods.shareTextToFriend(this@HomeActivity, "Share Drive file", model.linkurl)
+                    }
+                }
+                R.id.actionDelete -> {
+                    driveFragment?.deleteDriveData(model.shareid, model.Flag)
+                    viewModel.executeDeleteDrive(model.shareid)
+                }
+            }
+            true
+        })
+        popupMenu.show()
     }
 
     override fun stateChanged() {
-        LogM.e("=> stateChanged is calling !!!")
         dashboardFragment?.callHomeAPI()
     }
 
@@ -649,7 +679,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                     setFourthImage(resultUri)
                 }
             }
-            if(selected_image == alMultiImage.size + 1) {
+            if (selected_image == alMultiImage.size + 1) {
                 fileUpload(file!!)
             }
         } else {

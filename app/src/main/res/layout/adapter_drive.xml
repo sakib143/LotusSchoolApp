@@ -7,7 +7,6 @@
         <variable
             name="driveModel"
             type="com.appforschool.data.model.DriveModel.Data" />
-
         <variable
             name="driveListner"
             type="com.appforschool.listner.HomeListner" />
@@ -148,14 +147,16 @@
                     android:layout_centerHorizontal="true" />
 
                 <ImageView
+                    android:id="@+id/ivShare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/_12ssp"
+                    android:padding="@dimen/_10sdp"
                     android:layout_gravity="end"
-                    android:src="@drawable/ic_share"
+                    android:src="@drawable/ic_drive_menu"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_alignParentRight="true"
-                    android:onClick="@{()-> driveListner.shareDriveData(driveModel)}"/>
+                    android:onClick="@{()-> driveListner.shareDriveData(ivShare,driveModel)}"/>
 
             </RelativeLayout>
 

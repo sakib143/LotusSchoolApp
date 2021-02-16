@@ -58,6 +58,10 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callUpdateProfile(@Body jsonObject: JsonObject): Response<UpdateProfileModel>
 
+    @POST("Get_SpData")
+    suspend fun callDeleteDrive(@Body jsonObject: JsonObject): Response<DeleteDriveModel>
+
+
     @Multipart
     @POST("UploadFile")
     suspend fun callUploadAssignment(

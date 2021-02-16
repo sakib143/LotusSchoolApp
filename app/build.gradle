@@ -136,8 +136,11 @@ dependencies {
     //Date library
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
 
-
     //Multi image selection
     implementation project(':gligar')
+
+    //Image compress size which is used for multi image selection and then compress image.
+    implementation 'id.zelory:compressor:3.0.0'
+
 
 }
