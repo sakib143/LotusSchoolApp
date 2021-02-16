@@ -127,6 +127,9 @@ class DriveFragment : BaseBindingFragment<FragmentDriveBinding>(),
                 else -> resources.getString(R.string.drive)
             }
         }.attach()
+
+        tabs.getTabAt(1)?.setIcon(R.drawable.ic_share_tab)
+
     }
 
     fun getDriveList() {
