@@ -10,7 +10,6 @@ import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -26,12 +25,11 @@ import com.appforschool.utils.*
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.opensooq.supernova.gligar.GligarPicker
 import com.yalantis.ucrop.UCrop
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.default
 import kotlinx.android.synthetic.main.activity_add_to_drive.*
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import javax.inject.Inject
 
 class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
@@ -47,9 +45,9 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     //Multiple Image selection END
 
     //Add to PDF START
-    var file: File? = null
-    var fileOutputStream: FileOutputStream? = null
-    val pdfDocument = PdfDocument()
+    private var file: File? = null
+    private var fileOutputStream: FileOutputStream? = null
+    private var pdfDocument = PdfDocument();
     //Add to PDF END
 
     override fun initializeBinding(binding: ActivityAddToDriveBinding) {
@@ -305,25 +303,18 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     fun addToPdf(position: Int) {
         var pageNumber = position
         pageNumber += 1
-        LogM.e("Page number testing " + pageNumber)
-        val bitmap = BitmapFactory.decodeFile(alMultiImage.get(position).imageUri.path)
-        val pageInfo = PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, pageNumber).create()
+        val firstBitmap = BitmapFactory.decodeFile(alMultiImage.get(position).imageUri.path)
+        val decoded: Bitmap = globalMethods.getResizedBitmap(firstBitmap,350)!!  //Compress Image file to reduce pdf size
+        val pageInfo = PdfDocument.PageInfo.Builder(decoded.width, decoded.height, pageNumber).create()
         val page = pdfDocument.startPage(pageInfo)
-        val canvas = page.canvas
+        val canvas = page?.canvas
         val paint = Paint()
         paint.setColor(Color.BLUE)
-        canvas.drawPaint(paint)
-        canvas.drawBitmap(bitmap, 0f, 0f, null)
+        canvas?.drawPaint(paint)
+        canvas?.drawBitmap(decoded, 0f, 0f, null)
         pdfDocument.finishPage(page)
-        bitmap.recycle()
+        decoded.recycle()
         pdfDocument.writeTo(fileOutputStream)
-
-        Coroutines.main {
-            val compressedImageFile = Compressor.compress(this@AddToDriveActivity, file!!) {
-                default(width = 640, format = Bitmap.CompressFormat.WEBP)
-            }
-        }
-
         uploadSingleFile(file!!)
     }
 
