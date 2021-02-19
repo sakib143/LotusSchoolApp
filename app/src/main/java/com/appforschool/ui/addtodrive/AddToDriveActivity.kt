@@ -25,8 +25,12 @@ import com.appforschool.utils.*
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.opensooq.supernova.gligar.GligarPicker
 import com.yalantis.ucrop.UCrop
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
 import kotlinx.android.synthetic.main.activity_add_to_drive.*
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -181,7 +185,9 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
                 uploadMultiImageFile(data)
             }
             UCrop.REQUEST_CROP -> {
-                handleCropResult(data!!)
+                if(data != null) {
+                    handleCropResult(data)
+                }
             }
             else -> {
                 handleCropError(data!!)
@@ -304,7 +310,7 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         var pageNumber = position
         pageNumber += 1
         val firstBitmap = BitmapFactory.decodeFile(alMultiImage.get(position).imageUri.path)
-        val decoded: Bitmap = globalMethods.getResizedBitmap(firstBitmap,350)!!  //Compress Image file to reduce pdf size
+        val decoded: Bitmap = globalMethods.getResizedBitmap(firstBitmap,720)!!  //Compress Image file to reduce pdf size
         val pageInfo = PdfDocument.PageInfo.Builder(decoded.width, decoded.height, pageNumber).create()
         val page = pdfDocument.startPage(pageInfo)
         val canvas = page?.canvas
