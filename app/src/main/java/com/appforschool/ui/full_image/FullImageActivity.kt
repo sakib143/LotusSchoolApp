@@ -35,7 +35,6 @@ class FullImageActivity : BaseActivity() {
 
         Glide.with(this@FullImageActivity)
             .load(intent.getStringExtra(Constant.REQUEST_LINK_URL))
-            .centerCrop()
             .into(ivFullImage)
 
     }
