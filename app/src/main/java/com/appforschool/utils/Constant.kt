@@ -96,6 +96,7 @@ class Constant {
         const val KEY_DRIVE_DATA = "key_drive_data"
         const val MODE_DELETE_DRIVE = "deletedrive"
         const val REQUEST_DRIVE_ID = "driveid"
+        const val REQUEST_FLAG = "flag"
 
 
 

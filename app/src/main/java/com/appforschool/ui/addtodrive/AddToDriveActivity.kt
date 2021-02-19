@@ -25,13 +25,7 @@ import com.appforschool.utils.*
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.opensooq.supernova.gligar.GligarPicker
 import com.yalantis.ucrop.UCrop
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.format
-import id.zelory.compressor.constraint.quality
-import id.zelory.compressor.constraint.resolution
-import id.zelory.compressor.constraint.size
 import kotlinx.android.synthetic.main.activity_add_to_drive.*
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject

@@ -110,7 +110,7 @@ class HomeActivitViewModel @Inject constructor(
         return _setIsJoinLog!!
     }
 
-    fun executeDeleteDrive(driveId: String): LiveData<DeleteDriveModel> {
+    fun executeDeleteDrive(driveId: String, strFlag: String): LiveData<DeleteDriveModel> {
         Coroutines.main {
             try {
                 val inputParam = JsonObject()
@@ -119,6 +119,18 @@ class HomeActivitViewModel @Inject constructor(
                 inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
                 inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
                 inputParam.addProperty(Constant.REQUEST_DRIVE_ID, driveId)
+                when (strFlag) {
+                    "answer" -> {
+                        inputParam.addProperty(Constant.REQUEST_FLAG, 3)
+                    }
+                    "drive" -> {
+                        inputParam.addProperty(Constant.REQUEST_FLAG, 1)
+                    }
+                    "shared" -> {
+                        inputParam.addProperty(Constant.REQUEST_FLAG, 2)
+                    }
+                }
+
                 val apiResponse = repository.callDeleteDrive(inputParam)
                 _deleteDrive.postValue(apiResponse)
             } catch (e: ApiExceptions) {

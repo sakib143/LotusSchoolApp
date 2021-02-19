@@ -333,7 +333,9 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     private val deleteDriveObserver = Observer<DeleteDriveModel> {
-        toast(it.data.get(0).message)
+        if(it.status) {
+            toast(it.data.get(0).message)
+        }
     }
 
     private val startExamObserver = Observer<StartExamModel> {
@@ -605,7 +607,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 }
                 R.id.actionDelete -> {
                     driveFragment?.deleteDriveData(model.shareid, model.Flag)
-                    viewModel.executeDeleteDrive(model.shareid)
+                    viewModel.executeDeleteDrive(model.shareid, model.Flag)
                 }
             }
             true
