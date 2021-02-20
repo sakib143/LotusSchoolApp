@@ -48,6 +48,8 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
     private var pdfDocument = PdfDocument();
     //Add to PDF END
 
+    private var alSubjectList: ArrayList<SubjectListModel.Data> = ArrayList<SubjectListModel.Data>()
+
     override fun initializeBinding(binding: ActivityAddToDriveBinding) {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
@@ -121,14 +123,18 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
 
     private val subjectObserver = Observer<SubjectListModel> {
         if (it.status) {
-            setSubjectAdapter(it)
+            alSubjectList.clear()
+            alSubjectList  = it.data
+            setSubjectAdapter()
         } else {
+            alSubjectList.clear()
+            setSubjectAdapter()
             toast(it!!.message)
         }
     }
 
-    private fun setSubjectAdapter(it: SubjectListModel) {
-        val adapter = SubjectAdapter(this@AddToDriveActivity, it.data)
+    private fun setSubjectAdapter() {
+        val adapter = SubjectAdapter(this@AddToDriveActivity, alSubjectList)
         spSubjectAD.adapter = adapter
     }
 

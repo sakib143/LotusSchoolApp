@@ -8,7 +8,7 @@ import androidx.annotation.Keep
 
 data class SubjectListModel(
     @Expose
-    @SerializedName("data") var `data`: List<Data> = listOf(),
+    @SerializedName("data") var `data`: ArrayList<Data> = arrayListOf(),
     @Expose
     @SerializedName("message") var message: String= "", // success
     @Expose
