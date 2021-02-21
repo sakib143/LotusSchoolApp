@@ -169,6 +169,7 @@ class AddToDriveViewModel @Inject constructor(
 
     fun onStandardSelection(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         LogM.e("=> testing " + pos)
+        subjectId.value = 0 //Reset subject while user re select standard
         standardid.value = alStandardList.get(pos)?.groupid
         executerSubjectList(alStandardList.get(pos)?.groupid.toString())
         //pos                                 get selected item position
@@ -213,10 +214,12 @@ class AddToDriveViewModel @Inject constructor(
             application.toast("Please select knowledge type")
         } else if (standardid.value == 0 || standardid.value == null) {
             application.toast("Please select Standard")
+        } else if(subjectId.value == 0){
+            application.toast("Please select subject")
         } else if (isFileSelected.value == true && file.value == null) {
             application.toast("Please choose file")
         } else if (isFileSelected.value == false && linkurl.value.isNullOrEmpty()) {
-            application.toast("Please enter url")
+            application.toast("Please enter URL")
         } else if (isFileSelected.value == false && !globalMethods.isValidUrl(linkurl.value.toString())) {
             application.toast("Please enter valid URL")
         } else {
