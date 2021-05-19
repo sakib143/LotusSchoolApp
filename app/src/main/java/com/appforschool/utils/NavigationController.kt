@@ -11,11 +11,9 @@ import com.appforschool.ui.attendexam.AttendExamActivity
 import com.appforschool.ui.auth.changepassword.ChangePasswordActivity
 import com.appforschool.ui.auth.login.LoginActivity
 import com.appforschool.ui.commonwebview.CommonWebviewActivity
-import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.profile.teacher.TeacherProfileActivity
 import com.appforschool.ui.profile.user.UserProfileActivity
-import com.appforschool.ui.videocalling.VideoCallingActivity
 import javax.inject.Inject
 
 /**
@@ -45,15 +43,6 @@ class NavigationController @Inject constructor(var context: Context) {
     //     */
     fun navigateToLoginScreen(activity: BaseActivity) {
         activity.startActivity(LoginActivity.intentFor(context))
-    }
-
-
-    /**
-    //     * Opens Video calling
-    //     * @param activity -> to Start the Activity
-    //     */
-    fun navigateToVideoCallScreen(activity: BaseActivity, roomUrl: String, scheduleId: Int, roomId: String) {
-        activity.startActivity(VideoCallingActivity.intentFor(context, roomUrl, scheduleId,roomId))
     }
 
     /**

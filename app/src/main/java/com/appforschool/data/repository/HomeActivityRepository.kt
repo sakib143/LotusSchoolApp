@@ -58,4 +58,10 @@ class HomeActivityRepository @Inject constructor(
             webServiceInterface.callViewResult(objectLogin)
         }
     }
+
+    suspend fun callEndLog(objectLogin: JsonObject): SetCallEndLogModel {
+        return apiRequest {
+            webServiceInterface.callEndLog(objectLogin)
+        }
+    }
 }

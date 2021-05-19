@@ -12,7 +12,6 @@ import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.ui.profile.user.UserProfileActivity
 import com.appforschool.ui.profile.teacher.TeacherProfileActivity
 import com.appforschool.ui.splash.SplashActivity
-import com.appforschool.ui.videocalling.VideoCallingActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -47,12 +46,6 @@ abstract class ActivityBuilder {
      **/
     @ContributesAndroidInjector()
     abstract fun bindCommonWebviewActivity(): CommonWebviewActivity
-
-    /**
-     * fun to bind VideoCalling screen , making Injection enable
-     **/
-    @ContributesAndroidInjector()
-    abstract fun bindVideoCallingActivity(): VideoCallingActivity
 
     /**
      * fun to bind AddToDriveActivity screen , making Injection enable

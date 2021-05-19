@@ -4,7 +4,6 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.data.model.*
-import com.appforschool.ui.attendexam.AttendExamAdapter
 import com.appforschool.ui.home.fragment.assignment.AssignmentAdapter
 import com.appforschool.ui.home.fragment.drive.DriveAdapter
 import com.appforschool.ui.home.fragment.exam.ExamAdapter

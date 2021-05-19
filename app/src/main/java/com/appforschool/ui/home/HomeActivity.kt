@@ -1,9 +1,8 @@
 package com.appforschool.ui.home
 
 import android.Manifest
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
+import android.content.*
+import android.content.BroadcastReceiver
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Paint
@@ -21,6 +20,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.appforschool.BuildConfig
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
@@ -51,8 +51,11 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_drawer.*
+import org.jitsi.meet.sdk.*
 import java.io.File
 import java.io.FileOutputStream
+import java.net.MalformedURLException
+import java.net.URL
 import javax.inject.Inject
 
 
@@ -92,10 +95,24 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     private var driveFragment: DriveFragment? = null
 
+    //Jitsi Video calling related stuff START
+    private var userName: String? = null
+    private var isHost: Int = 1
+    private var scheduleId: Int = 0
+    private var roomUrl: String? = null
+    private var roomId: String = ""
+    //Jitsi Video calling related stuff END
+
     override fun initializeBinding(binding: ActivityHomeBinding) {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         binding.homeActivityListner = this
+    }
+
+    private val broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            onBroadcastReceived(intent)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,6 +147,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         viewModel.fileSubmit.observe(this@HomeActivity, fileSubmitObserver)
         viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
         viewModel.deleteDrive.observe(this@HomeActivity, deleteDriveObserver)
+        viewModel.call_end_log.observe(this, callEndObserver)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -332,6 +350,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
 
+    private val callEndObserver = Observer<SetCallEndLogModel> {
+        toast(it!!.message)
+    }
+
     private val deleteDriveObserver = Observer<DeleteDriveModel> {
         if(it.status) {
             toast(it.data.get(0).message)
@@ -406,16 +428,24 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         Manifest.permission.RECORD_AUDIO
     ) {
         if (model.meetinglink.isNullOrBlank()) {
-            viewModel.executeSetJoinLog(model.schid.toString())
-            val fullUrl = prefUtils.getUserData()?.videoserverurlnew
-            val scheduleId = model.schid
-            var roomId = model.roomno
-            navigationController.navigateToVideoCallScreen(
-                this@HomeActivity,
-                fullUrl!!,
-                scheduleId,
-                roomId
-            )
+            if(scheduleId != 0) {
+                toast("Please end current meeting.")
+            } else {
+                roomUrl = prefUtils.getUserData()?.videoserverurlnew
+                roomId = model.roomno
+                scheduleId =  model.schid
+                setJitsiMeet()
+            }
+//            viewModel.executeSetJoinLog(model.schid.toString())
+//            val fullUrl = prefUtils.getUserData()?.videoserverurlnew
+//            val scheduleId = model.schid
+//            var roomId = model.roomno
+//            navigationController.navigateToVideoCallScreen(
+//                this@HomeActivity,
+//                fullUrl!!,
+//                scheduleId,
+//                roomId
+//            )
         } else {
             viewModel.executeSetJoinLog(model.schid.toString())
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
@@ -760,5 +790,89 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         }
     }
     //Multiple Image selection END
+
+    //Jist Meet Video calling related stuff by Sakib START
+
+    // Screen sharing relates stuff by Sakib Syed START
+    private fun onBroadcastReceived(intent: Intent?) {
+        if (intent != null) {
+            val event = BroadcastEvent(intent)
+            when (event.getType()) {
+                BroadcastEvent.Type.CONFERENCE_JOINED -> {
+                    LogM.e("CONFERENCE_JOINED")
+                }
+                BroadcastEvent.Type.PARTICIPANT_JOINED -> {
+                    LogM.e("PARTICIPANT_JOINED")
+                }
+                BroadcastEvent.Type.CONFERENCE_TERMINATED -> {
+                    viewModel.executeSetEndcallLog(scheduleId)
+                    roomId = ""
+                    scheduleId = 0
+                    LogM.e("CONFERENCE_TERMINATED")
+                }
+            }
+        }
+    }
+
+    private fun registerForBroadcastMessages() {
+        val intentFilter = IntentFilter()
+        for (type in BroadcastEvent.Type.values()) {
+            intentFilter.addAction(type.action)
+        }
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter)
+    }
+
+    // Screen sharing relates stuff by Sakib Syed END
+
+    public override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        JitsiMeetActivityDelegate.onNewIntent(intent)
+    }
+
+    private fun setJitsiMeet() {
+        val serverURL: URL
+        serverURL = try {
+            URL(roomUrl)
+        } catch (e: MalformedURLException) {
+            e.printStackTrace()
+            throw RuntimeException("Invalid server URL!")
+        }
+
+        var builder = JitsiMeetConferenceOptions.Builder()
+            .setServerURL(serverURL)
+            .setWelcomePageEnabled(false)
+            .setFeatureFlag("invite.enabled", false)
+            .setFeatureFlag("meeting-name.enabled", false)
+            .setFeatureFlag("live-streaming.enabled", false)
+            .setFeatureFlag("meeting-password.enabled", false)
+            .setFeatureFlag("video-share.enabled", false)   // Hide Youtube option from list.
+            .setFeatureFlag("close-captions.enabled", false) // Hide Start showing subtitles from list.
+
+        val jitsiMeetUserInfo = JitsiMeetUserInfo()
+        jitsiMeetUserInfo.displayName = userName
+        builder.setUserInfo(jitsiMeetUserInfo)
+
+
+        if(prefUtils.getUserData()?.isrecordingoption == 0) {
+            builder.setFeatureFlag("recording.enabled",false)
+        }
+
+        //Camera off when user is NOT host
+        if (isHost == 0) {
+            builder.setVideoMuted(true)
+        }
+
+        JitsiMeet.setDefaultConferenceOptions(builder.build())
+        registerForBroadcastMessages()
+
+        builder.build()
+
+        val options = org.jitsi.meet.sdk.JitsiMeetConferenceOptions.Builder()
+            .setRoom(roomId)
+            .build()
+        JitsiMeetActivity.launch(this, options)
+    }
+
+    //Jist Meet Video calling related stuff by Sakib END
 
 }
