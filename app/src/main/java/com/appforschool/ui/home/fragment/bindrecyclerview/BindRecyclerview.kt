@@ -8,6 +8,7 @@ import com.appforschool.ui.home.fragment.assignment.AssignmentAdapter
 import com.appforschool.ui.home.fragment.drive.DriveAdapter
 import com.appforschool.ui.home.fragment.exam.ExamAdapter
 import com.appforschool.ui.home.fragment.schedule.ScheduleAdapter
+import com.appforschool.ui.home.fragment.schedule.ScheduleViewModel
 import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsAdapter
 
 @BindingAdapter("bindScheduleList")
@@ -20,11 +21,7 @@ fun bindRecyclerView(view: RecyclerView, list: List<ScheduleModel.Data>) {
     var adapter = view.adapter
 
     if (adapter == null) {
-        adapter =
-            ScheduleAdapter(
-                view.context,
-                list
-            )
+        adapter = ScheduleAdapter(view.context, list)
         view.adapter = adapter
     }
 }

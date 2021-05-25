@@ -34,6 +34,18 @@ class ScheduleViewModel @Inject constructor(
     val isDataFound: LiveData<Boolean>
         get() = _isDataFound
 
+    private val _isTeacherUser: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isTeacherUser: LiveData<Boolean>
+        get() = _isTeacherUser
+
+    init {
+        if(prefUtils.getUserData()?.usertype.equals(Constant.USER_TYPE_STUDENT,ignoreCase = true)) {
+            _isTeacherUser.postValue(false)
+        } else {
+            _isTeacherUser.postValue(true)
+        }
+    }
+
     fun setDataFound(isFound: Boolean) {
         _isDataFound.value = isFound
     }

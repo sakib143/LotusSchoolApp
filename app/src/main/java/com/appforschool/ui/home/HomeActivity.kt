@@ -423,10 +423,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         permissionForVideoCalling(model)
     }
 
-    fun permissionForVideoCalling(model: ScheduleModel.Data) = runWithPermissions(
-        Manifest.permission.CAMERA,
-        Manifest.permission.RECORD_AUDIO
-    ) {
+    fun permissionForVideoCalling(model: ScheduleModel.Data) = runWithPermissions(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO) {
         if (model.meetinglink.isNullOrBlank()) {
             if(scheduleId != 0) {
                 toast("Please end current meeting.")
@@ -436,16 +433,6 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 scheduleId =  model.schid
                 setJitsiMeet()
             }
-//            viewModel.executeSetJoinLog(model.schid.toString())
-//            val fullUrl = prefUtils.getUserData()?.videoserverurlnew
-//            val scheduleId = model.schid
-//            var roomId = model.roomno
-//            navigationController.navigateToVideoCallScreen(
-//                this@HomeActivity,
-//                fullUrl!!,
-//                scheduleId,
-//                roomId
-//            )
         } else {
             viewModel.executeSetJoinLog(model.schid.toString())
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
@@ -587,6 +574,32 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             )!!
         )
         startActivity(intent, options.toBundle())
+    }
+
+    override fun openScheduleMenu(view: View,model: ScheduleModel.Data) {
+        val popupMenu: PopupMenu = PopupMenu(this, view)
+        popupMenu.menuInflater.inflate(R.menu.schedule_meeting_menu, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.actionShareLinkMeeting -> {
+                    if (model.meetinglink.isNullOrBlank()) {
+                       val  roomUrl = prefUtils.getUserData()?.videoserverurlnew  + model.roomno
+                        globalMethods.shareTextToFriend(this@HomeActivity, "Share Link", roomUrl)
+                    } else {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
+                        if (intent.resolveActivity(packageManager) != null) {
+                            startActivity(intent)
+                        }
+                    }
+                }
+                R.id.actionInActiveMeeting -> {
+//                    driveFragment?.deleteDriveData(model.shareid, model.Flag)
+//                    viewModel.executeDeleteDrive(model.shareid, model.Flag)
+                }
+            }
+            true
+        })
+        popupMenu.show()
     }
 
     override fun openDriveList(imageView: ImageView, model: DriveModel.Data) {

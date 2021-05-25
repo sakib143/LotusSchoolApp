@@ -16,4 +16,5 @@ interface HomeListner {
     fun openSubjectDetails(model: ScheduleModel.Data)
     fun openSubmissionFile(model: AssignmentModel.Data)
     fun openExamDetailsZoom(view: LinearLayout, date:String, time:String)
+    fun openScheduleMenu(view: View,model: ScheduleModel.Data)
 }

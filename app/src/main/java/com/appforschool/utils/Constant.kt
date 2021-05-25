@@ -97,8 +97,6 @@ class Constant {
         const val MODE_DELETE_DRIVE = "deletedrive"
         const val REQUEST_DRIVE_ID = "driveid"
         const val REQUEST_FLAG = "flag"
-
-
-
+        const val USER_TYPE_STUDENT = "S"
     }
 }

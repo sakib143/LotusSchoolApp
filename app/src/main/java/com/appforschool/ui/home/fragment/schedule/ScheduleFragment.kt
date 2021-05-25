@@ -73,6 +73,9 @@ class ScheduleFragment : BaseBindingFragment<FragmentScheduleBinding>() {
     private val scheduleData = Observer<ScheduleModel> {
         alSchedule = ArrayList()
         alSchedule!!.addAll(it!!.data!!)
+        for( i in alSchedule?.indices!!) {
+            alSchedule?.get(i)?.userType = prefUtils.getUserData()?.usertype!!
+        }
         binding?.scheduleList = alSchedule
         if (alSchedule?.size == 0) {
             viewModel.setDataFound(false)

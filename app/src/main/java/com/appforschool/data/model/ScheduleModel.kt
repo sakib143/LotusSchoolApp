@@ -13,6 +13,7 @@ data class ScheduleModel(
     @SerializedName("status") var status: Boolean = false
 ) {
     data class Data(
+        var userType: String = "",
         @Expose
         @SerializedName("Column1") var column1: String = "",
         @SerializedName("CourseName") var courseName: String = "",

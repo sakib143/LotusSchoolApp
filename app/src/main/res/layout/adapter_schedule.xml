@@ -3,16 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="scheduleModel"
             type="com.appforschool.data.model.ScheduleModel.Data" />
-
         <variable
             name="scheduleClickListner"
             type="com.appforschool.listner.HomeListner" />
+        <variable
+            name="string"
+            type="String" />
     </data>
 
     <LinearLayout
@@ -107,17 +107,6 @@
                     android:textSize="@dimen/_14ssp"
                     tools:text="Teacher name" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/tvTopicTitle"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_alignParentRight="true"-->
-<!--                    android:fontFamily="@font/calibri"-->
-<!--                    android:textColor="@color/colorBlack"-->
-<!--                    android:textSize="@dimen/_14ssp"-->
-<!--                    android:text="@string/topic"-->
-<!--                    android:visibility="@{scheduleModel.topic.length() > 0 ? View.VISIBLE : View.GONE}"/>-->
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -153,18 +142,38 @@
                     android:background="@drawable/ic_file_save"
                     android:onClick="@{()-> scheduleClickListner.openSubjectDetails(scheduleModel)}" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:fontFamily="@font/calibri"
-                    android:textColor="@color/colorJoinMeeting"
-                    android:textSize="@dimen/_20ssp"
-                    android:textStyle="bold"
-                    android:text="@string/connect"
-                    tools:visibility="visible"
-                    android:visibility="@{scheduleModel.isshowconnectbutton == 1 ? View.VISIBLE : View.GONE}"
-                    android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"/>
+                    android:orientation="horizontal"
+                    android:layout_alignParentRight="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/calibri"
+                        android:textColor="@color/colorJoinMeeting"
+                        android:textSize="@dimen/_20ssp"
+                        android:textStyle="bold"
+                        android:text="@string/connect"
+                        tools:visibility="visible"
+                        android:visibility="@{scheduleModel.isshowconnectbutton == 1 ? View.VISIBLE : View.GONE}"
+                        android:onClick="@{()-> scheduleClickListner.openVideoCalling(scheduleModel)}"/>
+
+                    <ImageView
+                        android:id="@+id/ivShare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12ssp"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_gravity="end"
+                        android:src="@drawable/ic_drive_menu"
+                        tools:visibility="visible"
+                        android:visibility="@{scheduleModel.userType.equals(`S`) ? View.GONE : View.VISIBLE}"
+                        android:onClick="@{()-> scheduleClickListner.openScheduleMenu(ivShare,scheduleModel)}"/>
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 
