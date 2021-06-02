@@ -98,5 +98,10 @@ class Constant {
         const val REQUEST_DRIVE_ID = "driveid"
         const val REQUEST_FLAG = "flag"
         const val USER_TYPE_STUDENT = "S"
+        const val MULTIPLE_LINE_QUESTIONS = "S"
+        const val SINGLE_LINE_QUESTIONS = "1"
+        const val OBJECTIVE_QUESTIONS = "O"
+        const val TRUE_FALSE_QUESTIONS = "T"
+
     }
 }

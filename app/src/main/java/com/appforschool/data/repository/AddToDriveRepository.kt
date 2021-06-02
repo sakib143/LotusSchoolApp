@@ -50,6 +50,23 @@ class AddToDriveRepository   @Inject constructor(
         }
     }
 
+    suspend fun callWithoutFileAddDrive(
+        shareid: RequestBody,
+        userid: RequestBody,
+        usertype: RequestBody,
+        studentid: RequestBody,
+        filetitle: RequestBody,
+        filedescr: RequestBody,
+        filetype: RequestBody,
+        uploadtype: RequestBody,
+        knowledgeType: RequestBody,
+        subjectId: RequestBody,
+        standardId: RequestBody): AssignmentSubmissionModel {
+        return apiRequest {
+            webServiceInterface.callWithoutFileAddDrive(shareid,userid,usertype,studentid,filetitle,filedescr,filetype,uploadtype,knowledgeType,subjectId,standardId)
+        }
+    }
+
     fun knowledgeTypeList() : ArrayList<KnwledgeTypeModel>{
         val arrayList : ArrayList<KnwledgeTypeModel> = ArrayList<KnwledgeTypeModel>()
         arrayList.add(KnwledgeTypeModel(null,"Select type"))

@@ -56,17 +56,17 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        builder = AlertDialog.Builder(activity!!)
+        builder = AlertDialog.Builder(requireActivity())
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.homeAPI.observe(viewLifecycleOwner, homeAPIObserver)
         callHomeAPI()
     }
 
     fun callHomeAPI() {
-        if (globalMethods.isInternetAvailable(activity!!)) {
+        if (globalMethods.isInternetAvailable(requireActivity())) {
             viewModel.executeHomeAPI()
         } else {
-            activity!!.toast(Constant.CHECK_INTERNET)
+            requireActivity().toast(Constant.CHECK_INTERNET)
         }
     }
 
@@ -106,17 +106,17 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             }
 
             //Refresh User name from session manager.
-            viewModel.getUserName()
+            viewModel.getUserInfo()
             checkLatestVersion(it)
             listener?.updateUserName(it.data.get(0).studentname,it.data.get(0).standardname,it.data.get(0).logofilepath)
         } else {
-            activity!!.toast(it.message)
+            requireActivity().toast(it.message)
         }
     }
 
     private fun checkLatestVersion(it: HomeApiModel) {
         val latestVersion = it.data.get(0).currentversion
-        val currentVersion = globalMethods.getAppVersion(activity!!)
+        val currentVersion = globalMethods.getAppVersion(requireActivity())
         val isForceUpdate = it.data.get(0).isforceupdate
 
         if ( ! latestVersion.equals(currentVersion, ignoreCase = true) && isForceUpdate.equals(
@@ -137,7 +137,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
         builder?.setMessage(getString(R.string.update_force_update))
         builder?.setPositiveButton(getString(R.string.update)){ dialogInterface, which ->
             dialogInterface.dismiss()
-            val appStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${activity!!.packageName}"))
+            val appStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${requireActivity().packageName}"))
             appStoreIntent.setPackage("com.android.vending")
             startActivity(appStoreIntent)
         }
@@ -153,7 +153,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
         builder?.setMessage(getString(R.string.update_force_update))
         builder?.setPositiveButton(getString(R.string.yes)){ dialogInterface, which ->
             dialogInterface.dismiss()
-            val appStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${activity!!.packageName}"))
+            val appStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${requireActivity().packageName}"))
             appStoreIntent.setPackage("com.android.vending")
             startActivity(appStoreIntent)
         }

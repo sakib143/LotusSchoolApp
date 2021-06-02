@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.appforschool.R
 import com.appforschool.data.model.AttendExamModel
+import com.appforschool.utils.Constant
 import com.appforschool.utils.LogM
 import com.appforschool.utils.hide
 import com.appforschool.utils.show
@@ -66,6 +67,17 @@ class AttendExamAdapter(
 
         if (!list.get(position).subjectiveanswer.isNullOrEmpty()) {
             holder.edtAnswer.setText(list.get(position).subjectiveanswer)
+        }
+
+        if(list.get(position).optionC.isNullOrEmpty()) {
+            holder.cbThree.hide()
+        } else {
+            holder.cbThree.show()
+        }
+        if (list.get(position).optionD.isNullOrEmpty()) {
+            holder.cbFour.hide()
+        } else {
+            holder.cbFour.show()
         }
     }
 
@@ -202,14 +214,31 @@ class AttendExamAdapter(
 
     private fun setViewVisibility(position: Int, holder: MyViewHolder) {
         //If answer is subjective then hide checkbox and show edittext
-        if (list.get(position).qType.equals("S", ignoreCase = true)) {
-            holder.llCheckbox.hide()
-            holder.edtAnswer.show()
-            holder.llUploadFile.show()
-        } else {
+        if (list.get(position).qType.equals(Constant.OBJECTIVE_QUESTIONS, ignoreCase = true)
+            || list.get(position).qType.equals(Constant.TRUE_FALSE_QUESTIONS, ignoreCase = true) ) {
             holder.llCheckbox.show()
             holder.edtAnswer.hide()
             holder.llUploadFile.hide()
+        } else  if (list.get(position).qType.equals(Constant.MULTIPLE_LINE_QUESTIONS, ignoreCase = true)) {
+            holder.llCheckbox.hide()
+            holder.edtAnswer.show()
+            holder.llUploadFile.show()
+            if (!isFromViewAnswer) {
+                holder.edtAnswer.hint = holder.edtAnswer.context.getString(R.string.multi_line)
+                holder.edtAnswer.setLines(5)
+            } else {
+                holder.edtAnswer.hint = ""
+            }
+        } else if (list.get(position).qType.equals(Constant.SINGLE_LINE_QUESTIONS, ignoreCase = true)) {
+            holder.llCheckbox.hide()
+            holder.edtAnswer.show()
+            holder.llUploadFile.show()
+            if (!isFromViewAnswer) {
+                holder.edtAnswer.hint = holder.edtAnswer.context.getString(R.string.single_line)
+                holder.edtAnswer.setLines(1)
+            } else {
+                holder.edtAnswer.hint = ""
+            }
         }
 
         if (list.get(position).questionimagefullpath.isNullOrEmpty()) {

@@ -86,10 +86,19 @@ class AddToDriveActivity : BaseBindingActivity<ActivityAddToDriveBinding>() {
         viewModel.subject.observe(this, subjectObserver)
         viewModel.uploadFileLink.observe(this, uploadFileLinkObserver)
         viewModel.upload_selected_file.observe(this, fileUploadingObserver)
+        viewModel.showDialogForFile.observe(this,showDialogForFileObserver)
     }
 
     private val onMessageErrorObserver = Observer<Any> {
         toast(it.toString())
+    }
+
+    private val showDialogForFileObserver = Observer<Boolean> {
+        AlertDialogUtility.showConfirmAlert(this@AddToDriveActivity, this@AddToDriveActivity.getString(R.string.continue_without_attachment)) {
+                dialog, which ->
+            dialog.dismiss()
+            viewModel.callWithoutFileAddDrive()
+        }
     }
 
     private val standardObserver = Observer<StandardListModel> {

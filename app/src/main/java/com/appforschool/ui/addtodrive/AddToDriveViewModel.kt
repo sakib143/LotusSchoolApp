@@ -34,6 +34,9 @@ class AddToDriveViewModel @Inject constructor(
     private val _onMessageError = MutableLiveData<Any>()
     val onMessageError: LiveData<Any> get() = _onMessageError
 
+    private val _showDialogForFile = MutableLiveData<Boolean>()
+    val showDialogForFile: LiveData<Boolean> get() = _showDialogForFile
+
     //Standard observer
     private val _standard: MutableLiveData<StandardListModel> =
         MutableLiveData<StandardListModel>()
@@ -195,7 +198,9 @@ class AddToDriveViewModel @Inject constructor(
 
     fun uploadToDrive() {
         if (checkValidation()) {
-            if (isFileSelected.value == true) {
+            if (isFileSelected.value == true && file.value == null) {
+                _showDialogForFile.postValue(false) // Show confirmation without file selections.
+            } else if (isFileSelected.value == true ){
                 callFileAddDrive()
             } else {
                 executerUploadFileUrlModelDrive()
@@ -216,9 +221,7 @@ class AddToDriveViewModel @Inject constructor(
             application.toast("Please select Standard")
         } else if(subjectId.value == 0){
             application.toast("Please select subject")
-        } else if (isFileSelected.value == true && file.value == null) {
-            application.toast("Please choose file")
-        } else if (isFileSelected.value == false && linkurl.value.isNullOrEmpty()) {
+        }  else if (isFileSelected.value == false && linkurl.value.isNullOrEmpty()) {
             application.toast("Please enter URL")
         } else if (isFileSelected.value == false && !globalMethods.isValidUrl(linkurl.value.toString())) {
             application.toast("Please enter valid URL")
@@ -309,7 +312,7 @@ class AddToDriveViewModel @Inject constructor(
             application.toast(application.resources.getString(R.string.file_uploading_starting))
             try {
                 val response = repository.callFileAddDrive(
-                    userImageBody,
+                    userImageBody!!,
                     shareid,
                     userid,
                     usertype,
@@ -319,6 +322,57 @@ class AddToDriveViewModel @Inject constructor(
                     filetype,
                     fileext!!,
                     filesize!!,
+                    uploadtype,
+                    knowledgeType!!,
+                    subjectId!!,
+                    standardId!!
+                )
+                _upload_selected_file.postValue(response)
+                _isViewLoading.postValue(false)
+                if (response.status) {
+                    resetValues()
+                }
+            } catch (e: ApiExceptions) {
+                _isViewLoading.postValue(false)
+                _onMessageError.postValue(e.message)
+            } catch (e: NoInternetException) {
+                _isViewLoading.postValue(false)
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _upload_selected_file!!
+    }
+
+
+    fun callWithoutFileAddDrive(): LiveData<AssignmentSubmissionModel> {
+        Coroutines.main {
+            _isViewLoading.postValue(true)
+            val shareid = "".toRequestBody("text/plain".toMediaTypeOrNull())
+            val userid =
+                prefUtils.getUserData()!!.userid?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val usertype =
+                prefUtils.getUserData()!!.usertype?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val studentid =
+                prefUtils.getUserData()!!.studentId?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filetitle = topic.value?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filedescr = description.value?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val filetype = "F".toRequestBody("text/plain".toMediaTypeOrNull())
+            val uploadtype = "D".toRequestBody("text/plain".toMediaTypeOrNull())
+            val knowledgeType = kwtype.value?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val subjectId =
+                subjectId.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+            val standardId =
+                standardid.value?.toString()?.toRequestBody("text/plain".toMediaTypeOrNull())
+            application.toast(application.resources.getString(R.string.file_uploading_starting))
+            try {
+                val response = repository.callWithoutFileAddDrive(
+                    shareid,
+                    userid,
+                    usertype,
+                    studentid,
+                    filetitle!!,
+                    filedescr!!,
+                    filetype,
                     uploadtype,
                     knowledgeType!!,
                     subjectId!!,

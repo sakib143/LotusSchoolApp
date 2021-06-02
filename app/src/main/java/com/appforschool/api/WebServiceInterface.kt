@@ -114,9 +114,23 @@ interface WebServiceInterface {
         @Part(Constant.REQUEST_KW_TYPE) kwType: RequestBody,
         @Part(Constant.REUQEST_SUBJECT_ID) subjectId: RequestBody,
         @Part(Constant.REQUEST_STANDARDID) standardId: RequestBody
+    ): Response<AssignmentSubmissionModel>
 
-        ): Response<AssignmentSubmissionModel>
-
+    @Multipart
+    @POST("UploadFile")
+    suspend fun callWithoutFileAddDrive(
+        @Part(Constant.REUQEST_SHARE_ID) shareid: RequestBody,
+        @Part(Constant.REUQEST_USER_ID) userid: RequestBody,
+        @Part(Constant.REQUEST_USER_TYPE) usertype: RequestBody,
+        @Part(Constant.REQUEST_STUDENTID) studentid: RequestBody,
+        @Part(Constant.REQUEST_FILE_TITLE) filetitle: RequestBody,
+        @Part(Constant.REQUEST_FILE_DESCR) filedescr: RequestBody,
+        @Part(Constant.REQUEST_FILE_TYPE) filetype: RequestBody,
+        @Part(Constant.REUQEST_UPLOAD_TYPE) uploadtype: RequestBody,
+        @Part(Constant.REQUEST_KW_TYPE) kwType: RequestBody,
+        @Part(Constant.REUQEST_SUBJECT_ID) subjectId: RequestBody,
+        @Part(Constant.REQUEST_STANDARDID) standardId: RequestBody
+    ): Response<AssignmentSubmissionModel>
 
     @POST("Get_SpData")
     suspend fun callChangePasswordd(@Body jsonObject: JsonObject): Response<ChangePasswordModel>

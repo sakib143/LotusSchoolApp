@@ -51,7 +51,7 @@ class DashboardviewModel @Inject constructor(
         _profilePicUrl.postValue(prefUtils.getUserData()?.ProfileImage)
     }
 
-    fun getUserName() {
+    fun getUserInfo() {
         _userName.value = prefUtils.getUserData()?.studentname
         _standard.value = prefUtils.getUserData()?.standardname
         _profilePicUrl.postValue(prefUtils.getUserData()?.ProfileImage)
