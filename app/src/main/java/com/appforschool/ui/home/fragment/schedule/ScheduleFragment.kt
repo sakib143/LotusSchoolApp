@@ -59,10 +59,10 @@ class ScheduleFragment : BaseBindingFragment<FragmentScheduleBinding>() {
         viewModel.scheduleData.observe(viewLifecycleOwner, scheduleData)
 
         //Make API call
-        if (globalMethods.isInternetAvailable(activity!!)) {
+        if (globalMethods.isInternetAvailable(requireActivity())) {
             viewModel.executeScheduleData()
         } else {
-            activity!!.toast(Constant.CHECK_INTERNET)
+            requireActivity().toast(Constant.CHECK_INTERNET)
         }
     }
 
@@ -90,6 +90,16 @@ class ScheduleFragment : BaseBindingFragment<FragmentScheduleBinding>() {
 
     fun closeScheduelFragment() {
         listener?.popFragment()
+    }
+
+    fun removeSchedule(id: Int) {
+        for (i in alSchedule!!.indices) {
+            if(alSchedule?.get(i)?.schid == id) {
+                alSchedule?.removeAt(i)
+                break
+            }
+        }
+        binding?.scheduleList = alSchedule
     }
 
 }

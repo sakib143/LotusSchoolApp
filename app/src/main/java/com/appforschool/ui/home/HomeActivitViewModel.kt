@@ -45,6 +45,11 @@ class HomeActivitViewModel @Inject constructor(
     val call_end_log: LiveData<SetCallEndLogModel>
         get() = _call_end_log
 
+    //For inactive related stuff
+    private val _inActiveSchedule: MutableLiveData<InActiveModel> = MutableLiveData<InActiveModel>()
+    val inActiveSchedule: LiveData<InActiveModel>
+        get() = _inActiveSchedule
+
     init {
         _userName.postValue(prefUtils.getUserData()?.studentname)
         _starndard.postValue(prefUtils.getUserData()?.standardname)
@@ -292,6 +297,23 @@ class HomeActivitViewModel @Inject constructor(
             }
         }
         return _call_end_log
+    }
+
+    fun callInActiveSchedule(scheduleId: Int): LiveData<InActiveModel> {
+        Coroutines.main {
+            try {
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_SCHEDULE_INACTIVATE)
+                inputParam.addProperty(Constant.REQUEST_SCHEDULE_ID,scheduleId)
+                val apiResponse = repository.callInActiveSchedule(inputParam)
+                _inActiveSchedule.postValue(apiResponse)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+            }
+        }
+        return _inActiveSchedule!!
     }
 
 }

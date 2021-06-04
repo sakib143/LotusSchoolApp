@@ -103,6 +103,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     private var roomId: String = ""
     //Jitsi Video calling related stuff END
 
+    private var scheduleFragment: ScheduleFragment? = null
+
     override fun initializeBinding(binding: ActivityHomeBinding) {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
@@ -148,6 +150,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
         viewModel.deleteDrive.observe(this@HomeActivity, deleteDriveObserver)
         viewModel.call_end_log.observe(this, callEndObserver)
+        viewModel.inActiveSchedule.observe(this, inactiveScheduleObserver)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -266,9 +269,9 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openScheduleFragment() {
+        scheduleFragment = ScheduleFragment.newInstance()
         addFragment(
-            supportFragmentManager,
-            ScheduleFragment.newInstance(),
+            supportFragmentManager, scheduleFragment!!,
             addToBackStack = true
         )
     }
@@ -348,6 +351,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         } else {
             toast(it.message)
         }
+    }
+
+    private val inactiveScheduleObserver = Observer<InActiveModel> {
+        toast(it.message)
     }
 
     private val callEndObserver = Observer<SetCallEndLogModel> {
@@ -593,8 +600,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                     }
                 }
                 R.id.actionInActiveMeeting -> {
-//                    driveFragment?.deleteDriveData(model.shareid, model.Flag)
-//                    viewModel.executeDeleteDrive(model.shareid, model.Flag)
+                    viewModel.callInActiveSchedule(model.schid)
+                    scheduleFragment?.removeSchedule(model.schid)
                 }
             }
             true

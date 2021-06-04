@@ -156,4 +156,7 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callViewResult(@Body jsonObject: JsonObject): Response<ViewResultModel>
 
+    @POST("Get_SpData")
+    suspend fun callInActiveSchedule(@Body jsonObject: JsonObject): Response<InActiveModel>
+
 }

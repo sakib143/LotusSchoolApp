@@ -13,17 +13,10 @@ import com.appforschool.ui.home.fragment.subject.subjectdetails.SubjectDetailsAd
 
 @BindingAdapter("bindScheduleList")
 fun bindRecyclerView(view: RecyclerView, list: List<ScheduleModel.Data>) {
-    if (list.isEmpty())
-        return
-    val layoutManager = view.layoutManager
-    if (layoutManager == null)
         view.layoutManager = LinearLayoutManager(view.context)
     var adapter = view.adapter
-
-    if (adapter == null) {
         adapter = ScheduleAdapter(view.context, list)
         view.adapter = adapter
-    }
 }
 
 @BindingAdapter("bindSubjectDetial")

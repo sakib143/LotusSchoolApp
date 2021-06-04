@@ -102,6 +102,6 @@ class Constant {
         const val SINGLE_LINE_QUESTIONS = "1"
         const val OBJECTIVE_QUESTIONS = "O"
         const val TRUE_FALSE_QUESTIONS = "T"
-
+        const val REQUEST_SCHEDULE_INACTIVATE = "scheduleinactivate"
     }
 }

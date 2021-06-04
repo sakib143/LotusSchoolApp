@@ -7,6 +7,7 @@ import com.google.gson.JsonObject
 import com.appforschool.MyApp
 import com.appforschool.api.ApiExceptions
 import com.appforschool.api.NoInternetException
+import com.appforschool.data.model.InActiveModel
 import com.appforschool.data.model.ScheduleModel
 import com.appforschool.data.repository.ScheduleRepository
 import com.appforschool.utils.Constant
@@ -78,6 +79,4 @@ class ScheduleViewModel @Inject constructor(
         }
         return _scheduleData!!
     }
-
-
 }

@@ -64,4 +64,10 @@ class HomeActivityRepository @Inject constructor(
             webServiceInterface.callEndLog(objectLogin)
         }
     }
+
+    suspend fun callInActiveSchedule(objectLogin: JsonObject): InActiveModel {
+        return apiRequest {
+            webServiceInterface.callInActiveSchedule(objectLogin)
+        }
+    }
 }
