@@ -188,7 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="@{viewmodel.isFileSelected().booleanValue() ? View.VISIBLE : View.GONE}">
+                android:visibility="@{viewmodel.isFileSelected == true ? View.VISIBLE : View.GONE}">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -223,13 +223,6 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@color/colorBlack"
-                android:visibility="@{viewmodel.showLinkTextbox ? View.VISIBLE : View.GONE}" />
-
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -245,13 +238,13 @@
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/grey_dark"
                 android:textSize="@dimen/_15ssp"
-                android:visibility="@{viewmodel.isFileSelected().booleanValue() ? View.GONE : View.VISIBLE}" />
+                android:visibility="@{viewmodel.showLinkTextbox == true ? View.VISIBLE : View.GONE}" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
                 android:background="@color/colorBlack"
-                android:visibility="@{viewmodel.isFileSelected().booleanValue() ? View.GONE : View.VISIBLE}" />
+                android:visibility="@{viewmodel.showLinkTextbox == true  ? View.VISIBLE : View.GONE}" />
 
             <TextView
                 android:layout_width="wrap_content"
