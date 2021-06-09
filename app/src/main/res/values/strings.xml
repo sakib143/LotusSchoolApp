@@ -94,6 +94,9 @@
     <string name="continue_without_attachment">Continue without attachment?</string>
     <string name="multi_line">Multi Line Answer</string>
     <string name="single_line">Single Line Answer</string>
+    <string name="no_attachment">No Attachment</string>
+    <string name="link">Link</string>
+    <string name="upload_file">Upload File</string>
 
 
 </resources>

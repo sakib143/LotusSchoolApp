@@ -30,6 +30,12 @@ class AddToDriveRepository   @Inject constructor(
         }
     }
 
+    suspend fun callAddDriveWithnoAttachment(objectLogin: JsonObject): AddWithoutAttachmentModel {
+        return apiRequest {
+            webServiceInterface.callAddDriveWithnoAttachment(objectLogin)
+        }
+    }
+
     suspend fun callFileAddDrive(
         Image : MultipartBody.Part,
         shareid: RequestBody,

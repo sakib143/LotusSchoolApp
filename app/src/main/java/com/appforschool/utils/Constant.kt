@@ -63,6 +63,7 @@ class Constant {
         const val REQUEST_GETALLSTANDARDS = "getallstandards"
         const val REQUEST_DEVICE_DETAILS = "devicedetails"
         const val REQUEST_ADD_TO_DRIVE_WITH_LINK = "addtodrivewithlink"
+        const val REQUEST_ADD_TO_DRIVE_WITHNO_ATTACHMENT = "addtodrivewithnoattachment"
         const val REQUEST_KW_TYPE = "kwtype"
         const val REQUEST_LINK_URL = "linkurl"
         const val REQUEST_OLD_PASSWORD = "oldpassword"

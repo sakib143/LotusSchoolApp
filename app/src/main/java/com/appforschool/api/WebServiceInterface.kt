@@ -97,6 +97,9 @@ interface WebServiceInterface {
     @POST("Get_SpData")
     suspend fun callLinkAddDrive(@Body jsonObject: JsonObject): Response<UploadFileUrlModel>
 
+    @POST("Get_SpData")
+    suspend fun callAddDriveWithnoAttachment(@Body jsonObject: JsonObject): Response<AddWithoutAttachmentModel>
+
     @Multipart
     @POST("UploadFile")
     suspend fun callFileAddDrive(

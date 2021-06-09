@@ -34,9 +34,6 @@ class AddToDriveViewModel @Inject constructor(
     private val _onMessageError = MutableLiveData<Any>()
     val onMessageError: LiveData<Any> get() = _onMessageError
 
-    private val _showDialogForFile = MutableLiveData<Boolean>()
-    val showDialogForFile: LiveData<Boolean> get() = _showDialogForFile
-
     //Standard observer
     private val _standard: MutableLiveData<StandardListModel> =
         MutableLiveData<StandardListModel>()
@@ -73,6 +70,11 @@ class AddToDriveViewModel @Inject constructor(
     val upload_selected_file: LiveData<AssignmentSubmissionModel>
         get() = _upload_selected_file
 
+    //Upload text without attachment
+    private val _addWithOutAttachmentModel: MutableLiveData<AddWithoutAttachmentModel> =
+        MutableLiveData<AddWithoutAttachmentModel>()
+    val addWithOutAttachmentModel: LiveData<AddWithoutAttachmentModel>
+        get() = _addWithOutAttachmentModel
 
     // value for uploading files
     val topic = MutableLiveData<String>()
@@ -86,14 +88,36 @@ class AddToDriveViewModel @Inject constructor(
     val linkurl = MutableLiveData<String>()
     val file = MutableLiveData<File>()
 
-
+    //Set File selection boolean value.
     private val _isFileSelected = MutableLiveData<Boolean>()
     val isFileSelected: LiveData<Boolean> get() = _isFileSelected
+
+    //Set No Attachment boolean value to upload only simple text to drive.
+    private val _isNoAttachmentSelected = MutableLiveData<Boolean>()
+    val isNoAttachmentSelected: LiveData<Boolean> get() = _isNoAttachmentSelected
+
+    //Set URL to drive boolean value.
+    private val _showLinkTextbox = MutableLiveData<Boolean>()
+    val showLinkTextbox: LiveData<Boolean> get() = _showLinkTextbox
 
     val alKnowledge: ArrayList<KnwledgeTypeModel> = repository.knowledgeTypeList()
 
     fun setFileSelect(isSelected: Boolean) {
-        _isFileSelected.value = isSelected
+        _isFileSelected.postValue(isSelected)
+        _isNoAttachmentSelected.postValue(false)
+        _showLinkTextbox.postValue(false)
+    }
+
+    fun setNoAttachmentSelect(isSelected: Boolean) {
+        _isFileSelected.postValue(false)
+        _isNoAttachmentSelected.postValue(isSelected)
+        _showLinkTextbox.postValue(false)
+    }
+
+    fun setLinkAttachedSelect(isSelected: Boolean) {
+        _isFileSelected.postValue(false)
+        _isNoAttachmentSelected.postValue(false)
+        _showLinkTextbox.postValue(isSelected)
     }
 
     fun checkUserType() {
@@ -199,9 +223,11 @@ class AddToDriveViewModel @Inject constructor(
     fun uploadToDrive() {
         if (checkValidation()) {
             if (isFileSelected.value == true && file.value == null) {
-                _showDialogForFile.postValue(false) // Show confirmation without file selections.
+                application.toast("Please choose file.")
             } else if (isFileSelected.value == true ){
                 callFileAddDrive()
+            } else if(isNoAttachmentSelected.value == true) {
+                executeAddDriveWithNoAttachment()
             } else {
                 executerUploadFileUrlModelDrive()
             }
@@ -221,9 +247,9 @@ class AddToDriveViewModel @Inject constructor(
             application.toast("Please select Standard")
         } else if(subjectId.value == 0){
             application.toast("Please select subject")
-        }  else if (isFileSelected.value == false && linkurl.value.isNullOrEmpty()) {
+        }  else if (showLinkTextbox.value == true && linkurl.value.isNullOrEmpty()) {
             application.toast("Please enter URL")
-        } else if (isFileSelected.value == false && !globalMethods.isValidUrl(linkurl.value.toString())) {
+        } else if (showLinkTextbox.value == true && !globalMethods.isValidUrl(linkurl.value.toString())) {
             application.toast("Please enter valid URL")
         } else {
             isValid = true
@@ -251,6 +277,38 @@ class AddToDriveViewModel @Inject constructor(
             }
         }
         return _uploadFileLink!!
+    }
+
+    fun executeAddDriveWithNoAttachment(): LiveData<AddWithoutAttachmentModel> {
+        Coroutines.main {
+            try {
+                _isViewLoading.postValue(true)
+                val inputParam = JsonObject()
+                inputParam.addProperty(Constant.REQUEST_MODE, Constant.REQUEST_ADD_TO_DRIVE_WITHNO_ATTACHMENT)
+                inputParam.addProperty(Constant.REUQEST_SHARE_ID, 0)
+                inputParam.addProperty(Constant.REUQEST_USER_ID, prefUtils.getUserData()?.userid)
+                inputParam.addProperty(Constant.REQUEST_USER_TYPE, prefUtils.getUserData()?.usertype)
+                inputParam.addProperty(Constant.REQUEST_STUDENTID, prefUtils.getUserData()?.studentId)
+                inputParam.addProperty(Constant.REQUEST_STANDARDID, standardid.value)
+                inputParam.addProperty(Constant.REQUEST_FILE_TITLE, topic.value)
+                inputParam.addProperty(Constant.REQUEST_FILE_DESCR, description.value)
+                inputParam.addProperty(Constant.REQUEST_FILE_TYPE, "N") //Pass N  if not any file attached
+                inputParam.addProperty(Constant.REQUEST_KW_TYPE, kwtype.value)
+                inputParam.addProperty(Constant.REUQEST_SUBJECT_ID, subjectId.value)
+                inputParam.addProperty(Constant.REQUEST_FILE_EXT, "")
+
+                val apiResponse = repository.callAddDriveWithnoAttachment(inputParam)
+                _addWithOutAttachmentModel.postValue(apiResponse)
+                _isViewLoading.postValue(false)
+            } catch (e: ApiExceptions) {
+                _onMessageError.postValue(e.message)
+                _isViewLoading.postValue(false)
+            } catch (e: NoInternetException) {
+                _onMessageError.postValue(e.message)
+                _isViewLoading.postValue(false)
+            }
+        }
+        return _addWithOutAttachmentModel!!
     }
 
     private fun uploadLInkParam(): JsonObject {

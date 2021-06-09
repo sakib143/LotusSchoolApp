@@ -154,7 +154,7 @@
                     android:layout_gravity="center_horizontal"
                     android:checked="@{viewmodel.isFileSelected().booleanValue()}"
                     android:onClick="@{()-> viewmodel.setFileSelect(true)}"
-                    android:text="Upload File"
+                    android:text="@string/upload_file"
                     android:textSize="@dimen/_15ssp" />
 
                 <RadioButton
@@ -163,9 +163,20 @@
                     android:layout_gravity="center_horizontal"
                     android:checked="false"
                     android:fontFamily="@font/calibri"
-                    android:onClick="@{()-> viewmodel.setFileSelect(false)}"
-                    android:text="Direct Link"
+                    android:onClick="@{()-> viewmodel.setLinkAttachedSelect(true)}"
+                    android:text="@string/link"
                     android:textSize="@dimen/_15ssp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:checked="false"
+                    android:fontFamily="@font/calibri"
+                    android:onClick="@{()-> viewmodel.setNoAttachmentSelect(true)}"
+                    android:text="@string/no_attachment"
+                    android:textSize="@dimen/_15ssp" />
+
             </RadioGroup>
 
             <View
@@ -217,7 +228,7 @@
                 android:layout_height="@dimen/_1sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/colorBlack"
-                android:visibility="@{viewmodel.isFileSelected().booleanValue() ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{viewmodel.showLinkTextbox ? View.VISIBLE : View.GONE}" />
 
             <EditText
                 android:layout_width="match_parent"
