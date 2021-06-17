@@ -44,8 +44,9 @@ data class DriveModel(
         @Expose
         @SerializedName("shareid") var shareid: String = "",
         @Expose
-        @SerializedName("Flag") var Flag: String = ""
-
+        @SerializedName("Flag") var Flag: String = "",
+        @Expose
+        @SerializedName("contenttype") var contenttype: String = ""
 
     ): Parcelable
 }

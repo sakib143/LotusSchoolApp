@@ -3,25 +3,18 @@ package com.appforschool.ui.full_image
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.ScaleGestureDetector
-import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
-import kotlin.math.max
-import kotlin.math.min
 import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
+import com.allenxuan.xuanyihuang.xuanimageview.XuanImageView
 import com.appforschool.R
 import com.appforschool.base.BaseActivity
 import com.appforschool.ui.attendexam.AttendExamActivity
 import com.appforschool.utils.Constant
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_full_image.*
 
 class FullImageActivity : BaseActivity() {
-
-    private lateinit var scaleGestureDetector: ScaleGestureDetector
-    private var scaleFactor = 1.0f
 
     override fun layoutId() = R.layout.activity_full_image
 
@@ -30,16 +23,16 @@ class FullImageActivity : BaseActivity() {
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        val ivFullImage = findViewById<View>(R.id.ivFullImage) as ImageView
+        val ivFullImage = findViewById<View>(R.id.ivFullImage) as XuanImageView
 
-        ivFullImage.transitionName = Constant.IMAGE_FULL_ZOOM_ANIM
+        val requestOptions = RequestOptions()
+        requestOptions.placeholder(R.drawable.ic_loading_buffering)
+        requestOptions.error(R.drawable.ic_error)
 
         Glide.with(this@FullImageActivity)
+            .setDefaultRequestOptions(requestOptions)
             .load(intent.getStringExtra(Constant.REQUEST_LINK_URL))
             .into(ivFullImage)
-
-        scaleGestureDetector = ScaleGestureDetector(this, ScaleListener())
-
     }
 
     companion object {
@@ -47,19 +40,5 @@ class FullImageActivity : BaseActivity() {
         fun intentFor(context: Context, imageUrl: String) =
             Intent(context, AttendExamActivity::class.java)
                 .putExtra(Constant.REQUEST_LINK_URL, imageUrl)
-    }
-
-    override fun onTouchEvent(motionEvent: MotionEvent): Boolean {
-        scaleGestureDetector.onTouchEvent(motionEvent)
-        return true
-    }
-    private inner class ScaleListener : SimpleOnScaleGestureListener() {
-        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
-            scaleFactor *= scaleGestureDetector.scaleFactor
-            scaleFactor = max(0.1f, min(scaleFactor, 10.0f))
-            ivFullImage.scaleX = scaleFactor
-            ivFullImage.scaleY = scaleFactor
-            return true
-        }
     }
 }

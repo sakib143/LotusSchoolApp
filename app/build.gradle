@@ -139,4 +139,8 @@ dependencies {
     //Multi image selection
     implementation project(':gligar')
 
+    //Image drage, pinch to zoom, and rotate
+    implementation 'com.github.allenxuan:xuanimageview:0.5.0'
+
+
 }
