@@ -95,9 +95,7 @@ fun setAssignmentIcon(view: ImageView, model: AssignmentModel.Data) {
             ignoreCase = true
         )) {
         view.setImageResource(R.drawable.ic_doc)
-    } else if(model.filetype.equals("N",ignoreCase = true)) {
-        view.setImageResource(R.drawable.ic_no_attachment)
-    } else {
+    }else  {
         view.setImageResource(R.drawable.ic_file_for_assignment)
     }
 }
@@ -128,9 +126,7 @@ fun setDriveListIcon(view: ImageView, model: DriveModel.Data) {
             ignoreCase = true
         )) {
         view.setImageResource(R.drawable.ic_doc)
-    } else if(model.filetype.equals("N",ignoreCase = true)) {
-        view.setImageResource(R.drawable.ic_no_attachment)
-    } else  {
+    }else  {
         view.setImageResource(R.drawable.ic_file_for_assignment)
     }
 }

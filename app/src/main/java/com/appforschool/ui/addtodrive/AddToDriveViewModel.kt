@@ -100,15 +100,7 @@ class AddToDriveViewModel @Inject constructor(
     private val _showLinkTextbox = MutableLiveData<Boolean>()
     val showLinkTextbox: LiveData<Boolean> get() = _showLinkTextbox
 
-    //Show no attachment visiblity
-    private val _showNoAttachment = MutableLiveData<Boolean>()
-    val showNoAttachment: LiveData<Boolean> get() = _showNoAttachment
-
     val alKnowledge: ArrayList<KnwledgeTypeModel> = repository.knowledgeTypeList()
-
-    fun setNoAttachmentVisiblity(isAssibmentSelected: Boolean) {
-        _showNoAttachment.postValue(isAssibmentSelected)
-    }
 
     fun setFileSelect(isSelected: Boolean) {
         _isFileSelected.postValue(isSelected)
@@ -193,13 +185,6 @@ class AddToDriveViewModel @Inject constructor(
     fun onKnoledgeSelection(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         LogM.e("=> testing " + pos)
         kwtype.value = alKnowledge.get(pos).id
-
-        if(alKnowledge.get(pos).id.equals("A",ignoreCase = true)) {
-            setNoAttachmentVisiblity(true)
-        } else {
-            setNoAttachmentVisiblity(false)
-        }
-
         //pos                                 get selected item position
         //view.getText()                      get lable of selected item
         //parent.getAdapter().getItem(pos)    get item by pos

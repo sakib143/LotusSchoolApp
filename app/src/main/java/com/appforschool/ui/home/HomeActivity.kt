@@ -54,7 +54,6 @@ import kotlinx.android.synthetic.main.home_nav_drawer.*
 import org.jitsi.meet.sdk.*
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
 import java.net.MalformedURLException
 import java.net.URL
 import javax.inject.Inject
@@ -436,28 +435,17 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
             if(scheduleId != 0) {
                 toast("Please end current meeting.")
             } else {
-                viewModel.executeSetJoinLog(model.schid.toString())
                 roomUrl = prefUtils.getUserData()?.videoserverurlnew
                 roomId = model.roomno
                 scheduleId =  model.schid
                 setJitsiMeet()
             }
         } else {
-            try {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
-                startActivity(browserIntent)
-            }catch (e: Exception) {
-                toast(e.message!!)
+            viewModel.executeSetJoinLog(model.schid.toString())
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
             }
-//            try {
-//                viewModel.executeSetJoinLog(model.schid.toString())
-//                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
-//                if (intent.resolveActivity(packageManager) != null) {
-//                    startActivity(intent)
-//                }
-//            } catch (e: Exception) {
-//                toast(e.message)
-//            }
         }
     }
 
@@ -522,54 +510,39 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                     chooseFile = Intent.createChooser(chooseFile, "Choose a file")
                     startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
                 })
+//
+//            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+//            chooseFile.setType("*/*")
+//            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+//            startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
         }
 
     override fun openAssignmentFile(imageView: ImageView, model: AssignmentModel.Data) {
         viewModel.executeFileViewLog(model.shareid, "A")
-        if(model.filetype.equals("F",ignoreCase = true)) {
-            if (model.fileext.equals(".mp4", ignoreCase = true)) {
-                if (!model.filepath.isNullOrEmpty()) {
-                    val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
-                    intent.putExtra(Constant.VIDEO_URL, model.filepath)
-                    startActivity(intent)
-                } else {
-                    toast("File path not found.")
-                }
-            } else if (model.fileext.equals(".jpg", ignoreCase = true)
-                || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
-                    ".jpeg", ignoreCase = true)
-            ) {
-                if (!model.filepath.isNullOrEmpty()) {
-                    ViewCompat.setTransitionName(imageView, Constant.IMAGE_FULL_ZOOM_ANIM)
-                    val intent = Intent(this, FullImageActivity::class.java)
-                    intent.putExtra(Constant.REQUEST_LINK_URL, model.filepath)
-                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        this,
-                        imageView!!,
-                        ViewCompat.getTransitionName(imageView)!!
-                    )
-                    startActivity(intent, options.toBundle())
-                } else {
-                    toast("File path not found.")
-                }
-            } else {
-                if (!model.filepath.isNullOrEmpty()) {
-                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
-                    startActivity(browserIntent)
-                } else {
-                    toast("Link URL not found.")
-                }
-            }
-        } else if (model.filetype.equals("L",ignoreCase = true)) {
-            var url: String = model.linkurl!!
-            if (!url.isNullOrEmpty()) {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(browserIntent)
-            } else {
-                toast("Link URL not found.")
-            }
-        } else if (model.filetype.equals("N",ignoreCase = true)) {
-            toast("No Attachment found.")
+        if (model.fileext.equals(".mp4", ignoreCase = true)) {
+            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+            intent.putExtra(Constant.VIDEO_URL, model.filepath)
+            startActivity(intent)
+        } else if (model.fileext.equals(
+                ".jpg",
+                ignoreCase = true
+            ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
+                ".jpeg",
+                ignoreCase = true
+            )
+        ) {
+            ViewCompat.setTransitionName(imageView, Constant.IMAGE_FULL_ZOOM_ANIM)
+            val intent = Intent(this, FullImageActivity::class.java)
+            intent.putExtra(Constant.REQUEST_LINK_URL, model.filepath)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                imageView!!,
+                ViewCompat.getTransitionName(imageView)!!
+            )
+            startActivity(intent, options.toBundle())
+        } else {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
+            startActivity(browserIntent)
         }
     }
 

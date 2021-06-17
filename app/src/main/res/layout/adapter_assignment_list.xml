@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="assignmentModel"
             type="com.appforschool.data.model.AssignmentModel.Data" />
+
         <variable
             name="assignmentListner"
             type="com.appforschool.listner.HomeListner" />
