@@ -168,6 +168,8 @@
                     android:textSize="@dimen/_15ssp" />
 
                 <RadioButton
+                    tools:visibility="visible"
+                    android:visibility="@{viewmodel.showNoAttachment ? View.VISIBLE : View.GONE}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
