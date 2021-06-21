@@ -39,6 +39,29 @@ class GlobalMethods @Inject constructor() {
         return "http://img.youtube.com/vi/" + getYoutubeVideoIdFromUrl(videoUrl) + "/0.jpg"
     }
 
+    fun isYoutubeUrl(mUrl: String): Boolean {
+        val success: Boolean
+        val pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+"
+        success = if (!mUrl.isNullOrEmpty() && mUrl.matches(pattern.toRegex())) {
+            true
+        } else {
+            // Not Valid youtube URL
+            false
+        }
+        return success
+    }
+
+    fun extractYoutubeVideoId(ytUrl: String?): String? {
+        var vId: String? = null
+        val pattern = "(?<=watch\\?v=|/videos/|embed\\/)[^#\\&\\?]*"
+        val compiledPattern = Pattern.compile(pattern)
+        val matcher = compiledPattern.matcher(ytUrl)
+        if (matcher.find()) {
+            vId = matcher.group()
+        }
+        return vId
+    }
+
     fun getYoutubeVideoIdFromUrl(inUrl: String): String? {
         var inUrl = inUrl
         inUrl = inUrl.replace("&feature=youtu.be", "")

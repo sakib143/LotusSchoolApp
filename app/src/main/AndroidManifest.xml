@@ -44,7 +44,7 @@
             android:name=".ui.commonwebview.CommonWebviewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.videocalling.VideoCallingActivity"
+            android:name=".ui.youtube.YoutubeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.HomeActivity"

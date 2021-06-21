@@ -9,6 +9,18 @@ import com.appforschool.R;
 
 public class AlertDialogUtility {
 
+    public static boolean isYoutubeUrl(String strUrl) {
+        boolean success;
+        String pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+";
+        if (!strUrl.isEmpty() && strUrl.matches(pattern)) {
+            success = true;
+        } else {
+            // Not Valid youtube URL
+            success = false;
+        }
+        return success;
+    }
+
     public static void showInternetAlert(Context context) {
         new AlertDialog.Builder(context).setIcon(0).setTitle(Constant.CHECK_INTERNET).setMessage(Constant.CHECK_INTERNET)
                 .setCancelable(true).setNeutralButton("OK", null)
@@ -34,7 +46,7 @@ public class AlertDialogUtility {
     }
 
     public static void showSingleAlert(Context context, String strMessege, DialogInterface.OnClickListener onYesClick) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(context.getString(R.string.app_name)).setMessage(strMessege).setPositiveButton("Ok",onYesClick);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(context.getString(R.string.app_name)).setMessage(strMessege).setPositiveButton("Ok", onYesClick);
         AlertDialog dialog = builder.create();
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogZoomEffect;
         dialog.show();

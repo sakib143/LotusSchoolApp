@@ -97,9 +97,23 @@ fun setAssignmentIcon(view: ImageView, model: AssignmentModel.Data) {
         view.setImageResource(R.drawable.ic_doc)
     } else if(model.filetype.equals("N",ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_no_attachment)
+    } else if(isYoutubeUrl(model.linkurl!!)) {
+        view.setImageResource(R.drawable.ic_youtube)
     } else {
         view.setImageResource(R.drawable.ic_file_for_assignment)
     }
+}
+
+fun isYoutubeUrl(mUrl: String): Boolean {
+    val success: Boolean
+    val pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+"
+    success = if (!mUrl.isNullOrEmpty() && mUrl.matches(pattern.toRegex())) {
+        true
+    } else {
+        // Not Valid youtube URL
+        false
+    }
+    return success
 }
 
 @BindingAdapter("setDriveListIcon")
@@ -130,6 +144,8 @@ fun setDriveListIcon(view: ImageView, model: DriveModel.Data) {
         view.setImageResource(R.drawable.ic_doc)
     } else if(model.filetype.equals("N",ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_no_attachment)
+    } else if(isYoutubeUrl(model.linkurl!!)) {
+        view.setImageResource(R.drawable.ic_youtube)
     } else  {
         view.setImageResource(R.drawable.ic_file_for_assignment)
     }

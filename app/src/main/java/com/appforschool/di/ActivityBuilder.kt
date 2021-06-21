@@ -12,6 +12,7 @@ import com.appforschool.ui.full_image.FullImageActivity
 import com.appforschool.ui.profile.user.UserProfileActivity
 import com.appforschool.ui.profile.teacher.TeacherProfileActivity
 import com.appforschool.ui.splash.SplashActivity
+import com.appforschool.ui.youtube.YoutubeActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -89,5 +90,11 @@ abstract class ActivityBuilder {
      **/
     @ContributesAndroidInjector()
     abstract fun bindFullExamDateActivity() : FullExamDateActivity
+
+    /**
+     * fun to bind Full Exam Date time, making Injection enable
+     **/
+    @ContributesAndroidInjector()
+    abstract fun bindYoutubeActivity() : YoutubeActivity
 
 }

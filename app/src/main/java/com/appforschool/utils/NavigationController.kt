@@ -14,6 +14,7 @@ import com.appforschool.ui.commonwebview.CommonWebviewActivity
 import com.appforschool.ui.home.HomeActivity
 import com.appforschool.ui.profile.teacher.TeacherProfileActivity
 import com.appforschool.ui.profile.user.UserProfileActivity
+import com.appforschool.ui.youtube.YoutubeActivity
 import javax.inject.Inject
 
 /**
@@ -115,6 +116,14 @@ class NavigationController @Inject constructor(var context: Context) {
                 totalobtainedmarks
             )
         )
+    }
+
+    /**
+    //     * Opens CommonWebview Screen
+    //     * @param activity -> to Start the Activity
+    //     */
+    fun navigateToYoutubePlayer(activity: BaseActivity, url: String) {
+        activity.startActivity(YoutubeActivity.intentFor(context, url))
     }
 
 
