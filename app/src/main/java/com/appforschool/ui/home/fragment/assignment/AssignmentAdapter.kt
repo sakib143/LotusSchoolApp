@@ -12,7 +12,7 @@ import com.appforschool.listner.HomeListner
 
 class AssignmentAdapter (
     private val context: Context,
-    private val dataList: List<AssignmentModel.Data>
+    private var dataList: MutableList<AssignmentModel.Data>
 ) : RecyclerView.Adapter<AssignmentAdapter.BindingViewHolder>() {
 
     override fun getItemCount() = dataList.size
@@ -30,5 +30,12 @@ class AssignmentAdapter (
         //Set Item click listner in Adapte
         holder.itemBinding.setVariable(BR.assignmentListner,holder.itemBinding.root.context as HomeListner)
     }
+
+    fun updateList(list: List<AssignmentModel.Data>) {
+        dataList.clear()
+        dataList.addAll(list)
+        notifyDataSetChanged()
+    }
+
     class BindingViewHolder(val itemBinding: ViewDataBinding) : RecyclerView.ViewHolder(itemBinding.root)
 }

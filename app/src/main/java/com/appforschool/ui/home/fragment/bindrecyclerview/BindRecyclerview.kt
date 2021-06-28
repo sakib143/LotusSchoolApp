@@ -45,16 +45,13 @@ fun bindAssignment(view: RecyclerView, list: List<AssignmentModel.Data>) {
     val layoutManager = view.layoutManager
     if (layoutManager == null)
         view.layoutManager = LinearLayoutManager(view.context)
-    var adapter = view.adapter
+    var adapter : AssignmentAdapter? = view.adapter as? AssignmentAdapter
 
     if (adapter == null) {
-        adapter =
-            AssignmentAdapter(
-                view.context,
-                list
-            )
+        adapter = AssignmentAdapter(view.context, list.toMutableList())
         view.adapter = adapter
     }
+    adapter.updateList(list)
 }
 
 //@BindingAdapter("bindAlert")

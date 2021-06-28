@@ -104,6 +104,8 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     private var roomId: String = ""
     //Jitsi Video calling related stuff END
 
+    private var assignmentFragment: AssignmentFragment? = null
+
     private var scheduleFragment: ScheduleFragment? = null
 
     override fun initializeBinding(binding: ActivityHomeBinding) {
@@ -284,15 +286,17 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun openSubjectFragment() {
         addFragment(
             supportFragmentManager,
+
             SubjectFragment.newInstance(),
             addToBackStack = true
         )
     }
 
     override fun openAssignmentFragment() {
+        assignmentFragment = AssignmentFragment.newInstance()
         addFragment(
             supportFragmentManager,
-            AssignmentFragment.newInstance(),
+            assignmentFragment!!,
             addToBackStack = true
         )
     }
@@ -420,7 +424,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     private val fileSubmitObserver = Observer<AssignmentSubmissionModel> {
         if (it.status) {
-//            openAssignmentFragment()
+            assignmentFragment?.executeAPI()
             toast(it.message)
         } else {
             toast(it.message)

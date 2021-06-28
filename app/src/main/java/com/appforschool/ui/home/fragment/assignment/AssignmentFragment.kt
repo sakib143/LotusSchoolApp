@@ -23,13 +23,12 @@ class AssignmentFragment : BaseBindingFragment<FragmentAssignmentBinding>() {
     private var alAssignment: ArrayList<AssignmentModel.Data>? = ArrayList()
     private var binding: FragmentAssignmentBinding? = null
 
-
     override fun initializeBinding(binding: FragmentAssignmentBinding) {
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
         binding.listner = this
-        this.binding = binding
         binding.assignmentList = alAssignment
+        this.binding = binding
     }
 
     companion object {
@@ -61,10 +60,14 @@ class AssignmentFragment : BaseBindingFragment<FragmentAssignmentBinding>() {
         viewModel.setDataFound(true)
         viewModel.onMessageError.observe(viewLifecycleOwner, onMessageErrorObserver)
         viewModel.subjectDetails.observe(viewLifecycleOwner, assignmentObserver)
-        if (globalMethods.isInternetAvailable(activity!!)) {
+        executeAPI()
+    }
+
+    fun executeAPI() {
+        if (globalMethods.isInternetAvailable(requireActivity())) {
             viewModel.executerAssigment()
         } else {
-            activity!!.toast(activity!!.resources.getString(R.string.check_internet_connection))
+            requireActivity().toast(requireActivity().resources.getString(R.string.check_internet_connection))
         }
     }
 
