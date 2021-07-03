@@ -100,6 +100,7 @@ class DashboardFragment : BaseBindingFragment<FragmentDashboardBinding>() {
             loginModel.ismutealloption = it.data.get(0).ismutealloption
             loginModel.islobbymodeoption  = it.data.get(0).islobbymodeoption
             loginModel.isrecordingoption  = it.data.get(0).isrecordingoption
+            loginModel.maxfileuploadsizekb  = it.data.get(0).maxfileuploadsizekb
             prefUtils.saveUserId(prefUtils.getUserData()!!.userid,loginModel)
             if(loginModel.isopenprofile == 1){
                 listener?.openProfileScreen()

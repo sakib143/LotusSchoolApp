@@ -97,6 +97,9 @@
     <string name="no_attachment">No Attachment</string>
     <string name="link">Link</string>
     <string name="upload_file">Upload File</string>
+    <string name="file_size_alert">Bigger file(s) selected. </string>
+    <string name="max_file_size_allow">Max file size allowed</string>
+    <string name="mb">MB.</string>
 
 
 </resources>

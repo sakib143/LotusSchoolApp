@@ -239,8 +239,24 @@ class AddToDriveViewModel @Inject constructor(
         if (checkValidation()) {
             if (isFileSelected.value == true && file.value == null) {
                 application.toast("Please choose file.")
-            } else if (isFileSelected.value == true ){
-                callFileAddDrive()
+            } else if (isFileSelected.value == true ) {
+                val fileSizeInBytes = file.value?.length()
+                val fileSizeInKB = fileSizeInBytes!! / 1024
+                val fileSizeInMB = fileSizeInKB / 1024
+                val allowedFileSize = prefUtils.getUserData()?.maxfileuploadsizekb!! / 1024
+                if(fileSizeInMB >= allowedFileSize) {
+                    application.toast("Your selected file size is $fileSizeInMB MB")
+                    AlertDialogUtility.showSingleAlert(
+                        application, application.getString(R.string.file_size_alert) + " \n" +
+                                application.getString(R.string.max_file_size_allow) + " " +
+                                allowedFileSize + " "
+                                + application.getString(R.string.mb)
+                    ) { dialog, which ->
+                        dialog.dismiss()
+                    }
+                } else {
+                    callFileAddDrive()
+                }
             } else if(isNoAttachmentSelected.value == true) {
                 executeAddDriveWithNoAttachment()
             } else {

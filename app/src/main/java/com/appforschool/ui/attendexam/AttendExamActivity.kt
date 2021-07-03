@@ -471,8 +471,24 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     }
 
     private fun uploadFile(file: File) {
-        toast(resources.getString(R.string.file_uploading_starting))
-        viewModel.uploadAnswerFile(strExamId, strQuestionId, file)
+        val fileSizeInBytes = file.length()
+        val fileSizeInKB = fileSizeInBytes / 1024
+        val fileSizeInMB = fileSizeInKB / 1024
+        val allowedFileSize = prefUtils.getUserData()?.maxfileuploadsizekb!! / 1024
+        if(fileSizeInMB >= allowedFileSize) {
+            toast("Your selected file size is $fileSizeInMB MB")
+            AlertDialogUtility.showSingleAlert(
+                this@AttendExamActivity, getString(R.string.file_size_alert) + " \n" +
+                        getString(R.string.max_file_size_allow) + " " +
+                        allowedFileSize + " "
+                        + getString(R.string.mb)
+            ) { dialog, which ->
+                dialog.dismiss()
+            }
+        } else {
+            toast(resources.getString(R.string.file_uploading_starting))
+            viewModel.uploadAnswerFile(strExamId, strQuestionId, file)
+        }
     }
 
     //Multiple Image selection START

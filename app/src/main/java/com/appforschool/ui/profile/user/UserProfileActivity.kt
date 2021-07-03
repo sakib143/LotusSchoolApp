@@ -15,6 +15,7 @@ import com.appforschool.data.model.ChangeProfilePicModel
 import com.appforschool.data.model.UpdateProfileModel
 import com.appforschool.databinding.ActivityUserProfileBinding
 import com.appforschool.listner.UserProfileListner
+import com.appforschool.utils.AlertDialogUtility
 import com.appforschool.utils.LogM
 import com.appforschool.utils.toast
 import com.yalantis.ucrop.UCrop
@@ -127,8 +128,24 @@ class UserProfileActivity : BaseBindingActivity<ActivityUserProfileBinding>() {
     private fun handleCropResult(result: Intent) {
         val resultUri = UCrop.getOutput(result)
         val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
-        viewModel.selectedBitmapImage.value = bitmap
-        viewModel.imagePath.value = File(resultUri?.path)
-        viewModel.executeChangeProfilePic()
+        val fileSizeInBytes = File(resultUri?.path).length()
+        val fileSizeInKB = fileSizeInBytes / 1024
+        val allowedFileSize = prefUtils.getUserData()?.maxfileuploadsizekb!! / 1024
+        val fileSizeInMB = fileSizeInKB / 1024
+        if(fileSizeInMB >= allowedFileSize) {
+            toast("Your selected file size is $fileSizeInMB MB")
+            AlertDialogUtility.showSingleAlert(
+                this@UserProfileActivity, getString(R.string.file_size_alert) + " \n" +
+                        getString(R.string.max_file_size_allow) + " " +
+                        allowedFileSize + " "
+                        + getString(R.string.mb)
+            ) { dialog, which ->
+                dialog.dismiss()
+            }
+        } else {
+            viewModel.selectedBitmapImage.value = bitmap
+            viewModel.imagePath.value = File(resultUri?.path)
+            viewModel.executeChangeProfilePic()
+        }
     }
 }

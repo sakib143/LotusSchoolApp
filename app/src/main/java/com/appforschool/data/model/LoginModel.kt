@@ -56,7 +56,9 @@ data class LoginModel(
         @Expose
         @SerializedName("islobbymodeoption") var islobbymodeoption: Int = 0,
         @Expose
-        @SerializedName("isrecordingoption") var isrecordingoption: Int = 0
+        @SerializedName("isrecordingoption") var isrecordingoption: Int = 0,
+        @Expose
+        @SerializedName("maxfileuploadsizekb") var maxfileuploadsizekb: Int = 0
     )
 
 

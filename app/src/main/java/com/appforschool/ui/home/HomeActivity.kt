@@ -3,6 +3,7 @@ package com.appforschool.ui.home
 import android.Manifest
 import android.content.*
 import android.content.BroadcastReceiver
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Paint
@@ -52,9 +53,10 @@ import dagger.android.HasAndroidInjector
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.home_nav_drawer.*
 import org.jitsi.meet.sdk.*
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
 import java.net.MalformedURLException
 import java.net.URL
 import javax.inject.Inject
@@ -89,9 +91,9 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     //Multiple Image selection END
 
     //Add to PDF START
-    var file: File? = null
+    var mFile: File? = null
     var fileOutputStream: FileOutputStream? = null
-    val pdfDocument = PdfDocument()
+    var pdfDocument:PdfDocument? = null
     //Add to PDF END
 
     private var driveFragment: DriveFragment? = null
@@ -123,16 +125,22 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
+        try {
+            UserProfileListner.getInstance().setListener(this@HomeActivity)
+            val model = UserProfileListner.getInstance().state
 
-        UserProfileListner.getInstance().setListener(this@HomeActivity)
-        val model = UserProfileListner.getInstance().state
+            dashboardFragment = DashboardFragment.newInstance()
+            navigateToDashBoardFragment(false)
+            setObserver()
 
-        dashboardFragment = DashboardFragment.newInstance()
-        navigateToDashBoardFragment(false)
-        setObserver()
-
-        file = getOutputFile()
-        fileOutputStream = FileOutputStream(file)
+            pdfDocument = PdfDocument()
+            mFile = getOutputFile()
+            fileOutputStream = FileOutputStream(mFile)
+        } catch (e: Exception) {
+            e.printStackTrace()
+              e.printStackTrace()
+            toast(e.message)
+        }
     }
 
     companion object {
@@ -145,54 +153,91 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     private fun setObserver() {
-        viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
-        viewModel.startExam.observe(this@HomeActivity, startExamObserver)
-        viewModel.viewResult.observe(this@HomeActivity, viewResultObserver)
-        viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
-        viewModel.fileSubmit.observe(this@HomeActivity, fileSubmitObserver)
-        viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
-        viewModel.deleteDrive.observe(this@HomeActivity, deleteDriveObserver)
-        viewModel.call_end_log.observe(this, callEndObserver)
-        viewModel.inActiveSchedule.observe(this, inactiveScheduleObserver)
+        try {
+            viewModel.setIsJoinLog.observe(this@HomeActivity, joinLogObserver)
+            viewModel.startExam.observe(this@HomeActivity, startExamObserver)
+            viewModel.viewResult.observe(this@HomeActivity, viewResultObserver)
+            viewModel.fileViewLog.observe(this@HomeActivity, fileViewLogObserver)
+            viewModel.fileSubmit.observe(this@HomeActivity, fileSubmitObserver)
+            viewModel.onMessageError.observe(this@HomeActivity, onMessageErrorObserver)
+            viewModel.deleteDrive.observe(this@HomeActivity, deleteDriveObserver)
+            viewModel.call_end_log.observe(this, callEndObserver)
+            viewModel.inActiveSchedule.observe(this, inactiveScheduleObserver)
+        } catch (e: Exception) {
+              e.printStackTrace()
+            toast(e.message)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (data != null) {
-            when (requestCode) {
-                PICKFILE_RESULT_CODE -> {
-                    val filePath = ImageFilePath.getPath(this@HomeActivity, data?.data)
-                    val file: File = File(filePath)
-                    fileUpload(file)
-                }
-                MULTI_IMAGE_PICKER_RESULT_CODE -> {
-                    uploadMultiImageFile(data)
-                }
-                UCrop.REQUEST_CROP -> {
-                    handleCropResult(data!!)
-                }
-                else -> {
-                    handleCropError(data!!)
+        try {
+            if (data != null) {
+                when (requestCode) {
+                    PICKFILE_RESULT_CODE -> {
+                        val filePath = ImageFilePath.getPath(this@HomeActivity, data?.data)
+                        val file: File = File(filePath)
+                        fileUpload(file)
+                    }
+                    MULTI_IMAGE_PICKER_RESULT_CODE -> {
+                        uploadMultiImageFile(data)
+                    }
+                    UCrop.REQUEST_CROP -> {
+                        handleCropResult(data!!)
+                    }
+                    else -> {
+                        handleCropError(data!!)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+              e.printStackTrace()
+            toast(e.message)
         }
     }
 
     private fun fileUpload(file: File) {
-        toast(resources.getString(R.string.file_uploading_starting))
-        viewModel.filePath.value = file
-        val fileSizeInBytes = file.length()
-        val fileSizeInKB = fileSizeInBytes / 1024
-        val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
-        val strFileExtension: String = "." + fileExtension
-        viewModel.uploadAssignmentFile(
-            shareId,
-            "title",
-            "description",
-            strFileExtension,
-            fileSizeInKB.toString(),
-            "A"
-        )
+        try {
+            val fileSizeInBytes = file.length()
+            val fileSizeInKB = fileSizeInBytes / 1024
+            val fileSizeInMB = fileSizeInKB / 1024
+            val allowedFileSize = prefUtils.getUserData()?.maxfileuploadsizekb!! / 1024
+            LogM.e("=> File path is " + file.absolutePath)
+            LogM.e("=> File size " + fileSizeInMB + " Allowed file size " + allowedFileSize)
+            if(fileSizeInMB >= allowedFileSize) {
+                toast("Your selected file size is $fileSizeInMB MB")
+                AlertDialogUtility.showSingleAlert(
+                    this@HomeActivity, getString(R.string.file_size_alert) + " \n" +
+                            getString(R.string.max_file_size_allow) + " " +
+                            allowedFileSize + " "
+                            + getString(R.string.mb)
+                ) { dialog, which ->
+                    dialog.dismiss()
+                }
+            } else {
+                toast(resources.getString(R.string.file_uploading_starting))
+                viewModel.filePath.value = file
+                val fileExtension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
+                val strFileExtension: String = "." + fileExtension
+                viewModel.uploadAssignmentFile(
+                    shareId,
+                    "title",
+                    "description",
+                    strFileExtension,
+                    fileSizeInKB.toString(),
+                    "A"
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+              e.printStackTrace()
+              e.printStackTrace()
+            toast(e.message)
+        } finally {
+            pdfDocument?.close()
+            fileOutputStream?.close()
+        }
     }
 
     private fun navigateToDashBoardFragment(addToBackStack: Boolean) {
@@ -216,13 +261,18 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     fun shareAopToFriend() {
-        val type = "text/plain"
-        val title = resources.getString(R.string.app_name)
-        val strBody = """
+        try {
+            val type = "text/plain"
+            val title = resources.getString(R.string.app_name)
+            val strBody = """
             ${resources.getString(R.string.share_to_friend)}
             http://play.google.com/store/apps/details?id=
             """.trimIndent()
-        globalMethods.shareAppToFriend(this@HomeActivity, type, title, strBody)
+            globalMethods.shareAppToFriend(this@HomeActivity, type, title, strBody)
+        } catch (e : Exception) {
+              e.printStackTrace()
+            toast(e.message)
+        }
     }
 
     fun openPlayStoreURL() {
@@ -246,8 +296,13 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     fun openInWeb() {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.WEB_URL))
-        startActivity(browserIntent)
+        try {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.WEB_URL))
+            startActivity(browserIntent)
+        } catch (e: Exception) {
+              e.printStackTrace()
+            toast(e.message)
+        }
     }
 
     fun signOut() {
@@ -327,12 +382,16 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun updateUserName(strUserName: String, strStandard: String, strLogo: String) {
-        tvUserNameHA.setText(strUserName)
-        tvStandardHA.setText(strStandard)
-        Glide.with(this@HomeActivity)
-            .load(strLogo)
-            .into(ivLogoHA)
-//        viewModel.getUserData(strUserName,strStandard,strLogo)
+        try {
+            tvUserNameHA.setText(strUserName)
+            tvStandardHA.setText(strStandard)
+            Glide.with(this@HomeActivity)
+                .load(strLogo)
+                .into(ivLogoHA)
+        } catch (e: Exception) {
+              e.printStackTrace()
+            toast(e.message)
+        }
     }
 
     override fun openProfileScreen() {
@@ -340,15 +399,20 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openFullImage(imgProfilePic: CircularImageView) {
-        ViewCompat.setTransitionName(imgProfilePic, Constant.IMAGE_FULL_ZOOM_ANIM)
-        val intent = Intent(this, FullImageActivity::class.java)
-        intent.putExtra(Constant.REQUEST_LINK_URL, prefUtils.getUserData()!!.ProfileImage)
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-            this,
-            imgProfilePic!!,
-            ViewCompat.getTransitionName(imgProfilePic)!!
-        )
-        startActivity(intent, options.toBundle())
+        try {
+            ViewCompat.setTransitionName(imgProfilePic, Constant.IMAGE_FULL_ZOOM_ANIM)
+            val intent = Intent(this, FullImageActivity::class.java)
+            intent.putExtra(Constant.REQUEST_LINK_URL, prefUtils.getUserData()!!.ProfileImage)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                imgProfilePic!!,
+                ViewCompat.getTransitionName(imgProfilePic)!!
+            )
+            startActivity(intent, options.toBundle())
+        } catch (e: Exception) {
+              e.printStackTrace()
+            toast(e.message)
+        }
     }
 
     private val joinLogObserver = Observer<SetJoinModel> {
@@ -436,51 +500,62 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     fun permissionForVideoCalling(model: ScheduleModel.Data) = runWithPermissions(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO) {
-        if (model.meetinglink.isNullOrBlank()) {
-            if(scheduleId != 0) {
-                toast("Please end current meeting.")
+        try {
+            if (model.meetinglink.isNullOrBlank()) {
+                if(scheduleId != 0) {
+                    toast("Please end current meeting.")
+                } else {
+                    viewModel.executeSetJoinLog(model.schid.toString())
+                    roomUrl = prefUtils.getUserData()?.videoserverurlnew
+                    roomId = model.roomno
+                    scheduleId =  model.schid
+                    setJitsiMeet()
+                }
             } else {
-                viewModel.executeSetJoinLog(model.schid.toString())
-                roomUrl = prefUtils.getUserData()?.videoserverurlnew
-                roomId = model.roomno
-                scheduleId =  model.schid
-                setJitsiMeet()
+                try {
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
+                    startActivity(browserIntent)
+                }catch (e: Exception) {
+                      e.printStackTrace()
+            toast(e.message)
+                }
             }
-        } else {
-            try {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.meetinglink))
-                startActivity(browserIntent)
-            }catch (e: Exception) {
-                toast(e.message!!)
-            }
+        } catch (e: Exception) {
+              e.printStackTrace()
+            toast(e.message)
         }
     }
 
     override fun openSubjectFile(imageView: ImageView, model: SubjectDetailsModel.Data) {
-        if (model.fileext.equals(".mp4", ignoreCase = true)) {
-            val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
-            intent.putExtra(Constant.VIDEO_URL, model.filepath)
-            startActivity(intent)
-        } else if (model.fileext.equals(
-                ".jpg",
-                ignoreCase = true
-            ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
-                ".jpeg",
-                ignoreCase = true
-            )
-        ) {
-            ViewCompat.setTransitionName(imageView, Constant.IMAGE_FULL_ZOOM_ANIM)
-            val intent = Intent(this, FullImageActivity::class.java)
-            intent.putExtra(Constant.REQUEST_LINK_URL, model.filepath)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                this,
-                imageView!!,
-                ViewCompat.getTransitionName(imageView)!!
-            )
-            startActivity(intent, options.toBundle())
-        } else {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
-            startActivity(browserIntent)
+        try {
+            if (model.fileext.equals(".mp4", ignoreCase = true)) {
+                val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+                intent.putExtra(Constant.VIDEO_URL, model.filepath)
+                startActivity(intent)
+            } else if (model.fileext.equals(
+                    ".jpg",
+                    ignoreCase = true
+                ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
+                    ".jpeg",
+                    ignoreCase = true
+                )
+            ) {
+                ViewCompat.setTransitionName(imageView, Constant.IMAGE_FULL_ZOOM_ANIM)
+                val intent = Intent(this, FullImageActivity::class.java)
+                intent.putExtra(Constant.REQUEST_LINK_URL, model.filepath)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this,
+                    imageView!!,
+                    ViewCompat.getTransitionName(imageView)!!
+                )
+                startActivity(intent, options.toBundle())
+            } else {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(model.filepath))
+                startActivity(browserIntent)
+            }
+        } catch (e: Exception) {
+              e.printStackTrace()
+            toast(e.message)
         }
     }
 
@@ -498,25 +573,31 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     fun checkFileSubmitPermission(model: AssignmentModel.Data) =
         runWithPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
-            shareId = model.shareid
-            AlertDialogUtility.CustomAlert(this@HomeActivity,
-                getString(R.string.app_name),
-                getString(R.string.select_file),
-                getString(R.string.image_file_title),
-                getString(R.string.other_file_title),
-                { dialog, which ->
-                    dialog.dismiss()
-                    GligarPicker().limit(4).disableCamera(false).cameraDirect(false).requestCode(
-                        MULTI_IMAGE_PICKER_RESULT_CODE
-                    ).withActivity(this).show()
-                },
-                { dialog, which ->
-                    dialog.dismiss()
-                    var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-                    chooseFile.setType("*/*")
-                    chooseFile = Intent.createChooser(chooseFile, "Choose a file")
-                    startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
-                })
+            try {
+                shareId = model.shareid
+                AlertDialogUtility.CustomAlert(this@HomeActivity,
+                    getString(R.string.app_name),
+                    getString(R.string.select_file),
+                    getString(R.string.image_file_title),
+                    getString(R.string.other_file_title),
+                    { dialog, which ->
+                        dialog.dismiss()
+                        GligarPicker().limit(4).disableCamera(false).cameraDirect(false)
+                            .requestCode(
+                                MULTI_IMAGE_PICKER_RESULT_CODE
+                            ).withActivity(this).show()
+                    },
+                    { dialog, which ->
+                        dialog.dismiss()
+                        var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+                        chooseFile.setType("*/*")
+                        chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+                        startActivityForResult(chooseFile, PICKFILE_RESULT_CODE)
+                    })
+            } catch (e: Exception) {
+                  e.printStackTrace()
+            toast(e.message)
+            }
         }
 
     override fun openAssignmentFile(imageView: ImageView, model: AssignmentModel.Data) {
@@ -639,61 +720,71 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     override fun openDriveList(imageView: ImageView, model: DriveModel.Data) {
-        viewModel.executeFileViewLog(model.shareid, "D")
-        //New condition
-        if(model.contenttype.equals("F",ignoreCase = true)) {
-            if (model.fileext.equals(".mp4", ignoreCase = true)) {
-                if (!model.filepath.isNullOrEmpty()) {
-                    val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
-                    intent.putExtra(Constant.VIDEO_URL, model.filepath)
-                    startActivity(intent)
+        try {
+            viewModel.executeFileViewLog(model.shareid, "D")
+            //New condition
+            if(model.contenttype.equals("F",ignoreCase = true)) {
+                if (model.fileext.equals(".mp4", ignoreCase = true)) {
+                    if (!model.filepath.isNullOrEmpty()) {
+                        val intent = Intent(this@HomeActivity, VideoPlayingActivity::class.java)
+                        intent.putExtra(Constant.VIDEO_URL, model.filepath)
+                        startActivity(intent)
+                    } else {
+                        toast("File path not found.")
+                    }
+                } else if (model.fileext.equals(".jpg", ignoreCase = true)
+                    || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
+                        ".jpeg", ignoreCase = true)
+                ) {
+                    if (!model.filepath.isNullOrEmpty()) {
+                        ViewCompat.setTransitionName(imageView, Constant.IMAGE_FULL_ZOOM_ANIM)
+                        val intent = Intent(this, FullImageActivity::class.java)
+                        intent.putExtra(Constant.REQUEST_LINK_URL, model.filepath)
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            this,
+                            imageView!!,
+                            ViewCompat.getTransitionName(imageView)!!
+                        )
+                        startActivity(intent, options.toBundle())
+                    } else {
+                        toast("File path not found.")
+                    }
                 } else {
-                    toast("File path not found.")
+                    if (!model.filepath.isNullOrEmpty()) {
+                        openDefaultBrowser(model.filepath!!)
+                    } else {
+                        toast("Link URL not found.")
+                    }
                 }
-            } else if (model.fileext.equals(".jpg", ignoreCase = true)
-                || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
-                    ".jpeg", ignoreCase = true)
-            ) {
-                if (!model.filepath.isNullOrEmpty()) {
-                    ViewCompat.setTransitionName(imageView, Constant.IMAGE_FULL_ZOOM_ANIM)
-                    val intent = Intent(this, FullImageActivity::class.java)
-                    intent.putExtra(Constant.REQUEST_LINK_URL, model.filepath)
-                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        this,
-                        imageView!!,
-                        ViewCompat.getTransitionName(imageView)!!
-                    )
-                    startActivity(intent, options.toBundle())
-                } else {
-                    toast("File path not found.")
-                }
-            } else {
-                if (!model.filepath.isNullOrEmpty()) {
-                    openDefaultBrowser(model.filepath!!)
+            } else if (model.contenttype.equals("L",ignoreCase = true)) {
+                var url: String = model.linkurl!!
+                if (!url.isNullOrEmpty()) {
+                    val videoId = globalMethods.extractYoutubeVideoId(url)
+                    if (videoId!=null) {
+                        navigationController.navigateToYoutubePlayer(this@HomeActivity, url)
+                    } else {
+                        openDefaultBrowser(url)
+                    }
                 } else {
                     toast("Link URL not found.")
                 }
+            } else if (model.contenttype.equals("N",ignoreCase = true)) {
+                toast("No Attachment found.")
             }
-        } else if (model.contenttype.equals("L",ignoreCase = true)) {
-            var url: String = model.linkurl!!
-            if (!url.isNullOrEmpty()) {
-                val videoId = globalMethods.extractYoutubeVideoId(url)
-                if (videoId!=null) {
-                    navigationController.navigateToYoutubePlayer(this@HomeActivity, url)
-                } else {
-                    openDefaultBrowser(url)
-                }
-            } else {
-                toast("Link URL not found.")
-            }
-        } else if (model.contenttype.equals("N",ignoreCase = true)) {
-            toast("No Attachment found.")
+        } catch (e: Exception) {
+              e.printStackTrace()
+            toast(e.message)
         }
     }
 
     private fun openDefaultBrowser(url: String) {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(browserIntent)
+        try {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(browserIntent)
+        } catch (e: Exception) {
+              e.printStackTrace()
+            toast(e.message)
+        }
     }
 
     override fun shareDriveData(view: View, model: DriveModel.Data) {
@@ -724,6 +815,11 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
 
     //Multiple Image selection START
     private fun uploadMultiImageFile(data: Intent?) {
+
+        pdfDocument = PdfDocument()
+        mFile = getOutputFile()
+        fileOutputStream = FileOutputStream(mFile)
+
         val imagesList = data?.extras?.getStringArray(GligarPicker.IMAGES_RESULT)
         val selectedUri = Uri.fromFile(File(imagesList?.get(0)))
         alMultiImage.clear()
@@ -770,6 +866,10 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         val resultUri = UCrop.getOutput(result)
         if (resultUri != null) {
             LogM.e("Cropped Images path is " + resultUri.path)
+
+
+
+
             when (selected_image) {
                 1 -> {
                     setFirstImage(resultUri)
@@ -785,7 +885,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
                 }
             }
             if (selected_image == alMultiImage.size + 1) {
-                fileUpload(file!!)
+                fileUpload(mFile!!)
             }
         } else {
             toast(getString(R.string.try_again_crop))
@@ -796,6 +896,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         selected_image = 5
         alMultiImage.get(3).imageUri = resultUri
         alMultiImage.get(3).isSelected = true
+        addToPdf(3)
         if (alMultiImage.size > 4) {
             startCrop(alMultiImage.get(4).imageUri)
         }
@@ -805,6 +906,7 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
         selected_image = 4
         alMultiImage.get(2).imageUri = resultUri
         alMultiImage.get(2).isSelected = true
+        addToPdf(2)
         if (alMultiImage.size > 3) {
             startCrop(alMultiImage.get(3).imageUri)
         }
@@ -833,19 +935,31 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     fun addToPdf(position: Int) {
-        val bitmap = BitmapFactory.decodeFile(alMultiImage.get(position).imageUri.path)
-        val pageInfo =
-            PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, position + 1).create()
-        val page = pdfDocument.startPage(pageInfo)
-        val canvas = page.canvas
-        val paint = Paint()
-        paint.setColor(Color.BLUE)
-        canvas.drawPaint(paint)
-        canvas.drawBitmap(bitmap, 0f, 0f, null)
-        pdfDocument.finishPage(page)
-        bitmap.recycle()
-        pdfDocument.writeTo(fileOutputStream)
-        LogM.e("PDF path is " + file?.absolutePath)
+        try {
+            // Original bitmap.
+            val mBitmap = BitmapFactory.decodeFile(alMultiImage.get(position).imageUri.path)
+
+            // Compress bitmap.
+            val out = ByteArrayOutputStream()
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 15, out)
+            val decoded: Bitmap = BitmapFactory.decodeStream(ByteArrayInputStream(out.toByteArray()))
+
+            val pageInfo = PdfDocument.PageInfo.Builder(decoded.width, decoded.height, position + 1).create()
+            val page = pdfDocument?.startPage(pageInfo)
+            val canvas = page?.canvas
+            val paint = Paint()
+            paint.setColor(Color.BLUE)
+            canvas?.drawPaint(paint)
+            canvas?.drawBitmap(decoded, 0f, 0f, null)
+            pdfDocument?.finishPage(page)
+            decoded.recycle()
+            pdfDocument?.writeTo(fileOutputStream)
+            LogM.e("PDF path is " + mFile?.absolutePath)
+        } catch (e: Exception) {
+            e.printStackTrace()
+              e.printStackTrace()
+            toast(e.message)
+        }
     }
 
     private fun getOutputFile(): File? {
@@ -888,15 +1002,19 @@ class HomeActivity : BaseBindingActivity<ActivityHomeBinding>(),
     }
 
     private fun registerForBroadcastMessages() {
-        val intentFilter = IntentFilter()
-        for (type in BroadcastEvent.Type.values()) {
-            intentFilter.addAction(type.action)
+        try {
+            val intentFilter = IntentFilter()
+            for (type in BroadcastEvent.Type.values()) {
+                intentFilter.addAction(type.action)
+            }
+            LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter)
+        } catch (e: Exception) {
+              e.printStackTrace()
+            toast(e.message)
         }
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, intentFilter)
     }
 
     // Screen sharing relates stuff by Sakib Syed END
-
     public override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         JitsiMeetActivityDelegate.onNewIntent(intent)

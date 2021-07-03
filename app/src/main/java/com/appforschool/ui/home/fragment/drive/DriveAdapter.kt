@@ -12,7 +12,7 @@ import com.appforschool.listner.HomeListner
 
 class DriveAdapter (
     private val context: Context,
-    private val dataList: List<DriveModel.Data>
+    private var dataList: List<DriveModel.Data>
 ) : RecyclerView.Adapter<DriveAdapter.BindingViewHolder>() {
 
     override fun getItemCount() = dataList.size
@@ -23,6 +23,11 @@ class DriveAdapter (
         return BindingViewHolder(
             rootView
         )
+    }
+
+    fun updateDataList(list: List<DriveModel.Data>) {
+        this.dataList = list
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {

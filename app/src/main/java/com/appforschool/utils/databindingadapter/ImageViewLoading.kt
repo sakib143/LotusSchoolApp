@@ -97,8 +97,10 @@ fun setAssignmentIcon(view: ImageView, model: AssignmentModel.Data) {
         view.setImageResource(R.drawable.ic_doc)
     } else if(model.filetype.equals("N",ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_no_attachment)
-    } else if(isYoutubeUrl(model.linkurl!!)) {
-        view.setImageResource(R.drawable.ic_youtube)
+    }  else if (!model.linkurl.isNullOrEmpty()) {
+        if (isYoutubeUrl(model.linkurl!!)) {
+            view.setImageResource(R.drawable.ic_youtube)
+        }
     } else {
         view.setImageResource(R.drawable.ic_file_for_assignment)
     }
@@ -120,33 +122,38 @@ fun isYoutubeUrl(mUrl: String): Boolean {
 fun setDriveListIcon(view: ImageView, model: DriveModel.Data) {
     if (model.fileext.equals(".pdf", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_pdf)
-    } else if(model.fileext.equals(".mp4", ignoreCase = true)) {
+    } else if (model.fileext.equals(".mp4", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_video_play)
-    }else if(model.fileext.equals(".ppt", ignoreCase = true)) {
+    } else if (model.fileext.equals(".ppt", ignoreCase = true)) {
         view.setImageResource(R.drawable.ic_ppt)
-    }else if(model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(
+    } else if (model.fileext.equals(".xls", ignoreCase = true) || model.fileext.equals(
             ".xlsx",
             ignoreCase = true
-        )) {
+        )
+    ) {
         view.setImageResource(R.drawable.ic_excel)
-    }else if(model.fileext.equals(".jpg", ignoreCase = true) || model.fileext.equals(
+    } else if (model.fileext.equals(".jpg", ignoreCase = true) || model.fileext.equals(
             ".gif",
             ignoreCase = true
         ) || model.fileext.equals(".png", ignoreCase = true) || model.fileext.equals(
             ".tiff",
             ignoreCase = true
-        ) || model.fileext.equals(".jpeg", ignoreCase = true)) {
+        ) || model.fileext.equals(".jpeg", ignoreCase = true)
+    ) {
         view.setImageResource(R.drawable.ic_image_file)
-    }else if(model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(
+    } else if (model.fileext.equals(".doc", ignoreCase = true) || model.fileext.equals(
             ".docx",
             ignoreCase = true
-        )) {
+        )
+    ) {
         view.setImageResource(R.drawable.ic_doc)
-    } else if(model.filetype.equals("N",ignoreCase = true)) {
+    } else if (model.filetype.equals("N", ignoreCase = true)) { //Here N means no attachment
         view.setImageResource(R.drawable.ic_no_attachment)
-    } else if(isYoutubeUrl(model.linkurl!!)) {
-        view.setImageResource(R.drawable.ic_youtube)
-    } else  {
+    } else if (!model.linkurl.isNullOrEmpty()) {
+        if (isYoutubeUrl(model.linkurl!!)) {
+            view.setImageResource(R.drawable.ic_youtube)
+        }
+    } else {
         view.setImageResource(R.drawable.ic_file_for_assignment)
     }
 }

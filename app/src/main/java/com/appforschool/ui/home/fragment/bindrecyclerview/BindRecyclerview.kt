@@ -91,31 +91,14 @@ fun bindAExamList(view: RecyclerView, list: List<ExamModel.Data>) {
 
 @BindingAdapter("bindDriveList")
 fun bindDriveList(view: RecyclerView, list: List<DriveModel.Data>) {
-    if (list.isEmpty())
-        return
     val layoutManager = view.layoutManager
     if (layoutManager == null)
         view.layoutManager = LinearLayoutManager(view.context)
-    var adapter = view.adapter
-        adapter = DriveAdapter(view.context, list)
+    var adapter : DriveAdapter? = view.adapter as? DriveAdapter
+    if (adapter == null) {
+        adapter = DriveAdapter(view.context, list.toMutableList())
         view.adapter = adapter
+    } else {
+        adapter.updateDataList(list)
+    }
 }
-
-//@BindingAdapter("bindAttendExam")
-//fun bindAttendExam(view: RecyclerView, list: List<AttendExamModel.Data>) {
-//    if (list.isEmpty())
-//        return
-//    val layoutManager = view.layoutManager
-//    if (layoutManager == null)
-//        view.layoutManager = LinearLayoutManager(view.context)
-//    var adapter = view.adapter
-//
-//    if (adapter == null) {
-//        adapter =
-//            AttendExamAdapter(
-//                view.context,
-//                list
-//            )
-//        view.adapter = adapter
-//    }
-//}

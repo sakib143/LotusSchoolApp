@@ -65,6 +65,8 @@ class YoutubeActivity : BaseActivity() {
         }else{
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+
+        youtube_player_view.enableBackgroundPlayback(false)
     }
 
     companion object {
@@ -72,6 +74,11 @@ class YoutubeActivity : BaseActivity() {
         fun intentFor(context: Context, videoUrls : String) =
             Intent(context, YoutubeActivity::class.java)
                 .putExtra(Constant.VIDEO_URL, videoUrls)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        youtube_player_view.release()
     }
 
 }
