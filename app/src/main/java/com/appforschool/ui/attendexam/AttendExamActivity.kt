@@ -18,6 +18,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.appforschool.BuildConfig
 import com.appforschool.R
 import com.appforschool.base.BaseBindingActivity
 import com.appforschool.data.model.*
@@ -234,15 +235,26 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
     }
 
     fun zoomImage(imageUrl: String, image: ImageView) {
-        ViewCompat.setTransitionName(image, Constant.IMAGE_FULL_ZOOM_ANIM)
-        val intent = Intent(this, FullImageActivity::class.java)
-        intent.putExtra(Constant.REQUEST_LINK_URL, imageUrl)
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-            this,
-            image!!,
-            ViewCompat.getTransitionName(image)!!
-        )
-        startActivity(intent, options.toBundle())
+        try {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(imageUrl)
+            )
+            (image.context as AttendExamActivity).startActivity(browserIntent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            toast(e.message)
+        }
+//        .,.
+//        ViewCompat.setTransitionName(image, Constant.IMAGE_FULL_ZOOM_ANIM)
+//        val intent = Intent(this, FullImageActivity::class.java)
+//        intent.putExtra(Constant.REQUEST_LINK_URL, imageUrl)
+//        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//            this,
+//            image!!,
+//            ViewCompat.getTransitionName(image)!!
+//        )
+//        startActivity(intent, options.toBundle())
     }
 
     fun optionAClicked(position: Int, srNumber: String) {
