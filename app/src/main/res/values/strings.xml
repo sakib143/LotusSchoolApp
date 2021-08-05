@@ -100,6 +100,7 @@
     <string name="file_size_alert">Bigger file(s) selected. </string>
     <string name="max_file_size_allow">Max file size allowed</string>
     <string name="mb">MB.</string>
+    <string name="click_to_open">Click to open</string>
 
 
 </resources>

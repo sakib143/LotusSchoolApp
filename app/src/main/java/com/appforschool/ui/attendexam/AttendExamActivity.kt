@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
@@ -234,13 +235,13 @@ class AttendExamActivity : BaseBindingActivity<ActivityAttendExamBinding>() {
         }
     }
 
-    fun zoomImage(imageUrl: String, image: ImageView) {
+    fun zoomImage(imageUrl: String, view: LinearLayout) {
         try {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse(imageUrl)
             )
-            (image.context as AttendExamActivity).startActivity(browserIntent)
+            (view.context as AttendExamActivity).startActivity(browserIntent)
         } catch (e: Exception) {
             e.printStackTrace()
             toast(e.message)

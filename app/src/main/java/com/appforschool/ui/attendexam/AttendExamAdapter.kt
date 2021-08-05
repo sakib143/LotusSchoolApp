@@ -146,10 +146,10 @@ class AttendExamAdapter(
             (context as AttendExamActivity).openFile(list.get(position).srNo.toString(), position)
         }
 
-        holder.ivImage.setOnClickListener() {
+        holder.llExamFile.setOnClickListener() {
             (context as AttendExamActivity).zoomImage(
                 list.get(position).questionimagefullpath,
-                holder.ivImage
+                holder.llExamFile
             )
         }
 
@@ -242,16 +242,16 @@ class AttendExamAdapter(
         }
 
         if (list.get(position).questionimagefullpath.isNullOrEmpty()) {
-            holder.ivImage.hide()
+            holder.llExamFile.hide()
         } else {
-            holder.ivImage.show()
-            Glide.with(context).load(list.get(position).questionimagefullpath)
-                .apply(
-                    RequestOptions()
-                        .priority(Priority.HIGH)
-                        .error(R.mipmap.ic_launcher)
-                )
-                .into(holder.ivImage)
+            holder.llExamFile.show()
+//            Glide.with(context).load(list.get(position).questionimagefullpath)
+//                .apply(
+//                    RequestOptions()
+//                        .priority(Priority.HIGH)
+//                        .error(R.mipmap.ic_launcher)
+//                )
+//                .into(holder.ivImage)
         }
     }
 
@@ -275,7 +275,8 @@ class AttendExamAdapter(
         val cbOne = itemView.findViewById(R.id.cbOne) as CheckBox
         val llCheckbox = itemView.findViewById(R.id.llCheckbox) as LinearLayout
         val edtAnswer = itemView.findViewById(R.id.edtAnswer) as EditText
-        val ivImage = itemView.findViewById(R.id.ivImage) as ImageView
+//        val ivImage = itemView.findViewById(R.id.ivImage) as ImageView
+        val llExamFile = itemView.findViewById(R.id.llExamFile) as LinearLayout
         val llUploadFile = itemView.findViewById(R.id.llUploadFile) as LinearLayout
         val tvACorrect = itemView.findViewById(R.id.tvACorrect) as TextView
         val tvAInCorrect = itemView.findViewById(R.id.tvAInCorrect) as TextView
